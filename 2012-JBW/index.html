@@ -98,7 +98,7 @@
                             <li>HTML 5 / CSS 3 / javascript</li>
                         </ul>
                     </li>
-                    <br />
+                    <br/>
                     <li>Native:
                         <ul>
                             <li>Responsive</li>
@@ -115,7 +115,7 @@
                      alt="https://devcentral.f5.com/weblogs/macvittie/archive/2008/09/10/3604.aspx"/>
             </section>
             <section data-state="alert">
-                <h1 style="position: absolute; top:25%;">You need a mobile web app regardless!</h1>
+                <h1 class="vertical-center">You need a mobile web app regardless!</h1>
             </section>
         </section>
         <section>
@@ -126,10 +126,11 @@
                     <li>CSS 3</li>
                     <li>JavaScript</li>
                 </ul>
-                <div style="float:right">
+                <div style="float:right; position: relative; top: -50px;">
                     <img src="assets/images/HTML5_Logo_256.png" style="padding: 20px; position: relative; top: 100px; left: -50px"/>
                     <img src="assets/images/CSS3_Logo.png" style="padding: 20px;"/>
                 </div>
+                <p style="clear:both;position: relative; top: 70px;">Html 5 Web App &rarr; Native App</p>
             </section>
             <section>
                 <h2>target = Webkit</h2>
@@ -141,6 +142,99 @@
                 <h2>Device Detection</h2>
                 <img src="assets/images/iphone_ipad.jpg"
                      alt="http://www.flickr.com/photos/ivyfield/4486938457/"/>
+            </section>
+            <section>
+                <h2>JavaScript APIs</h2>
+                <ul>
+                    <li>Geo-location</li>
+                    <li>Local Storage</li>
+                    <li>Web Sockets</li>
+                    <li>Canvas</li>
+                    <li>Drag and Drop</li>
+                    <br />
+                    <li>
+                        <a href="http://www.quirksmode.org/webkit_mobile.html">bit.ly/webkit-comparison</a>
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h2>Plethora of Frameworks</h2>
+
+                <div class="images" style="margin-top: 50px">
+                    <table>
+                        <tr>
+                            <td><img src="assets/images/frameworks/yui.png"></td>
+                            <td><img src="assets/images/frameworks/Jquery-mobile-logo.png"></td>
+                            <td><img src="assets/images/frameworks/sencha.png"></td>
+                        </tr>
+                    </table>
+                    <table class="images">
+                        <tr>
+                            <td><img src="assets/images/frameworks/zepto_js.png"></td>
+                            <td><img src="assets/images/frameworks/sproutcore.png"></td>
+                        </tr>
+                    </table>
+                </div>
+                <h2 style="margin-top: 50px" class="fragment">
+                    + JSF !!
+                </h2>
+            </section>
+            <section>
+                <h2>Adapting JSF to be &ldquo;Mobile Ready&rdquo;</h2>
+                <ul>
+                    <li>
+                        Responsive
+                        <ul class="fragment">
+                            <li>Single Page programming model (via JSF AJAX)</li>
+                        </ul>
+                    </li>
+                    <br />
+                    <li>
+                        Touch-specific controls
+                        <ul class="fragment">
+                            <li>CSS 3 styling</li>
+                        </ul>
+                    </li>
+                    <br />
+                    <li>
+                        Native L&F
+                        <ul class="fragment">
+                            <li>Component libraries</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2><a href="http://www.jboss.org/jdf/quickstarts/jboss-as-quickstart/kitchensink/">JBoss-as Quickstart: kitcehsink</a></h2>
+                <img src="assets/images/kitchensink-desktop_scaled.png" />
+            </section>
+            <section>
+                <h2><a href="https://github.com/bleathem/quickstart/tree/mobile-jsf">kitcehsink: &ldquo;Mobilized&rdquo;</a></h2>
+                <ul>
+                    <li>Still Vanilla JSF</li>
+                    <br />
+                    <li>
+                        We introduced slidfast:
+                        <ul>
+                            <li>CSS + JavaScript</li>
+                        </ul>
+                    </li>
+                </ul>
+                <img style="float:right; position: relative;" src="assets/images/kitchensink-mobile_scaled.png" />
+            </section>
+            <section>
+                <h2>Mobile compatible with slidfast</h2>
+            </section>
+            <section>
+                <h2>Slidfast CSS</h2>
+            </section>
+            <section>
+                <h2>Slidfast JavaScript</h2>
+            </section>
+            <section>
+                <h2>Single page programming model</h2>
             </section>
         </section>
     </div>
@@ -198,7 +292,7 @@
         mouseWheel:true,
 
         // Apply a 3D roll to links on hover
-        rollingLinks:true,
+        rollingLinks:false,
 
         // UI style
         theme:query.theme || 'default', // default/neon

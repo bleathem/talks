@@ -46,3 +46,32 @@ ul.intro {
          box-shadow: none;
 
 }
+
+.reveal .images {
+ width: 100%;
+ padding-bottom: 50px;
+ background-color: #FFFFFF;
+}
+
+.reveal .images table {
+ background-color: #FFFFFF;
+ width: 100%;
+ margin: auto;
+}
+
+.reveal .images td {
+ vertical-align: middle;
+}
+
+.reveal .images img {
+ border: none;
+ background: none;
+ -webkit-box-shadow: none;
+ -moz-box-shadow: none;
+ box-shadow: none;
+}
+
+.reveal .vertical-center {
+ position: absolute;
+ top:25%;
+}
