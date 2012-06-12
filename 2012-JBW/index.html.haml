@@ -68,8 +68,8 @@ layout: reveal
       %li CSS 3
       %li JavaScript
     %div{:style => "float:right; position: relative; top: -50px;"}
-      %img{:src => "assets/images/HTML5_Logo_256.png", style => "padding: 20px; position: relative; top: 100px; left: -50px" }
-      %img{:src => "assets/images/CSS3_Logo.png", style => "padding: 20px;" }
+      %img{:src => "assets/images/HTML5_Logo_256.png", :style => "padding: 20px; position: relative; top: 100px; left: -50px" }
+      %img{:src => "assets/images/CSS3_Logo.png", :style => "padding: 20px;" }
     %p{:style => "clear:both;position: relative; top: 70px;"}
       Html 5 Web App &rarr; Native App
   %section
@@ -158,6 +158,26 @@ layout: reveal
 
   %section
     %h2 Single page programming model
-
+    %pre
+      %code
+        &nbsp;
+        :escaped
+          <h:form id="mobileForm">
+            <div id="page-container">
+              <div id="home-page" class="page stage-left">
+                <ui:include src="/mobile/home.xhtml"/>
+              </div>
+              <div id="new" class="page stage-right">
+                <ui:include src="/mobile/new.xhtml"/>
+              </div>
+              <div id="list" class="page stage-right">
+                <ui:include src="/mobile/list.xhtml"/>
+              </div>
+              <div id="about" class="page stage-right">
+                <ui:include src="/mobile/about.xhtml"/>
+              </div>
+            </div>
+          </h:form>
+        &nbsp;
 
 
