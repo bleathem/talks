@@ -75,3 +75,11 @@ ul.intro {
  position: absolute;
  top:25%;
 }
+
+.reveal .prettyprint {
+    background-color: #ffffff;
+}
+
+.reveal .prettyprint .prettyprint {
+    width: auto;
+}

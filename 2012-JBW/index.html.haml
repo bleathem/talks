@@ -158,26 +158,62 @@ layout: reveal
 
   %section
     %h2 Single page programming model
-    %pre
-      %code
+    %pre{:class => "prettyprint", :style => "font-size: 8px"}
+      %code{:id => "code1"}
         &nbsp;
         :escaped
-          <h:form id="mobileForm">
-            <div id="page-container">
-              <div id="home-page" class="page stage-left">
-                <ui:include src="/mobile/home.xhtml"/>
-              </div>
-              <div id="new" class="page stage-right">
-                <ui:include src="/mobile/new.xhtml"/>
-              </div>
-              <div id="list" class="page stage-right">
-                <ui:include src="/mobile/list.xhtml"/>
-              </div>
-              <div id="about" class="page stage-right">
-                <ui:include src="/mobile/about.xhtml"/>
-              </div>
-            </div>
-          </h:form>
+          <?xml version="1.0" encoding="UTF-8"?>
+          <ui:composition template="/WEB-INF/templates/mobile.xhtml"
+                          xmlns:ui="http://java.sun.com/jsf/facelets"
+                          xmlns:f="http://java.sun.com/jsf/core"
+                          xmlns:h="http://java.sun.com/jsf/html"
+                          xmlns:my="http://java.sun.com/jsf/composite/components/mobile">
+              <ui:define name="content">
+                  <h:outputStylesheet name="mobile.css" library="css"/>
+                  <h:outputScript>
+                     //initialize mobile RichFaces with slidfast
+                     slidfast({
+                        defaultPageID:'home-page',
+                        callback: 'handleHashChange',
+                        backButtonID: 'back-button'
+                     });
+                  </h:outputScript>
+
+                  <div id="browser">
+                      <header>
+                          <div>
+                              <div id="back-button" class="hide-button">Home</div>
+                              <div id="info-button" class="right-header-button info-link">
+                                  <a href="#about">i</a>
+                              </div>
+                              <p>Mobile JSF</p>
+                          </div>
+                      </header>
+                      <h:form id="mobileForm">
+                         <div id="page-container">
+                              <div id="home-page" class="page stage-left">
+                                  <ui:include src="/mobile/home.xhtml"/>
+                              </div>
+                             <div id="new" class="page stage-right">
+                                 <ui:include src="/mobile/new.xhtml"/>
+                             </div>
+                             <div id="list" class="page stage-right">
+                                 <ui:include src="/mobile/list.xhtml"/>
+                             </div>
+                             <div id="about" class="page stage-right">
+                                 <ui:include src="/mobile/about.xhtml"/>
+                             </div>
+                          </div>
+                      </h:form>
+                  </div>
+              </ui:define>
+          </ui:composition>
         &nbsp;
+    .fragment{:data=>{:prettify=>"code1", :prettify_lines=>"2:6"}}
+    .fragment{:data=>{:prettify=>"code1", :prettify_lines=>"10:15"}}
+    .fragment{:data=>{:prettify=>"code1", :prettify_lines=>"18:18"}}
+    .fragment{:data=>{:prettify=>"code1", :prettify_lines=>"19:27"}}
+    .fragment{:data=>{:prettify=>"code1", :prettify_lines=>"28:43"}}
+
 
 
