@@ -4,29 +4,29 @@ layout: reveal
 
 %section
   %img.splash{:src => "assets/images/splash_scaled.png"}
-  %section
-    %h1 Going Mobile
-    %h2 with your RichFaces Applications
-    %ul.intro
-      %li Brian Leathem
-      %li Senior Software Engineer, Red Hat
-      %li 06.28.12
-    .footer
-      %img.summit-logo{:src => "assets/images/summit_logo_shadow.png" }
-      %img.redhat-logo{:src => "assets/images/redhat_logo_notext.png" }
-  %section
-    %h2 The plan
-    %ul
-      %li Why Mobile?
-      %li Why JSF?
-      %li Why RichFaces?
-    %section
-      %h2 Who am I?
-      %ul
-        %li Senior Software Engineer at Red Hat
-        %li RichFaces Project Lead
-        %li Represent Red Hat on the JSF 2.2 EG (JSR-344)
-        %li Seam Faces mobule lead
+%section
+  %h1 Going Mobile
+  %h2 with your RichFaces Applications
+  %ul.intro
+    %li Brian Leathem
+    %li Senior Software Engineer, Red Hat
+    %li 06.28.12
+  .footer
+    %img.summit-logo{:src => "assets/images/summit_logo_shadow.png" }
+    %img.redhat-logo{:src => "assets/images/redhat_logo_notext.png" }
+%section
+  %h2 The plan
+  %ul
+    %li Why Mobile?
+    %li Why JSF?
+    %li Why RichFaces?
+%section
+  %h2 Who am I?
+  %ul
+    %li Senior Software Engineer at Red Hat
+    %li RichFaces Project Lead
+    %li Represent Red Hat on the JSF 2.2 EG (JSR-344)
+    %li Seam Faces mobule lead
 %section
   %section
     %h2 Why Mobile?
@@ -113,6 +113,17 @@ layout: reveal
     %h2.fragment{:style => "margin-top: 50px"}
       + JSF !!
   %section
+    %h2 What do we like about JSF?
+    %ul
+      %li Standardized component-oriented programming model
+      %li AJAX built-in
+      %li Abstract away the javascript
+      %li Facelets: a Powerful templating mechanism
+      %li Rich component sets
+      %li Mobile specific renderers
+      %br
+      %li Let's build on our investment in JSF technology!
+  %section
     %h2 Adapting JSF to be &ldquo;Mobile Ready&rdquo;
     %ul
       %li
@@ -133,12 +144,12 @@ layout: reveal
   %section
     %h2
       %a{:href => "http://www.jboss.org/jdf/quickstarts/jboss-as-quickstart/kitchensink/"}
-        JBoss-as Quickstart: kitcehsink
+        JBoss-as Quickstart: kitchensink
       %img{:src => "assets/images/kitchensink-desktop_scaled.png"}
   %section
     %h2
       %a{:href => "https://github.com/bleathem/quickstart/tree/mobile-jsf"}
-        kitcehsink: &ldquo;Mobilized&rdquo;
+        kitchensink: &ldquo;Mobilized&rdquo;
     %ul
       %li Still Vanilla JSF
       %br
@@ -152,6 +163,19 @@ layout: reveal
 
   %section
     %h2 Slidfast CSS
+    %pre{:class => "prettyprint"}
+      %code{:id => "activate_the_gpu"}
+        &nbsp;
+        :escaped
+          .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            /*activate the GPU for compositing each page */
+            -webkit-transform: translate3d(0, 0, 0);
+          }
+        &nbsp;
+      .fragment{:data=>{:prettify=>"activate_the_gpu", :prettify_lines=>"6:6"}}
 
   %section
     %h2 Slidfast JavaScript
@@ -159,7 +183,7 @@ layout: reveal
   %section
     %h2 Single page programming model
     %pre{:class => "prettyprint", :style => "font-size: 8px"}
-      %code{:id => "code1"}
+      %code{:id => "multiple_page_elements"}
         &nbsp;
         :escaped
           <?xml version="1.0" encoding="UTF-8"?>
@@ -209,11 +233,11 @@ layout: reveal
               </ui:define>
           </ui:composition>
         &nbsp;
-    .fragment{:data=>{:prettify=>"code1", :prettify_lines=>"2:6"}}
-    .fragment{:data=>{:prettify=>"code1", :prettify_lines=>"10:15"}}
-    .fragment{:data=>{:prettify=>"code1", :prettify_lines=>"18:18"}}
-    .fragment{:data=>{:prettify=>"code1", :prettify_lines=>"19:27"}}
-    .fragment{:data=>{:prettify=>"code1", :prettify_lines=>"28:43"}}
+    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"2:6"}}
+    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"10:15"}}
+    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"18:18"}}
+    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"19:27"}}
+    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"28:43"}}
 
 
 
