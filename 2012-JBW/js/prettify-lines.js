@@ -1,6 +1,6 @@
 /*
 
- show_lines and hide_lines assumes a element that has data-prettify='code-element-id' and data-prettify_lines="from:to"
+    show_lines and hide_lines assumes a element that has data-prettify='code-element-id' and data-prettify_lines="from:to"
 
  */
 show_lines = function (event) {
@@ -44,7 +44,7 @@ highlight_fragment = function (code) {
 
                 var new_line = line.substring(padding);
                 new_lines += '<' + 'pre' + ' class="prettyprint highlight">\n'
-                new_lines += ('<' + 'code' + ' id="highlight" class="prettyprint">' +new_line+ '\n')
+                new_lines += ('<' + 'code' + ' class="prettyprint">' +new_line+ '\n')
             }
             else {
                 new_lines += (between ? line.substring(padding):line) + '\n'
@@ -57,7 +57,7 @@ highlight_fragment = function (code) {
 
         code_block.html(new_lines);
         prettyPrint();
-        $('#highlight').trigger('lineshighlighted');
+        $('.present .highlight').trigger('lineshighlighted');
     }
 }
 
