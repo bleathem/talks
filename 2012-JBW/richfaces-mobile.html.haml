@@ -91,6 +91,61 @@ layout: reveal
         %a{:href => "http://www.quirksmode.org/webkit_mobile.html"}
           bit.ly/webkit-comparison
   %section
+    %h2 Hide the Location bar
+    %img.plain.portrait{:src => "assets/images/portrait_scaled.png", :style => "float: right; position: relative; top: -30px"}
+    %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 120px; width: 550px; margin-left: 0"}
+      %code
+        &nbsp;
+        :escaped
+          hideURLBar: function() {
+              //hide the url bar on mobile devices
+              setTimeout(scrollTo, 100, 0, 1)
+          }
+        &nbsp;
+    %pre{:style => "border: solid red 4px; margin-left: 50px; width: 450px; height: 1.7em; position: relative; top: -83px"}
+  %section
+    %h2 Orientation Detection
+    %div{:style => "float:right; position: relative; top: -50px;"}
+      %img.plain.landscape{:src => "assets/images/landscape_scaled.png"}
+      %img.plain.portrait{:src => "assets/images/portrait_scaled.png"}
+  %section
+    %h2 Orientation Detection
+    %img.plain.portrait{:src => "assets/images/portrait_scaled.png", :style => "float: right; position: relative; top: -30px"}
+    %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 0px; width: 550px; margin-left: 0"}
+      %code
+        &nbsp;
+        :escaped
+          /* portrait screen width */
+          @media screen and (max-width: 480px) {
+             .portrait {
+             }
+             .landscape {
+                display:none;
+             }
+          }
+
+          /* landscape/desktop device widths */
+          @media screen and (min-width: 481px) {
+             .portrait {
+                display:none;
+             }
+             .landscape {
+             }
+          }
+        &nbsp;
+  %section
+    %h2 Hardware acceleration
+    %h3.capitalize{:style => "margin-top: 60px"} Activate the GPU for compositing each page
+    %pre{:class => "prettyprint", :style => "font-size: 14pt;  margin-top: 20px"}
+      %code{:id => "activate_the_gpu"}
+        &nbsp;
+        :escaped
+          .page {
+            ...
+            -webkit-transform: translate3d(0, 0, 0);
+          }
+        &nbsp;
+  %section
     %h2 Plethora of Frameworks
 
     .images{:style => "margin-top: 50px"}
@@ -140,13 +195,21 @@ layout: reveal
         %ul.fragment
           %li Component libraries
   %section
-    %h2 Hide the Location bar
-  %section
     %h2 Device Detection
     %img{:src => "assets/images/iphone_ipad.jpg", :alt => "http://www.flickr.com/photos/ivyfield/4486938457/" }
   %section
-    %h2 Device Detection - UAgentInfo
-    %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 120px"}
+    %h2 Device Detection
+    %h3.capitalize{:style => "margin-top: 60px"} User Agent String
+    %pre{:class => "prettyprint", :style => "font-size: 14pt;  margin-top: 20px"}
+      %code
+        &nbsp;
+        :escaped
+          Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.56 Safari/536.5
+        &nbsp;
+  %section
+    %h2 Device Detection
+    %h3.capitalize{:style => "margin-top: 60px"} Server Side: UAgentInfo
+    %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 20px"}
       %code
         &nbsp;
         :escaped
@@ -163,8 +226,9 @@ layout: reveal
             ...
         &nbsp;
   %section
-    %h2 Device Detection - JSF Bean
-    %pre{:class => "prettyprint", :style => "font-size: 14pt;  margin-top: 90px"}
+    %h2 Device Detection
+    %h3.capitalize{:style => "margin-top: 60px"} JSF Bean: UserAgent
+    %pre{:class => "prettyprint", :style => "font-size: 14pt;  margin-top: 20px"}
       %code
         &nbsp;
         :escaped
@@ -184,8 +248,9 @@ layout: reveal
              }
         &nbsp;
   %section
-    %h2 Device Detection - ReWrite
-    %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 120px"}
+    %h2 Device Detection
+    %h3.capitalize{:style => "margin-top: 60px"} URL Rewriting: ReWrite
+    %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 20px"}
       %code
         &nbsp;
         :escaped
@@ -198,12 +263,6 @@ layout: reveal
                 ).perform(Forward.to("/mobile/"));
              }
         &nbsp;
-  %section
-    %h2 Orientation Detection
-    %div{:style => "float:right; position: relative; top: -50px;"}
-      %img.plain.landscape{:src => "assets/images/landscape_scaled.png"}
-      %img.plain.portrait{:src => "assets/images/portrait_scaled.png"}
-
 %section
   %section
     %h2
@@ -224,26 +283,7 @@ layout: reveal
     %img{:style => "float:right; position: relative;", :src => "assets/images/kitchensink-mobile_scaled.png"  }
   %section
     %h2 Mobile compatible with slidfast
-
-  %section
-    %h2 Slidfast CSS
-    %pre{:class => "prettyprint"}
-      %code{:id => "activate_the_gpu"}
-        &nbsp;
-        :escaped
-          .page {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            /*activate the GPU for compositing each page */
-            -webkit-transform: translate3d(0, 0, 0);
-          }
-        &nbsp;
-      .fragment{:data=>{:prettify=>"activate_the_gpu", :prettify_lines=>"6:6"}}
-
-  %section
-    %h2 Slidfast JavaScript
-
+    %p{:style => "font-style: italic; margin-top: 2 00px"}A collection of lightweight CSS and Javascript assets
   %section
     %h2 Single page programming model
     %pre{:class => "prettyprint", :style => "font-size: 8px"}
@@ -254,8 +294,7 @@ layout: reveal
           <ui:composition template="/WEB-INF/templates/mobile.xhtml"
                           xmlns:ui="http://java.sun.com/jsf/facelets"
                           xmlns:f="http://java.sun.com/jsf/core"
-                          xmlns:h="http://java.sun.com/jsf/html"
-                          xmlns:my="http://java.sun.com/jsf/composite/components/mobile">
+                          xmlns:h="http://java.sun.com/jsf/html">
               <ui:define name="content">
                   <h:outputStylesheet name="mobile.css" library="css"/>
                   <h:outputScript>
@@ -297,11 +336,11 @@ layout: reveal
               </ui:define>
           </ui:composition>
         &nbsp;
-    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"2:6"}}
-    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"10:15"}}
-    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"18:18"}}
-    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"19:27"}}
-    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"28:43"}}
+    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"2:5"}}
+    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"9:14"}}
+    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"17:17"}}
+    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"18:26"}}
+    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"27:42"}}
   %section
     %h2 Scale with a dynamic page include
     %pre{:class => "prettyprint", :style => "font-size: 8px"}
