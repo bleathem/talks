@@ -103,6 +103,10 @@
         Reveal.addEventListener( 'fragmentshown', show_lines);
         Reveal.addEventListener( 'fragmenthidden', hide_lines);
 
+        $('body').on('lineshighlighted', function(event) {
+          $(event.target).animate({fontSize: '+=20%'}, 100, 'swing');
+        });
+
         prettyPrint();
 
     </script>
