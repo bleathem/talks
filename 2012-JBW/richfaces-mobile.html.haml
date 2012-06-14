@@ -6,7 +6,7 @@ layout: reveal
   %img.splash{:src => "assets/images/splash_scaled.png"}
 %section
   %h1 Going Mobile
-  %h2 with your RichFaces Applications
+  %h2.capitalize with your RichFaces Applications
   %ul.intro
     %li Brian Leathem
     %li Senior Software Engineer, Red Hat
@@ -26,7 +26,7 @@ layout: reveal
     %li Senior Software Engineer at Red Hat
     %li RichFaces Project Lead
     %li Represent Red Hat on the JSF 2.2 EG (JSR-344)
-    %li Seam Faces mobule lead
+    %li Seam Faces module lead
 %section
   %section
     %h2 Why Mobile?
@@ -59,7 +59,7 @@ layout: reveal
     %img{:src => "assets/images/damned_if_you_do.jpg", :alt => "https://devcentral.f5.com/weblogs/macvittie/archive/2008/09/10/3604.aspx"}
 
   %section{ :"data-state" => "alert"}
-    %h1{:class => "vertical-center"} You need a mobile web app regardless!
+    %h1{:style => "margin-top: 180px;"} You need a mobile web app regardless!
 %section
   %section
     %h2 Mobile Web is Ready
@@ -68,7 +68,7 @@ layout: reveal
       %li CSS 3
       %li JavaScript
     %div{:style => "float:right; position: relative; top: -50px;"}
-      %img{:src => "assets/images/HTML5_Logo_256.png", :style => "padding: 20px; position: relative; top: 100px; left: -50px" }
+      %img.html5_logo{:src => "assets/images/HTML5_Logo_256.png"}
       %img{:src => "assets/images/CSS3_Logo.png", :style => "padding: 20px;" }
     %p{:style => "clear:both;position: relative; top: 70px;"}
       Html 5 Web App &rarr; Native App
@@ -77,9 +77,6 @@ layout: reveal
       target = Webkit
       %a{:href => "http://gs.statcounter.com/#mobile_os-ww-monthly-201205-201205-bar"}
         %img{:src => "assets/images/mobile_os_marketshare.jpg"}
-  %section
-    %h2 Device Detection
-    %img{:src => "assets/images/iphone_ipad.jpg", :alt => "http://www.flickr.com/photos/ivyfield/4486938457/" }
   %section
     %h2 JavaScript APIs
     %ul
@@ -113,8 +110,8 @@ layout: reveal
     %h2.fragment{:style => "margin-top: 50px"}
       + JSF !!
   %section
-    %h2 What do we like about JSF?
-    %ul
+    %h2 Why JSF?
+    %ul.bullets
       %li Standardized component-oriented programming model
       %li AJAX built-in
       %li Abstract away the javascript
@@ -122,7 +119,8 @@ layout: reveal
       %li Rich component sets
       %li Mobile specific renderers
       %br
-      %li Let's build on our investment in JSF technology!
+    %h3.capitalize Let's build on our investment in JSF technology!
+%section
   %section
     %h2 Adapting JSF to be &ldquo;Mobile Ready&rdquo;
     %ul
@@ -140,6 +138,71 @@ layout: reveal
         Native L&F
         %ul.fragment
           %li Component libraries
+  %section
+    %h2 Hide the Location bar
+  %section
+    %h2 Device Detection
+    %img{:src => "assets/images/iphone_ipad.jpg", :alt => "http://www.flickr.com/photos/ivyfield/4486938457/" }
+  %section
+    %h2 Device Detection - UAgentInfo
+    %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 120px"}
+      %code{:id => "dynamic_page_element"}
+        &nbsp;
+        :escaped
+          public class UAgentInfo implements Serializable {
+             ...
+             public void initDeviceScan() {
+                this.isIphone = detectIphoneOrIpod();
+                this.isAndroidPhone = detectAndroidPhone();
+                this.isTierTablet = detectTierTablet();
+                this.isTierIphone = detectTierIphone();
+                this.isTierRichCss = detectTierRichCss();
+                this.isTierGenericMobile = detectTierOtherPhones();
+             }
+            ...
+        &nbsp;
+  %section
+    %h2 Device Detection - JSF Bean
+    %pre{:class => "prettyprint", :style => "font-size: 14pt;  margin-top: 90px"}
+      %code{:id => "dynamic_page_element"}
+        &nbsp;
+        :escaped
+          @Model
+          public class UserAgent {
+
+             private UAgentInfo uAgentInfo;
+
+             @PostConstruct
+             public void init() {
+                FacesContext context = FacesContext.getCurrentInstance();
+                HttpServletRequest request = (HttpServletRequest)
+                            context.getExternalContext().getRequest();
+                String userAgentStr = request.getHeader("user-agent");
+                String httpAccept = request.getHeader("Accept");
+                uAgentInfo = new UAgentInfo(userAgentStr, httpAccept);
+             }
+        &nbsp;
+  %section
+    %h2 Device Detection - ReWrite
+    %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 120px"}
+      %code{:id => "dynamic_page_element"}
+        &nbsp;
+        :escaped
+          public Configuration getConfiguration(final ServletContext context) {
+             return ConfigurationBuilder.begin()
+                .defineRule()
+                .when(Direction.isInbound()
+                .and(Path.matches("/").or(Path.matches("/index.jsf")))
+                .and(UserAgent.isMobile())
+                ).perform(Forward.to("/mobile/"));
+             }
+        &nbsp;
+  %section
+    %h2 Orientation Detection
+    %div{:style => "float:right; position: relative; top: -50px;"}
+      %img.plain.landscape{:src => "assets/images/landscape_scaled.png"}
+      %img.plain.portrait{:src => "assets/images/portrait_scaled.png"}
+
 %section
   %section
     %h2
@@ -238,6 +301,68 @@ layout: reveal
     .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"18:18"}}
     .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"19:27"}}
     .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"28:43"}}
+  %section
+    %h2 Scale with a dynamic page include
+    %pre{:class => "prettyprint", :style => "font-size: 8px"}
+      %code{:id => "dynamic_page_element"}
+        &nbsp;
+        :escaped
+          <?xml version="1.0" encoding="UTF-8"?>
+          <ui:composition template="/WEB-INF/templates/mobile.xhtml" ...>
+              <ui:define name="content">
+                  ...
+                  <div id="browser">
+                      ...
+                      <h:form id="mobileForm">
+                          <h:inputHidden id="page" value="\#{pageBean.location}" />
+                          <h:outputScript >
+                            var handleHashChange = function (page) {
+                               var appPage = $('#app-page');
+                               if (appPage.data('activePage') === page) {
+                                  slidfast.core.slideTo('app-page');
+                               } else {
+                                  loadPage(page);
+                                  appPage.data('activePage', page);
+                               }
+                            }
+
+                            var loadPage = function (page) {
+                               var hiddenInput = 'mobileForm:page';
+                               $(document.getElementById(hiddenInput)).val(page);
+
+                               var options = {
+                                  execute: hiddenInput,
+                                  render : '@form',
+                                  onevent : function(event) {
+                                     if(event.status == 'success') {
+                                        slidfast.core.slideTo('app-page');
+                                     }
+                                  }
+                               }
+                               jsf.ajax.request(hiddenInput, null, options);
+                            }
+                         </h:outputScript>
+
+                         <div id="page-container">
+                              <div id="home-page" class="page stage-left">
+                                  <ui:include src="/mobile/home.xhtml"/>
+                              </div>
+                              <div id="app-page" class="page stage-right">
+                                  <ui:include src="\#{pageBean.page}"/>
+                              </div>
+                          </div>
+                      </h:form>
+                  </div>
+              </ui:define>
+          </ui:composition>
+        &nbsp;
+    .fragment{:data=>{:prettify=>"dynamic_page_element", :prettify_lines=>"37:44"}}
+    .fragment{:data=>{:prettify=>"dynamic_page_element", :prettify_lines=>"10:34"}}
+  %section
+    %section
+      %h2 Simplification with RichFaces
+      %ul
+        %li This is too much javascript!
 
 
 
