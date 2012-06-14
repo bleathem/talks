@@ -1,6 +1,6 @@
 /*
 
-    show_lines and hide_lines assumes a element that has data-prettify='code-element-id' and data-prettify_lines="from:to"
+ show_lines and hide_lines assumes a element that has data-prettify='code-element-id' and data-prettify_lines="from:to"
 
  */
 show_lines = function (event) {
@@ -10,52 +10,34 @@ show_lines = function (event) {
     })
 };
 
-highlight_fragment = function (code) {
-    var data_prettify = code.attr('data-prettify')
-    var data_prettify_lines = code.attr('data-prettify_lines')
-    if(data_prettify != undefined) {
-        var code_lines = data_prettify_lines.split(':')
-        var from = code_lines[0];
-        var to = code_lines[1];
+highlight_fragment = function (fragment) {
+    var code = get_code(fragment);
+    if (typeof code !== 'undefined') {
+        var new_html = "";
 
-        var new_lines = ""
-
-        var code_block = $('#' + data_prettify);
-
-        var orig_code_id = 'code_' + data_prettify
-        var orig_code = $('#' + orig_code_id)
-        var text = ''
-        if(orig_code.length == 0) {
-            $('body').append('<' + 'code id="' + orig_code_id + '" style="display:none;"' + '>' + code_block.html() + '</' + 'code' + '>');
-            text = code_block.html();
-        }
-        else {
-            text = orig_code.html()
-        }
-
-        var text_lines = text.split('\n');
+        var text_lines = code.orig.code.html().split('\n');
         var between = false;
         var padding = 0;
         for(var i = 0; i < text_lines.length; i++) {
             var line = text_lines[i]
-            if(i == from) {
+            if (i == code.from) {
                 between = true;
                 padding = determine_left_padding(line);
 
                 var new_line = line.substring(padding);
-                new_lines += '<' + 'pre' + ' class="prettyprint highlight">\n'
-                new_lines += ('<' + 'code' + ' class="prettyprint">' +new_line+ '\n')
+                new_html += '<' + 'pre' + ' class="prettyprint highlight">\n'
+                new_html += ('<' + 'code' + ' class="prettyprint">' +new_line+ '\n')
             }
             else {
-                new_lines += (between ? line.substring(padding):line) + '\n'
+                new_html += (between ? line.substring(padding):line) + '\n'
             }
-            if(i == to) {
+            if (i == code.to) {
                 between = false;
-                new_lines += '</code></pre>'
+                new_html += '</code></pre>'
             }
         }
 
-        code_block.html(new_lines);
+        code.block.html(new_html);
         prettyPrint();
         $('.present .highlight').trigger('lineshighlighted');
     }
@@ -63,29 +45,10 @@ highlight_fragment = function (code) {
 
 hide_lines = function (event) {
     $(event.fragment).each(function(i, elem) {
-        var code = $(this);
-        var data_prettify = code.attr('data-prettify')
-        var data_prettify_lines = code.attr('data-prettify_lines')
-        if(data_prettify != undefined) {
-            var code_lines = data_prettify_lines.split(':')
-            var from = code_lines[0];
-            var to = code_lines[1];
-
-            var new_lines = ""
-
-            var code_block = $('#' + data_prettify);
-
-            var orig_code_id = 'code_' + data_prettify
-            var orig_code = $('#' + orig_code_id)
-            var text = ''
-            if(orig_code.length == 0) {
-                $('body').append('<' + 'code id="' + orig_code_id + '" style="display:none;"' + '>' + code_block.html() + '</' + 'code' + '>');
-                text = code_block.html();
-            }
-            else {
-                text = orig_code.html()
-            }
-            code_block.html(text);
+        var fragment = $(this);
+        var code = get_code(fragment);
+        if (typeof code !== 'undefined') {
+            code.block.html(code.orig.code.html());
             prettyPrint();
 
             var previous_fragment = $(".present .fragment.visible").last();
@@ -93,6 +56,30 @@ hide_lines = function (event) {
         }
     })
 };
+
+get_code = function (fragment) {
+    if (typeof fragment.attr('data-prettify') === 'undefined') {
+        return undefined;
+    }
+    var code = {};
+    var prettify = fragment.attr('data-prettify')
+    code.lines = fragment.attr('data-prettify_lines').split(':');
+    code.from = code.lines[0];
+    code.to = code.lines[1];
+    code.block = $('#' + prettify);
+    code.orig = {};
+    code.orig.id = 'code_' + prettify;
+    code.orig.code = $('#' + code.orig.id);
+    if(code.orig.code.length == 0) {
+        $('<code />', {
+            id: code.orig.id,
+            style: "display:none",
+            html: code.block.html()
+        }).appendTo('body');
+        code.orig.code = $('#' + code.orig.id);
+    }
+    return code;
+}
 
 function determine_left_padding(line) {
     for(i = 0; i < line.length; i++) {
