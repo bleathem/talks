@@ -33,12 +33,16 @@
  list-style: none;
 }
 
+.reveal ul ul, .reveal ul.bullets {
+ list-style: disc;
+}
+
 ul.intro {
  margin-top: 50px;
  list-style: none;
 }
 
-.reveal section img.splash, .reveal section .footer img {
+.reveal section img.splash, .reveal section .footer img, .reveal img.plain {
  border: none;
  background: none;
  -webkit-box-shadow: none;
@@ -71,9 +75,19 @@ ul.intro {
  box-shadow: none;
 }
 
-.reveal .vertical-center {
- position: absolute;
- top:25%;
+.html5_logo {
+    padding: 20px;
+    position: relative;
+    top: 100px;
+    left: -50px
+}
+
+.landscape {
+    position: relative; top: -100px; left: -150px;
+}
+
+.portrait {
+    position: relative; top: 50px; left: -50px;
 }
 
 .reveal .prettyprint {
@@ -82,4 +96,67 @@ ul.intro {
 
 .reveal .prettyprint .prettyprint {
     width: auto;
+}
+
+.reveal .capitalize {
+    text-transform: capitalize;
+}
+
+.reveal .prettyprint .highlight, .reveal .prettyprint .highlight code {
+    background-color:#eee;
+    font-weight: normal;
+}
+
+.reveal section .print {
+    display: none;
+}
+
+@media print {
+    section > ul, section > div, section > p {
+        margin-top: 50px;
+        margin-left: 50px;
+    }
+
+    body {
+        position: static;
+    }
+
+    .state-background {
+        position: static;
+    }
+
+    body, p, td, li, div, a {
+        font-size: 24pt;
+    }
+
+    h1 { font-size: 150% !important; }
+    h2 { font-size: 140% !important; }
+    h3 { font-size: 130% !important; }
+    h4 { font-size: 120% !important; }
+    h5 { font-size: 115% !important; }
+    h6 { font-size: 110% !important; }
+
+    .reveal section .screen {
+        display: none; !important
+    }
+
+    .reveal section .print {
+        display: block;
+    }
+
+    .footer, .html5_logo, .landscape, .portrait {
+        position: static;
+        top: auto;
+        left: auto;
+        right: auto;
+        bottom: auto;
+    }
+
+    .footer {
+        margin-top: 200px;
+    }
+
+    pre.prettyprint {
+        border: none;
+    }
 }
