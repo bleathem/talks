@@ -18,7 +18,7 @@ layout: reveal
 %section
   %h2 The plan
   %ul
-    %li Why Mobile?
+    %li Why the Mobile Web?
     %li Why JSF?
     %li Why RichFaces?
 %section
@@ -37,7 +37,7 @@ layout: reveal
     %h2 Smartphones!
     %img{:src => "assets/images/MartinCooper.jpg", :alt => "http://en.wikipedia.org/wiki/File:2007Computex_e21Forum-MartinCooper.jpg"}
   %section
-    %h2 Smartphones are everywhere!
+    %h2 Mobile phones are everywhere!
     %img{:src => "assets/images/mobile-chart2.png", :alt => "http://gigaom.com/2010/04/12/mary-meeker-mobile-internet-will-soon-overtake-fixed-internet/"}
 %section
   %section
@@ -92,7 +92,7 @@ layout: reveal
           bit.ly/webkit-comparison
   %section
     %h2 Hide the Location bar
-    %img.plain.portrait{:src => "assets/images/portrait_scaled.png", :style => "float: right; position: relative; top: -30px"}
+    %img.plain.portrait{:src => "assets/images/kitchensink-mobile-home_scaled.png", :style => "float: right; position: relative; top: -30px"}
     %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 120px; width: 550px; margin-left: 0"}
       %code
         &nbsp;
@@ -102,7 +102,7 @@ layout: reveal
               setTimeout(scrollTo, 100, 0, 1)
           }
         &nbsp;
-    %pre{:style => "border: solid red 4px; margin-left: 50px; width: 450px; height: 1.7em; position: relative; top: -83px"}
+    %div{:style => "border: solid red 4px; margin-left: 50px; width: 450px; height: 0.8em; position: relative; top: -83px"}
   %section
     %h2 Orientation Detection
     %div{:style => "float:right; position: relative; top: -50px;"}
@@ -144,6 +144,21 @@ layout: reveal
             ...
             -webkit-transform: translate3d(0, 0, 0);
           }
+        &nbsp;
+  %section
+    %h2 HTML 5 presentation
+    %pre{:class => "prettyprint", :style => "font-size: 14pt;  margin-top: 100px"}
+      %code{:id => "activate_the_gpu"}
+        &nbsp;
+        :escaped
+          <section>
+            <h2>The plan</h2>
+            <ul>
+              <li>Why the Mobile Web?</li>
+              <li>Why JSF?</li>
+              <li>Why RichFaces?</li>
+            </ul>
+          </section>
         &nbsp;
   %section
     %h2 Plethora of Frameworks
@@ -194,6 +209,12 @@ layout: reveal
         Native L&F
         %ul.fragment
           %li Component libraries
+  %section
+    %h2 The RichFaces Showcase
+    %a{:href => "http://showcase.richfaces.org", :target => "demo"}
+      %img.plain{:src => "assets/images/showcase.png", :style => "float:right; position: relative; left: -40px"}
+    %ul{:style => "margin-top: 160px"}
+      %li Mobile compatible components
   %section
     %h2 Device Detection
     %img{:src => "assets/images/iphone_ipad.jpg", :alt => "http://www.flickr.com/photos/ivyfield/4486938457/" }
@@ -269,6 +290,11 @@ layout: reveal
       %a{:href => "http://www.jboss.org/jdf/quickstarts/jboss-as-quickstart/kitchensink/"}
         JBoss-as Quickstart: kitchensink
       %img{:src => "assets/images/kitchensink-desktop_scaled.png"}
+    %h1.fragment.screen{:style => "border: solid red 4px; top: -460px; left: 170px; width: 336px; height: 125px; line-height: 125px; vertical-align: center; position: relative;"} 1
+    %h1.fragment.screen{:style => "border: solid red 4px; top: -478px; left: 180px; width: 256px; height: 150px; line-height: 150px; vertical-align: center; position: relative;"} 2
+    %h1.fragment.screen{:style => "border: solid red 4px; top: -769px; left: 520px; width: 200px; height: 140px; line-height: 140px; vertical-align: center; position: relative;"} 3
+    %h3.fragment.screen{:style => "border: solid red 4px; top: -648px; left: 180px; width: 352px; height: 58px; line-height: 58px; vertical-align: center; position: relative;"} 4
+
   %section
     %h2
       %a{:href => "https://github.com/bleathem/quickstart/tree/mobile-jsf"}
@@ -546,3 +572,19 @@ layout: reveal
     %h2 Responsive layout
     %a{:href => "http://bootstrap-richfaces.rhcloud.com", :target =>"demo"}
       %img{:src => "assets/images/richfaces_bootstrap.png"}
+%section
+  %h2 The end?
+  %h3.fragment{:style => "margin-top: 160px"} The beginning - of your mobile adventure with RichFaces!
+%section
+  %h2 Credits
+%section
+  %h2 Additional Resources
+%section
+  %h2 Stay in the loop
+  %ul
+    %li richfaces.org
+    %li twitter
+    %li google+
+    %li forums
+
+
