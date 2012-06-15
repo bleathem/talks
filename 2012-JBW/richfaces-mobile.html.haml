@@ -283,9 +283,9 @@ layout: reveal
     %img{:style => "float:right; position: relative;", :src => "assets/images/kitchensink-mobile_scaled.png"  }
   %section
     %h2 Mobile compatible with slidfast
-    %p{:style => "font-style: italic; margin-top: 2 00px"}A collection of lightweight CSS and Javascript assets
+    %p{:style => "font-style: italic; margin-top: 200px"}A collection of lightweight CSS and Javascript assets
   %section
-    %h2 Single page programming model
+    %h2 Single-page programming model
     %pre{:class => "prettyprint", :style => "font-size: 8px"}
       %code{:id => "multiple_page_elements"}
         &nbsp;
@@ -342,7 +342,7 @@ layout: reveal
     .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"18:26"}}
     .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"27:42"}}
   %section
-    %h2 Scale with a dynamic page include
+    %h2 Scale w/ dynamic ui:include
     %pre{:class => "prettyprint", :style => "font-size: 8px"}
       %code{:id => "dynamic_page_element"}
         &nbsp;
@@ -398,11 +398,151 @@ layout: reveal
         &nbsp;
     .fragment{:data=>{:prettify=>"dynamic_page_element", :prettify_lines=>"37:44"}}
     .fragment{:data=>{:prettify=>"dynamic_page_element", :prettify_lines=>"10:34"}}
+%section
   %section
-    %section
-      %h2 Simplification with RichFaces
-      %ul
-        %li This is too much javascript!
+    %h2 Complexity
+    %h3.capitalize{:style => "margin-top: 0px"} This is too much javascript!
+    %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 20px"}
+      %code
+        &nbsp;
+        :escaped
+          var loadPage = function (page) {
+             var hiddenInput = 'mobileForm:page';
+             $(document.getElementById(hiddenInput)).val(page);
 
+             var options = {
+                execute: hiddenInput,
+                render : '@form',
+                onevent : function(event) {
+                   if(event.status == 'success') {
+                      slidfast.core.slideTo('app-page');
+                   }
+                }
+             }
+             jsf.ajax.request(hiddenInput, null, options);
+          }
+        &nbsp;
+  %section
+    %h2 Simplification with RichFaces
+    %h3.capitalize{:style => "margin-top: 0px"} This looks more like JSF
+    %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 20px"}
+      %code
+        &nbsp;
+        :escaped
+          <a4j:jsFunction name="loadPage"
+                          render="@form"
+                          oncomplete="slidfast.core.slideTo('app-page')">
+              <a4j:param name="page" assignTo="\#{pageBean.location}"/>
+          </a4j:jsFunction>
+        &nbsp;
+  %section
+    %h2 Simplification with RichFaces
+    %pre{:class => "prettyprint", :style => "font-size: 8px"}
+      %code{:id => "rf_a4jfunction_page"}
+        &nbsp;
+        :escaped
+          <?xml version="1.0" encoding="UTF-8"?>
+          <ui:composition template="/WEB-INF/templates/mobile.xhtml"
+                          xmlns:ui="http://java.sun.com/jsf/facelets"
+                          xmlns:f="http://java.sun.com/jsf/core"
+                          xmlns:h="http://java.sun.com/jsf/html"
+                          xmlns:a4j="http://richfaces.org/a4j">
+              <ui:define name="content">
+                  <h:outputStylesheet name="app.css" library="css"/>
+                  <h:outputStylesheet name="mobile.css" library="css"/>
 
+                  <div id="browser">
+                      <header>
+                          <div>
+                              <div id="back-button" class="hide-button">Home</div>
+                              <div id="info-button" class="right-header-button info-link">
+                                  <a href="#about">i</a>
+                              </div>
+                              <p>Richfaces Mobile</p>
+                          </div>
+                      </header>
+                      <h:form id="mobileForm">
+                          <h:outputScript target="head">
+                              var handleHashChange = function (page) {
+                                  var appPage = $('#app-page');
+                                  if (appPage.data('activePage') === page) {
+                                      slidfast.core.slideTo('app-page');
+                                  } else {
+                                      loadPage(page);
+                                      appPage.data('activePage', page);
+                                  }
+                              }
+                          </h:outputScript>
+                          <a4j:jsFunction name="loadPage"
+                                          data="\#{pageBean.location}"
+                                          render="@form"
+                                          oncomplete="slidfast.core.slideTo('app-page')">
+                              <a4j:param name="page" assignTo="\#{pageBean.location}"/>
+                          </a4j:jsFunction>
 
+                          <div id="page-container">
+                              <div id="home-page" class="page stage-left">
+                                  <ui:include src="/mobile/home.xhtml"/>
+                              </div>
+                              <div id="app-page" class="page stage-right">
+                                  <ui:include src="\#{pageBean.page}"/>
+                              </div>
+                          </div>
+                      </h:form>
+                  </div>
+              </ui:define>
+          </ui:composition>
+        &nbsp;
+    .fragment{:data=>{:prettify=>"rf_a4jfunction_page", :prettify_lines=>"33:38"}}
+    .fragment{:data=>{:prettify=>"rf_a4jfunction_page", :prettify_lines=>"23:31"}}
+    .fragment{:data=>{:prettify=>"rf_a4jfunction_page", :prettify_lines=>"40:47"}}
+%section
+  %section
+    %h2
+      Sandbox
+      %span.capitalize - SlidFast components
+    %pre{:class => "prettyprint", :style => "font-size: 11px"}
+      %code{:id => "slidfastComponents_page"}
+        &nbsp;
+        :escaped
+          <?xml version="1.0" encoding="UTF-8"?>
+          <ui:composition template="/WEB-INF/templates/mobile.xhtml"
+                          xmlns:ui="http://java.sun.com/jsf/facelets"
+                          xmlns:h="http://java.sun.com/jsf/html"
+                          xmlns:slidfast="http://richfaces.org/slidfast">
+              <ui:define name="content">
+                  <h:outputStylesheet name="app.css" library="css"/>
+                  <h:outputStylesheet name="mobile.css" library="css"/>
+                  <div id="browser">
+                      <header>
+                          <div>
+                              <div id="back-button" class="hide-button">Home</div>
+                              <div id="info-button" class="right-header-button info-link">
+                                  <a href="#about">i</a>
+                              </div>
+                              <p>Richfaces Mobile</p>
+                          </div>
+                      </header>
+                      <h:form id="mobileForm">
+                          <slidfast:pageChanger id="pageChanger" activePage="\#{pageBean.location}" render="app-page" />
+                          <slidfast:pageContainer id="pageContainer">
+                              <slidfast:page id="home-page" stage="left">
+                                  <ui:include src="/mobile/home.xhtml"/>
+                              </slidfast:page>
+                              <slidfast:page id="app-page" stage="right">
+                                  <ui:include src="\#{pageBean.page}"/>
+                              </slidfast:page>
+                          </slidfast:pageContainer>
+                      </h:form>
+                  </div>
+                 <h:outputStylesheet library="org.richfaces" name="rf-mobile-skin.css" />
+              </ui:define>
+          </ui:composition>
+        &nbsp;
+    .fragment{:data=>{:prettify=>"slidfastComponents_page", :prettify_lines=>"21:28"}}
+    .fragment{:data=>{:prettify=>"slidfastComponents_page", :prettify_lines=>"20:20"}}
+%section
+  %section
+    %h2 Responsive layout
+    %a{:href => "http://bootstrap-richfaces.rhcloud.com", :target =>"demo"}
+      %img{:src => "assets/images/richfaces_bootstrap.png"}
