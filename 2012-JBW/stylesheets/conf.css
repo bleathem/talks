@@ -42,6 +42,11 @@ ul.intro {
  list-style: none;
 }
 
+.credits {
+ font-size: 0.5em;
+ line-height: 1.2em;
+}
+
 .reveal section img.splash, .reveal section .footer img, .reveal img.plain {
  border: none;
  background: none;
@@ -51,14 +56,17 @@ ul.intro {
 
 }
 
-.reveal .images {
- width: 100%;
- padding-bottom: 50px;
+.reveal .white {
  background-color: #FFFFFF;
 }
 
+.reveal .images {
+ width: 100%;
+ padding-bottom: 50px;
+
+}
+
 .reveal .images table {
- background-color: #FFFFFF;
  width: 100%;
  margin: auto;
 }
@@ -105,10 +113,17 @@ ul.intro {
 .reveal .prettyprint .highlight, .reveal .prettyprint .highlight code {
     background-color:#eee;
     font-weight: normal;
+    font-size: 18px;
+    margin: 2px auto;
 }
 
 .reveal section .print {
     display: none;
+}
+
+.commons {
+    font-size: 10pt;
+    text-align: center;
 }
 
 @media print {

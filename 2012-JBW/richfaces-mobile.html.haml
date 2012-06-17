@@ -21,6 +21,8 @@ layout: reveal
     %li Why the Mobile Web?
     %li Why JSF?
     %li Why RichFaces?
+  %div
+    %img{:src => "assets/images/storm_troopers.jpg", :alt => "http://www.flickr.com/photos/jdhancock/5845280258/", :style => "clear: both"}
 %section
   %h2 Who am I?
   %ul
@@ -28,6 +30,8 @@ layout: reveal
     %li RichFaces Project Lead
     %li Represent Red Hat on the JSF 2.2 EG (JSR-344)
     %li Seam Faces module lead
+  %div
+    %img{:src => "assets/images/silhouette.png", :alt => "http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232"}
 %section
   %section
     %h2 Why Mobile?
@@ -51,9 +55,9 @@ layout: reveal
       %br
       %li Native:
       %ul
-      %li Responsive
-      %li Touch-specific controls
-      %li Native L&F
+        %li Responsive
+        %li Touch-specific controls
+        %li Native L&F
   %section
     %h2 Choose: Native app or Mobile
     %p So how do I choose?
@@ -162,8 +166,7 @@ layout: reveal
         &nbsp;
   %section
     %h2 Plethora of Frameworks
-
-    .images{:style => "margin-top: 50px"}
+    .images.white{:style => "margin-top: 50px"}
       %table
         %tr
         %td
@@ -180,17 +183,49 @@ layout: reveal
             %img{:src => "assets/images/frameworks/sproutcore.png"}
     %h2.fragment{:style => "margin-top: 50px"}
       + JSF !!
+%section
   %section
     %h2 Why JSF?
-    %ul.bullets
-      %li Standardized component-oriented programming model
-      %li AJAX built-in
-      %li Abstract away the javascript
-      %li Facelets: a Powerful templating mechanism
-      %li Rich component sets
-      %li Mobile specific renderers
+    %img.plain{:src => "assets/images/question_mark.png", :style => "float:right; position: relative; left: -40px"}
+    %h3.capitalize{:style => "margin-top: 180px"} What do we like about JSF?
+  %section
+    %h2 JSF Because...
+    %img.plain{:src => "assets/images/java_logo.png", :style => "float:right; position: relative; left: -40px"}
+    %p{:style => "margin-top: 180px"} Standardized as part of Java EE
+  %section
+    %h2 JSF Because...
+    %img.plain{:src => "assets/images/ajax_logo.png", :style => "float:right; position: relative; left: -40px"}
+    %p{:style => "margin-top: 180px"}
+      Ajax is baked-in
       %br
-    %h3.capitalize Let's build on our investment in JSF technology!
+      to the framework
+  %section
+    %h2 JSF Because...
+    %img.plain{:src => "assets/images/puzzle.png", :style => "float:right; position: relative; left: -40px: height: 300px"}
+    %p{:style => "margin-top: 180px"}
+      Component-oriented
+      %br
+      programming model
+  %section
+    %h2 JSF Because...
+    %img.plain{:src => "assets/images/jigsaw.png", :style => "float:right; position: relative; left: -40px: height: 300px"}
+    %p{:style => "margin-top: 180px"}
+      Facelets:
+      %br
+      A powerful templating mechanism
+  %section
+    %h2 JSF Because...
+    %h3.capitalize{:style => "margin-top: 120px"} Let's build on our investment in JSF technology!
+    %table.images{:style => "margin-top: 80px"}
+      %tr
+        %td
+          %img{:src => "assets/images/group.png", :alt => "http://openclipart.org/detail/17302/groupe-by-czara1"}
+        %td
+          %img{:src => "assets/images/network.png", :alt => "http://openclipart.org/detail/36571/tango-network-workgroup-by-warszawianka"}
+        %td
+          %img{:src => "assets/images/money.png", :alt => "http://openclipart.org/detail/22860/money-bag-icon-by-chovynz"}
+        %td
+          %img{:src => "assets/images/clock.png", :alt => "http://openclipart.org/detail/48427/clock-by-palomaironique"}
 %section
   %section
     %h2 Adapting JSF to be &ldquo;Mobile Ready&rdquo;
@@ -286,32 +321,28 @@ layout: reveal
         &nbsp;
 %section
   %section
-    %h2
-      %a{:href => "http://www.jboss.org/jdf/quickstarts/jboss-as-quickstart/kitchensink/"}
-        JBoss-as Quickstart: kitchensink
-      %img{:src => "assets/images/kitchensink-desktop_scaled.png"}
-    %h1.fragment.screen{:style => "border: solid red 4px; top: -460px; left: 170px; width: 336px; height: 125px; line-height: 125px; vertical-align: center; position: relative;"} 1
-    %h1.fragment.screen{:style => "border: solid red 4px; top: -478px; left: 180px; width: 256px; height: 150px; line-height: 150px; vertical-align: center; position: relative;"} 2
-    %h1.fragment.screen{:style => "border: solid red 4px; top: -769px; left: 520px; width: 200px; height: 140px; line-height: 140px; vertical-align: center; position: relative;"} 3
-    %h3.fragment.screen{:style => "border: solid red 4px; top: -648px; left: 180px; width: 352px; height: 58px; line-height: 58px; vertical-align: center; position: relative;"} 4
+    %h2 JBoss-as Quickstart: kitchensink
+    %img{:src => "assets/images/kitchensink-desktop_scaled.png"}
+    %h1.fragment.screen{:style => "border: solid red 4px; top: -440px; left: 170px; width: 336px; height: 125px; line-height: 125px; vertical-align: center; position: relative;"} 1
+    %h1.fragment.screen{:style => "border: solid red 4px; top: -458px; left: 180px; width: 256px; height: 150px; line-height: 150px; vertical-align: center; position: relative;"} 2
+    %h1.fragment.screen{:style => "border: solid red 4px; top: -749px; left: 520px; width: 200px; height: 140px; line-height: 140px; vertical-align: center; position: relative;"} 3
+    %h3.fragment.screen{:style => "border: solid red 4px; top: -628px; left: 180px; width: 352px; height: 58px; line-height: 58px; vertical-align: center; position: relative;"} 4
 
   %section
-    %h2
-      %a{:href => "https://github.com/bleathem/quickstart/tree/mobile-jsf"}
-        kitchensink: &ldquo;Mobilized&rdquo;
-    %ul
-      %li Still Vanilla JSF
-      %br
+    %h2 kitchensink: &ldquo;Mobilized&rdquo;
+    %img.plain{:style => "float:right; position: relative;", :src => "assets/images/kitchensink-mobile-home_scaled.png"  }
+    <!-- demo time -->
+    %ul{:style => "margin-top: 180px"}
       %li
-        We introduced slidfast:
+        We introduced &ldquo;slidfast&rdquo;:
         %ul
           %li CSS + JavaScript
-    %img{:style => "float:right; position: relative;", :src => "assets/images/kitchensink-mobile_scaled.png"  }
   %section
     %h2 Mobile compatible with slidfast
     %p{:style => "font-style: italic; margin-top: 200px"}A collection of lightweight CSS and Javascript assets
+%section
   %section
-    %h2 Single-page programming model
+    %h2 &ldquo;Vanilla&rdquo; JSF mobile facelet
     %pre{:class => "prettyprint", :style => "font-size: 8px"}
       %code{:id => "multiple_page_elements"}
         &nbsp;
@@ -331,7 +362,6 @@ layout: reveal
                         backButtonID: 'back-button'
                      });
                   </h:outputScript>
-
                   <div id="browser">
                       <header>
                           <div>
@@ -362,171 +392,124 @@ layout: reveal
               </ui:define>
           </ui:composition>
         &nbsp;
-    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"2:5"}}
+    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"2:6"}}
+    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"7:8"}}
     .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"9:14"}}
-    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"17:17"}}
-    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"18:26"}}
-    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"27:42"}}
+    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"16:16"}}
+    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"17:25"}}
+    .fragment{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"26:41"}}
+  %section
+    %h2 Single-page programming model
+    %pre{:class => "prettyprint", :style => "font-size: 18px"}
+      %code{:id => "single_page"}
+        &nbsp;
+        :escaped
+          <h:form id="mobileForm">
+             <div id="page-container">
+                  <div id="home-page" class="page stage-left">
+                      <ui:include src="/mobile/home.xhtml"/>
+                  </div>
+                 <div id="new" class="page stage-right">
+                     <ui:include src="/mobile/new.xhtml"/>
+                 </div>
+                 <div id="list" class="page stage-right">
+                     <ui:include src="/mobile/list.xhtml"/>
+                 </div>
+                 <div id="about" class="page stage-right">
+                     <ui:include src="/mobile/about.xhtml"/>
+                 </div>
+              </div>
+          </h:form>
+        &nbsp;
+    .fragment{:data=>{:prettify=>"single_page", :prettify_lines=>"3:5"}}
   %section
     %h2 Scale w/ dynamic ui:include
+    %pre{:class => "prettyprint", :style => "font-size: 18px;"}
+      %code{:id => "dynamic_include"}
+        &nbsp;
+        :escaped
+          <div id="page-container">
+              <div id="home-page" class="page stage-left">
+                  <ui:include src="/mobile/home.xhtml"/>
+              </div>
+              <div id="app-page" class="page stage-right">
+                  <ui:include src="\#{pageBean.page}"/>
+              </div>
+          </div>
+        &nbsp;
+    .fragment{:data=>{:prettify=>"dynamic_include", :prettify_lines=>"5:7"}}
+  %section
+    %h2 Update the PageBean - JSF
     %pre{:class => "prettyprint", :style => "font-size: 8px"}
       %code{:id => "dynamic_page_element"}
         &nbsp;
         :escaped
-          <?xml version="1.0" encoding="UTF-8"?>
-          <ui:composition template="/WEB-INF/templates/mobile.xhtml" ...>
-              <ui:define name="content">
-                  ...
-                  <div id="browser">
-                      ...
-                      <h:form id="mobileForm">
-                          <h:inputHidden id="page" value="\#{pageBean.location}" />
-                          <h:outputScript >
-                            var handleHashChange = function (page) {
-                               var appPage = $('#app-page');
-                               if (appPage.data('activePage') === page) {
-                                  slidfast.core.slideTo('app-page');
-                               } else {
-                                  loadPage(page);
-                                  appPage.data('activePage', page);
-                               }
-                            }
+          <h:inputHidden id="page" value="\#{pageBean.location}" />
+          <h:outputScript >
+            var handleHashChange = function (page) {
+               var appPage = $('#app-page');
+               if (appPage.data('activePage') === page) {
+                  slidfast.core.slideTo('app-page');
+               } else {
+                  loadPage(page);
+                  appPage.data('activePage', page);
+               }
+            }
 
-                            var loadPage = function (page) {
-                               var hiddenInput = 'mobileForm:page';
-                               $(document.getElementById(hiddenInput)).val(page);
+            var loadPage = function (page) {
+               var hiddenInput = 'mobileForm:page';
+               $(document.getElementById(hiddenInput)).val(page);
 
-                               var options = {
-                                  execute: hiddenInput,
-                                  render : '@form',
-                                  onevent : function(event) {
-                                     if(event.status == 'success') {
-                                        slidfast.core.slideTo('app-page');
-                                     }
-                                  }
-                               }
-                               jsf.ajax.request(hiddenInput, null, options);
-                            }
-                         </h:outputScript>
-
-                         <div id="page-container">
-                              <div id="home-page" class="page stage-left">
-                                  <ui:include src="/mobile/home.xhtml"/>
-                              </div>
-                              <div id="app-page" class="page stage-right">
-                                  <ui:include src="\#{pageBean.page}"/>
-                              </div>
-                          </div>
-                      </h:form>
-                  </div>
-              </ui:define>
-          </ui:composition>
+               var options = {
+                  execute: hiddenInput,
+                  render : '@form',
+                  onevent : function(event) {
+                     if(event.status == 'success') {
+                        slidfast.core.slideTo('app-page');
+                     }
+                  }
+               }
+               jsf.ajax.request(hiddenInput, null, options);
+            }
+          </h:outputScript>
         &nbsp;
-    .fragment{:data=>{:prettify=>"dynamic_page_element", :prettify_lines=>"37:44"}}
-    .fragment{:data=>{:prettify=>"dynamic_page_element", :prettify_lines=>"10:34"}}
-%section
+    .fragment{:data=>{:prettify=>"dynamic_page_element", :prettify_lines=>"1:1"}}
+    .fragment{:data=>{:prettify=>"dynamic_page_element", :prettify_lines=>"2:11"}}
+    .fragment{:data=>{:prettify=>"dynamic_page_element", :prettify_lines=>"13:27"}}
   %section
-    %h2 Complexity
-    %h3.capitalize{:style => "margin-top: 0px"} This is too much javascript!
+    %h2 Update the PageBean - RichFaces 4.2
     %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 20px"}
       %code
         &nbsp;
         :escaped
-          var loadPage = function (page) {
-             var hiddenInput = 'mobileForm:page';
-             $(document.getElementById(hiddenInput)).val(page);
-
-             var options = {
-                execute: hiddenInput,
-                render : '@form',
-                onevent : function(event) {
-                   if(event.status == 'success') {
+          <h:outputScript target="head">
+              var handleHashChange = function (page) {
+                  var appPage = $('#app-page');
+                  if (appPage.data('activePage') === page) {
                       slidfast.core.slideTo('app-page');
-                   }
-                }
-             }
-             jsf.ajax.request(hiddenInput, null, options);
-          }
-        &nbsp;
-  %section
-    %h2 Simplification with RichFaces
-    %h3.capitalize{:style => "margin-top: 0px"} This looks more like JSF
-    %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 20px"}
-      %code
-        &nbsp;
-        :escaped
+                  } else {
+                      loadPage(page);
+                      appPage.data('activePage', page);
+                  }
+              }
+          </h:outputScript>
           <a4j:jsFunction name="loadPage"
+                          data="\#{pageBean.location}"
                           render="@form"
                           oncomplete="slidfast.core.slideTo('app-page')">
               <a4j:param name="page" assignTo="\#{pageBean.location}"/>
           </a4j:jsFunction>
         &nbsp;
   %section
-    %h2 Simplification with RichFaces
-    %pre{:class => "prettyprint", :style => "font-size: 8px"}
-      %code{:id => "rf_a4jfunction_page"}
+    %h2 Update the PageBean - RichFaces Sandbox
+    %pre{:class => "prettyprint", :style => "font-size: 18px, :margin-top: 180px"}
+      %code
         &nbsp;
         :escaped
-          <?xml version="1.0" encoding="UTF-8"?>
-          <ui:composition template="/WEB-INF/templates/mobile.xhtml"
-                          xmlns:ui="http://java.sun.com/jsf/facelets"
-                          xmlns:f="http://java.sun.com/jsf/core"
-                          xmlns:h="http://java.sun.com/jsf/html"
-                          xmlns:a4j="http://richfaces.org/a4j">
-              <ui:define name="content">
-                  <h:outputStylesheet name="app.css" library="css"/>
-                  <h:outputStylesheet name="mobile.css" library="css"/>
-
-                  <div id="browser">
-                      <header>
-                          <div>
-                              <div id="back-button" class="hide-button">Home</div>
-                              <div id="info-button" class="right-header-button info-link">
-                                  <a href="#about">i</a>
-                              </div>
-                              <p>Richfaces Mobile</p>
-                          </div>
-                      </header>
-                      <h:form id="mobileForm">
-                          <h:outputScript target="head">
-                              var handleHashChange = function (page) {
-                                  var appPage = $('#app-page');
-                                  if (appPage.data('activePage') === page) {
-                                      slidfast.core.slideTo('app-page');
-                                  } else {
-                                      loadPage(page);
-                                      appPage.data('activePage', page);
-                                  }
-                              }
-                          </h:outputScript>
-                          <a4j:jsFunction name="loadPage"
-                                          data="\#{pageBean.location}"
-                                          render="@form"
-                                          oncomplete="slidfast.core.slideTo('app-page')">
-                              <a4j:param name="page" assignTo="\#{pageBean.location}"/>
-                          </a4j:jsFunction>
-
-                          <div id="page-container">
-                              <div id="home-page" class="page stage-left">
-                                  <ui:include src="/mobile/home.xhtml"/>
-                              </div>
-                              <div id="app-page" class="page stage-right">
-                                  <ui:include src="\#{pageBean.page}"/>
-                              </div>
-                          </div>
-                      </h:form>
-                  </div>
-              </ui:define>
-          </ui:composition>
+          <slidfast:pageChanger id="pageChanger" activePage="\#{pageBean.location}" render="app-page" />
         &nbsp;
-    .fragment{:data=>{:prettify=>"rf_a4jfunction_page", :prettify_lines=>"33:38"}}
-    .fragment{:data=>{:prettify=>"rf_a4jfunction_page", :prettify_lines=>"23:31"}}
-    .fragment{:data=>{:prettify=>"rf_a4jfunction_page", :prettify_lines=>"40:47"}}
-%section
   %section
-    %h2
-      Sandbox
-      %span.capitalize - SlidFast components
+    %h2 &ldquo;SlidFast&rdquo; JSF mobile facelet
     %pre{:class => "prettyprint", :style => "font-size: 11px"}
       %code{:id => "slidfastComponents_page"}
         &nbsp;
@@ -577,8 +560,36 @@ layout: reveal
   %h3.fragment{:style => "margin-top: 160px"} The beginning - of your mobile adventure with RichFaces!
 %section
   %h2 Credits
+  %ul.credits
+    %li
+      %a{:href => "http://www.flickr.com/photos/jdhancock/5845280258/"} http://www.flickr.com/photos/jdhancock/5845280258/
+    %li
+      %a{:href => "http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232"} http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232
+    %li
+      %a{:href => "http://www.linuk.web.id/2010/09/biografi-singkat-linus-torvalds.html"} http://www.linuk.web.id/2010/09/biografi-singkat-linus-torvalds.html
+    %li
+      %a{:href => "http://en.wikipedia.org/wiki/File:2007Computex_e21Forum-MartinCooper.jpg"}  http://en.wikipedia.org/wiki/File:2007Computex_e21Forum-MartinCooper.jpg
+    %li
+      %a{:href => "http://gigaom.com/2010/04/12/mary-meeker-mobile-internet-will-soon-overtake-fixed-internet/"} http://gigaom.com/2010/04/12/mary-meeker-mobile-internet-will-soon-overtake-fixed-internet/
+    %li
+      %a{:href => "https://devcentral.f5.com/weblogs/macvittie/archive/2008/09/10/3604.aspx"}https://devcentral.f5.com/weblogs/macvittie/archive/2008/09/10/3604.aspx
+    %li
+      %a{:href => "http://openclipart.org/detail/17302/groupe-by-czara1"} http://openclipart.org/detail/17302/groupe-by-czara1
+    %li
+      %a{:href => "http://openclipart.org/detail/36571/tango-network-workgroup-by-warszawianka"}  http://openclipart.org/detail/36571/tango-network-workgroup-by-warszawianka
+    %li
+      %a{:href => "http://openclipart.org/detail/22860/money-bag-icon-by-chovynz"} http://openclipart.org/detail/22860/money-bag-icon-by-chovynz
+    %li
+      %a{:href => "http://openclipart.org/detail/48427/clock-by-palomaironique"} http://openclipart.org/detail/48427/clock-by-palomaironique
+    %li
+      %a{:href => "http://www.flickr.com/photos/ivyfield/4486938457/"} http://www.flickr.com/photos/ivyfield/4486938457/
+    .commons
+      :plain
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons Licence" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">GOING MOBILE With Your RichFaces Applications</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="www.bleathem.ca/talks/2012-JBW/richfaces-mobile.html" property="cc:attributionName" rel="cc:attributionURL">Brian Leathem</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/bleathem/talks/tree/master/2012-JBW" rel="dct:source">github.com</a>.<br />Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/bleathem/talks/tree/master/2012-JBW" rel="cc:morePermissions">https://github.com/bleathem/talks/tree/master/2012-JBW</a>.
 %section
   %h2 Additional Resources
+  %a{:href => "http://www.jboss.org/jdf/quickstarts/jboss-as-quickstart/kitchensink/"} JBoss-as Kitchensink quickstart
+  %a{:href => "https://github.com/bleathem/quickstart/tree/mobile-jsf"} JBoss-as Kitchensink quickstart w/ Vanilla JSF
 %section
   %h2 Stay in the loop
   %ul
