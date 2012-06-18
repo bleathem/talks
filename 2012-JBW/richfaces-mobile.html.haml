@@ -245,12 +245,6 @@ layout: reveal
         %ul.fragment
           %li Component libraries
   %section
-    %h2 The RichFaces Showcase
-    %a{:href => "http://showcase.richfaces.org", :target => "demo"}
-      %img.plain{:src => "assets/images/showcase.png", :style => "float:right; position: relative; left: -40px"}
-    %ul{:style => "margin-top: 160px"}
-      %li Mobile compatible components
-  %section
     %h2 Device Detection
     %img{:src => "assets/images/iphone_ipad.jpg", :alt => "http://www.flickr.com/photos/ivyfield/4486938457/" }
   %section
@@ -321,7 +315,64 @@ layout: reveal
         &nbsp;
 %section
   %section
-    %h2 JBoss-as Quickstart: kitchensink
+    %h2 The RichFaces value add
+    %img{:src => "assets/images/richfaces-logo.png", :style => "float:right; position: relative; left: -40px; padding: 20px"}
+    %p{:style => "margin-top: 180px"} For mobile JSF apps
+  %section
+    %h2 a4j:push
+    %p{:style => "width: 90%; margin: 40px auto 10px auto; text-align: left"}Facelet Source
+    %pre{:class => "prettyprint", :style => "font-size: 18px; margin-top: 0px"}
+      %code
+        &nbsp;
+        :escaped
+          <a4j:push address="pushCdi"
+            ondataavailable="jQuery('<li/>').text(event.rf.data)
+                                            .prependTo('#messages')" />
+          <ul id="messages" />
+        &nbsp;
+    %p{:style => "width: 90%; margin: 40px auto 10px auto; text-align: left"}Java Source
+    %pre{:class => "prettyprint", :style => "font-size: 18px"}
+      %code
+        &nbsp;
+        :escaped
+          @Inject
+          @Push(topic = "pushCdi")
+          Event<String> pushEvent;
+
+          public void sendMessage() {
+            pushEvent.fire("My Message");
+          }
+        &nbsp;
+  %section
+    %h2 a4j:push in tweetstream
+    %img.plain{:src => "assets/images/tweetstream-phone.png", :style => "float:right; position: relative; left: -40px"}
+    %p{:style => "margin-top: 180px"} JBW 2011 Keynote
+  %section
+    %h2 Client-side validation
+    %img.plain{:src => "assets/images/kitchensink-mobile-validation.png", :style => "float:right; position: relative; left: -40px"}
+    %ul{:style => "margin-top: 160px"}
+      %li Perform validation locally
+  %section
+    %h2 a4j:jsFuntion
+    %h3.normalcase{:style => "margin-top: 80px"} A facelet component interface to the JSF AJAX API
+    %pre{:class => "prettyprint", :style => "font-size: 18px; margin-top: 80px"}
+      %code
+        &nbsp;
+        :escaped
+          <a4j:jsFunction name="updateName" render="showname">
+             <a4j:param name="name" assignTo="\#{functionBean.text}" />
+           </a4j:jsFunction>
+        &nbsp;
+  %section
+    %h2 The RichFaces Showcase
+    %img.plain{:src => "assets/images/showcase.png", :style => "float:right; position: relative; left: -40px"}
+    %ul{:style => "margin-top: 160px"}
+      %li Mobile compatible components
+      %li
+        %a{:href => "http://showcase.richfaces.org", :target => "demo"} http://showcase.richfaces.org
+%section
+  %section
+    %h2 Case Study: &ldquo;kitchensink&rdquo; Quickstart
     %img{:src => "assets/images/kitchensink-desktop_scaled.png"}
     %h1.fragment.screen{:style => "border: solid red 4px; top: -440px; left: 170px; width: 336px; height: 125px; line-height: 125px; vertical-align: center; position: relative;"} 1
     %h1.fragment.screen{:style => "border: solid red 4px; top: -458px; left: 180px; width: 256px; height: 150px; line-height: 150px; vertical-align: center; position: relative;"} 2
