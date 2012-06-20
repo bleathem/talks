@@ -147,7 +147,7 @@ ul, ol, div, p {
 	    -ms-transform: none;
 	        transform: none;
 }
-.reveal section {
+.reveal section, .reveal section section {
 	page-break-after: always !important;
 	display: block !important;
 }

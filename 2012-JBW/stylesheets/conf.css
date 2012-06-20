@@ -42,11 +42,6 @@ ul.intro {
  list-style: none;
 }
 
-.credits {
- font-size: 0.5em;
- line-height: 1.2em;
-}
-
 .reveal section img.splash, .reveal section .footer img, .reveal img.plain {
  border: none;
  background: none;
@@ -83,23 +78,18 @@ ul.intro {
  box-shadow: none;
 }
 
-.html5_logo {
-    padding: 20px;
-    position: relative;
-    top: 100px;
-    left: -50px
+.html5_slide img {
+ padding: 20px;
+ float: right;
 }
 
-.landscape {
-    position: relative; top: -100px; left: -150px;
-}
-
-.portrait {
-    position: relative; top: 50px; left: -50px;
+.left {
+    text-align: left;
 }
 
 .reveal .prettyprint {
     background-color: #ffffff;
+    border: none;
 }
 
 .reveal .prettyprint .prettyprint {
@@ -117,7 +107,7 @@ ul.intro {
 .reveal .prettyprint .highlight, .reveal .prettyprint .highlight code {
     background-color:#eee;
     font-weight: normal;
-    font-size: 18px;
+    font-size: 16pt;
     margin: 2px auto;
 }
 
@@ -125,12 +115,56 @@ ul.intro {
     display: none;
 }
 
-.commons {
+.reveal .commons {
     font-size: 10pt;
     text-align: center;
 }
 
+.reveal .links li a {
+    font-size: 16pt;
+}
+
+.reveal .links li {
+    font-size: 16pt;
+    line-height: normal;
+}
+
+.reveal .links li a {
+    font-size: 18pt;
+}
+
+.reveal .links li {
+    font-size: 18pt;
+    line-height: normal;
+}
+
+@media screen {
+    .reveal .notes {
+        display: none;
+    }
+
+    .html5_slide p, .html5_slide div, .html5_slide img {
+        position: relative;
+    }
+
+    .relative {
+        position: relative
+    }
+
+    .resources {
+        margin-left: 15%;
+    }
+}
+
 @media print {
+    .reveal img {
+        border: none;
+        background: none;
+        -webkit-box-shadow: none;
+           -moz-box-shadow: none;
+                box-shadow: none;
+    }
+
     section > ul, section > div, section > p {
         margin-top: 50px;
         margin-left: 50px;
@@ -163,7 +197,7 @@ ul.intro {
         display: block;
     }
 
-    .footer, .html5_logo, .landscape, .portrait {
+    .footer, .landscape, .portrait {
         position: static;
         top: auto;
         left: auto;
@@ -175,7 +209,39 @@ ul.intro {
         margin-top: 200px;
     }
 
-    pre.prettyprint {
-        border: none;
+    .reveal .notes, .notes p, .notes td, .notes li, .notes div, .notes a {
+        font-size: 16pt;
     }
+
+    .reveal .notes li {
+        line-height: normal;
+    }
+
+    .reveal .notes {
+        border-top: #000000 solid 4px;
+        width: 100%;
+        margin-top: 40px;
+        padding-top: 40px;
+    }
+
+    .reveal ul {
+        list-style: disc;
+    }
+
+    .reveal.linear .slides>section, .reveal.linear .slides>section>section,
+    .reveal.linear .slides>section.past, .reveal.linear .slides>section.future {
+        width: 100%;
+        clear: both;
+    }
+
+    .reveal .links li, .reveal .links li a, .reveal .commons *{
+        font-size: 12pt;
+    }
+
+    .reveal pre.prettyprint {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
 }
