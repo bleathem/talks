@@ -24,8 +24,8 @@
 html, body {
 	padding: 0;
 	margin: 0;
-	width: 1024px;
-	height: 768px;
+	width: 100%;
+	height: 100%;
 	min-height: 600px;
 }
 
@@ -34,7 +34,7 @@ body {
 	padding: 0;
 	margin: 0;
 	overflow: hidden;
-	
+
 	font-family: 'Lato', Times, 'Times New Roman', serif;
 	font-size: 36px;
 	font-weight: 200;
@@ -42,25 +42,30 @@ body {
 	color: #4a5d75;
 
 	background: #1c1e20;
-	background: url("../assets/images/jboss_bkgd.png");
-    background-repeat: no-repeat;
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNzUlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM1NTVhNWYiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMWMxZTIwIiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L3JhZGlhbEdyYWRpZW50PgogIDxyZWN0IHg9Ii01MCIgeT0iLTUwIiB3aWR0aD0iMTAxIiBoZWlnaHQ9IjEwMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-radial-gradient(center, ellipse cover,  rgba(85,90,95,1) 0%, rgba(28,30,32,1) 100%);
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(85,90,95,1)), color-stop(100%,rgba(28,30,32,1)));
+	background: -webkit-radial-gradient(center, ellipse cover,  rgba(85,90,95,1) 0%,rgba(28,30,32,1) 100%);
+	background: -o-radial-gradient(center, ellipse cover,  rgba(85,90,95,1) 0%,rgba(28,30,32,1) 100%);
+	background: -ms-radial-gradient(center, ellipse cover,  rgba(85,90,95,1) 0%,rgba(28,30,32,1) 100%);
+	background: radial-gradient(center, ellipse cover,  rgba(85,90,95,1) 0%,rgba(28,30,32,1) 100%);
 }
 
 /*********************************************
  * HEADERS
  *********************************************/
-.reveal h1, 
-.reveal h2, 
-.reveal h3, 
+.reveal h1,
+.reveal h2,
+.reveal h3,
 .reveal h4 {
 	margin: 0 0 20px 0;
-	
+
 	color: #4a5d75;
-	
+
 	font-family: 'League Gothic', sans-serif;
 	line-height: 0.9em;
 	letter-spacing: 0.02em;
-	
+
 	text-transform: uppercase;
 	text-shadow: 0px 0px 6px rgba(0,0,0,0.2);
 }
@@ -222,7 +227,7 @@ body {
 	}
 
 .reveal a:not(.image) {
-	color: hsl(185, 85%, 50%);
+	color: #778289;
 	text-decoration: none;
 
 	-webkit-transition: all .2s ease;
@@ -233,8 +238,8 @@ body {
 }
 	
 	.reveal a:not(.image):hover {
-		color: hsl(185, 85%, 70%);
-		background: hsla(185, 25%, 20%, 0.4);
+		color: #e8edf1;
+		background: #778289;
 		text-shadow: none;
 		border: none;
 		border-radius: 2px;

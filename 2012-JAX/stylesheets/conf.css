@@ -1,3 +1,39 @@
+body {
+    background: none;
+    z-index: 0;
+}
+
+html:after, body:before, body:after {
+    content: "";
+    z-index:-2;
+    position:fixed;
+    display: block;
+    background-repeat: repeat-x;
+}
+
+body:before {
+    background-image: url("/assets/images/bkgd/jboss_bkgd_top.png");
+    height: 171px;
+    left:0;
+    right: 0;
+    top:0;
+}
+
+body:after {
+    background-image: url("/assets/images/bkgd/jboss_bkgd_bottom.png");
+    content: url("/assets/images/bkgd/jboss_community_txt.png");
+    height: 197px;
+    padding-left: 10px;
+    left:0;
+    right: 0;
+    bottom: 0;
+}
+
+.reveal img.splash {
+    position: relative;
+    top: 150px;
+}
+
 .footer {
  background-color: #cc0000;
  width: 100%;
