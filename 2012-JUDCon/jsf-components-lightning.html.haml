@@ -1,0 +1,179 @@
+---
+layout: reveal
+---
+
+%section
+  %img.splash{:src => "assets/images/jboss_community_txt.png"}
+%section
+  %h1 Leverage the jQuery plugin ecosystem
+  %h2.capitalize to create highly-interactive JSF Components
+  %ul.intro
+    %li Brian Leathem
+    %li Senior Software Engineer, Red Hat
+    %li 06.28.12
+  %ul.notes
+    %li Welcome to the session "Going Mobile with your RichFaces Applications"
+%section
+  %h2 JSF is...
+  %img.plain.relative{:src => "assets/images/puzzle.png", :style => "float:right; left: -40px: height: 300px"}
+  %p{:style => "margin-top: 180px"}
+    Component-oriented
+%section
+  %h2 Building JSF Components
+  %img.plain.relative{:src => "assets/images/house_of_cards.jpg", :style => "float:right; left: -40px: height: 300px"}
+  %p{:style => "margin-top: 180px"}
+    Traditionally Tricky business
+%section
+  %h2 Split code-base
+  %ul
+    %li
+      Server-side code
+      %ul
+        %li Components
+        %li Renderers
+        %li xml junk!
+    %li
+      %br
+    %li
+      Client-side code
+      %ul
+        %li HTML
+        %li CSS
+        %li javascript
+%section
+  %h2 Lots of browsers
+  .images.white{:style => "margin-top: 50px"}
+    %table
+      %tr
+        %td
+          %img{:src => "assets/images/firefox.png"}
+        %td
+          %img{:src => "assets/images/chrome.png"}
+        %td
+          %img{:src => "assets/images/ie.png"}
+      %tr
+        %td
+          %img{:src => "assets/images/opera.png"}
+        %td
+          %img{:src => "assets/images/safari.jpg"}
+        %td
+          %img{:src => "assets/images/konqueror.png"}
+      %tr
+        %td
+          %img{:src => "assets/images/epiphany.png"}
+        %td
+          %img{:src => "assets/images/camino.png"}
+        %td
+          %img{:src => "assets/images/seamonkey.png"}
+  %h1.fragment + mobile!
+%section
+  %h3 The solution
+  %ul
+    %li Re-use existing javascript "widgets"
+    %li There is a huge potential for code re-use
+    %li
+      %br
+    %li.fragment
+      Google search comparison:
+      %ul.nobullets
+        %li
+          JSF Component:
+          %ul
+            %li
+              %span{:style => "font-family: monospace"}
+                &nbsp; ~ 3
+              Million hits
+        %li
+          Javascript Component:
+          %ul
+            %li
+              %span{:style => "font-family: monospace"}
+                \~ 416
+              Million hits
+%section
+  %h2 Image Gallery
+  %img.plain{:src => "assets/images/imagegallery.png"}
+%section
+  %h2 Image Gallery - Component
+  %pre{:class => "prettyprint", :style => "font-size: 7pt;"}
+    %code{:id => "gallery"}
+      &nbsp;
+      :escaped
+        <!DOCTYPE html>
+        <html lang="en-US"
+            xmlns="http://www.w3.org/1999/xhtml"
+            xmlns:h="http://java.sun.com/jsf/html"
+            xmlns:ui="http://java.sun.com/jsf/facelets"
+            xmlns:cc="http://java.sun.com/jsf/composite">
+
+        <cc:interface>
+          <cc:attribute name="photos" />
+
+          <!-- plugin configuration -->
+          <cc:attribute name="selector" />
+          [ ... snip ... ]
+          <cc:attribute name="dialogClass" />
+        </cc:interface>
+
+        <cc:implementation>
+          <div id="\#{cc.clientId}:div">
+              <ui:repeat value="\#{cc.attrs.photos}" var="photo">
+                  <a rel="gallery" href="\#{photo.full}" title="\#{photo.title}">
+                      <img src="\#{photo.thumb}" alt="\#{photo.title}" />
+                  </a>
+              </ui:repeat>
+          </div>
+
+          <h:outputScript library="javax.faces" name="jsf.js"/>
+          <h:outputScript library="composite/com.jquery" name="jquery-1.7.2.min.js"/>
+          <h:outputScript library="composite/com.jqueryui/js" name="jquery-ui-1.8.19.custom.min.js"/>
+          <h:outputScript library="composite/com.github.blueimp/js" name="load-image.js"/>
+          <h:outputScript library="composite/com.github.blueimp/js" name="jquery.image-gallery.js"/>
+          <h:outputStylesheet library="composite/com.jqueryui/css/ui-lightness" name="jquery-ui.custom.css"/>
+          <h:outputStylesheet library="composite/com.github.blueimp/css" name="jquery.image-gallery.css"/>
+          <h:outputScript>
+              var pluginOptions = {};
+              ! '\#{cc.attrs.selector}' || (pluginOptions.selector = '\#{cc.attrs.selector}');
+              [ ... snip ... ]
+              ! '\#{cc.attrs.dialogClass}' || (pluginOptions.dialogClass = '\#{cc.attrs.dialogClass}');
+
+              jQuery(function() {
+                  $(document.getElementById('\#{cc.clientId}:div')).imagegallery(pluginOptions);
+              });
+          </h:outputScript>
+        </cc:implementation>
+
+        </html>
+      &nbsp;
+  .fragment.screen{:data=>{:prettify=>"gallery", :prettify_lines=>"1:6"}}
+  .fragment.screen{:data=>{:prettify=>"gallery", :prettify_lines=>"8:15"}}
+  .fragment.screen{:data=>{:prettify=>"gallery", :prettify_lines=>"17:24"}}
+  .fragment.screen{:data=>{:prettify=>"gallery", :prettify_lines=>"26:32"}}
+  .fragment.screen{:data=>{:prettify=>"gallery", :prettify_lines=>"34:41"}}
+%section
+  %img.plain.relative{:src => "assets/images/jqueryui.png", :style => "float:right; top: -60px"}
+  %h3 jQuery UI
+%section
+  %img.plain.relative{:src => "assets/images/bootstrap.png", :style => "float:right; top: -60px"}
+  %h3 Bootstrap
+%section
+  %h2 Links
+  .left.resources
+    %p Source code:
+    %ul.links
+      %li
+        %a{:href => "http://www.jboss.org/jdf/quickstarts/jboss-as-quickstart/kitchensink/"} JBoss-as Kitchensink quickstart
+      %li
+        %a{:href => "https://github.com/bleathem/quickstart/tree/mobile-jsf"} JBoss-as Kitchensink quickstart | mobile w/ Vanilla JSF
+      %li
+        %a{:href => "https://github.com/richfaces/as-quickstarts"} JBoss-as Kitchensink quickstart | mobile w/ RichFaces
+    %p{:style => "margin-top: 30px"} Articles:
+    %ul.links
+      %li
+        %a{:href => "http://jsflive.wordpress.com/2010/09/19/collapsiblepanel-revisited/"} Collapsible panel | CC
+      %li
+        %a{:href => "http://javaserverfaces.java.net/nonav/docs/2.0/pdldocs/facelets/composite/interface.html"} composite Tag interface
+      %li
+        %a{:href => "http://javaserverfaces.java.net/nonav/docs/2.0/pdldocs/facelets/composite/implementation.html"} composite Tag implementation
+      %li
+        %a{:href => "http://blueimp.github.com/jQuery-Image-Gallery/"} jQuery-Image-Gallery
