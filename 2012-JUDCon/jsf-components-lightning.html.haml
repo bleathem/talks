@@ -15,7 +15,7 @@ layout: reveal
     %li Welcome to the session "Going Mobile with your RichFaces Applications"
 %section
   %h2 JSF is...
-  %img.plain.relative{:src => "assets/images/puzzle.png", :style => "float:right; left: -40px: height: 300px"}
+  %img.plain.relative{:src => "assets/images/jigsaw.png", :style => "float:right; left: -40px: height: 300px"}
   %p{:style => "margin-top: 180px"}
     Component-oriented
 %section
@@ -157,23 +157,42 @@ layout: reveal
   %img.plain.relative{:src => "assets/images/bootstrap.png", :style => "float:right; top: -60px"}
   %h3 Bootstrap
 %section
+  %h2 This is bigger than JSF
+  %ul{:style => "line-height: 400%"}
+    %li Polyglot JVM
+    %li Web frameworks in many languages/environments
+    %li Consistent L&F throughout a heterogeneous application
+%section
+  %h2 Call to action!
+  %div{:style => "line-height: 150%"}
+    %br
+    %p All JBoss projects with UI building capabilities should coordinate and identify a common strategy for building client "widgets"
+    %br
+    %p Let's empower our users to build heterogeneous JBoss applications with a consistent L&F!
+%section
   %h2 Links
   .left.resources
-    %p Source code:
     %ul.links
       %li
-        %a{:href => "http://www.jboss.org/jdf/quickstarts/jboss-as-quickstart/kitchensink/"} JBoss-as Kitchensink quickstart
+        %a{:href => "https://github.com/richfaces/sandbox"} RichFaces Sandbox on github
       %li
-        %a{:href => "https://github.com/bleathem/quickstart/tree/mobile-jsf"} JBoss-as Kitchensink quickstart | mobile w/ Vanilla JSF
+        %a{:href => "http://jsflive.wordpress.com/2010/09/19/collapsiblepanel-revisited/"} Blog Collapsible panel w/ Composite Components
       %li
-        %a{:href => "https://github.com/richfaces/as-quickstarts"} JBoss-as Kitchensink quickstart | mobile w/ RichFaces
-    %p{:style => "margin-top: 30px"} Articles:
+        JSF Composite component API docs:
+        %ul
+          %li
+            %a{:href => "http://javaserverfaces.java.net/nonav/docs/2.0/pdldocs/facelets/composite/interface.html"} composite Tag interface
+          %li
+            %a{:href => "http://javaserverfaces.java.net/nonav/docs/2.0/pdldocs/facelets/composite/implementation.html"} composite Tag implementation
+    %br
+    %br
     %ul.links
       %li
-        %a{:href => "http://jsflive.wordpress.com/2010/09/19/collapsiblepanel-revisited/"} Collapsible panel | CC
-      %li
-        %a{:href => "http://javaserverfaces.java.net/nonav/docs/2.0/pdldocs/facelets/composite/interface.html"} composite Tag interface
-      %li
-        %a{:href => "http://javaserverfaces.java.net/nonav/docs/2.0/pdldocs/facelets/composite/implementation.html"} composite Tag implementation
-      %li
-        %a{:href => "http://blueimp.github.com/jQuery-Image-Gallery/"} jQuery-Image-Gallery
+        Javascript "widgets"
+        %ul
+          %li
+            %a{:href => "http://jqueryui.com/"} jQuery UI
+          %li
+            %a{:href => "http://twitter.github.com/bootstrap/"} Twitter Bootstrap
+          %li
+            %a{:href => "http://blueimp.github.com/jQuery-Image-Gallery/"} jQuery-Image-Gallery
