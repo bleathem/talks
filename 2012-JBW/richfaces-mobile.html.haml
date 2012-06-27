@@ -26,14 +26,14 @@ layout: reveal
   %div
     %img{:src => "assets/images/storm_troopers.jpg", :alt => "http://www.flickr.com/photos/jdhancock/5845280258/", :style => "clear: both"}
   %ul.notes
-    %li We're here to talk about writing mobile app with JSF + RichFaces
-    %li We'll first establish that the mobile web is an important and unavoidable target in today's market
+    %li We're here to talk about writing mobile applications with JSF and RichFaces
+    %li We'll first establish that the mobile web is an <b>important</b> and <b>unavoidable</b> target in today's market
     %li Then we'll demonstrate how JSF & RichFaces can be effective tools in this space.
     %li
-      Before we dive in, I'd like to get a feel from you as yo how you are positioned today:
+      Before we dive in, I'd like to get a feel from you as to how you are positioned today:
       %ol
-        %li Who amongst you is currently using RichFaces for Desktop Applications?
-        %li Who are still unsure whether they need a mobile solution at all?
+        %li Who amongst you are currently using RichFaces for Desktop Applications?
+        %li Who is unsure whether they need a mobile solution at all?
         %li Who already has a mobile strategy in place?
         %li Those of you who do already have a mobile strategy in place, how many are doing it with JSF?
 %section
@@ -46,7 +46,7 @@ layout: reveal
   %div
     %img{:src => "assets/images/silhouette.png", :alt => "http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232"}
   %ul.notes
-    %li I am the RichFaces project lean and I represent Red Hat on the JSF 2.2 EG
+    %li I am the RichFaces project lead and I represent Red Hat on the JSF 2.2 EG
     %li If you have any question regarding Red Hat and JSF, feel free to corner me at any point throughout the summit
 %section
   %section
@@ -55,6 +55,7 @@ layout: reveal
     %img{:src => "assets/images/old_computer.jpg", :alt => "http://www.linuk.web.id/2010/09/biografi-singkat-linus-torvalds.html"}
     %ul.notes
       %li It's not immediately obvious in many market areas that an organisation can benefit from a mobile application
+      %li There a number of typical, seemingly sound arguments providing a mobile interface:
       %li
         "My Users need a desktop application!"
         %ul
@@ -62,31 +63,32 @@ layout: reveal
           %li data entry requirements
           %li sit at their desk all day
           %li need a mouse
-      %li Of course, we have a game changer
+      %li However, despite these arguments, we have a game changer
   %section
     %h2 Smartphones!
     %img{:src => "assets/images/MartinCooper.jpg", :alt => "http://en.wikipedia.org/wiki/File:2007Computex_e21Forum-MartinCooper.jpg"}
     %ul.notes
       %li [Hold up my phone]
-      %li These little devices in everyone's pocket, with enough computint power packed in them to compete with desktop PC's
+      %li These little devices in everyone's pocket, with enough computing power packed in them to compete with desktop PC's
       %li
-        This ha provided your users and customers with the means to access your data anywhere.
+        This has provided your users and customers with the means to access your data anywhere.
         %ul
           %li Not the same kind of interaction as on a desktop app
           %li Use cases may be different, but no less valid.
-          %li For instance, a use case may be an inventory status, rather then dta entry
-      %li Here's a photo of Martin Cooper (the inventor of the cell phone) holding the famous motorolla brick phone
-      %li For me it's a shocking reminder of how far mobile phones have come, in such a short time.
+          %li For instance, a use case may be an inventory status, rather then data entry
+      %li This is a photo of Martin Cooper (the inventor of the cell phone) holding the famous motorolla brick phone
+      %li For me it's a shocking reminder of how far mobile phones have come in such a short time.
   %section
     %h2 Mobile phones are everywhere!
     %img{:src => "assets/images/mobile-chart2.png", :alt => "http://gigaom.com/2010/04/12/mary-meeker-mobile-internet-will-soon-overtake-fixed-internet/"}
     %ul.notes
-      %li &gt; 1 billion mobile users today
+      %li Mobile phones are everywhere!
+      %li with greater than 1 billion mobile users today
       %li By 2014 there will be more mobile users than desktop users
       %li
         Granted these aren't all smartphone users, but
         %ul
-          %li the trend is such that mobile phones are increasing in complexity
+          %li the trend is such that mobile phones are increasing in complexity, not decreasing
           %li further driving the need for mobile apps.
 %section
   %section
@@ -104,16 +106,16 @@ layout: reveal
         %li HTML 5 / CSS 3 / javascript
     %ul.notes
       %li
-        Those of you who have looked at developing mobile apps know you have a choice to make
+        Those of you who have looked at developing mobile apps know you have a choice to make between Natvie and Web applications
       %li
         Native:
         %ul
-          %li [see advatages above]
+          %li has traditionally had the advantage of... [see advantages above]
           %li but there are too many platforms to be able to develop for the all
       %li
         Web:
         %ul
-          %li Conversely the web is ubiquitous accross platforms
+          %li Conversely, the mobile web is ubiquitous across platforms
           %li but traditionally doesn't offer the native advantages
       %li Then there is the hybrid approach which tries to offer the best of both worlds (See Aerogear Summit presentations)
   %section
@@ -122,23 +124,23 @@ layout: reveal
     %img{:src => "assets/images/damned_if_you_do.jpg", :alt => "https://devcentral.f5.com/weblogs/macvittie/archive/2008/09/10/3604.aspx"}
     %ul.notes
       %li So how do we choose?
-      %li On the one hand, we have native with the advantages it offers, but an increased development burden
+      %li On the one hand, we have native with apparent runtime advantages, at the cost of an increased development burden
       %li On the other hand we have web apps with their ubiquitous run-time, but potential platform limitations
       %li It seems we are "damned" either way
       %li
         I love this graphic
         %ul
-          %li it was on my father's coffee cup grownig up
+          %li it was on my father's coffee cup growing up
           %li when I was young it was just a funny picture
           %li but every year I understood a little more the predicament it was describing
           %li now I think of it whenever I'm faced with any unpleasant dilemma
-      %li but not to worry - I have an answer for this one!
+      %li but not to worry - I have an answer for this mobile dilemma!
   %section{ :"data-state" => "alert"}
     %h1.relative{:style => "top: 180px;"} You need a mobile web app regardless!
     %ul.notes
       %li You need a mobile web app regardless!
       %li Not everyone can nor will install your native app, even if it is better
-      %li For consumer-facing applications this is obvious - it's not practical to install an app for *every* store one shops at
+      %li For consumer-facing applications this is obvious - it's not practical to install an app for *every* store at which one shops
       %li
         I was in a hardware store recently - I wanted to by a garden hose and some related accessories
         %ul
@@ -191,7 +193,8 @@ layout: reveal
       %li
         You can imagine the kind of JSF Components we can make with these API's
         %ul
-          %li Data Table pages that pre-fetch and store the data locally
+          %li a location aware mapping component
+          %li Data Table pagers that pre-fetch and store the data locally
           %li Push applications using web sockets to respond to server-side events - (in fact we have this one already!)
           %li Canvas driven components drawing arbitrary graphics (Dials, sliders, etc)
       %li The possibliities are seemingly litmitless
@@ -210,18 +213,20 @@ layout: reveal
         &nbsp;
     %div.screen.relative{:style => "border: solid red 4px; margin-left: 50px; width: 450px; height: 0.8em; top: -83px"}
     %ul.notes
+      %li Starting with a simple but effective example: hiding the location bar
       %li Here's a screen-shot of a mobile web-app
       %li Notice there is no location bar
       %li It doesn't "look" like a web browser
       %li Achieving this is simply a matter calling the DOM method "scrollTo", here invoked after a timeout to allow the page to load
   %section
     %h2 Orientation Detection
-    %img.plain.relative{:src => "assets/images/landscape_scaled.png", :style => "float: left; left: 30px; top: 100px;"}
-    %img.plain.relative{:src => "assets/images/portrait_scaled.png", :style => "float: left; left: 100px"}
+    %img.plain.relative{:src => "assets/images/landscape.png", :style => "float: left; left: 30px; top: 100px;"}
+    %img.plain.relative{:src => "assets/images/portrait.png", :style => "float: left; left: 100px"}
     %ul.notes
       %li Another "must have" for mobile apps is orientation detection.
       %li When we have more screen real estate available, we should use it!
       %li In this trivial example, we conditionally display table columns depending on the orientation of the device.
+      %li In the portrait mode, we display the id and name columns, and add the email and phone number in the landscape view
   %section
     %h2 Orientation Detection
     %img.plain.relative{:src => "assets/images/portrait_scaled.png", :style => "float: right; top: -30px; left: -50px; z-index: 30"}
@@ -248,7 +253,7 @@ layout: reveal
           }
         &nbsp;
     %ul.notes
-      %li We can easily achieve this with some simple CSS leveraging the max-width CSS 3 property
+      %li We achieve this with some simple CSS leveraging the max-width CSS 3 property
       %li When the with of the display is less than the value specified (480px) we hide any element wit the CSS class "landscape"
       %li We've also created the converse "portrait" css class, Although it tends to be less useful in practice.
   %section
@@ -264,6 +269,7 @@ layout: reveal
           }
         &nbsp;
     %ul.notes
+      %li Another important feature available with CSS 3 is the transform translate3d css property
       %li We can achieve a performance boost for our mobile web apps wit this simple CSS rule
       %li When this rule is present, the browser will activate the GPU for rendering visual effects
       %li In fact the presentation you are looking at now is written in HTML 5, and uses the same CSS property to power the page transitions
@@ -272,7 +278,7 @@ layout: reveal
   %section
     %h2 HTML 5 presentation
     %pre{:class => "prettyprint", :style => "font-size: 14pt;  margin-top: 100px"}
-      %code{:id => "activate_the_gpu"}
+      %code
         &nbsp;
         :escaped
           <section>
@@ -285,8 +291,8 @@ layout: reveal
           </section>
         &nbsp;
     %ul.notes
-      %li To drive the point home, here is the markup used to create on of the introductory slides
-      %li Nothing more than the HTML 5 "section" tag, and a conventional HTML unordered list
+      %li To drive the point home, here is the markup used to create one of the introductory slides of this presentation
+      %li As you can see, it consists of nothing more than the HTML 5 "section" tag, and a conventional HTML unordered list
       %li The rest of the style and behaviour comes from CSS 3 and javascript
   %section
     %h2 Plethora of Frameworks
@@ -317,14 +323,14 @@ layout: reveal
     %img.plain.relative{:src => "assets/images/question_mark.png", :style => "float:right; left: -40px"}
     %h3.capitalize{:style => "margin-top: 180px"} What do we like about JSF?
     %ul.notes
-      %li What does JSF have going for it that we should be sure to consider it for mobile use cases?
+      %li What does JSF have going for it that we should to consider it for mobile use cases?
   %section
     %h2 JSF Because...
     %img.plain.relative{:src => "assets/images/java_logo.png", :style => "float:right; left: -40px"}
     %p{:style => "margin-top: 180px"} Standardized as part of Java EE
     %ul.notes
       %li The biggest plus for me with JSF is that it is a standard
-      %li Multiple OSS implementations
+      %li With multiple OSS implementations
       %li Healthy component vendor marketplace - again OSS
       %li No vendor lock-in!
   %section
@@ -359,6 +365,11 @@ layout: reveal
     %ul.notes
       %li Facelets are one of the crown jewels of the JSF eco-system
       %li We have a highly expressive and compositable templating language
+      %li
+        %ul
+          %li includes
+          %li composite component
+          %li fragments and compositions
       %li Keep our view code DRY
   %section
     %h2 JSF Because...
@@ -456,7 +467,7 @@ layout: reveal
         &nbsp;
     %ul.notes
       %li Fortunately we don't have to parse the user-agent ourselves.
-      %li We can leverage librairies to do this for us, like the UAgentInfo library shown here.
+      %li We can leverage libraries to do this for us, like the UAgentInfo library shown here.
       %li We can use this library to determine whether the request originated from:
       %li [ go thorugh the API above ]
   %section
@@ -558,7 +569,7 @@ layout: reveal
     %ul.notes
       %li In addition to the UI components, RichFaces also offers a number of non-visual components
       %li In particular the a4j:push component is particularly valuable in mobile applications
-      %li where we can have the mobil clients respond to server-side events
+      %li where we can have the mobile clients respond to server-side events
       %li Here we see some sample code demonstrating how simple the push component is to use
       %li On our facelet page, we place an a4j:push component addressing a particular topic
       %li then in our backing bean we use CDI to inject a pushEvent for the same topic
@@ -608,7 +619,7 @@ layout: reveal
     %h1.fragment.screen.relative{:style => "border: solid red 4px; top: -749px; left: 520px; width: 200px; height: 140px; line-height: 140px; vertical-align: center;"} 3
     %h3.fragment.screen.relative{:style => "border: solid red 4px; top: -628px; left: 180px; width: 352px; height: 58px; line-height: 58px; vertical-align: center;"} 4
     %ul.notes
-      %li Let's take a look at a more concrete "reql-world" example: here we see the JBoss-as kitchensink sample project.
+      %li Let's take a look at a more concrete "real-world" example: here we see the JBoss-as kitchensink sample project.
       %li It's a CRUD application that uses many Java EE APIS's and there corresponding JBoss implementations.
       %li
         We'll take a look at how we "mobilized" this application
@@ -639,7 +650,7 @@ layout: reveal
     %ul.notes
       %li the key thing to keep in mind with slidfast is that it's designed to be light-weight
       %li Slidfast is just what's required to write your mobile app the way you want, without requiring one to adopt a whole framework
-      %li This is in contrast with many of the other "hevy-wight" mobile frameworks we mentioned earlier
+      %li This is in contrast with many of the other "heavy-weight" mobile frameworks we mentioned earlier
       %li Slidfast is however AJAX centric, and works best when we write our applications with a single page programming model
 %section
   %section
@@ -714,7 +725,7 @@ layout: reveal
               %li the id of the button we'll use for backward navigation
           %li the div with id "browser" is styled by slidfast to fill up the entire page
           %li
-            the html 5 header tag is used to set the title bar accross the top of the page
+            the html 5 header tag is used to set the title bar across the top of the page
             %ul
               %li here's where we put the back-button with the id we configured above
           %li notice we navigate using location hashes - we'll see below how slidfast uses the location hash to slide content in and out of the view
@@ -837,10 +848,10 @@ layout: reveal
           %li
             Next we create an options object we will pass along with the jsf ajax request
             %ul
-              %li "execute" and "render are analagous to the same attributes in an f:ajax call
+              %li "execute" and "render are analogous to the same attributes in an f:ajax call
               %li with the onevent callback we trigger the slidfast page transition when the ajax call is successful
           %li Finally we invoke the jsf.ajax method to trigger the ajax call and associated page updates
-      %li The value of the location hash gets stored in the "location" prooperty of the pageBean, and is used to specify what page to include in the dynamic ui:include
+      %li The value of the location hash gets stored in the "location" property of the pageBean, and is used to specify what page to include in the dynamic ui:include
   %section
     %h2 Update the PageBean - RichFaces 4.2
     %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 20px"}
@@ -869,7 +880,7 @@ layout: reveal
           <slidfast:pageChanger id="pageChanger" activePage="\#{pageBean.location}" render="app-page" />
         &nbsp;
     %ul.notes
-      %li (The Sandbox is the richfaces skunkworks, where we try out our new ideas and components before landing them into our component set)
+      %li (The Sandbox is the RichFaces SkunkWorks, where we try out our new ideas and components before landing them into our component set)
       %li here we have a pageChanger that encapsulates the above javascript, and also provides some additional added value
       %li by allowing other components to take over the ajax rendering, in which case the pageChanger component only invokes the slidfast transition
   %section
