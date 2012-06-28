@@ -213,6 +213,10 @@ ul.intro {
         font-size: 16pt;
     }
 
+    .reveal .notes .key li {
+        font-size: 24pt;
+    }
+
     .reveal .notes li {
         line-height: normal;
     }

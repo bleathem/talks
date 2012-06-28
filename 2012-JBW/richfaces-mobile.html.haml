@@ -18,6 +18,8 @@ layout: reveal
   .notes
     %ul
       %li Welcome to the session "Going Mobile with your RichFaces Applications"
+    %ul.key
+      %li Welcome to the session...
 %section
   %h2 The plan
   %ul
@@ -38,6 +40,11 @@ layout: reveal
           %li Who is unsure whether they need a mobile solution at all?
           %li Who already has a mobile strategy in place?
           %li Those of you who do already have a mobile strategy in place, how many are doing it with JSF?
+    %ul.key
+      %li writing mobile web applications with...
+      %li establish the mobile web
+      %li demonstrate JSF/RichFaces can be effective
+      %li [survey]
 %section
   %h2 Who am I?
   %ul
@@ -51,6 +58,9 @@ layout: reveal
     %ul
       %li I am the RichFaces project lead and I represent Red Hat on the JSF 2.2 EG
       %li If you have any question regarding Red Hat and JSF, feel free to corner me at any point throughout the summit
+    %ul.key
+      %li me
+      %li questions
 %section
   %section
     %h2 Why Mobile?
@@ -68,13 +78,16 @@ layout: reveal
             %li sit at their desk all day
             %li need a mouse
         %li However, despite these arguments, we have a game changer
+      %ul.key
+        %li not immediately obvious
+        %li typical sound arguments
   %section
     %h2 Smartphones!
     %img{:src => "assets/images/MartinCooper.jpg", :alt => "http://en.wikipedia.org/wiki/File:2007Computex_e21Forum-MartinCooper.jpg"}
     .notes
       %ul
         %li [Hold up my phone]
-        %li These little devices in everyone's pocket, with enough computing power packed in them to compete with desktop PC's
+        %li These little devices in everyones' pocket, with enough computing power packed in them to compete with desktop PC's
         %li
           This has provided your users and customers with the means to access your data anywhere.
           %ul
@@ -83,6 +96,9 @@ layout: reveal
             %li For instance, a use case may be an inventory status, rather then data entry
         %li This is a photo of Martin Cooper (the inventor of the cell phone) holding the famous motorolla brick phone
         %li For me it's a shocking reminder of how far mobile phones have come in such a short time.
+      %ul.key
+        %li little devices
+        %li different interaction
   %section
     %h2 Mobile phones are everywhere!
     %img{:src => "assets/images/mobile-chart2.png", :alt => "http://gigaom.com/2010/04/12/mary-meeker-mobile-internet-will-soon-overtake-fixed-internet/"}
@@ -185,7 +201,7 @@ layout: reveal
         %li We can further simplify our story by focusing on webkit based browsers.
         %li This covers the browsers that ship with the Android, iOS, blackberry and Symbian OS'es
         %li These also happen to be today's leading mobile platforms, justifying our focus on webkit browsers
-        %li This focus then allows us to target the subset of HTML 4 and CSS 3 features supported on webkit
+        %li This focus then allows us to target the subset of HTML 5 and CSS 3 features supported on webkit
   %section
     %h2 JavaScript APIs
     %ul
@@ -243,7 +259,7 @@ layout: reveal
         %li In the portrait mode, we display the id and name columns, and add the email and phone number in the landscape view
   %section
     %h2 Orientation Detection
-    %img.plain.relative{:src => "assets/images/portrait_scaled.png", :style => "float: right; top: -30px; left: -50px; z-index: 30"}
+    %img.plain.relative{:src => "assets/images/portrait.png", :style => "float: right; top: -30px; left: -50px; z-index: 30"}
     %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 0px; width: 550px; margin-left: 0; z-index: 10"}
       %code
         &nbsp;
@@ -617,7 +633,7 @@ layout: reveal
       %ul
         %li Perhaps you remember the tweetstream demo from last year's JBoss world keynote?
         %li the tweetstream demo is a terrific example of using the RichFaces push component in a mobile JSF application
-        %li we'll go through a demo of it shortly, when we get to our sample application
+        %li we'll see the demo component in action shortly, when we get to a demo of our case-study sample application
   %section
     %h2 Client-side validation
     %img.plain.relative{:src => "assets/images/kitchensink-mobile-validation.png", :style => "float:right; left: -40px"}
@@ -669,12 +685,9 @@ layout: reveal
   %section
     %h2 kitchensink: &ldquo;Mobilized&rdquo;
     %img.plain.relative{:style => "float:right;", :src => "assets/images/kitchensink-mobile-home_scaled.png"  }
-    <!-- demo time -->
     %ul{:style => "margin-top: 180px"}
       %li
-        We introduced &ldquo;slidfast&rdquo;:
-        %ul
-          %li CSS + JavaScript
+        Demo time!
     .notes
       %ul
         %li Here's a screenshot of the "mobilized" application.
@@ -745,7 +758,6 @@ layout: reveal
         &nbsp;
     .fragment.screen{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"2:6"}}
     .fragment.screen{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"9:14"}}
-    .fragment.screen{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"16:16"}}
     .fragment.screen{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"17:25"}}
     .fragment.screen{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"21:21"}}
     .fragment.screen{:data=>{:prettify=>"multiple_page_elements", :prettify_lines=>"26:41"}}
@@ -763,7 +775,6 @@ layout: reveal
                 %li the initial/default page id,
                 %li the name of a callback method we'll see shortly
                 %li the id of the button we'll use for backward navigation
-            %li the div with id "browser" is styled by slidfast to fill up the entire page
             %li
               the html 5 header tag is used to set the title bar across the top of the page
               %ul
@@ -903,7 +914,7 @@ layout: reveal
         &nbsp;
         :escaped
           <h:outputScript target="head">
-          <a4j:jsFunction name="loadPage"
+          <a4j:jsFunction name="handleHashChange"
                           render="@form"
                           oncomplete="slidfast.core.slideTo('app-page')">
               <a4j:param name="page" assignTo="\#{pageBean.location}"/>
@@ -922,7 +933,15 @@ layout: reveal
       %code
         &nbsp;
         :escaped
-          <slidfast:pageChanger id="pageChanger" activePage="\#{pageBean.location}" render="app-page" />
+          <slidfast:pageChanger activePage="\#{pageBean.location}" render="app-page" />
+        &nbsp;
+    %pre.fragment{:class => "prettyprint", :style => "font-size: 18px, :margin-top: 180px"}
+      %code
+        &nbsp;
+        :escaped
+          <slidfast:page id="app-page" stage="right">
+              <ui:include src="\#{pageBean.page}"/>
+          </slidfast:page>
         &nbsp;
     .notes
       %ul
