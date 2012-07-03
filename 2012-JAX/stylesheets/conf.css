@@ -249,11 +249,16 @@ ul.intro {
         font-size: 16pt;
     }
 
+    .reveal .notes .key li {
+        font-size: 24pt;
+    }
+
     .reveal .notes li {
         line-height: normal;
     }
 
     .reveal .notes {
+        clear: both;
         border-top: #000000 solid 4px;
         width: 100%;
         margin-top: 40px;
