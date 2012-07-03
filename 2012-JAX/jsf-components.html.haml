@@ -10,84 +10,309 @@ layout: reveal
   %ul.intro
     %li Brian Leathem
     %li Senior Software Engineer, Red Hat
-    %li 06.28.12
+    %li 2012-07-10
   %ul.notes
-    %li Welcome to the session "Going Mobile with your RichFaces Applications"
+    %li Welcome to the session "Leverage the jQuery plugin ecosystem to create highly-interactive JSF Components"
 %section
-  %h2 The plan
-  %ul
-    %li Why the Mobile Web?
-    %li Why JSF?
-    %li Why RichFaces?
-  %div
-    %img{:src => "assets/images/storm_troopers.jpg", :alt => "http://www.flickr.com/photos/jdhancock/5845280258/", :style => "clear: both"}
+  %h2 JSF is...
+  %img.plain.relative{:src => "assets/images/jigsaw.png", :style => "float:right; left: -40px: height: 300px"}
+  %p{:style => "margin-top: 180px"}
+    Component-oriented
   %ul.notes
-    %li We're here to talk about writing mobile app with JSF + RichFaces
-    %li We'll first establish that the mobile web is an important and unavoidable target in today's market
-    %li Then we'll demonstrate how JSF & RichFaces can be effective tools in this space.
-    %li
-      Before we dive in, I'd like to get a feel from you as yo how you are positioned today:
-      %ol
-        %li Who amongst you is currently using RichFaces for Desktop Applications?
-        %li Who are still unsure whether they need a mobile solution at all?
-        %li Who already has a mobile strategy in place?
-        %li Those of you who do already have a mobile strategy in place, how many are doing it with JSF?
+    %li JSF offers us a standardized component model for building web applications
+    %li In the context of this talk, this component model provides us with a blueprint for building portable components we can "plug" into any JSF application
 %section
-  %h2 Who am I?
+  %h2 Building JSF Components
+  %img.plain.relative{:src => "assets/images/house_of_cards.jpg", :style => "float:right; left: -40px: height: 300px"}
+  %p{:style => "margin-top: 180px"}
+    Traditionally Tricky business
+  %ul.notes
+    %li This is great, but JSF components are notoriously verbose to create
+%section
+  %h2 Split code-base
   %ul
-    %li Senior Software Engineer at Red Hat
-    %li RichFaces Project Lead
-    %li Represent Red Hat on the JSF 2.2 EG (JSR-344)
-    %li Seam Faces module lead
-  %div
-    %img{:src => "assets/images/silhouette.png", :alt => "http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232"}
-%section
-  %h2 Additional Resources
-  .left.resources
-    %p Source code:
-    %ul.links
-      %li
-        %a{:href => "http://www.jboss.org/jdf/quickstarts/jboss-as-quickstart/kitchensink/"} JBoss-as Kitchensink quickstart
-      %li
-        %a{:href => "https://github.com/bleathem/quickstart/tree/mobile-jsf"} JBoss-as Kitchensink quickstart | mobile w/ Vanilla JSF
-      %li
-        %a{:href => "https://github.com/richfaces/as-quickstarts"} JBoss-as Kitchensink quickstart | mobile w/ RichFaces
-    %p{:style => "margin-top: 30px"} Articles:
-    %ul.links
-      %li
-        %a{:href => "http://jsflive.wordpress.com/2010/09/19/collapsiblepanel-revisited/"} Collapsible panel | CC
-      %li
-        %a{:href => "http://javaserverfaces.java.net/nonav/docs/2.0/pdldocs/facelets/composite/interface.html"} composite Tag interface
-      %li
-        %a{:href => "http://javaserverfaces.java.net/nonav/docs/2.0/pdldocs/facelets/composite/implementation.html"} composite Tag implementation
-      %li
-        %a{:href => "http://blueimp.github.com/jQuery-Image-Gallery/"} jQuery-Image-Gallery
-%section
-  %h2 Stay in the loop
-  %ul.links.loop
     %li
-      Project website:
-      %a{:href => "http://richfaces.org"} http://richfaces.org
-    %li
-      Twitter:
-      %a{:href => "https://twitter.com/#!/richfaces"} https://twitter.com/#!/richfaces
-    %li
-      Google+:
-      %a{:href => "https://plus.google.com/b/115573055688754345457/"} http://richfaces.org
-    %li
-      RichFaces Forums:
-      %a{:href => "https://community.jboss.org/en/richfaces?view=discussions"} https://community.jboss.org/en/richfaces?view=discussions
-    %li
-      Blog feed:
-      %a{:href => "http://planet.jboss.org/feed/richfacesall"} http://planet.jboss.org/feed/richfacesall
-    %li
-      IRC: #richfaces
-  %p{:style => "margin-top: 50px" } Later today:
-  %ul.links
-    %li
-      BOF: What's New in Java Frameworks for Web, Cloud, & Mobile
+      Server-side code
       %ul
-        1:20 pm - 2:20 pm
+        %li Components
+        %li Renderers
+        %li xml junk!
+    %li
+      %br
+    %li
+      Client-side code
+      %ul
+        %li HTML
+        %li CSS
+        %li javascript
+  %ul.notes
+    %li For starters, we're dealing with a split code base.
+    %li We not only have to create the server side code: Components, Renderers, and xml config
+    %li We also have to create the client side pieces: the html, javascript, and CSS responsible for the component's behaviour and user-interactions
+%section
+  %h2 Lots of browsers
+  .images.white{:style => "margin-top: 50px"}
+    %table
+      %tr
+        %td
+          %img{:src => "assets/images/firefox.png"}
+        %td
+          %img{:src => "assets/images/chrome.png"}
+        %td
+          %img{:src => "assets/images/ie.png"}
+      %tr
+        %td
+          %img{:src => "assets/images/opera.png"}
+        %td
+          %img{:src => "assets/images/safari.jpg"}
+        %td
+          %img{:src => "assets/images/konqueror.png"}
+      %tr
+        %td
+          %img{:src => "assets/images/epiphany.png"}
+        %td
+          %img{:src => "assets/images/camino.png"}
+        %td
+          %img{:src => "assets/images/seamonkey.png"}
+  %h1.fragment + mobile!
+  %ul.notes
+    %li All this client-code then has to be tested in a in a multitude of browsers
+    %li and don't forget to test on mobile devices too
+%section
+  %h3 The solution
+  %ul
+    %li Re-use existing javascript "widgets"
+    %li There is a huge potential for code re-use
+    %li
+      %br
+    %li.fragment
+      Google search comparison:
+      %ul.nobullets
+        %li
+          JSF Component:
+          %ul
+            %li
+              %span{:style => "font-family: monospace"}
+                &nbsp; ~ 3
+              Million hits
+        %li
+          Javascript Component:
+          %ul
+            %li
+              %span{:style => "font-family: monospace"}
+                \~ 416
+              Million hits
+  %ul.notes
+    %li But I'm not here to complain, I'm here to share a solution
+    %li You should be, and can easily be building JSF components using existing javascript "widgets"
+    %li By widgets, I mean self-contained free standing javscript code that encapsulates a user interaction
+    %li The important piece here is that these are self-contained components, framework independent, and not requiring any back-end nor framework code to operate
+%section
+  %h2 Image Gallery
+  %img.plain{:src => "assets/images/imagegallery.png"}
+  %ul.notes
+    %li For example, look at this jQuery UI imagegallery widget
+    %li It's a trivial widget, with a rich usr interface.
+    %li To use it, you point the jQuery plugin at some correctly formatted html markup, and you end up with a fully functional, single-purpose image gallery
+    %li click on an thumbnail to get a zoomed-in popup of the photo, with controls to navigate through the provided collection of photos
+%section
+  %img.plain.relative{:src => "assets/images/jqueryui.png", :style => "float:right; top: -60px"}
+  %h3 jQuery UI
+  %ul.notes
+    %li jQuery plugins can also be fairly non-trivial
+    %li here we have the jQuery UI widget set, providing more complex functionality with tabs, datepickers, modal alerts, etc.
+%section
+  %img.plain.relative{:src => "assets/images/bootstrap.png", :style => "float:right; top: -60px"}
+  %h3 Bootstrap
+  %ul.notes
+    %li Another widget set generating a lot of excitement right now is the twitter Bootstrap project.
+    %li Bootstrap takes a stronger focus on HTML and CSS for widget behaviour, but does incorporate some javascript as well
+%section
+  %h2 Image Gallery - Component
+  %pre{:class => "prettyprint", :style => "font-size: 7pt;"}
+    %code{:id => "gallery"}
+      &nbsp;
+      :escaped
+        <!DOCTYPE html>
+        <html lang="en-US"
+            xmlns="http://www.w3.org/1999/xhtml"
+            xmlns:h="http://java.sun.com/jsf/html"
+            xmlns:ui="http://java.sun.com/jsf/facelets"
+            xmlns:cc="http://java.sun.com/jsf/composite">
 
+        <cc:interface>
+          <cc:attribute name="photos" />
 
+          <!-- plugin configuration -->
+          <cc:attribute name="selector" />
+          [ ... snip ... ]
+          <cc:attribute name="dialogClass" />
+        </cc:interface>
 
+        <cc:implementation>
+          <div id="\#{cc.clientId}:div">
+              <ui:repeat value="\#{cc.attrs.photos}" var="photo">
+                  <a rel="gallery" href="\#{photo.full}" title="\#{photo.title}">
+                      <img src="\#{photo.thumb}" alt="\#{photo.title}" />
+                  </a>
+              </ui:repeat>
+          </div>
+
+          <h:outputScript library="javax.faces" name="jsf.js"/>
+          <h:outputScript library="composite/com.jquery" name="jquery-1.7.2.min.js"/>
+          <h:outputScript library="composite/com.jqueryui/js" name="jquery-ui-1.8.19.custom.min.js"/>
+          <h:outputScript library="composite/com.github.blueimp/js" name="load-image.js"/>
+          <h:outputScript library="composite/com.github.blueimp/js" name="jquery.image-gallery.js"/>
+          <h:outputStylesheet library="composite/com.jqueryui/css/ui-lightness" name="jquery-ui.custom.css"/>
+          <h:outputStylesheet library="composite/com.github.blueimp/css" name="jquery.image-gallery.css"/>
+          <h:outputScript>
+              var pluginOptions = {};
+              ! '\#{cc.attrs.selector}' || (pluginOptions.selector = '\#{cc.attrs.selector}');
+              [ ... snip ... ]
+              ! '\#{cc.attrs.dialogClass}' || (pluginOptions.dialogClass = '\#{cc.attrs.dialogClass}');
+
+              jQuery(function() {
+                  $(document.getElementById('\#{cc.clientId}:div')).imagegallery(pluginOptions);
+              });
+          </h:outputScript>
+        </cc:implementation>
+
+        </html>
+      &nbsp;
+  .fragment.screen{:data=>{:prettify=>"gallery", :prettify_lines=>"1:6"}}
+  .fragment.screen{:data=>{:prettify=>"gallery", :prettify_lines=>"8:15"}}
+  .fragment.screen{:data=>{:prettify=>"gallery", :prettify_lines=>"17:24"}}
+  .fragment.screen{:data=>{:prettify=>"gallery", :prettify_lines=>"26:32"}}
+  .fragment.screen{:data=>{:prettify=>"gallery", :prettify_lines=>"34:41"}}
+  %ul.notes
+    %li
+      Let's take a look at the code required to make a JSF 2 component out of these javascript widgets
+      %ol
+        %li Here we have a JSF 2 composite component, and starts like any other JSF facelet file
+        %li
+          %ul
+            %li The composite component has 2 sections, and interface and an implementation
+            %li In the interface we specify the attributes of the facelet tag
+            %li The attributes consist of the list of photos we want to include in our gallery
+            %li and all the options available to configure the jQuery plugin (which I've cut out for brevity)
+        %li Next we have the html to generate: we loop of the photos list, and output an anchor tag for each photo
+        %li We then map the component attributes into a javascript object
+        %li which we then pass as an parameter when we invoke the jQuery plugin
+%section
+  %h2 Using the imagegallery component
+  %pre{:class => "prettyprint", :style => "font-size: 7pt;"}
+    %code{:id => "gallery"}
+      &nbsp;
+      :escaped
+        <my:datepicker buttonImageOnly="true" dateFormat="yy-mm-dd" showOn="both"/>
+      &nbsp;
+  %ul.notes
+    %li While the component gives a rich looking interface (I'd demo it if I had more time) it is in fact a simple "output-only" component
+%section
+  %h2 jQuery UI Datepicker component
+  %pre{:class => "prettyprint", :style => "font-size: 7pt;"}
+    %code{:id => "datepicker"}
+      &nbsp;
+      :escaped
+        <!DOCTYPE html>
+        <html lang="en-US"
+              xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:cc="http://java.sun.com/jsf/composite">
+
+        <cc:interface>
+            <cc:attribute name="value" />
+            <cc:attribute name="showOn" />
+            <cc:attribute name="dateFormat" />
+            <cc:attribute name="buttonImageOnly" />
+        </cc:interface>
+
+        <cc:implementation>
+            <h:inputText id="input" value="\#{cc.attrs.value}" />
+            <h:outputScript library="javax.faces" name="jsf.js"/>
+            <h:outputScript library="composite/com.jquery" name="jquery-1.7.2.min.js"/>
+            <h:outputScript library="composite/com.jqueryui/development-bundle/ui" name="jquery.ui.core.js"/>
+            <h:outputScript library="composite/com.jqueryui/development-bundle/ui" name="jquery.ui.widget.js"/>
+            <h:outputScript library="composite/com.jqueryui/development-bundle/ui" name="jquery.ui.datepicker.js"/>
+            <h:outputStylesheet library="composite/com.jqueryui/css/ui-lightness" name="jquery-ui.custom.css"/>
+            <h:outputScript>
+                var pluginOptions = {
+                    buttonImage: "\#{request.contextPath}/javax.faces.resource/calendar.gif.jsf?ln=composite/org.richfaces",
+                    buttonImageOnly: "\#{"true" eq cc.attrs.buttonImageOnly}"
+                }
+                ! '\#{cc.attrs.showOn}' || (pluginOptions.showOn = '\#{cc.attrs.showOn}');
+                ! '\#{cc.attrs.dateFormat}' || (pluginOptions.dateFormat = '\#{cc.attrs.dateFormat}');
+
+                jQuery(function() {
+                    $(document.getElementById('\#{cc.clientId}:input')).datepicker(pluginOptions);
+                });
+
+            </h:outputScript>
+        </cc:implementation>
+        </html>
+      &nbsp;
+  .fragment.screen{:data=>{:prettify=>"datepicker", :prettify_lines=>"17:17"}}
+  %ul.notes
+    %li let's look at the implementation of a component that accept user input - the datepicker
+    %li This composite component follows nearly the same pattern as previous except for one difference:
+    %li We are delegate to the JSF input component to return the widget data back to the JSF servlet
+    %li The point I want to make is that so long as you can find a JSF component to delegate to you can write a JSF component leveraging any
+%section
+  %h2 RichFaces CDK
+  %img.plain.relative{:src => "assets/images/richfaces-logo.png", :style => "float:right; margin-left: 60px"}
+  %p{:style => "margin-top: 120px;"} Use the RichFaces CDK to build "full-fledged" JSF components with the ease and syntax of JSF 2 composite components
+  %ul.notes
+    %li The RichFaces CDK templating language is modeled after JSF 2 composite components
+    %li However when you use the RichFaces CDK, the template is rendererd into Java code at runtime
+    %li You end up with "full-fledged" jsf components, free of any limitations of the composite component way of building components
+    %li Feel free to speak to me if you want to hear more about the CDK, or attend my talk in 2 weeks at JAX
+%section
+  %h2 This is bigger than JSF
+  %ul{:style => "line-height: 400%"}
+    %li Polyglot JVM
+    %li Web frameworks in many languages/environments
+    %li Consistent L&F throughout a heterogeneous application
+  %ul.notes
+    %li A Final motivation for building components on top of standalone javascript widgets - even when creating brand-new widgets
+    %li In this world of ployglot on the JVM, and hetergenous server environments, it's not uncommon to have a single application spread accross multiple frameworks
+    %li By using a consistent set of HTML markup, CSS, and javascript to enrich your application
+    %li you can achieve a consistent L&F for your users irrespective of the back-end technology
+%section
+  %h2 Call to action!
+  %div{:style => "line-height: 150%"}
+    %br
+    %p All JBoss projects with UI building capabilities should coordinate and identify a common strategy for building client "widgets"
+    %br
+    %p Let's empower our users to build heterogeneous JBoss applications with a consistent L&F!
+  %ul.notes
+    %li So I'd like to extend an invitation to all framework providers at JBoss to come together and standardize on a set of javascript widgets
+    %li in this way we can empower our users to build heterogeneous JBoss applications with a consistent L&F!
+%section
+  %h2 Links
+  .left.resources
+    %ul.links
+      %li
+        %a{:href => "https://github.com/richfaces/sandbox"} RichFaces Sandbox on github
+      %li
+        %a{:href => "http://jsflive.wordpress.com/2010/09/19/collapsiblepanel-revisited/"} Blog Collapsible panel w/ Composite Components
+      %li
+        JSF Composite component API docs:
+        %ul
+          %li
+            %a{:href => "http://javaserverfaces.java.net/nonav/docs/2.0/pdldocs/facelets/composite/interface.html"} composite Tag interface
+          %li
+            %a{:href => "http://javaserverfaces.java.net/nonav/docs/2.0/pdldocs/facelets/composite/implementation.html"} composite Tag implementation
+    %br
+    %br
+    %ul.links
+      %li
+        Javascript "widgets"
+        %ul
+          %li
+            %a{:href => "http://jqueryui.com/"} jQuery UI
+          %li
+            %a{:href => "http://twitter.github.com/bootstrap/"} Twitter Bootstrap
+          %li
+            %a{:href => "http://blueimp.github.com/jQuery-Image-Gallery/"} jQuery-Image-Gallery

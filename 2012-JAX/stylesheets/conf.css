@@ -12,7 +12,7 @@ html:after, body:before, body:after {
 }
 
 body:before {
-    background-image: url("/assets/images/bkgd/jboss_bkgd_top.png");
+    background-image: url("../assets/images/bkgd/jboss_bkgd_top.png");
     height: 171px;
     left:0;
     right: 0;
@@ -20,10 +20,11 @@ body:before {
 }
 
 body:after {
-    background-image: url("/assets/images/bkgd/jboss_bkgd_bottom.png");
-    content: url("/assets/images/bkgd/jboss_community_txt.png");
+    background-image: url("../assets/images/bkgd/jboss_bkgd_bottom.png");
+    content: url("../assets/images/bkgd/jboss_community_txt.png");
+    text-align: right;
     height: 197px;
-    padding-left: 10px;
+    padding-right: 10px;
     left:0;
     right: 0;
     bottom: 0;
@@ -65,7 +66,7 @@ body:after {
  background: none;
 }
 
-.reveal ul {
+.reveal ul, .reveal ul ul.nobullets {
  list-style: none;
 }
 
@@ -143,8 +144,10 @@ ul.intro {
 .reveal .prettyprint .highlight, .reveal .prettyprint .highlight code {
     background-color:#eee;
     font-weight: normal;
-    font-size: 16pt;
-    margin: 2px auto;
+    font-size: 12pt;
+    margin: 2px -100px;
+    text-indent: 100px;
+    padding: 0;
 }
 
 .reveal section .print {
