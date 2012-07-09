@@ -1,5 +1,6 @@
 ---
 layout: reveal
+title: "JAX 2012 | Highly-interactive JSF Components"
 ---
 
 %section
@@ -17,7 +18,7 @@ layout: reveal
 %section
   %section
     %h2 Standardized Component Model
-    %img.plain.relative{:src => "assets/images/jigsaw.png", :style => "float:right; left: -40px: height: 300px"}
+    %img.plain.relative{:src => "assets/images/jigsaw.png", :style => "float:right; left: -40px; height: 300px"}
     %p{:style => "margin-top: 180px"}
       Component-oriented
     .notes
@@ -63,7 +64,7 @@ layout: reveal
         %li By the end of this talk you'll be in a position to explore this 3rd option to it's fullest
   %section
     %h2 Building JSF Components
-    %img.plain.relative{:src => "assets/images/house_of_cards.jpg", :style => "float:right; left: -40px: height: 300px"}
+    %img.plain.relative{:src => "assets/images/house_of_cards.jpg", :style => "float:right; left: -40px; height: 300px"}
     %ul{:style => "display: block"}
       %li
         Server-side code
@@ -282,7 +283,7 @@ layout: reveal
       %code
         &nbsp;
         :escaped
-          <my:datepicker value="\#{myBean.val}"
+          <s:datepicker value="\#{myBean.val}"
                          buttonImageOnly="true"
                          dateFormat="yy-mm-dd"
                          showOn="both"/>
@@ -300,18 +301,10 @@ layout: reveal
         %li An input component, bound to a backing bean
   %section
     %h2 Datepicker composite component
-    %pre{:class => "prettyprint", :style => "font-size: 7pt;"}
+    %pre{:class => "prettyprint", :style => "font-size: 8pt;"}
       %code{:id => "datepicker"}
         &nbsp;
         :escaped
-          <!DOCTYPE html>
-          <html lang="en-US"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:cc="http://java.sun.com/jsf/composite">
-
           <cc:interface>
               <cc:attribute name="value" />
               <cc:attribute name="showOn" />
@@ -341,9 +334,11 @@ layout: reveal
 
               </h:outputScript>
           </cc:implementation>
-          </html>
         &nbsp;
-    .fragment.screen{:data=>{:prettify=>"datepicker", :prettify_lines=>"17:17"}}
+    .fragment.screen{:data=>{:prettify=>"datepicker", :prettify_lines=>"1:6"}}
+    .fragment.screen{:data=>{:prettify=>"datepicker", :prettify_lines=>"9:9"}}
+    .fragment.screen{:data=>{:prettify=>"datepicker", :prettify_lines=>"10:15"}}
+    .fragment.screen{:data=>{:prettify=>"datepicker", :prettify_lines=>"17:26"}}
     .notes
       %ul
         %li let's look at the implementation of a component that accept user input - the datepicker
@@ -352,16 +347,18 @@ layout: reveal
         %li The point I want to make is that so long as you can find a JSF component to delegate to you can write a JSF component leveraging any
   %section
     %h2 datepicker usage
-    %pre.relative{:class => "prettyprint", :style => "font-size: 12pt; top: 150px"}
+    %pre.relative{:class => "prettyprint", :style => "font-size: 18pt; top: 150px"}
       %code
         &nbsp;
         :escaped
-          <my:datepicker buttonImageOnly="true" dateFormat="yy-mm-dd" showOn="both"/>
+          <s:datepicker buttonImageOnly="true"
+                         dateFormat="yy-mm-dd"
+                         showOn="both"/>
         &nbsp;
   %section
     %h2 generated markup
     %pre.relative{:class => "prettyprint", :style => "font-size: 9pt;"}
-      %code
+      %code{:id => "datepickermarkup"}
         &nbsp;
         :escaped
           <input class="hasDatepicker" id="form:j_idt16:input" name="form:j_idt16:input" type="text">
@@ -392,6 +389,10 @@ layout: reveal
             });
           </script>
         &nbsp;
+    .fragment.screen{:data=>{:prettify=>"datepickermarkup", :prettify_lines=>"1:1"}}
+    .fragment.screen{:data=>{:prettify=>"datepickermarkup", :prettify_lines=>"2:2"}}
+    .fragment.screen{:data=>{:prettify=>"datepickermarkup", :prettify_lines=>"3:15"}}
+    .fragment.screen{:data=>{:prettify=>"datepickermarkup", :prettify_lines=>"17:26"}}
 %section
   %section
     %h2 jQuery UI tabs
@@ -402,7 +403,7 @@ layout: reveal
         %li A stateful component
   %section
     %h2 tabs composite component
-    %pre{:class => "prettyprint", :style => "font-size: 5pt;"}
+    %pre{:class => "prettyprint", :style => "font-size: 6pt;"}
       %code{:id => "tabs"}
         &nbsp;
         :escaped
@@ -447,8 +448,6 @@ layout: reveal
                   });
               </h:outputScript>
           </cc:implementation>
-
-          </html>
         &nbsp;
     .fragment.screen{:data=>{:prettify=>"tabs", :prettify_lines=>"5:15"}}
     .fragment.screen{:data=>{:prettify=>"tabs", :prettify_lines=>"16:21"}}
@@ -489,7 +488,7 @@ layout: reveal
     .fragment.screen{:data=>{:prettify=>"uitabs", :prettify_lines=>"13:22"}}
   %section
     %h2 jQuery UI tab
-    %pre{:class => "prettyprint", :style => "font-size: 5pt;"}
+    %pre{:class => "prettyprint", :style => "font-size: 14pt;"}
       %code{:id => "tab"}
         &nbsp;
         :escaped
@@ -501,21 +500,7 @@ layout: reveal
               <div id="\#{cc.clientId}">
                 <cc:insertChildren />
               </div>
-              <h:outputScript library="javax.faces" name="jsf.js"/>
-              <h:outputScript library="composite/com.jquery" name="jquery-1.7.2.min.js"/>
-              <h:outputScript library="composite/com.jqueryui/development-bundle/ui" name="jquery.ui.core.js"/>
-              <h:outputScript library="composite/com.jqueryui/development-bundle/ui" name="jquery.ui.widget.js"/>
-              <h:outputScript library="composite/com.jqueryui/development-bundle/ui" name="jquery.ui.tabs.js"/>
-              <h:outputStylesheet library="composite/com.jqueryui/css/ui-lightness" name="jquery-ui.custom.css"/>
-              <h:outputScript>
-                  var pluginOptions = {
-                  }
-                  $(function() {
-                    $(document.getElementById('\#{cc.clientId}')).tabs(pluginOptions);
-                  });
-              </h:outputScript>
           </cc:implementation>
-          </html>
         &nbsp;
   %section
     %h2 tabs usage
@@ -523,22 +508,24 @@ layout: reveal
       %code{:id => "uitabs"}
         &nbsp;
         :escaped
-          <jqueryui:tabs id="tabs">
-            <jqueryui:tab title="Tab 1">
+          <s:tabs id="tabs">
+
+            <s:tab title="Tab 1">
               Hello <b>Tab</b>!!
-            </jqueryui:tab>
-            <jqueryui:tab title="Tab 2">
+            </s:tab>
+
+            <s:tab title="Tab 2">
               With nested components:
               <br/>
-              <jqueryui:datepicker dateFormat="yy-mm-dd"
-                                   showOn="both"
-                                   buttonImageOnly="true"/>
-              <br/>
-            </jqueryui:tab>
-          </jqueryui:tabs>
+              <s:datepicker dateFormat="yy-mm-dd"
+                            showOn="both"
+                            buttonImageOnly="true"/>
+            </s:tab>
+
+          </s:tabs>
         &nbsp;
 %section
-  %h2 Demo
+  %h1.relative{:style => "top: 180px"} Demo
 %section
   %section
     %h2 JSF 2 CC limitations
@@ -562,46 +549,61 @@ layout: reveal
     %li You end up with "full-fledged" jsf components, free of any limitations of the composite component way of building components
 %section
   %section
-    %h2 Bootstrap Dropdown Button - template
-    %pre{:class => "prettyprint", :style => "font-size: 18pt;"}
+    %h2 Bootstrap Dropdown Button
+    %div.relative{:style => "top: 200px"}
+      %img.plain.relative{:src => "assets/images/dropdown.png", :style => "float:right; top: -60px"}
+      %ul.bullets{:style => "display: block"}
+        %li Group child buttons into a dropdown
+        %li Dropdown renders it's children
+  %section
+    %h2 Dropdown - CDK template
+    %pre{:class => "prettyprint", :style => "font-size: 8pt;"}
       %code{:id => "dropdown"}
         &nbsp;
         :escaped
-          <?xml version="1.0" encoding="UTF-8"?>
           <cdk:root xmlns="http://jboss.org/schema/richfaces/cdk/xhtml-el"
-                    xmlns:cdk="http://jboss.org/schema/richfaces/cdk/core"
-                    xmlns:c="http://jboss.org/schema/richfaces/cdk/jstl/core"
-                    xmlns:cc="http://jboss.org/schema/richfaces/cdk/jsf/composite">
+                        xmlns:cdk="http://jboss.org/schema/richfaces/cdk/core"
+                        xmlns:c="http://jboss.org/schema/richfaces/cdk/jstl/core"
+                        xmlns:cc="http://jboss.org/schema/richfaces/cdk/jsf/composite">
 
-              <cc:interface>
-                  <cdk:class>org.richfaces.bootstrap.renderkit.ButtonDropdownRenderer</cdk:class>
-                  <cdk:superclass>org.richfaces.bootstrap.renderkit.ButtonDropdownRendererBase</cdk:superclass>
-                  <cdk:renderer-type>org.richfaces.bootstrap.ButtonDropdownRenderer</cdk:renderer-type>
-                  <cdk:renders-children>true</cdk:renders-children>
-                  <cdk:component-base-class>org.richfaces.bootstrap.component.AbstractButtonDropdown</cdk:component-base-class>
-              </cc:interface>
+                <cc:interface>
+                    <cdk:class>org.richfaces.bootstrap.renderkit.ButtonDropdownRenderer</cdk:class>
+                    <cdk:superclass>org.richfaces.bootstrap.renderkit.ButtonDropdownRendererBase</cdk:superclass>
+                    <cdk:renderer-type>org.richfaces.bootstrap.ButtonDropdownRenderer</cdk:renderer-type>
+                    <cdk:renders-children>true</cdk:renders-children>
+                    <cdk:component-base-class>org.richfaces.bootstrap.component.AbstractButtonDropdown</cdk:component-base-class>
+                </cc:interface>
 
-              <cc:implementation>
-                  <div class="btn-group \#{component.vertical ne null ? component.vertical.buttonClass : ''}">
-                      <a class="btn \#{component.severity ne null ? component.severity.buttonClass : ''} \#{component.scale ne null ? component.scale.buttonStyleClass : ''} \#{component.buttonStyle} dropdown-toggle" data-toggle="dropdown" href="#"
-                         cdk:passThrough="on*">
-                          \#{component.title.concat(' ')}
-                          <span class="caret"></span>
-                      </a>
-                      <ul class="dropdown-menu \#{component.horizontal ne null ? component.horizontal.buttonClass : ''}">
-                          <c:forEach var="child" items="\#{component.getChildren()}">
-                              <li>
-                                  <cdk:call expression="child.encodeAll(facesContext)" />
-                              </li>
-                          </c:forEach>
-                      </ul>
-                  </div>
-              </cc:implementation>
-          </cdk:root>
+                <cc:implementation>
+                    <div class="btn-group \#{component.vertical ne null ? component.vertical.buttonClass : ''}">
+                        <a data-toggle="dropdown" href="#" cdk:passThrough="on*"
+                           class="btn \#{component.severity ne null ? component.severity.buttonClass : ''}
+                                  \#{component.scale ne null ? component.scale.buttonStyleClass : ''}
+                                  \#{component.buttonStyle} dropdown-toggle">
+                            \#{component.title.concat(' ')}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu \#{component.horizontal ne null ? component.horizontal.buttonClass : ''}">
+                            <c:forEach var="child" items="\#{component.getChildren()}">
+                                <li>
+                                    <cdk:call expression="child.encodeAll(facesContext)" />
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                  </cc:implementation>
+              </cdk:root>
         &nbsp;
+    .fragment.screen{:data=>{:prettify=>"dropdown", :prettify_lines=>"1:4"}}
+    .fragment.screen{:data=>{:prettify=>"dropdown", :prettify_lines=>"6:12"}}
+    .fragment.screen{:data=>{:prettify=>"dropdown", :prettify_lines=>"14:31"}}
+    .fragment.screen{:data=>{:prettify=>"dropdown", :prettify_lines=>"26:26"}}
+    .notes
+      %ul
+        %li not delegating to JSF components
   %section
-    %h2 Bootstrap Dropdown Button - Component
-    %pre{:class => "prettyprint", :style => "font-size: 18pt;"}
+    %h2 Dropdown Button - Component
+    %pre{:class => "prettyprint", :style => "font-size: 9pt;"}
       %code{:id => "dropdown_component"}
         &nbsp;
         :escaped
