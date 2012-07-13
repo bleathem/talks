@@ -11,6 +11,7 @@ title: "JAX 2012 | Going Mobile with your RichFaces Applications"
   %ul.intro
     %li Brian Leathem
     %li Senior Software Engineer, Red Hat
+    %li JAX - San Francisco
     %li 2012-07-09
   %ul.notes
     %li Welcome to the session "Going Mobile with your RichFaces Applications"
@@ -51,7 +52,7 @@ title: "JAX 2012 | Going Mobile with your RichFaces Applications"
   .notes
     %ul
       %li I am the RichFaces project lead and I represent Red Hat on the JSF 2.2 EG
-      %li If you have any question regarding Red Hat and JSF, feel free to corner me at any point throughout the summit
+      %li If you have any question regarding Red Hat and JSF, feel free to corner me at any point throughout the conference
     %ul.key
       %li me
       %li questions
@@ -128,13 +129,13 @@ title: "JAX 2012 | Going Mobile with your RichFaces Applications"
           Native:
           %ul
             %li has traditionally had the advantage of... [see advantages above]
-            %li but there are too many platforms to be able to develop for the all
+            %li but there are too many platforms to be able to develop for them all
         %li
           Web:
           %ul
             %li Conversely, the mobile web is ubiquitous across platforms
             %li but traditionally doesn't offer the native advantages
-        %li Then there is the hybrid approach which tries to offer the best of both worlds (See Aerogear Summit presentations)
+        %li Then there is the hybrid approach which tries to offer the best of both worlds (See the Aerogear JBoss project for more details about hybrid apps)
   %section
     %h2 Choose: Native app or Mobile
     %p So how do I choose?
@@ -154,7 +155,7 @@ title: "JAX 2012 | Going Mobile with your RichFaces Applications"
             %li now I think of it whenever I'm faced with any unpleasant dilemma
         %li but not to worry - I have an answer for this mobile dilemma!
   %section{ :"data-state" => "alert"}
-    %h1.relative{:style => "top: 180px;"} You need a mobile web app regardless!
+    %h1.relative.alert{:style => "top: 180px;"} You need a mobile web app regardless!
     .notes
       %ul
         %li You need a mobile web app regardless!
@@ -165,9 +166,9 @@ title: "JAX 2012 | Going Mobile with your RichFaces Applications"
           %ul
             %li I wanted to price compare with a neighboring store
             %li On visiting with website on my mobile phone, I was prompted to install a native application - No way!
-            %li Fall back to a mobile web-app that more than meeted my needs
+            %li Fall back to a mobile web-app that more than met my needs
         %li Not always the case - some mobile web apps are horrible!
-        %li Let's mare sure the ones we write aren't!
+        %li Let's just mare sure the ones we write aren't!
 %section
   %section
     %h2 Mobile Web is Ready
@@ -466,11 +467,12 @@ title: "JAX 2012 | Going Mobile with your RichFaces Applications"
   %section
     %h2 Device Detection
     %h3.capitalize{:style => "margin-top: 60px"} User Agent String
-    %pre{:class => "prettyprint", :style => "font-size: 14pt;  margin-top: 20px"}
+    %pre{:class => "prettyprint", :style => "font-size: 15pt;  margin-top: 20px"}
       %code
         &nbsp;
         :escaped
-          Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.56 Safari/536.5
+          Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5
+                      (KHTML, like Gecko) Chrome/19.0.1084.56 Safari/536.5
         &nbsp;
     .notes
       %ul
@@ -690,6 +692,34 @@ title: "JAX 2012 | Going Mobile with your RichFaces Applications"
         %li Let's spend a few minutes running the application to get a feel for what it's all about
         %li [ demo the app ]
   %section
+    %h2 Manipulate the location hash
+    %p{:style => "width: 90%; margin: 40px auto 10px auto; text-align: left"} Directly, using html links
+    %pre{:class => "prettyprint", :style => "font-size: 18px;"}
+      %code
+        &nbsp;
+        :escaped
+          <a href="#about">i</a>
+        &nbsp;
+    %p{:style => "width: 90%; margin: 40px auto 10px auto; text-align: left"} Using javascript
+    %pre{:class => "prettyprint", :style => "font-size: 18px;"}
+      %code
+        &nbsp;
+        :escaped
+          <rich:panelMenuItem label="Add Member"
+                              onclick="location.hash='new'"
+                              mode="client" />
+        &nbsp;
+    .notes
+      %ul
+        %li We can set the location hash directly using an html tag
+        %li Or we can use a javascript listener on a component to set it
+        %li either way, once the location hash is changed, slidfast will initiate the page transition
+        %li A big advantage of using th location is hash is it supports backwards navigation - through our custom back button, or via the browser controls
+        %li There is (at least!) one significant problem with the previous approach
+        %li Can anyone guess what it is?
+        %li The approach won't scale - we've front-loaded all our mobile pages
+        %li We need an AJAX driven approach that loads pages as required, if we want to scale
+  %section
     %h2 Mobile compatible with slidfast
     %p{:style => "font-style: italic; margin-top: 200px"}A collection of lightweight CSS and Javascript assets
     .notes
@@ -808,36 +838,8 @@ title: "JAX 2012 | Going Mobile with your RichFaces Applications"
         %li so if I want to activate the "about" page, I have to set the location hash to "about"
         %li Let's take a look at how we can manipulate the location hash to navigate through our pages
   %section
-    %h2 Manipulate the location hash
-    %p{:style => "width: 90%; margin: 40px auto 10px auto; text-align: left"} Directly, using html links
-    %pre{:class => "prettyprint", :style => "font-size: 18px;"}
-      %code
-        &nbsp;
-        :escaped
-          <a href="#about">i</a>
-        &nbsp;
-    %p{:style => "width: 90%; margin: 40px auto 10px auto; text-align: left"} Using javascript
-    %pre{:class => "prettyprint", :style => "font-size: 18px;"}
-      %code
-        &nbsp;
-        :escaped
-          <rich:panelMenuItem label="Add Member"
-                              onclick="location.hash='new'"
-                              mode="client" />
-        &nbsp;
-    .notes
-      %ul
-        %li We can set the location hash directly using an html tag
-        %li Or we can use a javascript listener on a component to set it
-        %li either way, once the location hash is changed, slidfast will initiate the page transition
-        %li A big advantage of using th location is hash is it supports backwards navigation - through our custom back button, or via the browser controls
-        %li There is (at least!) one significant problem with the previous approach
-        %li Can anyone guess what it is?
-        %li The approach won't scale - we've front-loaded all our mobile pages
-        %li We need an AJAX driven approach that loads pages as required, if we want to scale
-  %section
     %h2 Scale w/ dynamic ui:include
-    %pre{:class => "prettyprint", :style => "font-size: 18px;"}
+    %pre.relative{:class => "prettyprint", :style => "font-size: 18px; top: 150px"}
       %code{:id => "dynamic_include"}
         &nbsp;
         :escaped

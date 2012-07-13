@@ -11,16 +11,19 @@ title: "JAX 2012 | Highly-interactive JSF Components"
   %ul.intro
     %li Brian Leathem
     %li Senior Software Engineer, Red Hat
+    %li JAX - San Francisco
     %li 2012-07-10
   .notes
     %ul
     %li Welcome to the session "Leverage the jQuery plugin ecosystem to create highly-interactive JSF Components"
 %section
   %section
-    %h2 Standardized Component Model
+    %h2 JSF - Standardized Component Model
     %img.plain.relative{:src => "assets/images/jigsaw.png", :style => "float:right; left: -40px; height: 300px"}
     %p{:style => "margin-top: 180px"}
       Component-oriented
+      %br
+      web framework
     .notes
       %ul
         %li Today we are going to talk about building JSF components,
@@ -31,20 +34,20 @@ title: "JAX 2012 | Highly-interactive JSF Components"
         %li Thus empowering our JSF developers with customized rich functionality, without requiring them to code to arbitrary javascript APIs
   %section
     %h2 Component Providers
-    .images.white{:style => "margin-top: 50px"}
+    .images{:style => "margin-top: 150px"}
       %table
         %tr
           %td
             %img.relative{:src => "assets/images/jsf_component_sets/icefaces.gif", :style => "left: 50px"}
           %td
-            %img.relative{:src => "assets/images/jsf_component_sets/richfaces-logo.png", :style => "top: -50px"}
+            %img.relative{:src => "assets/images/jsf_component_sets/richfaces-logo.png", :style => "top: -150px"}
           %td
             %img.relative{:src => "assets/images/jsf_component_sets/openfaces.png", :style => "left: -50px"}
         %tr
           %td
             %img.relative{:src => "assets/images/jsf_component_sets/trinidad.png"}
           %td
-            %img.relative{:src => "assets/images/jsf_component_sets/myfaces.jpg"}
+            %img.relative{:src => "assets/images/jsf_component_sets/myfaces.png"}
           %td
             %img.relative{:src => "assets/images/jsf_component_sets/primefaces.png"}
         %tr
@@ -52,7 +55,7 @@ title: "JAX 2012 | Highly-interactive JSF Components"
             %img.relative{:src => "assets/images/jsf_component_sets/ibm.png", :style => "left: 120px"}
           %td
           %td
-            %img.relative{:src => "assets/images/jsf_component_sets/oracle.jpg", :style => "left: -120px"}
+            %img.relative{:src => "assets/images/jsf_component_sets/oracle.png", :style => "left: -120px"}
     .notes
       %ul
         %li You may probably asking yourself "why mess with building your own components when there are so many component providers out there?"
@@ -277,17 +280,60 @@ title: "JAX 2012 | Highly-interactive JSF Components"
       %img.relative{:src => "assets/images/file_structure.png", :style => "float:right; top: -150px; left: 20px"}
       %ul{:style => "display: block;"}
         %li Package your composite components in a jar file to share across teams/apps
+    %p.fragment.screen.relative{:style => "border: solid green 4px; top: 145px; left: 650px; width: 252px; height: 20px;"}
+    %p.fragment.screen.relative{:style => "border: solid green 4px; top: 130px; left: 650px; width: 252px; height: 75px;"}
+    %p.fragment.screen.relative{:style => "border: solid green 4px; top: 115px; left: 650px; width: 252px; height: 70px;"}
+    %p.fragment.screen.relative{:style => "border: solid green 4px; top: 100px; left: 650px; width: 252px; height: 20px;"}
   %section
     %h2 Using the imagegallery component
-    %pre.relative{:class => "prettyprint", :style => "font-size: 18pt; top: 150px"}
-      %code
+    %pre.relative{:class => "prettyprint", :style => "font-size: 14pt;"}
+      %code{:id => "gallery_component"}
         &nbsp;
         :escaped
-          <s:datepicker value="\#{myBean.val}"
-                         buttonImageOnly="true"
-                         dateFormat="yy-mm-dd"
-                         showOn="both"/>
+          <!DOCTYPE html>
+          <html lang="en-US">
+
+          <ui:composition template="/resources/template.xhtml"
+                          xmlns="http://www.w3.org/1999/xhtml"
+                          xmlns:h="http://java.sun.com/jsf/html"
+                          xmlns:ui="http://java.sun.com/jsf/facelets"
+                          xmlns:s="http://richfaces.org/sandbox/composite">
+              <ui:define name="body">
+                  <h:form id="form">
+                      Some sample of the component:
+                      <s:imagegallery photos="\#{galleryBean.photos}"/>
+                  </h:form>
+              </ui:define>
+          </ui:composition>
+          </html>
         &nbsp;
+    .fragment.screen{:data=>{:prettify=>"gallery_component", :prettify_lines=>"8:8"}}
+    .fragment.screen{:data=>{:prettify=>"gallery_component", :prettify_lines=>"12:12"}}
+  %section
+    %h2 GalleryBean.java
+    %pre.relative{:class => "prettyprint", :style => "font-size: 14pt;"}
+      %code{:id => "gallery_bean"}
+        &nbsp;
+        :escaped
+          @ManagedBean
+          @RequestScoped
+          public class GalleryBean {
+            private List<FlickrPhoto> photos;
+
+            public GalleryBean() {
+              photos = new ArrayList<FlickrPhoto>();
+              photos.add(new FlickrPhoto("title a", "http://flickr.com/a..."));
+              photos.add(new FlickrPhoto("title c", "http://flickr.com/c..."));
+              photos.add(new FlickrPhoto("title d", "http://flickr.com/d..."));
+              ...
+            }
+
+            public List<FlickrPhoto> getPhotos() {
+              return photos;
+            }
+        &nbsp;
+    .fragment.screen{:data=>{:prettify=>"gallery_bean", :prettify_lines=>"4:4"}}
+    .fragment.screen{:data=>{:prettify=>"gallery_bean", :prettify_lines=>"7:10"}}
     .notes
       %ul
         %li This component gives a rich looking interface demo-time it is in fact a simple "output-only" component
@@ -502,10 +548,12 @@ title: "JAX 2012 | Highly-interactive JSF Components"
               </div>
           </cc:implementation>
         &nbsp;
+      .fragment.screen{:data=>{:prettify=>"tab", :prettify_lines=>"1:1"}}
+      .fragment.screen{:data=>{:prettify=>"tab", :prettify_lines=>"6:8"}}
   %section
     %h2 tabs usage
     %pre{:class => "prettyprint", :style => "font-size: 18pt;"}
-      %code{:id => "uitabs"}
+      %code{:id => "tabsusage"}
         &nbsp;
         :escaped
           <s:tabs id="tabs">
@@ -524,8 +572,9 @@ title: "JAX 2012 | Highly-interactive JSF Components"
 
           </s:tabs>
         &nbsp;
-%section
-  %h1.relative{:style => "top: 180px"} Demo
+    .fragment.screen{:data=>{:prettify=>"tabsusage", :prettify_lines=>"1:1"}}
+    .fragment.screen{:data=>{:prettify=>"tabsusage", :prettify_lines=>"3:5"}}
+    .fragment.screen{:data=>{:prettify=>"tabsusage", :prettify_lines=>"7:13"}}
 %section
   %section
     %h2 JSF 2 CC limitations
@@ -675,9 +724,3 @@ title: "JAX 2012 | Highly-interactive JSF Components"
             %a{:href => "http://twitter.github.com/bootstrap/"} Twitter Bootstrap
           %li
             %a{:href => "http://blueimp.github.com/jQuery-Image-Gallery/"} jQuery-Image-Gallery
-%section
-  %h2
-%section
-  %h2
-%section
-  %h2
