@@ -1,0 +1,726 @@
+---
+layout: reveal
+title: "JAX 2012 | Highly-interactive JSF Components"
+---
+
+%section
+  %img.splash{:src => "assets/images/jboss_community_txt.png"}
+%section
+  %h1 Leverage the jQuery plugin ecosystem
+  %h2.capitalize to create highly-interactive JSF Components
+  %ul.intro
+    %li Brian Leathem
+    %li Senior Software Engineer, Red Hat
+    %li JAX - San Francisco
+    %li 2012-07-10
+  .notes
+    %ul
+    %li Welcome to the session "Leverage the jQuery plugin ecosystem to create highly-interactive JSF Components"
+%section
+  %section
+    %h2 JSF - Standardized Component Model
+    %img.plain.relative{:src => "assets/images/jigsaw.png", :style => "float:right; left: -40px; height: 300px"}
+    %p{:style => "margin-top: 180px"}
+      Component-oriented
+      %br
+      web framework
+    .notes
+      %ul
+        %li Today we are going to talk about building JSF components,
+        %li demonstrating how quickly you can build custom components specifically tailored to your use cases,
+        %li leveraging one of JSF's most significant features: the standardized component model.
+        %li This component model provides us with a blueprint for building portable components we can then "plug" into any JSF application
+        %li providing us with a means to re-use our components across projects and teams,
+        %li Thus empowering our JSF developers with customized rich functionality, without requiring them to code to arbitrary javascript APIs
+  %section
+    %h2 Component Providers
+    .images{:style => "margin-top: 150px"}
+      %table
+        %tr
+          %td
+            %img.relative{:src => "assets/images/jsf_component_sets/icefaces.gif", :style => "left: 50px"}
+          %td
+            %img.relative{:src => "assets/images/jsf_component_sets/richfaces-logo.png", :style => "top: -150px"}
+          %td
+            %img.relative{:src => "assets/images/jsf_component_sets/openfaces.png", :style => "left: -50px"}
+        %tr
+          %td
+            %img.relative{:src => "assets/images/jsf_component_sets/trinidad.png"}
+          %td
+            %img.relative{:src => "assets/images/jsf_component_sets/myfaces.png"}
+          %td
+            %img.relative{:src => "assets/images/jsf_component_sets/primefaces.png"}
+        %tr
+          %td
+            %img.relative{:src => "assets/images/jsf_component_sets/ibm.png", :style => "left: 120px"}
+          %td
+          %td
+            %img.relative{:src => "assets/images/jsf_component_sets/oracle.png", :style => "left: -120px"}
+    .notes
+      %ul
+        %li You may probably asking yourself "why mess with building your own components when there are so many component providers out there?"
+        %li providing us with a wide variety of rich JSF components?
+        %li Odds are that no JSF component set provides all the components needed to meet your specific use case requirements
+        %li You are either faced with compromising your requirements to better align with the provided components
+        %li Mixing and matching component providers if you are lucky enough to find another provider with the specific feature you need
+        %li Or developing the component yourself
+        %li By the end of this talk you'll be in a position to explore this 3rd option to it's fullest
+  %section
+    %h2 Building JSF Components
+    %img.plain.relative{:src => "assets/images/house_of_cards.jpg", :style => "float:right; left: -40px; height: 300px"}
+    %ul{:style => "display: block"}
+      %li
+        Server-side code
+        %ul
+          %li Components
+          %li Renderers
+          %li taglib xml
+          %li faces-config.xml
+      %li
+        %br
+      %li
+        Client-side code
+        %ul
+          %li HTML
+          %li CSS
+          %li javascript
+    .notes
+      %ul
+        %li This is all well and good, but JSF components are notoriously verbose to create
+        %li Traditionally Tricky business
+        %li Split code-base
+        %li For starters, we're dealing with a split code base.
+        %li We not only have to create the server side code: Components, Renderers, and xml config
+        %li We also have to create the client side pieces: the html, javascript, and CSS responsible for the component's behaviour and user-interactions
+  %section
+    %h2 Lots of browsers
+    .images.white{:style => "margin-top: 50px"}
+      %table
+        %tr
+          %td
+            %img.relative{:src => "assets/images/firefox.png", :style => "left: 50px"}
+          %td
+            %img.relative{:src => "assets/images/chrome.png", :style => "top: -50px"}
+          %td
+            %img.relative{:src => "assets/images/ie.png", :style => "left: -50px"}
+        %tr
+          %td
+            %img.relative{:src => "assets/images/opera.png"}
+          %td
+            %img.relative{:src => "assets/images/safari.jpg"}
+          %td
+            %img.relative{:src => "assets/images/konqueror.png"}
+        %tr
+          %td
+            %img.relative{:src => "assets/images/epiphany.png", :style => "left: 50px"}
+          %td
+            %img.relative{:src => "assets/images/camino.png", :style => "top: 50px"}
+          %td
+            %img.relative{:src => "assets/images/seamonkey.png", :style => "left: -50px"}
+    %h1.fragment + mobile!
+    .notes
+      %ul
+        %li All this client-code then has to be tested in a in a multitude of browsers
+        %li and don't forget to test on mobile devices too
+%section
+  %section
+    %h3 The solution
+    %ul
+      %li Re-use existing javascript "widgets"
+      %li There is a huge potential for code re-use
+      %li
+        %br
+      %li.fragment
+        Google search comparison:
+        %ul.nobullets
+          %li
+            JSF Component:
+            %ul
+              %li
+                %span{:style => "font-family: monospace"}
+                  &nbsp; ~ 3
+                Million hits
+          %li
+            Javascript Component:
+            %ul
+              %li
+                %span{:style => "font-family: monospace"}
+                  \~ 416
+                Million hits
+    .notes
+      %ul
+        %li But I'm not here to complain, I'm here to share a solution
+        %li You should be, and can easily be building JSF components using existing javascript "widgets"
+        %li By widgets, I mean self-contained free standing javscript code that encapsulates a user interaction
+        %li The important piece here is that these are self-contained components, framework independent, and not requiring any back-end nor framework code to operate
+  %section
+    %h2 Polyglot web apps
+    %ul{:style => "line-height: 400%"}
+      %li Polyglot JVM
+      %li Web frameworks in many languages/environments
+      %li Consistent L&F throughout a heterogeneous application
+    .notes
+      %ul
+        %li A Final motivation for building components on top of standalone javascript widgets - even when creating brand-new widgets
+        %li In this world of ployglot on the JVM, and hetergenous server environments, it's not uncommon to have a single application spread accross multiple frameworks
+        %li By using a consistent set of HTML markup, CSS, and javascript to enrich your application
+        %li you can achieve a consistent L&F for your users irrespective of the back-end technology
+  %section
+    %h2 Image Gallery
+    %img.plain.relative{:src => "assets/images/imagegallery.png"}
+    .notes
+      %ul
+        %li For example, look at this jQuery UI imagegallery widget
+        %li It's a trivial widget, with a rich usr interface.
+        %li To use it, you point the jQuery plugin at some correctly formatted html markup, and you end up with a fully functional, single-purpose image gallery
+        %li click on an thumbnail to get a zoomed-in popup of the photo, with controls to navigate through the provided collection of photos
+  %section
+    %img.plain.relative{:src => "assets/images/jqueryui.png", :style => "float:right; top: -60px"}
+    %h3 jQuery UI
+    .notes
+      %ul
+        %li jQuery plugins can also be fairly non-trivial
+        %li here we have the jQuery UI widget set, providing more complex functionality with tabs, datepickers, modal alerts, etc.
+  %section
+    %img.plain.relative{:src => "assets/images/bootstrap.png", :style => "float:right; top: -60px"}
+    %h3 Bootstrap
+    .notes
+      %ul
+        %li Another widget set generating a lot of excitement right now is the twitter Bootstrap project.
+        %li Bootstrap takes a stronger focus on HTML and CSS for widget behaviour, but does incorporate some javascript as well
+%section
+  %section
+    %h2 Image Gallery
+    %div.relative{:style => "top: 200px"}
+      %img.plain.relative{:src => "assets/images/imagegallery.png", :style => "float:right; top: -150px; width: 400px"}
+      %ul.bullets{:style => "display: block"}
+        %li A jQuery UI imagegallery plugin
+        %li An output only component
+    .notes
+      %ul
+        %li For example, look at this jQuery UI imagegallery widget
+        %li It's a trivial widget, with a rich usr interface.
+        %li To use it, you point the jQuery plugin at some correctly formatted html markup, and you end up with a fully functional, single-purpose image gallery
+        %li click on an thumbnail to get a zoomed-in popup of the photo, with controls to navigate through the provided collection of photos
+  %section
+    %h2 Image Gallery - Component
+    %pre{:class => "prettyprint", :style => "font-size: 7pt;"}
+      %code{:id => "gallery"}
+        &nbsp;
+        :escaped
+          <!DOCTYPE html>
+          <html lang="en-US"
+              xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:cc="http://java.sun.com/jsf/composite">
+
+          <cc:interface>
+            <cc:attribute name="photos" />
+
+            <!-- plugin configuration -->
+            <cc:attribute name="selector" />
+            [ ... snip ... ]
+            <cc:attribute name="dialogClass" />
+          </cc:interface>
+
+          <cc:implementation>
+            <div id="\#{cc.clientId}:div">
+                <ui:repeat value="\#{cc.attrs.photos}" var="photo">
+                    <a rel="gallery" href="\#{photo.full}" title="\#{photo.title}">
+                        <img src="\#{photo.thumb}" alt="\#{photo.title}" />
+                    </a>
+                </ui:repeat>
+            </div>
+
+            <h:outputScript library="javax.faces" name="jsf.js"/>
+            <h:outputScript library="composite/com.jquery" name="jquery-1.7.2.min.js"/>
+            <h:outputScript library="composite/com.jqueryui/js" name="jquery-ui-1.8.19.custom.min.js"/>
+            <h:outputScript library="composite/com.github.blueimp/js" name="load-image.js"/>
+            <h:outputScript library="composite/com.github.blueimp/js" name="jquery.image-gallery.js"/>
+            <h:outputStylesheet library="composite/com.jqueryui/css/ui-lightness" name="jquery-ui.custom.css"/>
+            <h:outputStylesheet library="composite/com.github.blueimp/css" name="jquery.image-gallery.css"/>
+            <h:outputScript>
+                var pluginOptions = {};
+                ! '\#{cc.attrs.selector}' || (pluginOptions.selector = '\#{cc.attrs.selector}');
+                [ ... snip ... ]
+                ! '\#{cc.attrs.dialogClass}' || (pluginOptions.dialogClass = '\#{cc.attrs.dialogClass}');
+
+                jQuery(function() {
+                    $(document.getElementById('\#{cc.clientId}:div')).imagegallery(pluginOptions);
+                });
+            </h:outputScript>
+          </cc:implementation>
+
+          </html>
+        &nbsp;
+    .fragment.screen{:data=>{:prettify=>"gallery", :prettify_lines=>"1:6"}}
+    .fragment.screen{:data=>{:prettify=>"gallery", :prettify_lines=>"8:15"}}
+    .fragment.screen{:data=>{:prettify=>"gallery", :prettify_lines=>"17:24"}}
+    .fragment.screen{:data=>{:prettify=>"gallery", :prettify_lines=>"26:32"}}
+    .fragment.screen{:data=>{:prettify=>"gallery", :prettify_lines=>"34:41"}}
+    .notes
+      %ul
+        %li
+          Let's take a look at the code required to make a JSF 2 component out of these javascript widgets
+          %ol
+            %li Here we have a JSF 2 composite component, and starts like any other JSF facelet file
+            %li
+              %ul
+                %li The composite component has 2 sections, and interface and an implementation
+                %li In the interface we specify the attributes of the facelet tag
+                %li The attributes consist of the list of photos we want to include in our gallery
+                %li and all the options available to configure the jQuery plugin (which I've cut out for brevity)
+            %li Next we have the html to generate: we loop of the photos list, and output an anchor tag for each photo
+            %li We then map the component attributes into a javascript object
+            %li which we then pass as an parameter when we invoke the jQuery plugin
+  %section
+    %h2 Packaging the cc
+    %div.relative{:style => "top: 200px"}
+      %img.relative{:src => "assets/images/file_structure.png", :style => "float:right; top: -150px; left: 20px"}
+      %ul{:style => "display: block;"}
+        %li Package your composite components in a jar file to share across teams/apps
+    %p.fragment.screen.relative{:style => "border: solid green 4px; top: 145px; left: 650px; width: 252px; height: 20px;"}
+    %p.fragment.screen.relative{:style => "border: solid green 4px; top: 130px; left: 650px; width: 252px; height: 75px;"}
+    %p.fragment.screen.relative{:style => "border: solid green 4px; top: 115px; left: 650px; width: 252px; height: 70px;"}
+    %p.fragment.screen.relative{:style => "border: solid green 4px; top: 100px; left: 650px; width: 252px; height: 20px;"}
+  %section
+    %h2 Using the imagegallery component
+    %pre.relative{:class => "prettyprint", :style => "font-size: 14pt;"}
+      %code{:id => "gallery_component"}
+        &nbsp;
+        :escaped
+          <!DOCTYPE html>
+          <html lang="en-US">
+
+          <ui:composition template="/resources/template.xhtml"
+                          xmlns="http://www.w3.org/1999/xhtml"
+                          xmlns:h="http://java.sun.com/jsf/html"
+                          xmlns:ui="http://java.sun.com/jsf/facelets"
+                          xmlns:s="http://richfaces.org/sandbox/composite">
+              <ui:define name="body">
+                  <h:form id="form">
+                      Some sample of the component:
+                      <s:imagegallery photos="\#{galleryBean.photos}"/>
+                  </h:form>
+              </ui:define>
+          </ui:composition>
+          </html>
+        &nbsp;
+    .fragment.screen{:data=>{:prettify=>"gallery_component", :prettify_lines=>"8:8"}}
+    .fragment.screen{:data=>{:prettify=>"gallery_component", :prettify_lines=>"12:12"}}
+  %section
+    %h2 GalleryBean.java
+    %pre.relative{:class => "prettyprint", :style => "font-size: 14pt;"}
+      %code{:id => "gallery_bean"}
+        &nbsp;
+        :escaped
+          @ManagedBean
+          @RequestScoped
+          public class GalleryBean {
+            private List<FlickrPhoto> photos;
+
+            public GalleryBean() {
+              photos = new ArrayList<FlickrPhoto>();
+              photos.add(new FlickrPhoto("title a", "http://flickr.com/a..."));
+              photos.add(new FlickrPhoto("title c", "http://flickr.com/c..."));
+              photos.add(new FlickrPhoto("title d", "http://flickr.com/d..."));
+              ...
+            }
+
+            public List<FlickrPhoto> getPhotos() {
+              return photos;
+            }
+        &nbsp;
+    .fragment.screen{:data=>{:prettify=>"gallery_bean", :prettify_lines=>"4:4"}}
+    .fragment.screen{:data=>{:prettify=>"gallery_bean", :prettify_lines=>"7:10"}}
+    .notes
+      %ul
+        %li This component gives a rich looking interface demo-time it is in fact a simple "output-only" component
+%section
+  %section
+    %h2 jQuery UI Datepicker component
+    %div.relative{:style => "top: 200px"}
+      %img.plain.relative{:src => "assets/images/jqueryui_datepicker.png", :style => "float:right; top: -60px"}
+      %ul.bullets{:style => "display: block"}
+        %li The jQuery UI datepicker plugin
+        %li An input component, bound to a backing bean
+  %section
+    %h2 Datepicker composite component
+    %pre{:class => "prettyprint", :style => "font-size: 8pt;"}
+      %code{:id => "datepicker"}
+        &nbsp;
+        :escaped
+          <cc:interface>
+              <cc:attribute name="value" />
+              <cc:attribute name="showOn" />
+              <cc:attribute name="dateFormat" />
+              <cc:attribute name="buttonImageOnly" />
+          </cc:interface>
+
+          <cc:implementation>
+              <h:inputText id="input" value="\#{cc.attrs.value}" />
+              <h:outputScript library="javax.faces" name="jsf.js"/>
+              <h:outputScript library="composite/com.jquery" name="jquery-1.7.2.min.js"/>
+              <h:outputScript library="composite/com.jqueryui/development-bundle/ui" name="jquery.ui.core.js"/>
+              <h:outputScript library="composite/com.jqueryui/development-bundle/ui" name="jquery.ui.widget.js"/>
+              <h:outputScript library="composite/com.jqueryui/development-bundle/ui" name="jquery.ui.datepicker.js"/>
+              <h:outputStylesheet library="composite/com.jqueryui/css/ui-lightness" name="jquery-ui.custom.css"/>
+              <h:outputScript>
+                  var pluginOptions = {
+                      buttonImage: "\#{request.contextPath}/javax.faces.resource/calendar.gif.jsf?ln=composite/org.richfaces",
+                      buttonImageOnly: "\#{"true" eq cc.attrs.buttonImageOnly}"
+                  }
+                  ! '\#{cc.attrs.showOn}' || (pluginOptions.showOn = '\#{cc.attrs.showOn}');
+                  ! '\#{cc.attrs.dateFormat}' || (pluginOptions.dateFormat = '\#{cc.attrs.dateFormat}');
+
+                  jQuery(function() {
+                      $(document.getElementById('\#{cc.clientId}:input')).datepicker(pluginOptions);
+                  });
+
+              </h:outputScript>
+          </cc:implementation>
+        &nbsp;
+    .fragment.screen{:data=>{:prettify=>"datepicker", :prettify_lines=>"1:6"}}
+    .fragment.screen{:data=>{:prettify=>"datepicker", :prettify_lines=>"9:9"}}
+    .fragment.screen{:data=>{:prettify=>"datepicker", :prettify_lines=>"10:15"}}
+    .fragment.screen{:data=>{:prettify=>"datepicker", :prettify_lines=>"17:26"}}
+    .notes
+      %ul
+        %li let's look at the implementation of a component that accept user input - the datepicker
+        %li This composite component follows nearly the same pattern as previous except for one difference:
+        %li We are delegate to the JSF input component to return the widget data back to the JSF servlet
+        %li The point I want to make is that so long as you can find a JSF component to delegate to you can write a JSF component leveraging any
+  %section
+    %h2 datepicker usage
+    %pre.relative{:class => "prettyprint", :style => "font-size: 18pt; top: 150px"}
+      %code
+        &nbsp;
+        :escaped
+          <s:datepicker buttonImageOnly="true"
+                         dateFormat="yy-mm-dd"
+                         showOn="both"/>
+        &nbsp;
+  %section
+    %h2 generated markup
+    %pre.relative{:class => "prettyprint", :style => "font-size: 9pt;"}
+      %code{:id => "datepickermarkup"}
+        &nbsp;
+        :escaped
+          <input class="hasDatepicker" id="form:j_idt16:input" name="form:j_idt16:input" type="text">
+          <img src="/composite-demo/javax.faces.resource/calendar.gif.jsf?ln=composite/org.richfaces" class="ui-datepicker-trigger">
+          <script type="text/javascript" src="/composite-demo/javax.faces.resource/jsf.js.jsf?ln=javax.faces"></script>
+          <script type="text/javascript"
+              src="/composite-demo/javax.faces.resource/jquery-1.7.2.min.js.jsf?ln=composite/com.jquery">
+          </script>
+          <script type="text/javascript"
+              src="/composite-demo/javax.faces.resource/jquery.ui.core.js.jsf?ln=composite/com.jqueryui/development-bundle/ui">
+          </script>
+          <script type="text/javascript"
+              src="/composite-demo/javax.faces.resource/jquery.ui.widget.js.jsf?ln=composite/com.jqueryui/development-bundle/ui">
+          </script>
+          <script type="text/javascript"
+              src="/composite-demo/javax.faces.resource/jquery.ui.datepicker.js.jsf?ln=composite/com.jqueryui/development-bundle/ui">
+          </script>
+          <script type="text/javascript">
+            var pluginOptions = {
+              buttonImage:"/composite-demo/javax.faces.resource/calendar.gif.jsf?ln=composite/org.richfaces",
+              buttonImageOnly:"true"
+            }
+            !'both' || (pluginOptions.showOn = 'both');
+            !'yy-mm-dd' || (pluginOptions.dateFormat = 'yy-mm-dd');
+
+            jQuery(function () {
+              $(document.getElementById('form:j_idt16:input')).datepicker(pluginOptions);
+            });
+          </script>
+        &nbsp;
+    .fragment.screen{:data=>{:prettify=>"datepickermarkup", :prettify_lines=>"1:1"}}
+    .fragment.screen{:data=>{:prettify=>"datepickermarkup", :prettify_lines=>"2:2"}}
+    .fragment.screen{:data=>{:prettify=>"datepickermarkup", :prettify_lines=>"3:15"}}
+    .fragment.screen{:data=>{:prettify=>"datepickermarkup", :prettify_lines=>"17:26"}}
+%section
+  %section
+    %h2 jQuery UI tabs
+    %div.relative{:style => "top: 200px"}
+      %img.plain.relative{:src => "assets/images/jqueryui_tabs.png", :style => "float:right; top: -60px"}
+      %ul.bullets{:style => "display: block"}
+        %li The jQuery UI tabs plugin
+        %li A stateful component
+  %section
+    %h2 tabs composite component
+    %pre{:class => "prettyprint", :style => "font-size: 6pt;"}
+      %code{:id => "tabs"}
+        &nbsp;
+        :escaped
+          <cc:interface componentType="org.richfaces.sandbox.composite.UITabs">
+          </cc:interface>
+
+          <cc:implementation>
+              <div id="\#{cc.clientId}">
+                <h:inputHidden id="selected" value="\#{cc.selected}" />
+                <ul>
+                  <ui:repeat var="tab" value="\#{cc.tabChildren}"> <!-- \#{cc.children} broken see: JAVASERVERFACES-2099 -->
+                    <li>
+                      <a href="#\#{tab.clientId}">\#{tab.attributes['title']}</a>
+                    </li>
+                  </ui:repeat>
+                </ul>
+                <cc:insertChildren />
+              </div>
+              <h:outputScript library="javax.faces" name="jsf.js"/>
+              <h:outputScript library="composite/com.jquery" name="jquery-1.7.2.min.js"/>
+              <h:outputScript library="composite/com.jqueryui/development-bundle/ui" name="jquery.ui.core.js"/>
+              <h:outputScript library="composite/com.jqueryui/development-bundle/ui" name="jquery.ui.widget.js"/>
+              <h:outputScript library="composite/com.jqueryui/development-bundle/ui" name="jquery.ui.tabs.js"/>
+              <h:outputStylesheet library="composite/com.jqueryui/css/ui-lightness" name="jquery-ui.custom.css"/>
+              <h:outputScript>
+                  var pluginOptions = { selected: '\#{cc.selected}' }
+
+                  $(function() {
+                      var widget = $(document.getElementById('\#{cc.clientId}'));
+
+                      // initialize the plugin
+                      widget.tabs(pluginOptions);
+
+                      // register a tabselect change listener
+                      widget.bind("tabsselect", function(event, ui) {
+                          var selected_input = '\#{cc.clientId}' + ':selected';
+                          $(document.getElementById(selected_input)).val(ui.index);
+                          // trigger an ajax update, executing the hiddn input element to update the component state
+                          var options = { execute: selected_input }
+                          jsf.ajax.request(selected_input, null, options);
+                      });
+                  });
+              </h:outputScript>
+          </cc:implementation>
+        &nbsp;
+    .fragment.screen{:data=>{:prettify=>"tabs", :prettify_lines=>"5:15"}}
+    .fragment.screen{:data=>{:prettify=>"tabs", :prettify_lines=>"16:21"}}
+    .fragment.screen{:data=>{:prettify=>"tabs", :prettify_lines=>"23:39"}}
+    .fragment.screen{:data=>{:prettify=>"tabs", :prettify_lines=>"1:2"}}
+  %section
+    %h2 UITabs.java
+    %pre{:class => "prettyprint", :style => "font-size: 8pt;"}
+      %code{:id => "uitabs"}
+        &nbsp;
+        :escaped
+          @FacesComponent("org.richfaces.sandbox.composite.UITabs")
+          public class UITabs extends UINamingContainer {
+              enum PropertyKeys {selected}
+
+              public int getSelected() {
+                  return (Integer) getStateHelper().eval(PropertyKeys.selected, 0);
+              }
+
+              public void setSelected(int selected) {
+                  getStateHelper().put(PropertyKeys.selected, selected);
+              }
+
+              public List<UIComponent> getTabChildren() {
+                  List<UIComponent> children = this.getFacet("javax.faces.component.COMPOSITE_FACET_NAME").getChildren();
+                  List<UIComponent> tabChildren = new ArrayList<UIComponent>();
+                  for (UIComponent child : children) {
+                      if (child instanceof UITab) {
+                          tabChildren.add(child);
+                      }
+                  }
+                  return tabChildren;
+              }
+          }
+        &nbsp;
+    .fragment.screen{:data=>{:prettify=>"uitabs", :prettify_lines=>"1:2"}}
+    .fragment.screen{:data=>{:prettify=>"uitabs", :prettify_lines=>"3:11"}}
+    .fragment.screen{:data=>{:prettify=>"uitabs", :prettify_lines=>"13:22"}}
+  %section
+    %h2 jQuery UI tab
+    %pre{:class => "prettyprint", :style => "font-size: 14pt;"}
+      %code{:id => "tab"}
+        &nbsp;
+        :escaped
+          <cc:interface componentType="org.richfaces.sandbox.composite.UITab">
+            <cc:attribute name="title" />
+          </cc:interface>
+
+          <cc:implementation>
+              <div id="\#{cc.clientId}">
+                <cc:insertChildren />
+              </div>
+          </cc:implementation>
+        &nbsp;
+      .fragment.screen{:data=>{:prettify=>"tab", :prettify_lines=>"1:1"}}
+      .fragment.screen{:data=>{:prettify=>"tab", :prettify_lines=>"6:8"}}
+  %section
+    %h2 tabs usage
+    %pre{:class => "prettyprint", :style => "font-size: 18pt;"}
+      %code{:id => "tabsusage"}
+        &nbsp;
+        :escaped
+          <s:tabs id="tabs">
+
+            <s:tab title="Tab 1">
+              Hello <b>Tab</b>!!
+            </s:tab>
+
+            <s:tab title="Tab 2">
+              With nested components:
+              <br/>
+              <s:datepicker dateFormat="yy-mm-dd"
+                            showOn="both"
+                            buttonImageOnly="true"/>
+            </s:tab>
+
+          </s:tabs>
+        &nbsp;
+    .fragment.screen{:data=>{:prettify=>"tabsusage", :prettify_lines=>"1:1"}}
+    .fragment.screen{:data=>{:prettify=>"tabsusage", :prettify_lines=>"3:5"}}
+    .fragment.screen{:data=>{:prettify=>"tabsusage", :prettify_lines=>"7:13"}}
+%section
+  %section
+    %h2 JSF 2 CC limitations
+    %img{:src => "assets/images/goldberg.gif" }
+    .notes
+      %ul
+        %li When pushing the limits of composite components you often run up against either incomplete implementations or bugs
+        %li Examples: using composite components with includes, cc.children we saw earlier, and others
+        %li Additionally, sometimes we need to fallback on the greater expressivity of java
+        %li For instance when we need to wrap our child components with new html
+        %li In short composite components work well when you're requirements align well with an existing component to which you can delegate
+
+%section
+  %h2 RichFaces CDK
+  %img.plain.relative{:src => "assets/images/richfaces-logo.png", :style => "float:right; margin-left: 60px"}
+  %p{:style => "margin-top: 120px;"} Use the RichFaces CDK to build "full-fledged" JSF components with the ease and syntax of JSF 2 composite components
+  .notes
+    %ul
+    %li The RichFaces CDK templating language is modeled after JSF 2 composite components
+    %li However when you use the RichFaces CDK, the template is rendererd into Java code at runtime
+    %li You end up with "full-fledged" jsf components, free of any limitations of the composite component way of building components
+%section
+  %section
+    %h2 Bootstrap Dropdown Button
+    %div.relative{:style => "top: 200px"}
+      %img.plain.relative{:src => "assets/images/dropdown.png", :style => "float:right; top: -60px"}
+      %ul.bullets{:style => "display: block"}
+        %li Group child buttons into a dropdown
+        %li Dropdown renders it's children
+  %section
+    %h2 Dropdown - CDK template
+    %pre{:class => "prettyprint", :style => "font-size: 8pt;"}
+      %code{:id => "dropdown"}
+        &nbsp;
+        :escaped
+          <cdk:root xmlns="http://jboss.org/schema/richfaces/cdk/xhtml-el"
+                        xmlns:cdk="http://jboss.org/schema/richfaces/cdk/core"
+                        xmlns:c="http://jboss.org/schema/richfaces/cdk/jstl/core"
+                        xmlns:cc="http://jboss.org/schema/richfaces/cdk/jsf/composite">
+
+                <cc:interface>
+                    <cdk:class>org.richfaces.bootstrap.renderkit.ButtonDropdownRenderer</cdk:class>
+                    <cdk:superclass>org.richfaces.bootstrap.renderkit.ButtonDropdownRendererBase</cdk:superclass>
+                    <cdk:renderer-type>org.richfaces.bootstrap.ButtonDropdownRenderer</cdk:renderer-type>
+                    <cdk:renders-children>true</cdk:renders-children>
+                    <cdk:component-base-class>org.richfaces.bootstrap.component.AbstractButtonDropdown</cdk:component-base-class>
+                </cc:interface>
+
+                <cc:implementation>
+                    <div class="btn-group \#{component.vertical ne null ? component.vertical.buttonClass : ''}">
+                        <a data-toggle="dropdown" href="#" cdk:passThrough="on*"
+                           class="btn \#{component.severity ne null ? component.severity.buttonClass : ''}
+                                  \#{component.scale ne null ? component.scale.buttonStyleClass : ''}
+                                  \#{component.buttonStyle} dropdown-toggle">
+                            \#{component.title.concat(' ')}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu \#{component.horizontal ne null ? component.horizontal.buttonClass : ''}">
+                            <c:forEach var="child" items="\#{component.getChildren()}">
+                                <li>
+                                    <cdk:call expression="child.encodeAll(facesContext)" />
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                  </cc:implementation>
+              </cdk:root>
+        &nbsp;
+    .fragment.screen{:data=>{:prettify=>"dropdown", :prettify_lines=>"1:4"}}
+    .fragment.screen{:data=>{:prettify=>"dropdown", :prettify_lines=>"6:12"}}
+    .fragment.screen{:data=>{:prettify=>"dropdown", :prettify_lines=>"14:31"}}
+    .fragment.screen{:data=>{:prettify=>"dropdown", :prettify_lines=>"26:26"}}
+    .notes
+      %ul
+        %li not delegating to JSF components
+  %section
+    %h2 Dropdown Button - Component
+    %pre{:class => "prettyprint", :style => "font-size: 9pt;"}
+      %code{:id => "dropdown_component"}
+        &nbsp;
+        :escaped
+          @JsfComponent(
+                  type = AbstractButtonDropdown.COMPONENT_TYPE,
+                  family = AbstractButtonDropdown.COMPONENT_FAMILY,
+                  renderer = @JsfRenderer(type = ButtonDropdownRendererBase.RENDERER_TYPE),
+                  tag = @Tag(name = "buttonDropdown"))
+          public abstract class AbstractButtonDropdown extends UIPanel implements EventsMouseProps {
+              public static final String COMPONENT_FAMILY = "org.richfaces.bootstrap.ButtonDropdown";
+              public static final String COMPONENT_TYPE = "org.richfaces.bootstrap.ButtonDropdown";
+
+              @Attribute
+              public abstract String getTitle();
+
+              @Attribute
+              public abstract String getButtonStyle();
+
+              @Attribute
+              public abstract BootstrapSeverity getSeverity();
+
+              @Attribute
+              public abstract BootstrapSize getScale();
+
+              @Attribute
+              public abstract HorizontalPosition getHorizontal();
+
+              @Attribute
+              public abstract VerticalPosition getVertical();
+          }
+        &nbsp;
+  %section
+    %h2 Dropdown - usage
+    %pre{:class => "prettyprint", :style => "font-size: 18pt;"}
+      %code{:id => "dropdown_component"}
+        &nbsp;
+        :escaped
+          <b:buttonDropdown title="Primary" severity="primary">
+              <h:link outcome="/component/heroUnit/index.xhtml" value="heroUnit"/>
+              <h:link outcome="/component/tabbable/index.xhtml" value="tabbable"/>
+              <h:link outcome="/component/buttonGroup/index.xhtml" value="buttonGroup"/>
+              <h:link outcome="/component/navbar/index.xhtml" value="navbar"/>
+          </b:buttonDropdown>
+        &nbsp;
+%section
+  %h2 Links
+  .left.resources
+    %ul.links
+      %li
+        %a{:href => "https://github.com/richfaces/sandbox"} RichFaces Sandbox on github
+      %li
+        %a{:href => "http://jsflive.wordpress.com/2010/09/19/collapsiblepanel-revisited/"} Blog Collapsible panel w/ Composite Components
+      %li
+        JSF Composite component API docs:
+        %ul
+          %li
+            %a{:href => "http://javaserverfaces.java.net/nonav/docs/2.0/pdldocs/facelets/composite/interface.html"} composite Tag interface
+          %li
+            %a{:href => "http://javaserverfaces.java.net/nonav/docs/2.0/pdldocs/facelets/composite/implementation.html"} composite Tag implementation
+    %br
+    %br
+    %ul.links
+      %li
+        Javascript "widgets"
+        %ul
+          %li
+            %a{:href => "http://jqueryui.com/"} jQuery UI
+          %li
+            %a{:href => "http://twitter.github.com/bootstrap/"} Twitter Bootstrap
+          %li
+            %a{:href => "http://blueimp.github.com/jQuery-Image-Gallery/"} jQuery-Image-Gallery
