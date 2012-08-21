@@ -133,7 +133,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
       %ul
         %li Arquillian Graphene
         %li Selenium/Webdriver
-  %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 120px; width: 550px; margin-left: 0"}
+  %pre{:class => "prettyprint"}
     %code
       &nbsp;
       :escaped
@@ -154,14 +154,13 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
 %section
   %h2 Type-safe API to selenium
   %ul
-    %li GrapheneSelenium class is type-safe equivalent of Selenium class in Selenium 1.x,
-  %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 120px; width: 550px; margin-left: 0"}
+    %li GrapheneSelenium class is type-safe equivalent of Selenium class in Selenium 1.x
+  %pre{:class => "prettyprint"}
     %code
       &nbsp;
       :escaped
         @Drone
         GrapheneSelenium browser;
-
 %section
   %h2 Ajax with Graphene
   %ul
@@ -176,7 +175,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
   %ul
     %li Represent the JavaScript extensions on the tested page
     %li Follow on to the Page Objects Selenium Pattern
-  %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 120px; width: 550px; margin-left: 0"}
+  %pre{:class => "prettyprint"}
     %code
       &nbsp;
       :escaped
@@ -188,18 +187,17 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
     %li Encapsulates behaviour of the page
     %li Write an API that supports page transitions
     %li Not suitable for AJAX
-    %li
 %section
   %h2 Ajax w/ Page Extensions
   %ul
-    %li build tests out of components (rahter than pages)
-  %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 120px; width: 550px; margin-left: 0"}
+    %li build tests out of components (rhater than pages)
+  %pre{:class => "prettyprint"}
     %code
       &nbsp;
       :escaped
         @FindBy(id="form:calendar")
         Calendar calendar
-  %pre{:class => "prettyprint", :style => "font-size: 14pt; margin-top: 120px; width: 550px; margin-left: 0"}
+  %pre{:class => "prettyprint"}
     %code
       &nbsp;
       :escaped
@@ -219,7 +217,6 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
     %li Testing on both sides of the request
     %li En-rich the client request with a test to run on the server
     %li En-rich the server response with results of the test
-    %li
 %section
   %h2 JSFUnit | the old way
   %ul
@@ -258,22 +255,51 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
 %section
   %h2 Additional Resources
 %section
+  %h2 Other Arquillian session @ JavaOne
+  %ul
+    %li
+    %li
+    %li
+%section
   %h2 Stay in the loop
   %ul.links.loop
     %li
       Project website:
-      %a{:href => "http://richfaces.org"} http://richfaces.org
+      %ul
+        %li
+          %a{:href => "http://arquillian.org"} http://arquillian.org
+        %li
+          %a{:href => "http://richfaces.org"} http://richfaces.org
     %li
       Twitter:
-      %a{:href => "https://twitter.com/#!/richfaces"} https://twitter.com/#!/richfaces
+      %ul
+        %li
+          %a{:href => "https://twitter.com/#!arquillian"} @arquillian
+        %li
+          %a{:href => "https://twitter.com/#!richfaces"} @richfaces
     %li
       Google+:
-      %a{:href => "https://plus.google.com/b/115573055688754345457/"} http://richfaces.org
+      %ul
+        %li
+          %a{:href => "https://plus.google.com/100660127586085393031/"} +Arquillian
+        %li
+          %a{:href => "https://plus.google.com/b/115573055688754345457/"} +RichFaces
     %li
-      RichFaces Forums:
-      %a{:href => "https://community.jboss.org/en/richfaces?view=discussions"} https://community.jboss.org/en/richfaces?view=discussions
+      Forums:
+      %ul
+        %li
+          %a{:href => "https://community.jboss.org/en/arquillian?view=discussions"} Arquillian User forum
+        %li
+          %a{:href => "https://community.jboss.org/en/richfaces?view=discussions"} RichFaces User forum
     %li
       Blog feed:
-      %a{:href => "http://planet.jboss.org/feed/richfacesall"} http://planet.jboss.org/feed/richfacesall
+      %ul
+        %li
+          %a{:href => "http://arquillian.org/blog/"} http://arquillian.org/blog/
+        %li
+          %a{:href => "http://planet.jboss.org/feed/richfacesall"} http://planet.jboss.org/feed/richfacesall
     %li
-      IRC: #richfaces
+      IRC
+      %ul
+        %li IRC: #jbosstesting
+        %li IRC: #richfaces
