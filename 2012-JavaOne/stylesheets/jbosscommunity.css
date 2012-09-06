@@ -1,0 +1,93 @@
+/*********************************************
+ * FONT-FACE DEFINITIONS
+ *********************************************/
+
+@font-face {
+    font-family: 'Oswald Bold';
+    src: url('../assets/fonts/oswald/Oswald-Bold.otf') format('truetype');
+    /* font-family: 'League Gothic';
+     src: url('../assets/fonts/leaguegothic/league_gothic-webfont.ttf') format('truetype'); */
+    font-weight: normal;
+    font-style: normal;
+}
+
+.reveal h4 {
+    font-family: 'Oswald Bold', sans-serif;
+    line-height: 1em;
+}
+
+.reveal h1 { font-size: 96px; 	}
+.reveal h2 { font-size: 56px;	}
+.reveal h3 { font-size: 36px;	}
+.reveal h4 { font-size: 26px;	}
+
+/*********************************************
+ * JBoss community background
+ *********************************************/
+
+body {
+    background: none;
+    z-index: 0;
+}
+
+html:after, body:before, body:after {
+    content: "";
+    z-index:-2;
+    position:fixed;
+    display: block;
+    background-repeat: repeat-x;
+}
+
+body:before {
+    background-image: url("../assets/jbosscommunity/background_top.png");
+    height: 171px;
+    left:0;
+    right: 0;
+    top:0;
+}
+
+body:after {
+    background-image: url("../assets/jbosscommunity/background_bottom.png");
+    content: url("../assets/jbosscommunity/jbosscommunity_text.png");
+    text-align: right;
+    height: 197px;
+    padding-right: 10px;
+    left:0;
+    right: 0;
+    bottom: 0;
+}
+
+.reveal img.splash {
+    position: relative;
+    top: 150px;
+}
+
+.reveal section img.splash {
+    border: none;
+    background: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+/*********************************************
+ * CONTROLS
+ *********************************************/
+
+.reveal .controls {
+    height: 120px;
+    right: 15px;
+    bottom: 20px;
+}
+
+.reveal .controls a.enabled {
+    color: hsl(185, 55%, 69%);
+}
+
+/*********************************************
+ * PROGRESS BAR
+ *********************************************/
+
+.reveal .progress span {
+    background: hsl(185, 55%, 69%);
+}
