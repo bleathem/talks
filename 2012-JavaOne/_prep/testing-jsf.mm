@@ -1,0 +1,362 @@
+<map version="0.9.0">
+<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
+<node CREATED="1345236526527" ID="ID_1879204518" MODIFIED="1345238520438" TEXT="Testing JSF apps">
+<node CREATED="1345247424440" ID="ID_968724011" MODIFIED="1345247473427" POSITION="right" TEXT="Intro">
+<node CREATED="1345247474665" ID="ID_313508060" MODIFIED="1345247492920" TEXT="Who is a JSF developer"/>
+<node CREATED="1345737084246" ID="ID_1333729426" MODIFIED="1345737107626" TEXT="Who am I?">
+<node CREATED="1345737110117" ID="ID_1756954715" MODIFIED="1345737126625" TEXT="Why is a RichFaces dev presenting on Arquillian?"/>
+<node CREATED="1345737325893" ID="ID_1174177686" MODIFIED="1345737333479" TEXT="Selenium">
+<node CREATED="1345737335317" ID="ID_149358550" MODIFIED="1345737418238" TEXT="Selenium 1">
+<node CREATED="1345737339221" ID="ID_805697795" MODIFIED="1345737342922" TEXT="Single Class"/>
+<node CREATED="1345737343397" ID="ID_1532868698" MODIFIED="1345737351098" TEXT="String based methods"/>
+<node CREATED="1345737375413" ID="ID_1329255168" MODIFIED="1345737378945" TEXT="http://release.seleniumhq.org/selenium-remote-control/0.9.2/doc/java/com/thoughtworks/selenium/Selenium.html"/>
+</node>
+<node CREATED="1345737381093" ID="ID_402261837" MODIFIED="1345737384019" TEXT="Selenium 2">
+<node CREATED="1345737387717" ID="ID_1397896801" MODIFIED="1345737392166" TEXT="Webdriver API">
+<node CREATED="1345737463461" ID="ID_581563228" MODIFIED="1345737479114" TEXT="Multiple impls (one per browser)"/>
+</node>
+<node CREATED="1345737585861" ID="ID_255104547" MODIFIED="1345737588585" TEXT="type-safe"/>
+</node>
+</node>
+<node CREATED="1345737161878" ID="ID_1743757099" MODIFIED="1345737163736" TEXT="Lukas">
+<node CREATED="1345737165749" ID="ID_1111255005" MODIFIED="1345737198139" TEXT="Graphene 1 (Ajocado)">
+<node CREATED="1345737220934" ID="ID_402557926" MODIFIED="1345737229453" TEXT="Selenium Wrapper"/>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1345238522618" ID="ID_1994464647" MODIFIED="1345500158375" POSITION="right" TEXT="Intro to testing">
+<node CREATED="1345493631095" ID="ID_1393478053" MODIFIED="1345736967136">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Arquillian Review
+    </p>
+    <p>
+      (revolution)
+    </p>
+  </body>
+</html></richcontent>
+<node CREATED="1345493636704" ID="ID_1771070733" MODIFIED="1345493641119" TEXT="micro-deployments"/>
+<node CREATED="1345493649424" ID="ID_147248817" MODIFIED="1345493653642" TEXT="container integration"/>
+<node CREATED="1345493659264" ID="ID_1512706514" MODIFIED="1345493672763" TEXT="brings container to the test"/>
+<node CREATED="1345493702913" ID="ID_1403113780" MODIFIED="1345493704903" TEXT="tools">
+<node CREATED="1345493740432" ID="ID_734174111" MODIFIED="1345493742198" TEXT="IDE"/>
+<node CREATED="1345493743538" ID="ID_74869333" MODIFIED="1345493751655" TEXT="Junit/TestNG"/>
+</node>
+<node CREATED="1345499423618" ID="ID_1101930142" MODIFIED="1345499427494" TEXT="&quot;real&quot; tests"/>
+<node CREATED="1345499428114" ID="ID_639012777" MODIFIED="1345499437062" TEXT="&quot;Don&apos;t Mock me&quot;"/>
+</node>
+</node>
+<node CREATED="1345236562878" ID="ID_1829598601" MODIFIED="1345493642567" POSITION="right" TEXT="Back-end">
+<node CREATED="1345236552397" ID="ID_185488329" MODIFIED="1345236556710" TEXT="well understood"/>
+<node CREATED="1345236573170" ID="ID_1043460083" MODIFIED="1345236577980" TEXT="Unit tests"/>
+<node CREATED="1345236578603" ID="ID_311292879" MODIFIED="1345236585532" TEXT="Arquillian">
+<node CREATED="1345238621336" ID="ID_71486819" MODIFIED="1345238627304" TEXT="Automates deployment"/>
+<node CREATED="1345238627911" ID="ID_19584181" MODIFIED="1345238648127" TEXT="runs the tests in the server"/>
+</node>
+</node>
+<node CREATED="1345236540706" ID="ID_1413587814" MODIFIED="1345500149469" POSITION="right" TEXT="Front-end">
+<node CREATED="1345493817556" ID="ID_1874180955" MODIFIED="1345493827462" TEXT="Cone of test coverage">
+<node CREATED="1345493884162" ID="ID_90976545" MODIFIED="1345493891185" TEXT="watirmelon.com"/>
+</node>
+<node CREATED="1345236596585" ID="ID_1271077042" MODIFIED="1345236627570" TEXT="Test what&apos;s rendered to the browser"/>
+<node CREATED="1345494258497" ID="ID_1939382951" MODIFIED="1345500704066" TEXT="selenium">
+<node CREATED="1345494248721" ID="ID_889713627" MODIFIED="1345494252109" TEXT="lots of browsers"/>
+<node CREATED="1345494343568" ID="ID_1664036234" MODIFIED="1345494348366" TEXT="headless testing">
+<node CREATED="1345494274177" ID="ID_1259412260" MODIFIED="1345494321745" TEXT="htmlunit (mock browser)"/>
+<node CREATED="1345494334496" ID="ID_1033349232" MODIFIED="1345494338253" TEXT="webkit core?">
+<node CREATED="1345494350365" ID="ID_793671873" MODIFIED="1345494351982" TEXT="phantom"/>
+</node>
+<node CREATED="1345494381553" ID="ID_1645617939" MODIFIED="1345494386898" TEXT="w3c headless browsing spec"/>
+</node>
+<node CREATED="1345494284929" ID="ID_1420293719" MODIFIED="1345494288288" TEXT="unified API"/>
+<node CREATED="1345494430577" ID="ID_752980399" MODIFIED="1345494440195" TEXT="webdriver is the new API for selenium V2"/>
+<node CREATED="1345494471516" ID="ID_1765612237" MODIFIED="1345494474146" TEXT="problems">
+<node CREATED="1345494475505" ID="ID_1749021626" MODIFIED="1345737053080" TEXT="selenium IDE">
+<node CREATED="1345494481761" ID="ID_923330205" MODIFIED="1345494484255" TEXT="create tests">
+<node CREATED="1345494539745" ID="ID_1187637946" MODIFIED="1345494550465" TEXT="replay with all browsers"/>
+</node>
+<node CREATED="1345494520225" ID="ID_799816302" MODIFIED="1345494523309" TEXT="no abstraction">
+<node CREATED="1345494553329" ID="ID_1537315948" MODIFIED="1345494556291" TEXT="maintenance problem"/>
+<node CREATED="1345494565665" ID="ID_1691042923" MODIFIED="1345494571762" TEXT="consider login before tests">
+<node CREATED="1345494578193" ID="ID_1771512923" MODIFIED="1345494582067" TEXT="lots of repetition"/>
+</node>
+</node>
+</node>
+<node CREATED="1345494638944" ID="ID_946148286" MODIFIED="1345494646047" TEXT="slenium sees black box"/>
+<node CREATED="1345494651041" ID="ID_1368270487" MODIFIED="1345494655096" TEXT="tests state transitions">
+<node CREATED="1345494669425" ID="ID_529864130" MODIFIED="1345494687217" TEXT="some DOM/javascript/CSS">
+<node CREATED="1345494694785" ID="ID_1941315577" MODIFIED="1345494700626" TEXT="only what you express in your tests"/>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1345497377409" ID="ID_1524843082" MODIFIED="1345502620219" TEXT="Javascript testing">
+<node CREATED="1345497386513" ID="ID_1185612296" MODIFIED="1345498036096" TEXT="Init testing frameworks">
+<node CREATED="1345497397073" ID="ID_904958718" MODIFIED="1345497399571" TEXT="QUnit"/>
+<node CREATED="1345497400417" ID="ID_948835324" MODIFIED="1345497401827" TEXT="Jasmine"/>
+<node CREATED="1345497403041" ID="ID_586495970" MODIFIED="1345497405069" TEXT="JsMockito"/>
+</node>
+<node CREATED="1345498036962" ID="ID_1341294827" MODIFIED="1345498039908" TEXT="test runners">
+<node CREATED="1345498040738" ID="ID_958243836" MODIFIED="1345498042945" TEXT="JSTD"/>
+<node CREATED="1345498043586" ID="ID_913775132" MODIFIED="1345498046628" TEXT="Selenium"/>
+<node CREATED="1345498050674" ID="ID_1689660245" MODIFIED="1345498052350" TEXT="Maven"/>
+</node>
+<node CREATED="1345498161412" ID="ID_76661814" MODIFIED="1345498181461" TEXT="re-use container setup"/>
+<node CREATED="1345498198387" ID="ID_367689265" MODIFIED="1345498218456">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Drone + QUnit | JSTD
+    </p>
+    <p>
+      Maven / Jenkins / IDE
+    </p>
+  </body>
+</html></richcontent>
+</node>
+<node CREATED="1345498783698" ID="ID_888165779" MODIFIED="1345498786933" TEXT="Test Swarm">
+<node CREATED="1345498800594" ID="ID_1873102038" MODIFIED="1345498807507" TEXT="javascript testing does not scale"/>
+<node CREATED="1345498790466" ID="ID_1710247740" MODIFIED="1345498799289" TEXT="Crowd sourcing for Browser Coverage"/>
+</node>
+</node>
+<node CREATED="1345238663370" ID="ID_1459444411" MODIFIED="1345238691862" TEXT="Automate">
+<node CREATED="1345238409908" ID="ID_441984118" MODIFIED="1345238438569" TEXT="Deploy web app, run tests"/>
+<node CREATED="1345238676439" ID="ID_1928305954" MODIFIED="1345238696089" TEXT="deployment: Arquillian"/>
+<node CREATED="1345238679451" ID="ID_919373586" MODIFIED="1345500120867" TEXT="run tests: Arquillian Extensions"/>
+</node>
+<node CREATED="1345238241752" ID="ID_318579687" MODIFIED="1345238510566" TEXT="Arquillian Extensions">
+<node CREATED="1345494736145" ID="ID_161878014" MODIFIED="1345500765028" TEXT="Arquillian Drone">
+<node CREATED="1345494720385" ID="ID_824333473" MODIFIED="1345494726258" TEXT="right tool for the job"/>
+<node CREATED="1345494763121" ID="ID_193285516" MODIFIED="1345494772146" TEXT="brings the browser inside the test"/>
+<node CREATED="1345237944920" ID="ID_1163712887" MODIFIED="1345240282744" TEXT="manages life-cycle of:">
+<node CREATED="1345238769804" ID="ID_1906091411" MODIFIED="1345238817264" TEXT="web testing tool">
+<node CREATED="1345237946895" ID="ID_1005311939" MODIFIED="1345237959594" TEXT="Graphene"/>
+<node CREATED="1345237960376" ID="ID_621324933" MODIFIED="1345237963275" TEXT="Selenium"/>
+<node CREATED="1345237963793" ID="ID_332593797" MODIFIED="1345237966241" TEXT="Webdriver"/>
+</node>
+<node CREATED="1345238790244" ID="ID_132269264" MODIFIED="1345238842022" TEXT="objects required for interaction between browser and deployed application"/>
+</node>
+<node CREATED="1345494774225" ID="ID_1744691008" MODIFIED="1345494790212">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      @Drone
+    </p>
+    <p>
+      FirefoxDriver browser;
+    </p>
+  </body>
+</html></richcontent>
+</node>
+<node CREATED="1345494851603" ID="ID_1779975180" MODIFIED="1345494860658" TEXT="Separation of concerns">
+<node CREATED="1345494861554" ID="ID_596718625" MODIFIED="1345494865894" TEXT="Devs focus on tests"/>
+<node CREATED="1345494866897" ID="ID_1028093237" MODIFIED="1345494872002" TEXT="QA focuses on automation"/>
+</node>
+</node>
+<node CREATED="1345494913905" ID="ID_1667329771" MODIFIED="1345500763960" TEXT="Arquillian graphene">
+<node CREATED="1345738908693" ID="ID_1508992952" MODIFIED="1345812309989" TEXT="Intro">
+<node CREATED="1345494953360" ID="ID_772307504" MODIFIED="1345504132552" TEXT="proven to handle AJAX"/>
+<node CREATED="1345737920085" ID="ID_722485696" MODIFIED="1345737957146" TEXT="Stores current webdriver context to the T.L.S.">
+<node CREATED="1345737943494" ID="ID_824410089" MODIFIED="1345738075606" TEXT="Allows for injection of selenium objects">
+<node CREATED="1345738046901" ID="ID_698649285" MODIFIED="1345738050458" TEXT="Contexts"/>
+<node CREATED="1345738051077" ID="ID_1744916957" MODIFIED="1345738052935" TEXT="Config"/>
+<node CREATED="1345738053750" ID="ID_1521074369" MODIFIED="1345738058800" TEXT="Page Objects"/>
+<node CREATED="1345738059366" ID="ID_461723949" MODIFIED="1345738065354" TEXT="Components Objects"/>
+</node>
+</node>
+<node CREATED="1345739620646" ID="ID_558108693" MODIFIED="1345739625836" TEXT="Utility Class">
+<node CREATED="1345739633398" ID="ID_301858740" MODIFIED="1345739639335" TEXT="Inspired by Mockito"/>
+<node CREATED="1345739652218" ID="ID_1167897538" MODIFIED="1345739668992" TEXT="Consolidates many Selnium APIs/Classes"/>
+</node>
+</node>
+<node CREATED="1345494965248" ID="ID_936469516" MODIFIED="1345494968419" TEXT="jquery selectors"/>
+<node CREATED="1345495297793" ID="ID_1236828611" MODIFIED="1345740832411" TEXT="Page Objects pattern">
+<node CREATED="1345495318380" ID="ID_1907461816" MODIFIED="1345738178069" TEXT="write one class per page">
+<node CREATED="1345495323841" ID="ID_685350133" MODIFIED="1345495341860" TEXT="encapsulates behaviour of the page"/>
+</node>
+<node CREATED="1345495348481" ID="ID_913617594" MODIFIED="1345738244904" TEXT="use P.O. to write fluent API that tests actions">
+<node CREATED="1345495378304" ID="ID_1596237568" MODIFIED="1345495380931" TEXT="code example"/>
+<node CREATED="1345738259189" ID="ID_536831202" MODIFIED="1345738267114" TEXT="for instance log in process"/>
+</node>
+<node CREATED="1345495392507" ID="ID_967068805" MODIFIED="1345812311376" STYLE="fork" TEXT="not suitable for AJAX tests"/>
+<node CREATED="1345737902149" ID="ID_305285358" MODIFIED="1345738292042" TEXT="Graphene allows injection of Page Objects"/>
+</node>
+<node CREATED="1345738304293" ID="ID_967713547" MODIFIED="1345740831531" TEXT="Component Objects">
+<node CREATED="1345738339397" ID="ID_1044943044" MODIFIED="1346731545375" TEXT="Break down page objects into more granular component objects">
+<node CREATED="1345738370010" ID="ID_1521223001" MODIFIED="1345738379350" TEXT="Better for suited for ajax tests"/>
+<node CREATED="1345738479670" ID="ID_262073035" MODIFIED="1345738488617" TEXT="Better for app using rich widgets"/>
+<node CREATED="1345738390518" ID="ID_1365378142" MODIFIED="1345738431866" TEXT="Allows for better re-use of code logic"/>
+<node CREATED="1345738435430" ID="ID_1198672088" MODIFIED="1345738443208" TEXT="Control widget from high-level API"/>
+</node>
+<node CREATED="1345495466802" ID="ID_370653493" MODIFIED="1345495496205">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      @FindBy(id=&quot;form:calendar&quot;)
+    </p>
+    <p>
+      Calendar calendar
+    </p>
+  </body>
+</html></richcontent>
+</node>
+<node CREATED="1345495514929" ID="ID_1987337166" MODIFIED="1345738599052" TEXT="build tests out of components (rather than tag elements)"/>
+<node CREATED="1345495542033" ID="ID_206718050" MODIFIED="1345495554838" TEXT="java interface encapsulates behvior of the component">
+<node CREATED="1345495564018" ID="ID_1952399210" MODIFIED="1345495604124">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      @Component
+    </p>
+    <p>
+      public class Calendar {
+    </p>
+    <p>
+      &#160;&#160;&#160;&#160;@Root
+    </p>
+    <p>
+      &#160;&#160;&#160;&#160;WebElement driver;
+    </p>
+    <p>
+      &#160;&#160;&#160;&#160;....
+    </p>
+    <p>
+      }
+    </p>
+  </body>
+</html></richcontent>
+</node>
+</node>
+<node CREATED="1345738671143" ID="ID_313870972" MODIFIED="1345738673121" TEXT="https://github.com/arquillian/arquillian-graphene/blob/master/graphene-webdriver/graphene-webdriver-ftest/src/test/java/org/jboss/arquillian/graphene/enricher/TestInitializingComponentObjects.java#L47"/>
+</node>
+<node CREATED="1345495057714" FOLDED="true" ID="ID_555268237" MODIFIED="1346352799554" TEXT="Interceptors">
+<node CREATED="1345495063265" ID="ID_1453281263" MODIFIED="1345495074111" TEXT="Cross-cutting concerns"/>
+<node CREATED="1345495076129" ID="ID_1971268230" MODIFIED="1345495094296" TEXT="eg. migrating tests from FF to IE, excpetion is thrown"/>
+</node>
+<node CREATED="1345494969073" FOLDED="true" ID="ID_1209678768" MODIFIED="1346352797482" TEXT="request guards">
+<node CREATED="1345738928310" ID="ID_1866481976" MODIFIED="1345739327703" TEXT="After user action, you have to wait for re-render">
+<node CREATED="1345738982687" ID="ID_556457907" MODIFIED="1345738994561" TEXT="Common pattern - timeout">
+<node CREATED="1345738997381" ID="ID_420854591" MODIFIED="1345739007515" TEXT="May be insufficient in CI"/>
+<node CREATED="1345739015429" ID="ID_13330053" MODIFIED="1345739027753" TEXT="waiting too long"/>
+</node>
+<node CREATED="1345739047512" FOLDED="true" ID="ID_530739987" MODIFIED="1345739324003" TEXT="Blocking call, waits for request to end">
+<node CREATED="1345739092822" ID="ID_1154596771" MODIFIED="1345739095483" TEXT="small timeout"/>
+<node CREATED="1345739096181" ID="ID_1729291529" MODIFIED="1345739100813" TEXT="retest until condition is met"/>
+</node>
+</node>
+<node CREATED="1345495005920" ID="ID_560813053" MODIFIED="1345495030156">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      guardXhr(button).click();
+    </p>
+    <p>
+      guardHttp(button).click();
+    </p>
+  </body>
+</html></richcontent>
+</node>
+<node CREATED="1345739270460" ID="ID_1486772691" MODIFIED="1345739387641" TEXT="waiting API">
+<node CREATED="1345739276012" ID="ID_418556410" MODIFIED="1345739457735">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      <a href="https://github.com/arquillian/arquillian-graphene/blob/master/graphene-webdriver/graphene-webdriver-ftest/src/test/java/org/jboss/arquillian/graphene/ftest/condition/ConditionsTestCase.java#L156">Demo</a>
+    </p>
+  </body>
+</html></richcontent>
+</node>
+<node CREATED="1345739278814" ID="ID_1315234082" MODIFIED="1345739289483" TEXT="Based off Selenium API">
+<node CREATED="1345739549237" ID="ID_362537132" MODIFIED="1345739553563" TEXT="insert code samples"/>
+</node>
+<node CREATED="1345739359574" ID="ID_1120529574" MODIFIED="1345739361599" TEXT="Graphene.waitModel().until(headerStyleAttributeFactory.isPresent());"/>
+</node>
+</node>
+<node CREATED="1345495038593" FOLDED="true" ID="ID_405653198" MODIFIED="1346173959828" TEXT="Page Extensions">
+<node CREATED="1345495049617" ID="ID_949132680" MODIFIED="1345495054179" TEXT="Script Injection">
+<node CREATED="1345495145377" ID="ID_984437398" MODIFIED="1345495153185" TEXT="@JavaScript(&quot;window&quot;)"/>
+<node CREATED="1345740054070" ID="ID_1080578319" MODIFIED="1345740071374" TEXT="leverages the WebDriver JavaScriptExecutor interface"/>
+</node>
+<node CREATED="1345739819318" ID="ID_582873802" MODIFIED="1345739826025" TEXT="Used internally">
+<node CREATED="1345739831870" ID="ID_135312890" MODIFIED="1345739838540" TEXT="enhance your page with javascript code"/>
+<node CREATED="1345739843276" ID="ID_1622489189" MODIFIED="1345739850225" TEXT="use injected javascript to manipulate the page"/>
+</node>
+<node CREATED="1345739859974" ID="ID_69042685" MODIFIED="1345740828231" TEXT="&quot;guards&quot; use case">
+<node CREATED="1345739921708" ID="ID_1649487769" MODIFIED="1345739973887" TEXT="js code required to impl guards"/>
+<node CREATED="1345739974405" ID="ID_1887837227" MODIFIED="1345739983999" TEXT="that js code is injected using page extensions API"/>
+</node>
+<node CREATED="1345740534230" ID="ID_1215762202" MODIFIED="1345740637174" TEXT="window API use case">
+<node CREATED="1345740607618" ID="ID_1410418017" MODIFIED="1345740629066" TEXT="@JavaScript(&#x201c;window&#x201d;) &#xa;public interface Window() {&#xa;      WebElement getElementById(String id); &#xa;}"/>
+</node>
+</node>
+</node>
+<node CREATED="1345499285661" ID="ID_1971630007" MODIFIED="1345500240859" TEXT="Arquillian Warp">
+<node CREATED="1345499296698" ID="ID_1398331949" MODIFIED="1345499305477" TEXT="clilent+server integration"/>
+<node CREATED="1345499336338" ID="ID_215463053" MODIFIED="1345499365670" TEXT="witih selenium, server is a black box"/>
+<node CREATED="1345499462610" ID="ID_93978113" MODIFIED="1345499469926" TEXT="client sends test to the server">
+<node CREATED="1345499473044" ID="ID_1945061372" MODIFIED="1345499490366" TEXT="enrich the request"/>
+<node CREATED="1345499477906" ID="ID_1540332965" MODIFIED="1345499484403" TEXT="enrich the response"/>
+</node>
+<node CREATED="1345499494258" ID="ID_1740429015" MODIFIED="1345499496884" TEXT="JSFUnit">
+<node CREATED="1345499501410" ID="ID_537538570" MODIFIED="1345499505236" TEXT="HtmlUnit"/>
+<node CREATED="1345499505970" ID="ID_1861563834" MODIFIED="1345499511238" TEXT="End of the Request State">
+<node CREATED="1345241981259" ID="ID_1365404704" MODIFIED="1345241991400" TEXT="Assert state at the end of the JSF lifecycle"/>
+</node>
+<node CREATED="1345499512146" ID="ID_1985427556" MODIFIED="1345499516838" TEXT="JSF Only">
+<node CREATED="1345499527719" ID="ID_609256076" MODIFIED="1345499534457" TEXT="No CDI, EJB etc."/>
+<node CREATED="1345245056289" ID="ID_1895237444" MODIFIED="1345246158205" TEXT="can&apos;t verify anything else than FacesContext state"/>
+<node CREATED="1345245090467" ID="ID_1071198071" MODIFIED="1345245091997" TEXT="should test also CDI beans, or anything what can Arq provide (enrich)"/>
+</node>
+</node>
+<node CREATED="1345499548754" ID="ID_450423183" MODIFIED="1345499554487" TEXT="JSUnit.NG">
+<node CREATED="1345499555594" ID="ID_1385834997" MODIFIED="1345505222375" TEXT="Selenium / any other HTTP client">
+<node CREATED="1345499565055" ID="ID_1039033358" MODIFIED="1345499571831" TEXT="not an &quot;in-container&quot; client"/>
+<node CREATED="1345240523010" ID="ID_1342278743" MODIFIED="1345240538481" TEXT="test a web application using real HTTP requests"/>
+</node>
+<node CREATED="1345499576647" ID="ID_1226564196" MODIFIED="1345569123131" TEXT="serialize the test, return result">
+<node CREATED="1345240567510" ID="ID_250087344" MODIFIED="1345240569159" TEXT="&quot;Testing on both sides of the request&quot;"/>
+<node CREATED="1345240539532" ID="ID_1746094789" MODIFIED="1345240540341" TEXT="verify server-side state and behavior"/>
+</node>
+<node CREATED="1345499585458" ID="ID_334937938" MODIFIED="1345499591090" TEXT="Test the entire lifecycle"/>
+<node CREATED="1345499591858" ID="ID_1736017017" MODIFIED="1345499596087" TEXT="Any injectable resource">
+<node CREATED="1345499596723" ID="ID_478010809" MODIFIED="1345499601620" TEXT="CDI, EJB, etc."/>
+<node CREATED="1345499604713" ID="ID_53451866" MODIFIED="1345499607366" TEXT="any framework"/>
+</node>
+</node>
+</node>
+</node>
+</node>
+<node CREATED="1345500308610" ID="ID_608459057" MODIFIED="1345500599233" POSITION="right" TEXT="Reduce test development turnaround">
+<node CREATED="1345500341416" ID="ID_220209086" MODIFIED="1345500348553" TEXT="Re-usable Browser Session"/>
+<node CREATED="1345500349394" ID="ID_459672419" MODIFIED="1345500356179" TEXT="Arquillian jRebel extension"/>
+<node CREATED="1345500356866" ID="ID_1977748383" MODIFIED="1345500362352" TEXT="sharing deployments across tests"/>
+<node CREATED="1345737540021" ID="ID_806631476" MODIFIED="1345737541974" TEXT="Cloud">
+<node CREATED="1345737545093" ID="ID_1838234753" MODIFIED="1345737547931" TEXT="Source Labs"/>
+<node CREATED="1345737548549" ID="ID_154364297" MODIFIED="1345737552278" TEXT="Openshift?"/>
+</node>
+</node>
+</node>
+</map>

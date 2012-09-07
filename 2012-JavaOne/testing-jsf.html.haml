@@ -32,26 +32,36 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
     %img{:src => "assets/images/silhouette.png", :alt => "http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232"}
 %section
   %h2 Who are you?
-  %ul
-    %li Who currently develops web applications with JSF?
-    %li Who is using Arquillian to test their application logic?
-    %li Who is using Selenium to test their application front-end?
+  %div
+    %img.plain{:src => "assets/images/crowd.png"}
+  .notes
+    %ul
+      %li Who currently develops web applications with JSF?
+      %li Who is using Arquillian to test their application logic?
+      %li Who is using Selenium to test their application front-end?
 %section
   %h2 Arquillian review
-  %ul
-    %li Micro-deployments
+  %div{:style => "float:left"}
+    %img.plain{:src => "assets/images/arquillian_ike.png"}
+    %h4 Don't mock me!
+  %ul.bullets.relative{:style => "top: 100px; left: 20px"}
     %li Container integration
     %li Bring the container to the test
-    %li Real tests - don't mock me!
+    %li Real tests
+    %li Micro-deployments
 %section
   %h2 Back-end testing
-  %ul
-    %li Today, a well understood problem
+  %img.plain{:src => "assets/images/check.png", :style => "float:left"}
+  %ul.relative{:style => "top: 150px; left: 20px"}
+    %li A well understood problem
 %section
   %h2 Back-end testing | Unit tests
-  %ul
-    %li JUnit
-    %li TestNG
+  %img.plain.relative{:src => "assets/images/masks.png", :style => "float:left; top: 50px"}
+  %div.relative{:style => "top: 100px"}
+    %h4 JUnit / TestNG
+    %ul.bullets{:style => "width: 500px"}
+      %li Easy to test self-contained logic
+      %li Mocks allow us to extend unit tests further
 %section
   %h2 Back-end testing | "Real" tests
   %ul
