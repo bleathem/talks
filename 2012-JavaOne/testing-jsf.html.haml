@@ -40,16 +40,6 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
       %li Who is using Arquillian to test their application logic?
       %li Who is using Selenium to test their application front-end?
 %section
-  %h2 Arquillian review
-  %div{:style => "float:left"}
-    %img.plain{:src => "assets/images/arquillian_ike.png"}
-    %h4 Don't mock me!
-  %ul.bullets.relative{:style => "top: 100px; left: 20px"}
-    %li Container integration
-    %li Bring the container to the test
-    %li Real tests
-    %li Micro-deployments
-%section
   %h2 Back-end testing
   %img.plain{:src => "assets/images/check.png", :style => "float:left"}
   %ul.relative{:style => "top: 150px; left: 20px"}
@@ -64,39 +54,176 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
       %li Mocks allow us to extend unit tests further
 %section
   %h2 Back-end testing | "Real" tests
-  %ul
-    %li Arquillian
-    %li run tests in the server
+  %img.plain.relative{:src => "assets/images/testing-tags.png", :style => "float:left; top: 50px"}
+  %div.relative{:style => "top: 100px"}
+    %h4 "Real tests"
+    %ul.bullets
+      %li Test code in-container
+      %li No "surprises" in production
 %section
-  %h2 Anti-pattern: Ice-cream Cone of test coverage
-  %div
-    %img{:src => "assets/images/softwaretestingicecreamconeantipattern.png", :alt => "http://watirmelon.files.wordpress.com/2012/01/softwaretestingicecreamconeantipattern.png", :style => "clear: both"}
+  %h2 Enter Arquillian
+  %div{:style => "float:left"}
+    %img.plain{:src => "assets/images/arquillian_ike.png"}
+    %h4 Don't mock me!
+  %ul.bullets.relative{:style => "top: 100px; left: 20px"}
+    %li Bring the container to the test
+    %li Micro-deployments
 %section
-  %h2 Ideal case: Ice-cream Cone of test coverage
-  %div
-    %img{:src => "assets/images/idealautomatedtestingpyramid.png", :alt => "http://watirmelon.files.wordpress.com/2012/01/idealautomatedtestingpyramid.png", :style => "clear: both"}
+  %section
+    %h2 Example | Greeter
+    %ul.bullets.relative{:style => "top: 100px"}
+      %li Basic Arquillian test
+      %li Demonstrate @Inject
+      %li Introduce Shrinkwrap
+  %section
+    %h2 Greeter | The Bean
+    %pre{:class => "prettyprint", :style => "font-size: 18px"}
+      %code{:id => "greeter"}
+        &nbsp;
+        :escaped
+          public class Greeter {
+
+              private PhraseBuilder phraseBuilder;
+
+              @Inject
+              public Greeter(PhraseBuilder phraseBuilder) {
+                  this.phraseBuilder = phraseBuilder;
+              }
+
+              public void greet(PrintStream to, String name) {
+                  to.println(createGreeting(name));
+              }
+
+              public String createGreeting(String name) {
+                  return phraseBuilder.buildPhrase("hello", name);
+              }
+          }
+        &nbsp;
+  %section
+    %h2 Greeter | Injection
+    %pre{:class => "prettyprint", :style => "font-size: 18px"}
+      %code{:id => "phraseBuilder"}
+        &nbsp;
+        :escaped
+          public class PhraseBuilder {
+              private Map<String, String> templates;
+
+              public String buildPhrase(String id, Object... args) {
+                  return MessageFormat.format(templates.get(id), args);
+              }
+
+              @PostConstruct
+              public void initialize() {
+                  templates = new HashMap<String, String>();
+                  templates.put("hello", "Hello, {0}!");
+              }
+          }
+        &nbsp;
+  %section
+    %h2 Greeter | Test
+    %pre{:class => "prettyprint", :style => "font-size: 15px"}
+      %code{:id => "basicTest"}
+        &nbsp;
+        :escaped
+          @RunWith(Arquillian.class)
+          public class GreeterTest {
+              @Deployment
+              public static JavaArchive createDeployment() {
+                  JavaArchive jar = ShrinkWrap.create(JavaArchive.class)
+                      .addClasses(Greeter.class, PhraseBuilder.class)
+                      .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+                  return jar;
+              }
+
+              @Inject
+              Greeter greeter;
+
+              @Test
+              public void should_create_greeting() {
+                  Assert.assertEquals("Hello, Earthling!",
+                      greeter.createGreeting("Earthling"));
+              }
+          }
+
+        &nbsp;
+      .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"1:1"}}
+      .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"3:8"}}
+      .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"10:11"}}
+      .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"13:17"}}
+  %section
+    %h2 The Magic
+    %ul
+      %li
+        POM Dependencies
+        %ul
+          %li Arquillian
+          %li JUnit | TestNG
+          %li Deployment Container
+      %li &nbsp;
+      %li
+        Arquillian.xml
+        %ul
+          %li Configuration of the test container
+  %section
+    %h2 Greeter | POM
+    %pre{:class => "prettyprint", :style => "font-size: 17px"}
+      %code{:id => "basicTest"}
+        &nbsp;
+        :escaped
+          <profile>
+              <id>arquillian-jbossas-managed</id>
+              <dependencies>
+                  ...
+                  <dependency>
+                      <groupId>org.jboss.as</groupId>
+                      <artifactId>jboss-as-arquillian-container-managed</artifactId>
+                      <version>7.1.1.Final</version>
+                      <scope>test</scope>
+                  </dependency>
+
+                  <dependency>
+                      <groupId>org.jboss.arquillian.protocol</groupId>
+                      <artifactId>arquillian-protocol-servlet</artifactId>
+                      <scope>test</scope>
+                  </dependency>
+
+              </dependencies>
+          </profile>
+        &nbsp;
 %section
-  %h2 Howto increase automated test coverage?
-  %ul
-    %li Unit tests of GUI code would neat lots of mocks
-    %li We want to focus on real-tests
-%section
-  %h2 Selenium
-  %ul
-    %li Test against lots of browsers w/ unified API
-    %li Headless testing via html unit
-%section
-  %h2 Selenium IDE - Easy!
-  %ul
-    %li Easy to write/record tests
-    %li replay tests against all browsers
-%section
-  %h2 Selenium - Problems!
-  %ul
-    %li No abstraction - highly repetitive
-    %li Maintenance problem
-    %li Tests focus against state transitions
-    %li Test only DOM/CSS expressed directly in the test
+  %section
+    %h2 Front-end Testing
+    %h3 Test the UX
+  %section
+    %h2 Ideal: Pyramid of test coverage
+    %div
+      %img{:src => "assets/images/idealautomatedtestingpyramid.png", :alt => "http://watirmelon.files.wordpress.com/2012/01/idealautomatedtestingpyramid.png", :style => "clear: both"}
+  %section
+    %h2 Reality: Ice-cream Cone of test coverage
+    %div
+      %img{:src => "assets/images/softwaretestingicecreamconeantipattern.png", :alt => "http://watirmelon.files.wordpress.com/2012/01/softwaretestingicecreamconeantipattern.png", :style => "clear: both"}
+  %section
+    %h2 Howto increase automated test coverage?
+    %ul
+      %li Unit tests of GUI code would neat lots of mocks
+      %li We want to focus on real-tests
+  %section
+    %h2 Selenium
+    %ul
+      %li Test against lots of browsers w/ unified API
+      %li Headless testing via html unit
+  %section
+    %h2 Selenium IDE - Easy!
+    %ul
+      %li Easy to write/record tests
+      %li replay tests against all browsers
+  %section
+    %h2 Selenium - Problems!
+    %ul
+      %li No abstraction - highly repetitive
+      %li Maintenance problem
+      %li Tests focus against state transitions
+      %li Test only DOM/CSS expressed directly in the test
 %section
   %h2 JS Testing
   %ul

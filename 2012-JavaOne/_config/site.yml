@@ -1,7 +1,7 @@
 profiles:
   development:
   production:
-    base_url: http://www.bleathem.ca/talks/2012-JAX/
+    base_url: http://www.bleathem.ca/talks/2012-JavaOne/
     deploy:
       host: bleathem.ca
-      path: /home/bleathem/bleathem.ca/talks/2012-JAX/
+      path: /home/bleathem/bleathem.ca/talks/2012-JavaOne/
