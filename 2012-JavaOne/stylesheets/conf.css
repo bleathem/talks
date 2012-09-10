@@ -138,6 +138,20 @@ ul.intro {
     line-height: normal;
 }
 
+.reveal dl dt, .reveal dl dd {
+    text-align: left;
+}
+
+.reveal dl dt {
+    font-weight: bold;
+    margin-top: 1em;
+}
+
+.reveal dl dd {
+    font-style: italic;
+    margin-left: 4em;
+}
+
 @media screen {
     .reveal .notes {
         display: none;

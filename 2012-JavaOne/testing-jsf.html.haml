@@ -73,10 +73,15 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
 %section
   %section
     %h2 Example | Greeter
-    %ul.bullets.relative{:style => "top: 100px"}
-      %li Basic Arquillian test
-      %li Demonstrate @Inject
-      %li Introduce Shrinkwrap
+    %div.relative{:style => "top: 100px"}
+      %h1{:style => "float: left; font-size: 120pt"}
+        Hello
+        %br
+        World!
+      %ul.bullets.relative{:style => "top: 60px"}
+        %li Basic Arquillian test
+        %li Demonstrate @Inject
+        %li Introduce Shrinkwrap
   %section
     %h2 Greeter | The Bean
     %pre{:class => "prettyprint", :style => "font-size: 18px"}
@@ -146,12 +151,11 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
                       greeter.createGreeting("Earthling"));
               }
           }
-
         &nbsp;
-      .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"1:1"}}
-      .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"3:9"}}
-      .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"11:12"}}
-      .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"14:18"}}
+    .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"1:1"}}
+    .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"3:9"}}
+    .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"11:12"}}
+    .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"14:18"}}
   %section
     %h2 The Magic
     %ul
@@ -245,10 +249,15 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
     %h2 Automating Client-side testing
     %ul
       %li Deploy the app, run the tests!
+    %div
+      %img.plain{:src => "assets/images/assembly_line.jpg", :alt => "http://www.flickr.com/photos/pasukaru76/6893926948/"}
+
   %section
     %h2 Deployment
     %ul
-      %li Already solved by arquillian!
+      %li Ike's got us covered!
+    %div
+      %img.plain{:src => "assets/images/arquillian_success.png"}
   %section
     %h2 Arquillian Extensions
     %dl
@@ -262,18 +271,26 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
   %section
     %h2 Arquillian Drone
     %ul
-      %li Manages the life-cycle of objects required for interaction between browser and deployed application
+      %li
+        Manages the life-cycle of objects required for interaction between browser and deployed application
+        %ul
+          %li Browser
+          %li Selenium server
+  %section
+    %h2 Arquillian Drone
+    %ul
       %li
         Integrates with:
         %ul
           %li Arquillian Graphene
           %li Selenium/Webdriver
-    %pre{:class => "prettyprint"}
+    %pre{:class => "prettyprint", :style => "font-size: 30px"}
       %code
         &nbsp;
         :escaped
           @Drone
           FirefoxDriver browser
+        &nbsp;
   %section
     %h2 Separation of concerns
     %ul
