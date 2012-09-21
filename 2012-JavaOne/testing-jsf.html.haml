@@ -219,6 +219,32 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
       %li Let's focus on real-tests
 %section
   %section
+    %h2 Real tests &rarr; real browsers
+    .images.white{:style => "margin-top: 50px"}
+      %table
+        %tr
+          %td
+            %img.relative{:src => "assets/images/browsers/firefox.png", :style => "left: 50px"}
+          %td
+            %img.relative{:src => "assets/images/browsers/chrome.png", :style => "top: -50px"}
+          %td
+            %img.relative{:src => "assets/images/browsers/ie.png", :style => "left: -50px"}
+        %tr
+          %td
+            %img.relative{:src => "assets/images/browsers/opera.png"}
+          %td
+            %img.relative{:src => "assets/images/browsers/safari.jpg"}
+          %td
+            %img.relative{:src => "assets/images/browsers/konqueror.png"}
+        %tr
+          %td
+            %img.relative{:src => "assets/images/browsers/epiphany.png", :style => "left: 50px"}
+          %td
+            %img.relative{:src => "assets/images/browsers/camino.png", :style => "top: 50px"}
+          %td
+            %img.relative{:src => "assets/images/browsers/seamonkey.png", :style => "left: -50px"}
+
+  %section
     %h2 Selenium
     %div.relative{:style => "top: 30px"}
       %img.plain{:src => "assets/images/selenium.png", :style => "float:left"}
@@ -253,11 +279,18 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
       %img.plain{:src => "assets/images/assembly_line.jpg", :alt => "http://www.flickr.com/photos/pasukaru76/6893926948/"}
 
   %section
-    %h2 Deployment
-    %ul
-      %li Ike's got us covered!
-    %div
+    %h2 Container lifecycle
+    %div{:style => "float:left;"}
       %img.plain{:src => "assets/images/arquillian_success.png"}
+      %h4 Ike's got us covered!
+    %ul.bullets.relative{:style => "top: 100px; left: 20px; width: 450px; float:right"}
+      %li Startup/shutdown the container
+      %li Create the testable archive
+      %li Deploy the application
+  %section
+    %h2 Client lifecycle?
+    %ul
+      %li Browser
   %section
     %h2 Arquillian Extensions
     %dl
