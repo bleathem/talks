@@ -72,7 +72,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
       %li Micro-deployments
 %section
   %section
-    %h2 Example | Greeter
+    %h2 Example | GreeterTest
     %div.relative{:style => "top: 100px"}
       %h1{:style => "float: left; font-size: 120pt"}
         Hello
@@ -83,79 +83,76 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
         %li Demonstrate @Inject
         %li Introduce Shrinkwrap
   %section
-    %h2 Greeter | The Bean
+    %h2 GreeterTest | The Bean
     %pre{:class => "prettyprint", :style => "font-size: 18px"}
       %code{:id => "greeter"}
-        &nbsp;
-        :escaped
-          public class Greeter {
+        = preserve do
+          :escaped
+            public class Greeter {
 
-              private PhraseBuilder phraseBuilder;
+                private PhraseBuilder phraseBuilder;
 
-              @Inject
-              public Greeter(PhraseBuilder phraseBuilder) {
-                  this.phraseBuilder = phraseBuilder;
-              }
+                @Inject
+                public Greeter(PhraseBuilder phraseBuilder) {
+                    this.phraseBuilder = phraseBuilder;
+                }
 
-              public void greet(PrintStream to, String name) {
-                  to.println(createGreeting(name));
-              }
+                public void greet(PrintStream to, String name) {
+                    to.println(createGreeting(name));
+                }
 
-              public String createGreeting(String name) {
-                  return phraseBuilder.buildPhrase("hello", name);
-              }
-          }
-        &nbsp;
+                public String createGreeting(String name) {
+                    return phraseBuilder.buildPhrase("hello", name);
+                }
+            }
   %section
-    %h2 Greeter | Injection
+    %h2 GreeterTest | Injection
     %pre{:class => "prettyprint", :style => "font-size: 18px"}
       %code{:id => "phraseBuilder"}
-        &nbsp;
-        :escaped
-          public class PhraseBuilder {
-              private Map<String, String> templates;
+        = preserve do
+          :escaped
+            public class PhraseBuilder {
+                private Map<String, String> templates;
 
-              public String buildPhrase(String id, Object... args) {
-                  return MessageFormat.format(templates.get(id), args);
-              }
+                public String buildPhrase(String id, Object... args) {
+                    return MessageFormat.format(templates.get(id), args);
+                }
 
-              @PostConstruct
-              public void initialize() {
-                  templates = new HashMap<String, String>();
-                  templates.put("hello", "Hello, {0}!");
-              }
-          }
-        &nbsp;
+                @PostConstruct
+                public void initialize() {
+                    templates = new HashMap<String, String>();
+                    templates.put("hello", "Hello, {0}!");
+                }
+            }
   %section
-    %h2 Greeter | Test
+    %h2 GreeterTest | Test
     %pre{:class => "prettyprint", :style => "font-size: 15px"}
       %code{:id => "basicTest"}
-        &nbsp;
-        :escaped
-          @RunWith(Arquillian.class)
-          public class GreeterTest {
-              @Deployment
-              public static JavaArchive createDeployment() {
-                  JavaArchive jar = ShrinkWrap.create(JavaArchive.class)
-                      .addClasses(Greeter.class, PhraseBuilder.class)
-                      .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
-                  return jar;
-              }
+        = preserve do
+          :escaped
+            @RunWith(Arquillian.class)
+            public class GreeterTest {
+                @Deployment
+                public static JavaArchive createDeployment() {
+                    JavaArchive jar = ShrinkWrap.create(JavaArchive.class)
+                        .addClasses(Greeter.class, PhraseBuilder.class)
+                        .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+                    return jar;
+                }
 
-              @Inject
-              Greeter greeter;
+                @Inject
+                Greeter greeter;
 
-              @Test
-              public void should_create_greeting() {
-                  Assert.assertEquals("Hello, Earthling!",
-                      greeter.createGreeting("Earthling"));
-              }
-          }
-        &nbsp;
+                @Test
+                public void should_create_greeting() {
+                    Assert.assertEquals("Hello, Earthling!",
+                        greeter.createGreeting("Earthling"));
+                }
+            }
     .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"1:1"}}
     .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"3:9"}}
     .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"11:12"}}
-    .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"14:18"}}
+    .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"14:17"}}
   %section
     %h2 The Magic
     %ul
@@ -171,31 +168,32 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
         %ul
           %li Configuration of the test container
   %section
-    %h2 Greeter | POM
+    %h2 GreeterTest | POM
     %pre{:class => "prettyprint", :style => "font-size: 17px"}
       %code{:id => "basicTest"}
-        &nbsp;
-        :escaped
-          <profile>
-              <id>arquillian-jbossas-managed</id>
-              <dependencies>
-                  ...
-                  <dependency>
-                      <groupId>org.jboss.as</groupId>
-                      <artifactId>jboss-as-arquillian-container-managed</artifactId>
-                      <version>7.1.1.Final</version>
-                      <scope>test</scope>
-                  </dependency>
+        = preserve do
+          :escaped
+            <profile>
+                <id>arquillian-jbossas-managed</id>
+                <dependencies>
+                    ...
+                    <dependency>
+                        <groupId>org.jboss.as</groupId>
+                        <artifactId>jboss-as-arquillian-container-managed</artifactId>
+                        <version>7.1.1.Final</version>
+                        <scope>test</scope>
+                    </dependency>
 
-                  <dependency>
-                      <groupId>org.jboss.arquillian.protocol</groupId>
-                      <artifactId>arquillian-protocol-servlet</artifactId>
-                      <scope>test</scope>
-                  </dependency>
+                    <dependency>
+                        <groupId>org.jboss.arquillian.protocol</groupId>
+                        <artifactId>arquillian-protocol-servlet</artifactId>
+                        <scope>test</scope>
+                    </dependency>
 
-              </dependencies>
-          </profile>
-        &nbsp;
+                </dependencies>
+            </profile>
+  %section
+    %h1.relative.demo Demo Time
 %section
   %section
     %h2 Front-end Testing
@@ -272,6 +270,66 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
         %li Test only DOM/CSS expressed directly in the test
 %section
   %section
+    %h2 Example | Selenium
+  %section
+    %h2 Selenium Ex. | The App
+    %img{:src => "assets/images/kitchensink.png"}
+  %section
+    %h2 Selenium Ex. | IDE
+    %img{:src => "assets/images/selenium-ide-test.png"}
+  %section
+    %h2 Selenium Ex. | The Test
+    %pre{:class => "prettyprint", :style => "font-size: 10px"}
+      %code{:id => "selenium"}
+        = preserve do
+          :escaped
+            public class SeleniumTest {
+                private WebDriver driver;
+                private String baseUrl;
+                private StringBuffer verificationErrors = new StringBuffer();
+
+                @Before
+                public void setUp() throws Exception {
+                  driver = new FirefoxDriver();
+                  baseUrl = "http://kitchensink-richfaces.rhcloud.com/";
+                  driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+                }
+
+                @Test
+                public void test() throws Exception {
+                  driver.get(baseUrl + "/");
+                  driver.findElement(By.id("reg:memberForm:name")).clear();
+                  driver.findElement(By.id("reg:memberForm:name")).sendKeys("Brian Leathem");
+                  driver.findElement(By.id("reg:memberForm:email")).clear();
+                  driver.findElement(By.id("reg:memberForm:email")).sendKeys("bleathem@test.ca");
+                  driver.findElement(By.id("reg:memberForm:phoneNumber")).clear();
+                  driver.findElement(By.id("reg:memberForm:phoneNumber")).sendKeys("234234234235");
+                  driver.findElement(By.id("reg:register")).click();
+                  Thread.sleep(2000);
+                  try {
+                    assertEquals("Brian Leathem", driver
+                      .findElement(By.id("reg:memberTable:0:member_name")).getText());
+                  } catch (Error e) {
+                    verificationErrors.append(e.toString());
+                  }
+                }
+
+                @After
+                public void tearDown() throws Exception {
+                  driver.quit();
+                  String verificationErrorString = verificationErrors.toString();
+                  if (!"".equals(verificationErrorString)) {
+                    fail(verificationErrorString);
+                  }
+                }
+            }
+    .fragment.screen{:data=>{:prettify=>"selenium", :prettify_lines=>"6:11"}}
+    .fragment.screen{:data=>{:prettify=>"selenium", :prettify_lines=>"13:29"}, :style => "top: -100px; margin: 0 -90px"}
+    .fragment.screen{:data=>{:prettify=>"selenium", :prettify_lines=>"32:39"}, :style => "top: -150px; margin: 0 -90px"}
+  %section
+    %h1.relative.demo Demo Time
+%section
+  %section
     %h2 Automating Client-side testing
     %ul
       %li Deploy the app, run the tests!
@@ -283,32 +341,32 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
     %div{:style => "float:left;"}
       %img.plain{:src => "assets/images/arquillian_success.png"}
       %h4 Ike's got us covered!
-    %ul.bullets.relative{:style => "top: 100px; left: 20px; width: 450px; float:right"}
+    %ul.bullets.relative{:style => "top: 100px; left: 20px; width: 450px"}
       %li Startup/shutdown the container
       %li Create the testable archive
       %li Deploy the application
   %section
     %h2 Client lifecycle?
-    %ul
-      %li Browser
+    %img.plain{:src => "assets/images/browser.png", :style => "float:left;"}
+    %ul.relative{:style => "top: 150px"}
+      %li Start / Stop the Browser
   %section
     %h2 Arquillian Extensions
     %dl
       %dt Arquillian Drone
       %dd Brings the browser to the test
       %dt Arquillian Graphene
-      %dd Type-safe API to Selnium
+      %dd Selenium integration and extension
       %dt Arquillian Warp
       %dd Testing on both sides of the request
 %section
   %section
     %h2 Arquillian Drone
-    %ul
-      %li
-        Manages the life-cycle of objects required for interaction between browser and deployed application
-        %ul
-          %li Browser
-          %li Selenium server
+    %div.relative{:style => "top: 100px;"}
+      %img.plain{:src => "assets/images/drone.png", :style => "float:left;"}
+      %ul.relative{:style => "top: 40px; left: 20px; width: 500px"}
+        %li
+          Manages the life-cycle of objects required for interaction between browser and deployed application
   %section
     %h2 Arquillian Drone
     %ul
@@ -317,82 +375,200 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
         %ul
           %li Arquillian Graphene
           %li Selenium/Webdriver
-    %pre{:class => "prettyprint", :style => "font-size: 30px"}
+    %pre.relative{:class => "prettyprint", :style => "font-size: 20px; top: 50px"}
       %code
-        &nbsp;
-        :escaped
-          @Drone
-          FirefoxDriver browser
-        &nbsp;
+        = preserve do
+          :escaped
+            @Drone
+            WebDriver browser
+    %br
+    %pre.relative{:class => "prettyprint", :style => "font-size: 20px; top: 50px"}
+      %code
+        = preserve do
+          :escaped
+            <extension qualifier="webdriver">
+                <property name="browserCapabilities">chrome</property>
+            </extension>
   %section
     %h2 Separation of concerns
-    %ul
-      %li Devs focus on authoring tests
-      %li QA focus on automating tests
+    %div{:style => "float:left; width:450px"}
+      %p Devs focus: Author tests
+      %img{:src => "assets/images/build.jpg", :style => "width:400px", :alt => "http://www.flickr.com/photos/metrolibraryarchive/3267555668/"}
+    %div{:style => "float:right; width:450px"}
+      %img{:src => "assets/images/inspection.jpg", :style => "width:400px", :alt => "http://www.flickr.com/photos/metrolibraryarchive/3267249336/"}
+      %p QA focus: Automate tests
+%section
+  %section
+    %h2 Example | GoogleTest
+    %div.relative{:style => "top: 50px"}
+      %img{:src => "assets/images/google.png", :style => "float:left;"}
+      %ul.bullets.relative{:style => "top: 100px"}
+        %li Simple Drone test
+        %li Demonstrate @Drone
+  %section
+    %h2 GoogleTest | Test
+    %pre.relative{:class => "prettyprint", :style => "font-size: 20px; top: 50px"}
+      %code{:id => "googleTest"}
+        = preserve do
+          :escaped
+            @RunWith(Arquillian.class)
+            public class GoogleTest {
+
+                URL url = URLUtils.buildUrl("http://www.google.com/");
+
+                @Drone
+                WebDriver browser;
+
+                @Test
+                public void testOpeningHomePage() {
+                    browser.get(url.toString());
+                }
+            }
+  %section
+    %h1.relative.demo Demo Time
 %section
   %section
     %h2 Arquillian Graphene
-    %ul
-      %li Provides a type-safe API to selenium
-      %li proven to handle AJAX
+    %img{:src => "assets/images/graphene.jpg", :style => "float: left; width:400px", :alt => "http://www.flickr.com/photos/core-materials/5057399792/"}
+    %div.relative{:style => "top: 150px; left: 25px"}
+      %p.left
+        Selenium
+        %span{:style => "font-variant : small-caps; font-style: italic; font-weight: bold"} Arquillian-Style
+  %section
+    %h2 Graphene 1.0
+    %dl
+      %dt GrapheneSelenium class
+      %dd type-safe Selenium class for Selenium 1.x
+    %pre.relative{:class => "prettyprint", :style => "top: 100px; font-size:25px"}
+      %code
+        = preserve do
+          :escaped
+            @Drone
+            GrapheneSelenium browser;
+    %canvas.fragment.screen.canvas
+  %section
+    %h2 Graphene 2.0
+    %img.plain{:src => "assets/images/needle.png", :style => "float:left;"}
+    %ul.bullets.relative{:style => "width: 450px; left: 50px; top: 50px"}
+      %li @Inject Page and DOM objects into your tests
+      %li Simplify AJAX tests
       %li Page Extensions
       %li Interceptors
   %section
-    %h2 Type-safe API to selenium
-    %ul
-      %li GrapheneSelenium class is type-safe equivalent of Selenium class in Selenium 1.x
-    %pre{:class => "prettyprint"}
+    %h2
+      %span{:style => "font-variant: small-caps; text-transform: none"} @FindBy
+      Injection
+    %br
+    %p.left Selenium/WebDriver API:
+    %pre.relative{:class => "prettyprint", :style => "font-size:25px"}
       %code
-        &nbsp;
-        :escaped
-          @Drone
-          GrapheneSelenium browser;
+        = preserve do
+          :escaped
+            WebElement username
+                = driver.findElement(By.id("username"))
+    %br
+    %p.left Graphene Injection:
+    %pre.relative{:class => "prettyprint", :style => "font-size:25px"}
+      %code
+        = preserve do
+          :escaped
+            @FindBy(id="username")
+            WebElement username;
+%section
   %section
-    %h2 Ajax with Graphene
+    %h2 Page objects
+    %img{:src => "assets/images/page.png", :style => "float:left;"}
+    %div
+      %ul.bullets.relative{:style => "width: 450px; left: 50px; top: 50px"}
+        %li A class that encapsulates the behaviour of a page
+      %pre.relative{:class => "prettyprint", :style => "font-size: 20px; width: 525px; margin-right: 0; top: 70px"}
+        %code
+          = preserve do
+            :escaped
+              @Page
+              LoginPage loginPage
+      %pre.relative{:class => "prettyprint", :style => "font-size: 20px; width: 525px; margin-right: 0; top: 70px;"}
+        %code{:style => "margin=left: 0; padding: 0"}
+          = preserve do
+            :escaped
+              loginPage.loginAs("username", "password");
+  %section
+    %h2 Page Fragments
+    %img{:src => "assets/images/page-fragment.png", :style => "float:left;"}
+    %ul.bullets.relative{:style => "width: 450px; left: 50px; top: 50px"}
+      %li Follow on to the Page Objects Selenium Pattern
+      %li Encapsulate page markup
+    %pre.relative{:class => "prettyprint", :style => "font-size: 20px; width: 525px; margin-right: 0; top: 70px;"}
+      %code
+        = preserve do
+          :escaped
+            @FindBy(css=".pickList")
+            PickListComponent pickList;
+  %section
+    %h2 Ajax Tests w/ Page fragments
     %ul
-      %li jQuery selectors
-      %li
-        Request guards
-        %ul
-          %li guardXhr(button).click();
-          %li guardHttp(button).click();
+      %li build tests out of components (rather than pages)
+    %pre{:class => "prettyprint", :style => "font-size: 18px"}
+      %code
+        = preserve do
+          :escaped
+            @FindBy(id="form:calendar")
+            Calendar calendar
+    %pre{:class => "prettyprint", :style => "font-size: 18px"}
+      %code
+        = preserve do
+          :escaped
+            @Component
+            public class Calendar {
+                @Root
+                WebElement driver;
+                ....
+            }
+%section
+  %section
+    %h2 Request guards
+    %img{:src => "assets/images/beefeater.jpg", :style => "float:left;", :alt => "http://www.flickr.com/photos/abennett96/2717629123/"}
+    %div.relative{:style => "top: 50px; left: 20px"}
+      %p.left{:style => "font-style: italic"} Blocks the Selenium test execution until a network communication caused by a given action ends
+      %dl
+        %dt guardHttp(button).click();
+        %dd blocks on HTTP
+        %dt guardXhr(button).click();
+        %dd blocks on XHR (Ajax)
+  %section
+    %h2 Request guards | Example
+%section
   %section
     %h2 Page Extensions
-    %ul
-      %li Represent the JavaScript extensions on the tested page
-      %li Follow on to the Page Objects Selenium Pattern
+    %p.left{:style => "font-style: italic"} Allow you to inject arbitrary JavaScript code in the page under the test
     %pre{:class => "prettyprint"}
       %code
-        &nbsp;
-        :escaped
-          @JavaScript("window")
+        = preserve do
+          :escaped
+            @JavaScript("window")
   %section
-    %h2 Page objects Pattern | Review
-    %ul
-      %li Write one class per page
-      %li Encapsulates behaviour of the page
-      %li Write an API that supports page transitions
-      %li Not suitable for AJAX
-  %section
-    %h2 Ajax w/ Page Extensions
-    %ul
-      %li build tests out of components (rhater than pages)
+    %h2 Request Guards | Impl
     %pre{:class => "prettyprint"}
       %code
-        &nbsp;
-        :escaped
-          @FindBy(id="form:calendar")
-          Calendar calendar
-    %pre{:class => "prettyprint"}
-      %code
-        &nbsp;
-        :escaped
-          @Component
-          public class Calendar {
-              @Root
-              WebElement driver;
-              ....
-          }
+        = preserve do
+          :escaped
+            @JavaScript(value = "Graphene.Page.RequestGuard")
+            @Dependency(sources = "Graphene.Page.RequestGuard.js", interfaces=XhrInterception.class)
+            public interface RequestGuard extends InstallableJavaScript {
+
+                /**
+                 * @return the last request type
+                 */
+                RequestType getRequestDone();
+
+                /**
+                 * Clears the request type cache and returns the last request type
+                 * @return the last request type
+                 */
+                RequestType clearRequestDone();
+
+            }
+%section
   %section
     %h2 Interceptors with Graphene
     %ul
@@ -457,6 +633,15 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
   %ul.links
     %li
       %a{:href => "http://www.flickr.com/photos/jdhancock/5845280258/"} http://www.flickr.com/photos/jdhancock/5845280258/
+      %a{:href => "http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232"} http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232
+      %a{:href => "http://watirmelon.files.wordpress.com/2012/01/idealautomatedtestingpyramid.png"} http://watirmelon.files.wordpress.com/2012/01/idealautomatedtestingpyramid.png
+      %a{:href => "http://watirmelon.files.wordpress.com/2012/01/softwaretestingicecreamconeantipattern.png"} http://watirmelon.files.wordpress.com/2012/01/softwaretestingicecreamconeantipattern.png
+      %a{:href => "http://www.flickr.com/photos/cellardoorfilms/7620375702/"} http://www.flickr.com/photos/cellardoorfilms/7620375702/
+      %a{:href => "http://www.flickr.com/photos/pasukaru76/6893926948/"} http://www.flickr.com/photos/pasukaru76/6893926948/
+      %a{:href => "http://www.flickr.com/photos/metrolibraryarchive/3267555668/"} http://www.flickr.com/photos/metrolibraryarchive/3267555668/
+      %a{:href => "http://www.flickr.com/photos/metrolibraryarchive/3267249336/"} http://www.flickr.com/photos/metrolibraryarchive/3267249336/
+      %a{:href => "http://www.flickr.com/photos/core-materials/5057399792/"} http://www.flickr.com/photos/core-materials/5057399792/
+      %a{:href => "http://www.flickr.com/photos/abennett96/2717629123/"} http://www.flickr.com/photos/abennett96/2717629123/
     .links.commons
       :plain
         <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons Licence" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">GOING MOBILE With Your RichFaces Applications</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="www.bleathem.ca/talks/2012-JBW/richfaces-mobile.html" property="cc:attributionName" rel="cc:attributionURL">Brian Leathem</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/bleathem/talks/tree/master/2012-JBW" rel="dct:source">github.com</a>.<br />Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/bleathem/talks/tree/master/2012-JBW" rel="cc:morePermissions">https://github.com/bleathem/talks/tree/master/2012-JBW</a>.

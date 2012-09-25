@@ -71,9 +71,15 @@ ul.intro {
     text-align: left;
 }
 
+.reveal .demo {
+    font-size: 200px;
+    top: 150px;
+}
+
 .reveal .prettyprint {
     background-color: #ffffff;
     border: none;
+    padding: 10px;
 }
 
 .reveal .prettyprint .prettyprint {
