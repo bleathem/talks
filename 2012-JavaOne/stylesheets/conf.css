@@ -76,6 +76,10 @@ ul.intro {
     top: 150px;
 }
 
+.reveal .monospace {
+    font-family: monospace;
+}
+
 .reveal .prettyprint {
     background-color: #ffffff;
     border: none;

@@ -80,7 +80,9 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
         World!
       %ul.bullets.relative{:style => "top: 60px"}
         %li Basic Arquillian test
-        %li Demonstrate @Inject
+        %li
+          Demonstrate
+          %span.monospace @Inject
         %li Introduce Shrinkwrap
   %section
     %h2 GreeterTest | The Bean
@@ -404,7 +406,9 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
       %img{:src => "assets/images/google.png", :style => "float:left;"}
       %ul.bullets.relative{:style => "top: 100px"}
         %li Simple Drone test
-        %li Demonstrate @Drone
+        %li
+          Demonstrate
+          %span.monospace @Drone
   %section
     %h2 GoogleTest | Test
     %pre.relative{:class => "prettyprint", :style => "font-size: 20px; top: 50px"}
@@ -450,16 +454,16 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
     %h2 Graphene 2.0
     %img.plain{:src => "assets/images/needle.png", :style => "float:left;"}
     %ul.bullets.relative{:style => "width: 450px; left: 50px; top: 50px"}
-      %li @Inject Page and DOM objects into your tests
+      %li Inject Page and DOM objects into your tests
       %li Simplify AJAX tests
       %li Page Extensions
       %li Interceptors
+%section
   %section
     %h2
-      %span{:style => "font-variant: small-caps; text-transform: none"} @FindBy
-      Injection
+      %span WebDriver Injection
     %br
-    %p.left Selenium/WebDriver API:
+    %p.left Selenium/WebDriver programmatic API:
     %pre.relative{:class => "prettyprint", :style => "font-size:25px"}
       %code
         = preserve do
@@ -467,13 +471,20 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
             WebElement username
                 = driver.findElement(By.id("username"))
     %br
-    %p.left Graphene Injection:
+    %p.left alternative @FindBy annotation:
     %pre.relative{:class => "prettyprint", :style => "font-size:25px"}
       %code
         = preserve do
           :escaped
             @FindBy(id="username")
             WebElement username;
+  %section
+    %h2 Graphene Injection
+    %dl
+      %dt.monospace @FindBy
+      %dd Extend to more than just WebElement objects
+      %dt.monospace @Page
+      %dd Injection of Selenium Page objects
 %section
   %section
     %h2 Page objects
@@ -575,29 +586,99 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
       %li Cross-cutting concerns
 %section
   %section
+    %h2 Graphene | Example
+    %pre{:class => "prettyprint", :style => "font-size: 8px"}
+      %code
+        = preserve do
+          :escaped
+            RunWith(Arquillian.class)
+            @Ignore
+            public class PickListTest {
+                private static final String WEBAPP_SRC = "src/main/webapp";
+
+                @Deployment(testable = false)
+                public static WebArchive createDeployment() {
+                    MavenDependencyResolver resolver = DependencyResolvers.use(
+                            MavenDependencyResolver.class).loadMetadataFromPom("pom.xml");
+
+                    return ShrinkWrap.create(WebArchive.class, "picklist.war")
+                            .addPackage(RichBean.class.getPackage())
+                            .addAsWebResource(new File(WEBAPP_SRC + "/pickList", "pickList.xhtml"))
+                            .addAsWebResource(new File(WEBAPP_SRC + "/pickList", "pickList_strings.xhtml"))
+                            .addAsWebResource(new File(WEBAPP_SRC + "/pickList", "pickList_composite.xhtml"))
+                            .addAsWebResource(new File(WEBAPP_SRC + "/resources/components", "pickList.xhtml"), "/resources/components/pickList.xhtml")
+                            .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+                            .addAsWebInfResource(new StringAsset("<faces-config version=\"2.0\"/>"), "faces-config.xml")
+                            .addAsLibraries(resolver.artifact("org.richfaces.ui:richfaces-components-ui:4.3.0-SNAPSHOT").resolveAsFiles())
+                            .addAsLibraries(resolver.artifact("org.richfaces.core:richfaces-core-impl:4.3.0-SNAPSHOT").resolveAsFiles());
+                }
+
+                @Drone
+                WebDriver browser;
+
+                @ArquillianResource
+                URL deploymentURL;
+
+                @FindBy(css=".pickList")
+                PickListComponent pickList;
+
+                @FindBy(css=".submitButton")
+                WebElement submitButton;
+
+                @FindBy(css=".out")
+                WebElement outPanel;
+
+                @Test
+                public void testPickListInPage() {
+                    String page = deploymentURL + "pickList.jsf";
+                    browser.get(page);
+
+                    pickList.addAll();
+                    Graphene.waitGui();
+                    submitButton.submit();
+                    List<WebElement> elements = outPanel.findElements(By.cssSelector(".value"));
+                    List<String> values = new ArrayList<String>(elements.size());
+                    for (WebElement element : elements) {
+                        values.add(element.getText());
+                    }
+                    Assert.assertEquals(5, values.size());
+                    Assert.assertEquals(pickList.getSelectedItems(), values);
+                }
+
+%section
+  %section
     %h2 Arquillian Warp
-    %ul
-      %li Testing on both sides of the request
-      %li En-rich the client request with a test to run on the server
-      %li En-rich the server response with results of the test
+    %div.relative{:style => "top: 50px"}
+      %img.plain{:src => "assets/images/warp.png", :style => "float: left;"}
+      %ul.bullets.relative{:style => "width: 450px; left: 50px;"}
+        %li Testing on both sides of the request
+        %li En-rich the client request with a test to run on the server
+        %li En-rich the server response with results of the test
   %section
     %h2 JSFUnit | the old way
-    %ul
-      %li HtmlUnit
-      %li Assert state only at the end of the JSF lifecycle
-      %li JSF Only (No CDI, EJB etc.)
+    %div.relative{:style => "top: 20px"}
+      %img.plain{:src => "assets/images/jsfunit.png", :style => "float: left;"}
+      %ul.bullets.relative{:style => "width: 450px; left: 50px; top: 100px"}
+        %li HtmlUnit - no real browsers
+        %li Assert state only at the end of the JSF lifecycle
+        %li JSF Only (No CDI, EJB etc.)
   %section
-    %h2 Warp = JSFUnit.NG
-    %ul
-      %li Selenium / any other HTTP client
-      %li serialize the test, return result
-      %li Test the entire lifecycle
-      %li
-        Any injectable resource
-        %ul
-          %li CDI
-          %li EJB
-          %li Any framework!
+    %h2 Warp | the new way
+    %div.relative{:style => "top: 20px"}
+      %img.plain{:src => "assets/images/new.png", :style => "float: left;"}
+      %ul.bullets.relative{:style => "width: 450px; left: 50px;"}
+        %li Selenium / any other HTTP client
+        %li serialize the test, return result
+        %li Test the entire lifecycle
+        %li
+          Any injectable resource
+          %ul
+            %li CDI
+            %li EJB
+            %li Any framework!
+%section
+  %section
+    %h2 Warp | Example
 %section
   %h2 Reducing test development turnaround
   %ul
