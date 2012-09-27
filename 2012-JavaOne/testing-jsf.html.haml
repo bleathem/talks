@@ -21,7 +21,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
       %li Testing the Back-end
       %li Testing the Front-end
     %div
-      %img{:src => "assets/images/storm_troopers.jpg", :alt => "http://www.flickr.com/photos/jdhancock/5845280258/", :style => "clear: both"}
+      %img.clear{:src => "assets/images/storm_troopers.jpg", :alt => "http://www.flickr.com/photos/jdhancock/5845280258/"}
   %section
     %h2 Who am I?
     %ul
@@ -43,42 +43,43 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
 %section
   %section
     %h2 Back-end testing
-    %img.plain{:src => "assets/images/check.png", :style => "float:left"}
-    %ul.relative{:style => "top: 150px; left: 20px"}
-      %li A well understood problem
+    %div.relative.inline{:style => "top: 50px"}
+      %img.plain{:src => "assets/images/check.png"}
+      %p A well understood problem
   %section
     %h2 Back-end testing | Unit tests
-    %img.plain.relative{:src => "assets/images/masks.png", :style => "float:left; top: 50px"}
-    %div.relative{:style => "top: 100px"}
-      %h4 JUnit / TestNG
-      %ul.bullets{:style => "width: 500px"}
-        %li Easy to test self-contained logic
-        %li Mocks allow us to extend unit tests further
+    %div.relative.inline{:style => "top: 100px"}
+      %img.plain.nomargin{:src => "assets/images/masks.png"}
+      %div
+        %h4 JUnit / TestNG
+        %ul.bullets.fixed-width-wide
+          %li Easy to test self-contained logic
+          %li Mocks allow us to extend unit tests further
   %section
     %h2 Back-end testing | "Real" tests
-    %img.plain.relative{:src => "assets/images/testing-tags.png", :style => "float:left; top: 50px"}
-    %div.relative{:style => "top: 100px"}
-      %h4 "Real tests"
-      %ul.bullets
-        %li Test code in-container
-        %li No "surprises" in production
+    %div.left.relative.inline{:style => "top: 50px"}
+      %img.plain{:src => "assets/images/testing-tags.png"}
+      %div
+        %h4 "Real tests"
+        %ul.bullets
+          %li Test code in-container
+          %li No "surprises" in production
   %section
     %h2 Enter Arquillian
-    %div{:style => "float:left"}
-      %img.plain{:src => "assets/images/arquillian_ike.png"}
-      %h4 Don't mock me!
-    %ul.bullets.relative{:style => "top: 100px; left: 20px"}
-      %li Bring the container to the test
-      %li Micro-deployments
+    %div.inline
+      %div
+        %img.plain{:src => "assets/images/arquillian_ike.png"}
+        %h4 Don't mock me!
+      %ul.bullets
+        %li Bring the container to the test
+        %li Micro-deployments
 %section
   %section
     %h2 Example | GreeterTest
-    %div.relative{:style => "top: 100px"}
-      %h1{:style => "float: left; font-size: 120pt"}
-        Hello
-        %br
-        World!
-      %ul.bullets.relative{:style => "top: 60px"}
+    %div.relative.inline{:style => "top: 100px"}
+      %div
+        %h1{:style => "font-size: 120pt; margin-right: 30px"} Hello <br /> World!
+      %ul.bullets
         %li Basic Arquillian test
         %li
           Demonstrate
@@ -217,7 +218,6 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
         %span{:style => "margin-left: 20px; font-weight: bold"} -- lots of mocks!
       %li &nbsp;
       %li Let's focus on real-tests
-%section
   %section
     %h2 Real tests &rarr; real browsers
     .images.white{:style => "margin-top: 50px"}
@@ -243,42 +243,90 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
             %img.relative{:src => "assets/images/browsers/camino.png", :style => "top: 50px"}
           %td
             %img.relative{:src => "assets/images/browsers/seamonkey.png", :style => "left: -50px"}
-
+%section
   %section
     %h2 Selenium
-    %div.relative{:style => "top: 30px"}
-      %img.plain{:src => "assets/images/selenium.png", :style => "float:left"}
-      %ul.bullets.relative{:style => "top: 120px; width: 500px"}
-        %li Test against lots of browsers w/ unified API
-        %li Headless testing via html unit
+    %br
+    %h5.bold
+      Selenium automates browsers.
+      %span{:style => "font-style: italic"} That's it.
+    %div.relative.inline{:style => "top: -20px"}
+      %img.plain.nomargin{:src => "assets/images/selenium.png"}
+      %div
+        %p.left.block WebDriver API:
+        %ul.bullets{:style => "width: 400px"}
+          %li Unified API for all browsers
+          %li Headless tests via HtmlUnit
   %section
-    %h2 Selenium IDE - Easy!
-    %div.relative{:style => "top: 30px"}
-      %img.plain{:src => "assets/images/selenium-ide.png", :style => "float:left"}
-      %ul.bullets.relative{:style => "top: 120px; width: 500px"}
-        %li Easy to write/record tests
-        %li replay tests against all browsers
+    %h2 Selenium | API
+    %br
+    %div.left
+      %p WebDriver
+      %hr
+      %p.italic Represents the web browser
+      %hr
+      %ul
+        %li
+          Methods:
+          %ul
+            %li .get()
+            %li .findElement(By)
+
   %section
-    %h2 Selenium - Problems!
-    %div.relative{:style => "top: 10px"}
-      %img.plain{:src => "assets/images/frustrated.jpg", :style => "float:left", :alt => "http://www.flickr.com/photos/cellardoorfilms/7620375702/"}
-      %ul.bullets.relative{:style => "top: 120px; left: 20px"}
-        %li No abstraction
-        %li highly repetitive
-        %li Maintenance problem
+    %h2 Selenium | API
+    %br
+    %div.left
+      %p WebElement
+      %hr
+      %p.italic Represents an HTML element.
+      %hr
+      %ul
+        %li
+          Methods:
+          %ul
+            %li .click()
+            %li .sendKeys()
+            %li .getText()
+            %li .findElement(By)
+  %section
+    %h2 WebElement Lookup
+    %br
+    %p.left Selenium/WebDriver programmatic API:
+    %pre.relative{:class => "prettyprint", :style => "font-size:25px"}
+      %code
+        = preserve do
+          :escaped
+            WebElement username
+                = driver.findElement(By.id("username"))
+    %br
+    %p.left Alternative @FindBy annotation:
+    %pre.relative{:class => "prettyprint", :style => "font-size:25px"}
+      %code
+        = preserve do
+          :escaped
+            @FindBy(id="username")
+            WebElement username;
     .notes
       %ul
-        %li Tests focus against state transitions
-        %li Test only DOM/CSS expressed directly in the test
+        %li By.ByClassName, By.ByCssSelector, By.ById, By.ByLinkText, By.ByName, By.ByPartialLinkText, By.ByTagName, By.ByXPath, ByChained, ByIdOrName
+  %section
+    %h2 Selenium IDE - Easy!
+    %div.relative.inline{:style => "top: 30px"}
+      %img.plain.nomargin{:src => "assets/images/selenium-ide.png"}
+      %ul.bullets
+        %li Easy to write/record tests
+        %li Replay tests against all browsers
 %section
   %section
     %h2 Example | Selenium
+    %img.plain{:src => "assets/images/kitchensink.png", :style => "height: 500px"}
   %section
-    %h2 Selenium Ex. | The App
-    %img{:src => "assets/images/kitchensink.png"}
-  %section
-    %h2 Selenium Ex. | IDE
-    %img{:src => "assets/images/selenium-ide-test.png"}
+    %div{:style => "vertical-align: top; text-align: left"}
+      %h2.left{:style => "display: inline-block; vertical-align: top; text-align: center"}
+        Selenium
+        %br
+        IDE
+      %img.relative{:src => "assets/images/selenium-ide-test.png", :style => " display: inline-block; vertical-align: top; margin: 0;"}
   %section
     %h2 Selenium Ex. | The Test
     %pre{:class => "prettyprint", :style => "font-size: 10px"}
@@ -325,11 +373,21 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
                   }
                 }
             }
-    .fragment.screen{:data=>{:prettify=>"selenium", :prettify_lines=>"6:11"}}
-    .fragment.screen{:data=>{:prettify=>"selenium", :prettify_lines=>"13:29"}, :style => "top: -100px; margin: 0 -90px"}
-    .fragment.screen{:data=>{:prettify=>"selenium", :prettify_lines=>"32:39"}, :style => "top: -150px; margin: 0 -90px"}
+    .fragment.screen{:data=>{:prettify=>"selenium", :prettify_lines=>"5:11"}}
+    .fragment.screen{:data=>{:prettify=>"selenium", :prettify_lines=>"12:29"}, :style => "top: -40px; margin: 0 -90px"}
+    .fragment.screen{:data=>{:prettify=>"selenium", :prettify_lines=>"31:38"}, :style => "top: -30px;"}
   %section
     %h1.relative.demo Demo Time
+  %section
+    %h2 Selenium - Problems!
+    %div.relative{:style => "top: 50px"}
+    %p Not enough abstraction, Highly repetitive
+    %p &rarr; Maintenance problem
+    %img.plain{:src => "assets/images/frustrated.jpg", :alt => "http://www.flickr.com/photos/cellardoorfilms/7620375702/", :style => "margin-right: 4px"}
+    .notes
+      %ul
+        %li Tests focus against state transitions
+        %li Test only DOM/CSS expressed directly in the test
 %section
   %section
     %h2 Automating Client-side testing
@@ -340,35 +398,37 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
 
   %section
     %h2 Container lifecycle
-    %div{:style => "float:left;"}
-      %img.plain{:src => "assets/images/arquillian_success.png"}
-      %h4 Ike's got us covered!
-    %ul.bullets.relative{:style => "top: 100px; left: 20px; width: 450px"}
-      %li Startup/shutdown the container
-      %li Create the testable archive
-      %li Deploy the application
+    %div.relative.inline{:style => "top: 40px"}
+      %div
+        %img.plain.nomargin{:src => "assets/images/arquillian_success.png"}
+        %h4 Ike has us covered!
+      %ul.bullets.fixed-width-narrow
+        %li Startup/shutdown the container
+        %li Create the testable archive
+        %li Deploy the application
   %section
     %h2 Client lifecycle?
-    %img.plain{:src => "assets/images/browser.png", :style => "float:left;"}
-    %ul.relative{:style => "top: 150px"}
-      %li Start / Stop the Browser
+    %div.relative.inline{:style => "top: 40px"}
+      %img.plain.nomargin{:src => "assets/images/browser.png"}
+      %ul{:style => "width: auto"}
+        %li Start / Stop the Browser
   %section
     %h2 Arquillian Extensions
-    %dl
+    %dl.fragment
       %dt Arquillian Drone
       %dd Brings the browser to the test
+    %dl.fragment
       %dt Arquillian Graphene
       %dd Selenium integration and extension
+    %dl.fragment
       %dt Arquillian Warp
       %dd Testing on both sides of the request
 %section
   %section
     %h2 Arquillian Drone
-    %div.relative{:style => "top: 100px;"}
-      %img.plain{:src => "assets/images/drone.png", :style => "float:left;"}
-      %ul.relative{:style => "top: 40px; left: 20px; width: 500px"}
-        %li
-          Manages the life-cycle of objects required for interaction between browser and deployed application
+    %div.relative.inline.left{:style => "top : 80px"}
+      %img.plain{:src => "assets/images/drone.png"}
+      %p{:style => "width: 550px"} Manages the life-cycle of objects required for interaction between browser and deployed application
   %section
     %h2 Arquillian Drone
     %ul
@@ -393,18 +453,19 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
             </extension>
   %section
     %h2 Separation of concerns
-    %div{:style => "float:left; width:450px"}
-      %p Devs focus: Author tests
-      %img{:src => "assets/images/build.jpg", :style => "width:400px", :alt => "http://www.flickr.com/photos/metrolibraryarchive/3267555668/"}
-    %div{:style => "float:right; width:450px"}
-      %img{:src => "assets/images/inspection.jpg", :style => "width:400px", :alt => "http://www.flickr.com/photos/metrolibraryarchive/3267249336/"}
-      %p QA focus: Automate tests
+    %div.inline.left
+      %div
+        %p.block Devs focus: Author tests
+        %img{:src => "assets/images/build.jpg", :style => "width:400px; margin-top: 0", :alt => "http://www.flickr.com/photos/metrolibraryarchive/3267555668/"}
+      %div
+        %img{:src => "assets/images/inspection.jpg", :style => "width:400px", :alt => "http://www.flickr.com/photos/metrolibraryarchive/3267249336/"}
+        %p.block QA focus: Automate tests
 %section
   %section
     %h2 Example | GoogleTest
-    %div.relative{:style => "top: 50px"}
-      %img{:src => "assets/images/google.png", :style => "float:left;"}
-      %ul.bullets.relative{:style => "top: 100px"}
+    %div.relative.inline{:style => "top: 50px"}
+      %img{:src => "assets/images/google.png"}
+      %ul.bullets
         %li Simple Drone test
         %li
           Demonstrate
@@ -433,11 +494,16 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
 %section
   %section
     %h2 Arquillian Graphene
-    %img{:src => "assets/images/graphene.jpg", :style => "float: left; width:400px", :alt => "http://www.flickr.com/photos/core-materials/5057399792/"}
-    %div.relative{:style => "top: 150px; left: 25px"}
-      %p.left
+    %div.relative.inline{:style => "top : 50px"}
+      %img.plain{:src => "assets/images/graphene-logo.png", :alt => "http://www.flickr.com/photos/core-materials/5057399792/"}
+      %p
         Selenium
         %span{:style => "font-variant : small-caps; font-style: italic; font-weight: bold"} Arquillian-Style
+    .notes
+      %ul
+        %li Arquillian integration starts with Drone and the instantiation of the WebDriver instance.
+        %li Graphene then takes new instance of WebDriver's browser session and store is in its Thread Local Context.
+        %li Graphene also wraps the WebDriver instance in order to intercept calls.
   %section
     %h2 Graphene 1.0
     %dl
@@ -452,111 +518,206 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
     %canvas.fragment.screen.canvas
   %section
     %h2 Graphene 2.0
-    %img.plain{:src => "assets/images/needle.png", :style => "float:left;"}
-    %ul.bullets.relative{:style => "width: 450px; left: 50px; top: 50px"}
-      %li Inject Page and DOM objects into your tests
-      %li Simplify AJAX tests
-      %li Page Extensions
-      %li Interceptors
+    %div.relative.inline{:style => "top : 50px"}
+      %img.plain{:src => "assets/images/needle.png"}
+      %ul
+        %li More Injection
+        %li More Abstractions
+        %li More Extensions
 %section
   %section
-    %h2
-      %span WebDriver Injection
-    %br
-    %p.left Selenium/WebDriver programmatic API:
-    %pre.relative{:class => "prettyprint", :style => "font-size:25px"}
-      %code
-        = preserve do
-          :escaped
-            WebElement username
-                = driver.findElement(By.id("username"))
-    %br
-    %p.left alternative @FindBy annotation:
-    %pre.relative{:class => "prettyprint", :style => "font-size:25px"}
-      %code
-        = preserve do
-          :escaped
-            @FindBy(id="username")
-            WebElement username;
+    %h2 Page Abstractions
+    %div.inline
+      %img.plain{:src => "assets/images/html.png"}
+      %p.fixed-width Encapsulate DOM elements behind a custom API
   %section
-    %h2 Graphene Injection
-    %dl
-      %dt.monospace @FindBy
-      %dd Extend to more than just WebElement objects
-      %dt.monospace @Page
-      %dd Injection of Selenium Page objects
+    %h2 Selenium | Page objects
+    %div.relative.inline{:style => "top : 50px"}
+      %img.nomargin{:src => "assets/images/page.png"}
+      %div
+        %ul.bullets.fixed-width-narrow
+          %li A class that encapsulates the behaviour of a page
+        %br
+        %br
+        %div.relative{:style => "left: 20px"}
+          %pre{:class => "prettyprint", :style => "font-size: 20px; width: 525px; margin-right: 0;"}
+            %code
+              = preserve do
+                :escaped
+                  @Page
+                  LoginPage loginPage
+          %pre{:class => "prettyprint", :style => "font-size: 20px; width: 525px; margin-right: 0;"}
+            %code{:style => "margin=left: 0; padding: 0"}
+              = preserve do
+                :escaped
+                  loginPage.loginAs("username", "password");
+  %section
+    %h2 Selenium | Page Instantiation
+    %p.relative{:style => "top: 100px"} Selenium PageFactory class instantiates Page Objects:
+    %pre.relative{:class => "prettyprint", :style => "font-size: 22px; top: 200px"}
+      %code
+        = preserve do
+          :escaped
+            LoginPage loginPage =
+                PageFactory.initElements(driver, LoginPage.class);
+  %section
+    %h2 Graphene | Page Injection
+    %p.relative{:style => "top: 100px"}
+      Graphene introduces the
+      %span.monospace @Page
+      Injection Annotation
+    %pre.relative{:class => "prettyprint", :style => "font-size: 22px; top: 200px"}
+      %code
+        = preserve do
+          :escaped
+            @Page
+            LoginPage loginPage
+  %section
+    %h2 Graphene | Page Fragments
+    %div.relative.inline{:style => "top : 50px"}
+      %img.nomargin{:src => "assets/images/page-fragment.png"}
+      %div
+        %ul.bullets.fixed-width-narrow
+          %li Page Objects ++
+          %li Encapsulates the behaviour of a page fragment
+        %br
+        %br
+        %div.relative{:style => "left: 20px"}
+          %pre{:class => "prettyprint", :style => "font-size: 20px; width: 525px; margin-right: 0;"}
+            %code
+              = preserve do
+                :escaped
+                  @FindBy(css=".pickList")
+                  PickListComponent pickList;
+  %section
+    %h2 Abstraction FTW!
+    %p.italic.relative{:style => "top: 150px"}
+      Single place to update WebDriver code
+      %br
+      when the underlying DOM changes
 %section
   %section
-    %h2 Page objects
-    %img{:src => "assets/images/page.png", :style => "float:left;"}
-    %div
-      %ul.bullets.relative{:style => "width: 450px; left: 50px; top: 50px"}
-        %li A class that encapsulates the behaviour of a page
-      %pre.relative{:class => "prettyprint", :style => "font-size: 20px; width: 525px; margin-right: 0; top: 70px"}
-        %code
-          = preserve do
-            :escaped
-              @Page
-              LoginPage loginPage
-      %pre.relative{:class => "prettyprint", :style => "font-size: 20px; width: 525px; margin-right: 0; top: 70px;"}
-        %code{:style => "margin=left: 0; padding: 0"}
-          = preserve do
-            :escaped
-              loginPage.loginAs("username", "password");
+    %h2 Waiting...
+    %p.left Simplest case:
+    %pre{:class => "prettyprint", :style => "font-size: 20px;"}
+      %code
+        = preserve do
+          :escaped
+            Thread.sleep(2000);
+    %p.left Selenium provides the WebDriverWait class
+    %pre{:class => "prettyprint", :style => "font-size: 20px;"}
+      %code
+        = preserve do
+          :escaped
+            WebElement myDynamicElement = (new WebDriverWait(driver, 10))
+              .until(new ExpectedCondition<WebElement>(){
+              @Override
+              public WebElement apply(WebDriver d) {
+                return d.findElement(By.id("myDynamicElement"));
+              }});
+    %br
+    %p.left More boiler plate!
   %section
-    %h2 Page Fragments
-    %img{:src => "assets/images/page-fragment.png", :style => "float:left;"}
-    %ul.bullets.relative{:style => "width: 450px; left: 50px; top: 50px"}
-      %li Follow on to the Page Objects Selenium Pattern
-      %li Encapsulate page markup
-    %pre.relative{:class => "prettyprint", :style => "font-size: 20px; width: 525px; margin-right: 0; top: 70px;"}
-      %code
-        = preserve do
-          :escaped
-            @FindBy(css=".pickList")
-            PickListComponent pickList;
+    %h2 Graphene wait helpers
+    %table.left{:style => "width: 100%"}
+      %tr.bold
+        %th Helper
+        %th Description
+        %th.center Timeout
+      %tr
+        %td waitGui()
+        %td
+          waits for a short time
+          %br
+          eg. wait for client-side operations
+        %td.center 1
+      %tr
+        %td waitAjax()
+        %td
+          waits for longer time
+          %br
+          eg. wait for simple ajax request
+        %td.center 2
+      %tr
+        %td waitModel()
+        %td
+          waits for a long time
+          %br
+          eg. wait for database requests
+        %td.center 5
   %section
-    %h2 Ajax Tests w/ Page fragments
-    %ul
-      %li build tests out of components (rather than pages)
-    %pre{:class => "prettyprint", :style => "font-size: 18px"}
+    %h2 Wait helper Usage
+    %pre.relative{:class => "prettyprint", :style => "font-size: 20px; width: 850px; top: 100px"}
       %code
         = preserve do
           :escaped
-            @FindBy(id="form:calendar")
-            Calendar calendar
-    %pre{:class => "prettyprint", :style => "font-size: 18px"}
+            By id = By.id("button");
+            WebElement element = driver.findElement(id);
+            ...
+            waitModel(element(id).isVisible));
+            ...
+            waitModel(element(element).not().textContains("blahblah"));
+            ...
+            waitModel(attribute(id, "value").valueContains("blahblah"));
+            ...
+            waitModel(attribute(element, "value").not().valueEquals("blahblah"));
+  %section
+    %h2 Request guards
+    %div.inline
+      %img{:src => "assets/images/beefeater.jpg",:alt => "http://www.flickr.com/photos/abennett96/2717629123/"}
+      %div{:style => "width: 570px"}
+        %p.left{:style => "font-style: italic"} Blocks the Selenium test execution until a network communication caused by a given action ends
+        %dl
+          %dt guardHttp(button).click();
+          %dd blocks on HTTP
+          %dt guardXhr(button).click();
+          %dd blocks on XHR (Ajax)
+  %section
+    %h2 Request guard | Usage
+    %pre{:class => "prettyprint", :style => "font-size: 20px;"}
       %code
         = preserve do
           :escaped
-            @Component
-            public class Calendar {
-                @Root
-                WebElement driver;
-                ....
+            @RunWih(Arquillian.class)
+            public class TestClass {
+             
+                @FindBy(id="http")
+                private WebElement httpButton;
+             
+                @FindBy(id="none")
+                private WebElement noneButton;
+               
+                @FindBy(id="xhr")
+                private WebElement xhrButton;
+             
+                @Test
+                public void testSimple() {
+                    guardHttp(httpButton).click();
+                    guardXhr(xhrButton).click();
+                    guardHttp(noneButton).click();
+                }
             }
 %section
   %section
-    %h2 Request guards
-    %img{:src => "assets/images/beefeater.jpg", :style => "float:left;", :alt => "http://www.flickr.com/photos/abennett96/2717629123/"}
-    %div.relative{:style => "top: 50px; left: 20px"}
-      %p.left{:style => "font-style: italic"} Blocks the Selenium test execution until a network communication caused by a given action ends
-      %dl
-        %dt guardHttp(button).click();
-        %dd blocks on HTTP
-        %dt guardXhr(button).click();
-        %dd blocks on XHR (Ajax)
-  %section
-    %h2 Request guards | Example
-%section
-  %section
-    %h2 Page Extensions
-    %p.left{:style => "font-style: italic"} Allow you to inject arbitrary JavaScript code in the page under the test
+    %h2 Javascript Interfaces
+    %p.left{:style => "font-style: italic"} Interact with JavaScript code in the page from your Java test
     %pre{:class => "prettyprint"}
       %code
         = preserve do
           :escaped
             @JavaScript("window")
+            public interface Alert {
+              void alert(String message);
+            }
+  %section
+    %h2 Page Extensions
+    %p.left Automatically include Javascript Interfaces in your tests
+    %p.left Extensions has to implement PageExtension interface to define:
+    %ul.bullets
+      %li name
+      %li JavaScript code to be executed when the extension is installed,
+      %li JavaScript code returning true if the extension is already installed, false otherwise,
+      %li dependencies
   %section
     %h2 Request Guards | Impl
     %pre{:class => "prettyprint"}
@@ -584,6 +745,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
     %h2 Interceptors with Graphene
     %ul
       %li Cross-cutting concerns
+      %li https://issues.jboss.org/browse/ARQGRA-79
 %section
   %section
     %h2 Graphene | Example
@@ -648,25 +810,25 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
 %section
   %section
     %h2 Arquillian Warp
-    %div.relative{:style => "top: 50px"}
-      %img.plain{:src => "assets/images/warp.png", :style => "float: left;"}
-      %ul.bullets.relative{:style => "width: 450px; left: 50px;"}
+    %div.relative.inline{:style => "top: 50px"}
+      %img.plain.nomargin{:src => "assets/images/warp.png"}
+      %ul.bullets.fixed-width-narrow
         %li Testing on both sides of the request
         %li En-rich the client request with a test to run on the server
         %li En-rich the server response with results of the test
   %section
     %h2 JSFUnit | the old way
-    %div.relative{:style => "top: 20px"}
-      %img.plain{:src => "assets/images/jsfunit.png", :style => "float: left;"}
-      %ul.bullets.relative{:style => "width: 450px; left: 50px; top: 100px"}
+    %div.relative.inline{:style => "top: 20px"}
+      %img.plain{:src => "assets/images/jsfunit.png"}
+      %ul.bullets.fixed-width
         %li HtmlUnit - no real browsers
         %li Assert state only at the end of the JSF lifecycle
         %li JSF Only (No CDI, EJB etc.)
   %section
     %h2 Warp | the new way
-    %div.relative{:style => "top: 20px"}
-      %img.plain{:src => "assets/images/new.png", :style => "float: left;"}
-      %ul.bullets.relative{:style => "width: 450px; left: 50px;"}
+    %div.relative.inline{:style => "top: 20px"}
+      %img.plain{:src => "assets/images/new.png"}
+      %ul.bullets.fixed-width
         %li Selenium / any other HTTP client
         %li serialize the test, return result
         %li Test the entire lifecycle
