@@ -579,7 +579,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
       %div
         %ul.bullets.fixed-width-narrow
           %li Page Objects ++
-          %li Encapsulates the behaviour of a page fragment
+          %li Encapsulate the behaviour of a page fragment
         %br
         %br
         %div.relative{:style => "left: 20px"}
@@ -700,32 +700,109 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
 %section
   %section
     %h2 Javascript Interfaces
-    %p.left{:style => "font-style: italic"} Interact with JavaScript code in the page from your Java test
-    %pre{:class => "prettyprint"}
+    %div.relative{:style => "top: 40px"}
+      %p{:style => "font-style: italic"} Execute JavaScript from your Java test
+      %pre.relative{:class => "prettyprint", :style => "font-size: 24px; top: 80px"}
+        %code
+          = preserve do
+            :escaped
+              @JavaScript("myBackground")
+              @Dependency(sources = {"background.js"})
+              public interface Background {
+                  void setBackground(String color);
+                  String getBackground();
+              }
+  %section
+    %h2 Example | Javascript Interface
+    %div.relative.inline{:style => "top: 50px"}
+      %img{:src => "assets/images/google.png"}
+      %ul.bullets{:style => "width: 410px"}
+        %li Manipulate the DOM
+        %li Bi-directional communication
+  %section
+    %h2 Example | Javascript Interface
+    %p.left
+      BackGround.java:
+    %pre{:class => "prettyprint", :style => "font-size: 20px"}
       %code
         = preserve do
           :escaped
-            @JavaScript("window")
-            public interface Alert {
-              void alert(String message);
+            @JavaScript("myBackground")
+            @Dependency(sources = {"background.js"})
+            public interface Background {
+                void setBackground(String color);
+                String getBackground();
             }
+    %p.left
+      background.js:
+    %pre{:class => "prettyprint", :style => "font-size: 20px"}
+      %code
+        = preserve do
+          :escaped
+            myBackground = {
+                setBackground : function (color) {
+                    document.body.style.background = color;
+                },
+
+                getBackground : function () {
+                    return document.body.style.background;
+                }
+            }
+  %section
+    %h2 Example | Javascript Interface
+    %pre{:class => "prettyprint", :style => "font-size: 17px"}
+      %code
+        = preserve do
+          :escaped
+            @RunWith(Arquillian.class)
+            public class JavaScriptTest {
+
+                @Drone
+                WebDriver browser;
+
+                @Test
+                public void testOpeningHomePage() throws  Exception {
+                    browser.get("http://www.google.com/");
+                    Background background = JSInterfaceFactory.create(Background.class);
+
+                    System.out.println(String.format(
+                        "Background color is: %s", background.getBackground()));
+
+                    background.setBackground("red");
+                    System.out.println(String.format(
+                        "Background color is: %s", background.getBackground()));
+                    Thread.sleep((2000));
+
+                    background.setBackground("");
+                    System.out.println(String.format(
+                        "Background color is: %s", background.getBackground()));
+                    Thread.sleep((2000));
+                }
+            }
+  %section
+    %h1.relative.demo Demo Time
   %section
     %h2 Page Extensions
     %p.left Automatically include Javascript Interfaces in your tests
-    %p.left Extensions has to implement PageExtension interface to define:
+    %br
+    %p.left Simply:
     %ul.bullets
-      %li name
-      %li JavaScript code to be executed when the extension is installed,
-      %li JavaScript code returning true if the extension is already installed, false otherwise,
-      %li dependencies
+      %li Implement an interface
+      %li Register the extension
+    %br
+    %br
+    %p.left See the docs...
+    %a{:href => "https://docs.jboss.org/author/display/ARQGRA2/Page+Extensions", :style => "font-size: 30px"}
+      https://docs.jboss.org/author/display/ARQGRA2/Page+Extensions
   %section
     %h2 Request Guards | Impl
-    %pre{:class => "prettyprint"}
+    %pre{:class => "prettyprint", :style => "font-size: 20px"}
       %code
         = preserve do
           :escaped
             @JavaScript(value = "Graphene.Page.RequestGuard")
-            @Dependency(sources = "Graphene.Page.RequestGuard.js", interfaces=XhrInterception.class)
+            @Dependency(sources = "Graphene.Page.RequestGuard.js",
+                        interfaces=XhrInterception.class)
             public interface RequestGuard extends InstallableJavaScript {
 
                 /**
@@ -734,7 +811,8 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
                 RequestType getRequestDone();
 
                 /**
-                 * Clears the request type cache and returns the last request type
+                 * Clears the request type cache and returns the last
+                 * request type
                  * @return the last request type
                  */
                 RequestType clearRequestDone();
@@ -743,18 +821,22 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
 %section
   %section
     %h2 Interceptors with Graphene
+    Work is in progress to port the Graphene 1 interceptor API to Graphene 2
     %ul
       %li Cross-cutting concerns
-      %li https://issues.jboss.org/browse/ARQGRA-79
+      %li code which will be performed around invocation
+      %li execute code before/after the selenium command will be performed
+      %li catch exceptions thrown when performing selenium command
+    %a{:href => "https://issues.jboss.org/browse/ARQGRA-79", :style => "font-size: 30px"}
+      https://issues.jboss.org/browse/ARQGRA-79
 %section
   %section
     %h2 Graphene | Example
     %pre{:class => "prettyprint", :style => "font-size: 8px"}
-      %code
+      %code{:id => "graphene"}
         = preserve do
           :escaped
             RunWith(Arquillian.class)
-            @Ignore
             public class PickListTest {
                 private static final String WEBAPP_SRC = "src/main/webapp";
 
@@ -794,10 +876,8 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
                 public void testPickListInPage() {
                     String page = deploymentURL + "pickList.jsf";
                     browser.get(page);
-
                     pickList.addAll();
-                    Graphene.waitGui();
-                    submitButton.submit();
+                    Graphene.guardHttp(submitButton).submit();
                     List<WebElement> elements = outPanel.findElements(By.cssSelector(".value"));
                     List<String> values = new ArrayList<String>(elements.size());
                     for (WebElement element : elements) {
@@ -806,7 +886,10 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
                     Assert.assertEquals(5, values.size());
                     Assert.assertEquals(pickList.getSelectedItems(), values);
                 }
-
+    .fragment.screen{:data=>{:prettify=>"graphene", :prettify_lines=>"0:1"}}
+    .fragment.screen{:data=>{:prettify=>"graphene", :prettify_lines=>"4:19"}}
+    .fragment.screen{:data=>{:prettify=>"graphene", :prettify_lines=>"21:33"}}
+    .fragment.screen{:data=>{:prettify=>"graphene", :prettify_lines=>"36:50"}, :style => "top: -120px"}
 %section
   %section
     %h2 Arquillian Warp
@@ -828,46 +911,98 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
     %h2 Warp | the new way
     %div.relative.inline{:style => "top: 20px"}
       %img.plain{:src => "assets/images/new.png"}
-      %ul.bullets.fixed-width
-        %li Selenium / any other HTTP client
-        %li serialize the test, return result
-        %li Test the entire lifecycle
+      %ul.fixed-width
         %li
-          Any injectable resource
+          Advantages:
           %ul
-            %li CDI
-            %li EJB
-            %li Any framework!
+            %li Selenium / any HTTP client
+            %li Test the entire JSF lifecycle
+            %li
+              Test any injectable resource
+              %ul
+                %li CDI
+                %li EJB
+                %li Any framework!
+    .notes
+      %ul
+        %li Not just JSF
 %section
   %section
     %h2 Warp | Example
+    %pre{:class => "prettyprint", :style => "font-size: 8px"}
+      %code{:id => "warp"}
+        = preserve do
+          :escaped
+            @WarpTest
+            @RunWith(Arquillian.class)
+            public class PickListWarpTest {
+                @Deployment
+                ...
+
+                @Test
+                @RunAsClient
+                public void testPickListInPage() {
+                    String page = deploymentURL + "pickList.jsf";
+                    browser.get(page);
+
+                    Warp.filter(new JsfRequestFilter()).execute(new ClientAction() {
+                        @Override
+                        public void action() {
+                            pickList.addAll();
+                            submitButton.submit();
+                        }
+                    }).verify(new CheckListSize());
+
+                    List<WebElement> elements = outPanel.findElements(By.cssSelector(".value"));
+                    List<String> values = new ArrayList<String>(elements.size());
+                    for (WebElement element : elements) {
+                        values.add(element.getText());
+                    }
+                    Assert.assertEquals(5, values.size());
+                    Assert.assertEquals(pickList.getSelectedItems(), values);
+                }
+
+                public static class JsfRequestFilter implements RequestFilter<HttpRequest> {
+                    @Override
+                    public boolean matches(HttpRequest httpRequest) {
+                        return httpRequest.getUri().contains("pickList.jsf");
+                    }
+                }
+
+                public static class CheckListSize extends ServerAssertion {
+                    private static final long serialVersionUID = 1L;
+
+                    @Inject
+                    RichBean richBean;
+
+                    @BeforePhase(Phase.UPDATE_MODEL_VALUES)
+                    public void beforeUpdateModelValues() {
+                        Assert.assertEquals(4, richBean.getValues().size());
+                    }
+
+                    @AfterPhase(Phase.UPDATE_MODEL_VALUES)
+                    public void afterUpdateModelValues() {
+                        Assert.assertEquals(5, richBean.getValues().size());
+                    }
+                }
+            }
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"0:2"}}
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"6:27"}, :style => "top: -60px"}
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"29:34"}}
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"36:51"}, :style => "top: -180px"}
+  %section
+    %h1.relative.demo Demo Time
 %section
   %h2 Reducing test development turnaround
+  %p.left Best practices
   %ul
-    %li Re-usable Browser Session
-    %li Arquillian jRebel extension
-    %li sharing deployments across tests
-%section
-  %section
-    %h2 JS Testing
-    %ul
-      %li Another avenue for testing client-side interaction
-  %section
-    %h2 JS testing | Frameworks
-    %ul
-      %li QUnit
-      %li Jasmine
-      %li JsMockito
-  %section
-    %h2 JS testing | Test runners
-    %ul
-      %li JSTD
-      %li Selenium
-      %li Maven
-  %section
-    %h2 JS testing
-    %ul
-      %li How to re-use container setup of our functional tests?
+    %li.fragment Use a Remote Container
+    %li.fragment Re-usable Browser Session
+    %li.fragment
+      Use Shrinkwrap mirco-deployments
+      %ul
+        %li Share deployments across tests
+    %li.fragment Arquillian jRebel extension
 %section
   %h2 The end?
   %h3.fragment{:style => "margin-top: 160px"} The beginning - of JSF testing adventure with Arquillian and Selenium!
@@ -890,52 +1025,62 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
         <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons Licence" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">GOING MOBILE With Your RichFaces Applications</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="www.bleathem.ca/talks/2012-JBW/richfaces-mobile.html" property="cc:attributionName" rel="cc:attributionURL">Brian Leathem</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/bleathem/talks/tree/master/2012-JBW" rel="dct:source">github.com</a>.<br />Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/bleathem/talks/tree/master/2012-JBW" rel="cc:morePermissions">https://github.com/bleathem/talks/tree/master/2012-JBW</a>.
 %section
   %h2 Additional Resources
+  :textile
+    * Home Pages
+    ** "Selenium Website":http://seleniumhq.org/
+    ** "Arquillian Website":http://arquillian.org/
+    * &nbsp;
+    * Arquillian Extensions
+    ** "Drone docs":https://docs.jboss.org/author/display/ARQ/Drone
+    ** "Graphene 2 docs":https://docs.jboss.org/author/display/ARQGRA2/Getting+Started
+    ** "Warp docs":https://docs.jboss.org/author/display/ARQ/Warp
+    * &nbsp;
+    * "Sample Code":https://github.com/bleathem/GrapheneTest
 %section
-  %h2 Other Arquillian session @ JavaOne
-  %ul
-    %li
-    %li
-    %li
+  %h2 Arquillian @ JavaOne
+  :textile
+    {font-size: 22px}* "TUT5039":https://oracleus.activeevents.com/connect/sessionDetail.ww?SESSION_ID=5039 - Cover Your Web and Mobile Applications with Integration Tests from Scratch
+    * "CON7469":https://oracleus.activeevents.com/connect/sessionDetail.ww?SESSION_ID=7469 - Apache TomEE, a Java EE 6 Web Profile on Tomcat
+    * "CON2818":https://oracleus.activeevents.com/connect/sessionDetail.ww?SESSION_ID=2818 - A Bird’s-Eye View of the CDI Ecosystem
+    * "CON5312":https://oracleus.activeevents.com/connect/sessionDetail.ww?SESSION_ID=5312 - Continuous Enterprise Development: Case Studies in Java EE Integration Testing
+    * "CON6918":https://oracleus.activeevents.com/connect/sessionDetail.ww?SESSION_ID=6918 - The Arquillian Universe: A Tour Around the Astrophysics Lab
+    * "BOF7997":https://oracleus.activeevents.com/connect/sessionDetail.ww?SESSION_ID=7997 - A New Approach to Testing Your Java EE Applications Deployed on a PaaS
+    * "CON7622":https://oracleus.activeevents.com/connect/sessionDetail.ww?SESSION_ID=7622 - Testing JSF Applications with Arquillian and Selenium
+    * "CON5458":https://oracleus.activeevents.com/connect/sessionDetail.ww?SESSION_ID=5458 - Today’s Rapid Java EE Development: Live Coding from Scratch to Deployment
 %section
   %h2 Stay in the loop
-  %ul.links.loop
-    %li
-      Project website:
-      %ul
-        %li
-          %a{:href => "http://arquillian.org"} http://arquillian.org
-        %li
-          %a{:href => "http://richfaces.org"} http://richfaces.org
-    %li
-      Twitter:
-      %ul
-        %li
-          %a{:href => "https://twitter.com/#!arquillian"} @arquillian
-        %li
-          %a{:href => "https://twitter.com/#!richfaces"} @richfaces
-    %li
-      Google+:
-      %ul
-        %li
-          %a{:href => "https://plus.google.com/100660127586085393031/"} +Arquillian
-        %li
-          %a{:href => "https://plus.google.com/b/115573055688754345457/"} +RichFaces
-    %li
-      Forums:
-      %ul
-        %li
-          %a{:href => "https://community.jboss.org/en/arquillian?view=discussions"} Arquillian User forum
-        %li
-          %a{:href => "https://community.jboss.org/en/richfaces?view=discussions"} RichFaces User forum
-    %li
-      Blog feed:
-      %ul
-        %li
-          %a{:href => "http://arquillian.org/blog/"} http://arquillian.org/blog/
-        %li
-          %a{:href => "http://planet.jboss.org/feed/richfacesall"} http://planet.jboss.org/feed/richfacesall
-    %li
-      IRC
-      %ul
-        %li IRC: #jbosstesting
-        %li IRC: #richfaces
+  %table.links.loop{:style => "width: 100%"}
+    %tr
+      %td Project
+      %td
+        %a{:href => "http://arquillian.org"} arquillian.org
+      %td
+        %a{:href => "http://richfaces.org"} richfaces.org
+    %tr
+      %td Twitter:
+      %td
+        %a{:href => "https://twitter.com/#!arquillian"} @arquillian
+      %td
+        %a{:href => "https://twitter.com/#!richfaces"} @richfaces
+    %tr
+      %td Google+:
+      %td
+        %a{:href => "https://plus.google.com/100660127586085393031/"} +Arquillian
+      %td
+        %a{:href => "https://plus.google.com/b/115573055688754345457/"} +RichFaces
+    %tr
+      %td Forums:
+      %td
+        %a{:href => "https://community.jboss.org/en/arquillian?view=discussions"} Arquillian User forum
+      %td
+        %a{:href => "https://community.jboss.org/en/richfaces?view=discussions"} RichFaces User forum
+    %tr
+      %td IRC
+      %td #jbosstesting
+      %td #richfaces
+    %tr
+      %td Blog feed:
+      %td
+        %a{:href => "http://arquillian.org/blog/"} arquillian.org/blog/
+      %td
+        %a{:href => "http://planet.jboss.org/feed/richfacesall"} planet.jboss.org<br>/feed/richfacesall
