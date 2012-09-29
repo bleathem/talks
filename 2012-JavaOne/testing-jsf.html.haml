@@ -16,10 +16,10 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
 %section
   %section
     %h2 The plan
-    %ul
-      %li Testing Overview
-      %li Testing the Back-end
-      %li Testing the Front-end
+    :textile
+      * Brief Review of _back-end_ testing
+      * How to test the _front-end_ with Selenium
+      * Beyond Selenium with Arquillian Extensions
     %div
       %img.clear{:src => "assets/images/storm_troopers.jpg", :alt => "http://www.flickr.com/photos/jdhancock/5845280258/"}
   %section
@@ -28,12 +28,11 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
       %li Senior Software Engineer at Red Hat
       %li RichFaces Project Lead
       %li Represent Red Hat on the JSF 2.2 EG (JSR-344)
-      %li Seam Faces module lead
     %div
       %img{:src => "assets/images/silhouette.png", :alt => "http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232"}
   %section
     %h2 Who's behind all this?
-    %table.people{:style => ""}
+    %table.people{:style => "margin: auto"}
       %tr
         %td
           %img{:src => "assets/images/aslak.jpg"}
@@ -99,10 +98,11 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
     %div
       %img.plain{:src => "assets/images/crowd.png"}
     .notes
+      Can I see a show of hands for those...
       %ul
-        %li Who currently develops web applications with JSF?
-        %li Who is using Arquillian to test their application logic?
-        %li Who is using Selenium to test their application front-end?
+        %li Who currently develop web applications with JSF?
+        %li Who are using Arquillian to test their application logic?
+        %li Who are using Selenium to test their application front-end?
 %section
   %section
     %h2 Back-end testing
