@@ -150,7 +150,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
         %li Introduce Shrinkwrap
   %section
     %h2 GreeterTest | The Bean
-    %pre{:class => "prettyprint", :style => "font-size: 18px"}
+    %pre{:class => "prettyprint", :style => "font-size: 18px; top: 50px"}
       %code{:id => "greeter"}
         = preserve do
           :escaped
@@ -173,7 +173,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
             }
   %section
     %h2 GreeterTest | Injection
-    %pre{:class => "prettyprint", :style => "font-size: 18px"}
+    %pre{:class => "prettyprint", :style => "font-size: 18px; top: 100px"}
       %code{:id => "phraseBuilder"}
         = preserve do
           :escaped
@@ -192,7 +192,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
             }
   %section
     %h2 GreeterTest | Test
-    %pre{:class => "prettyprint", :style => "font-size: 15px"}
+    %pre{:class => "prettyprint", :style => "font-size: 15px; top: 50px"}
       %code{:id => "basicTest"}
         = preserve do
           :escaped
@@ -215,13 +215,13 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
                         greeter.createGreeting("Earthling"));
                 }
             }
-    .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"1:1"}}
-    .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"3:9"}}
-    .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"11:12"}}
-    .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"14:17"}}
+    .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"0:1"}}
+    .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"2:9"}}
+    .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"10:11"}}
+    .fragment.screen{:data=>{:prettify=>"basicTest", :prettify_lines=>"13:17"}}
   %section
     %h2 The Magic
-    %ul
+    %ul.relative{:style => "top: 50px"}
       %li
         POM Dependencies
         %ul
@@ -235,7 +235,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
           %li Configuration of the test container
   %section
     %h2 GreeterTest | POM
-    %pre{:class => "prettyprint", :style => "font-size: 17px"}
+    %pre{:class => "prettyprint", :style => "font-size: 17px; top: 50px"}
       %code{:id => "basicTest"}
         = preserve do
           :escaped
@@ -283,7 +283,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
       %li Let's focus on real-tests
   %section
     %h2 Real tests &rarr; real browsers
-    .images.white{:style => "margin-top: 50px"}
+    .images.white.relative{:style => "top: 100px"}
       %table
         %tr
           %td
@@ -454,11 +454,11 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
 %section
   %section
     %h2 Automating Client-side testing
-    %ul
-      %li Deploy the app, run the tests!
-    %div
-      %img.plain{:src => "assets/images/assembly_line.jpg", :alt => "http://www.flickr.com/photos/pasukaru76/6893926948/"}
-
+    %div.relative{:style => "top: 30px"}
+      %ul
+        %li Deploy the app, run the tests!
+      %div
+        %img.plain{:src => "assets/images/assembly_line.jpg", :alt => "http://www.flickr.com/photos/pasukaru76/6893926948/"}
   %section
     %h2 Container lifecycle
     %div.relative.inline{:style => "top: 40px"}
@@ -535,7 +535,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
           %span.monospace @Drone
   %section
     %h2 GoogleTest | Test
-    %pre.relative{:class => "prettyprint", :style => "font-size: 20px; top: 50px"}
+    %pre.relative{:class => "prettyprint", :style => "font-size: 20px; top: 80px"}
       %code{:id => "googleTest"}
         = preserve do
           :escaped
@@ -682,7 +682,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
     %p.left More boiler plate!
   %section
     %h2 Graphene wait helpers
-    %table.left{:style => "width: 100%"}
+    %table.left.relative{:style => "width: 100%; top: 50px"}
       %tr.bold
         %th Helper
         %th Description
@@ -884,14 +884,19 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
 %section
   %section
     %h2 Interceptors with Graphene
-    Work is in progress to port the Graphene 1 interceptor API to Graphene 2
-    %ul
-      %li Cross-cutting concerns
-      %li code which will be performed around invocation
-      %li execute code before/after the selenium command will be performed
-      %li catch exceptions thrown when performing selenium command
-    %a{:href => "https://issues.jboss.org/browse/ARQGRA-79", :style => "font-size: 30px"}
-      https://issues.jboss.org/browse/ARQGRA-79
+    %p.left.relative{:style => "top: 50px"} Work is in progress to port the Graphene 1 interceptor API to Graphene 2
+    %div.relative{:style => "top: 100px"}
+      %ul.bullets
+        %li Code executed around each WebDriver invocation
+        %li Cross-cutting concerns
+      %br
+      %br
+      %a{:href => "https://issues.jboss.org/browse/ARQGRA-79", :style => "font-size: 30px"}
+        https://issues.jboss.org/browse/ARQGRA-79
+    .notes
+      %ul
+        %li execute code before/after the selenium command will be performed
+        %li catch exceptions thrown when performing selenium command
 %section
   %section
     %h2 Graphene | Example
@@ -1083,22 +1088,36 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
       %a{:href => "http://www.flickr.com/photos/metrolibraryarchive/3267249336/"} http://www.flickr.com/photos/metrolibraryarchive/3267249336/
       %a{:href => "http://www.flickr.com/photos/core-materials/5057399792/"} http://www.flickr.com/photos/core-materials/5057399792/
       %a{:href => "http://www.flickr.com/photos/abennett96/2717629123/"} http://www.flickr.com/photos/abennett96/2717629123/
-    .links.commons
-      :plain
-        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons Licence" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">GOING MOBILE With Your RichFaces Applications</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="www.bleathem.ca/talks/2012-JBW/richfaces-mobile.html" property="cc:attributionName" rel="cc:attributionURL">Brian Leathem</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/bleathem/talks/tree/master/2012-JBW" rel="dct:source">github.com</a>.<br />Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/bleathem/talks/tree/master/2012-JBW" rel="cc:morePermissions">https://github.com/bleathem/talks/tree/master/2012-JBW</a>.
+  .links.commons
+    :plain
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons Licence" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Testing JSF applications with Arquillian and Selenium</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="www.bleathem.ca/talks/2012-JavaOne/richfaces-mobile.html" property="cc:attributionName" rel="cc:attributionURL">Brian Leathem</a> is licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/bleathem/talks/tree/master/2012-JavaOne" rel="dct:source">github.com</a>.<br />Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/bleathem/talks/tree/master/2012-JavaOne" rel="cc:morePermissions">https://github.com/bleathem/talks/tree/master/2012-JavaOne</a>.
 %section
   %h2 Additional Resources
-  :textile
-    * Home Pages
-    ** "Selenium Website":http://seleniumhq.org/
-    ** "Arquillian Website":http://arquillian.org/
-    * &nbsp;
-    * Arquillian Extensions
-    ** "Drone docs":https://docs.jboss.org/author/display/ARQ/Drone
-    ** "Graphene 2 docs":https://docs.jboss.org/author/display/ARQGRA2/Getting+Started
-    ** "Warp docs":https://docs.jboss.org/author/display/ARQ/Warp
-    * &nbsp;
-    * "Sample Code":https://github.com/bleathem/GrapheneTest
+  %ul.bullets
+    %li
+      Arquillian
+      %a{:href => "http://arquillian.org/guides/getting_started/"} Getting Started guides
+      %p.url
+        %a{:href => "http://arquillian.org/guides/getting_started/"} http://arquillian.org/guides/getting_started/
+    %li{:style => "margin-top: 1em"}
+      Arquillian Extensions:
+      %ul
+        %li
+          %a{:href => "https://docs.jboss.org/author/display/ARQ/Drone"} Drone docs
+          %p.url
+            %a{:href => "https://docs.jboss.org/author/display/ARQ/Drone"}https://docs.jboss.org/author/display/ARQ/Drone
+        %li
+          %a{:href => "https://docs.jboss.org/author/display/ARQGRA2/Getting+Started"} Graphene 2 docs
+          %p.url
+            %a{:href => "https://docs.jboss.org/author/display/ARQGRA2/Getting+Started"} https://docs.jboss.org/author/display/ARQGRA2/Getting+Started
+        %li
+          %a{:href => "https://docs.jboss.org/author/display/ARQ/Warp"} Warp docs
+          %p.url
+            %a{:href => "https://docs.jboss.org/author/display/ARQ/Warp"} https://docs.jboss.org/author/display/ARQ/Warp
+      %li{:style => "margin-top: 1em"}
+        %a{:href => "https://github.com/bleathem/GrapheneTest"} Sample Code
+        %p.url
+          %a{:href => "https://github.com/bleathem/GrapheneTest"} https://github.com/bleathem/GrapheneTest
 %section
   %h2 Arquillian @ JavaOne
   :textile
@@ -1112,7 +1131,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
     * "CON5458":https://oracleus.activeevents.com/connect/sessionDetail.ww?SESSION_ID=5458 - Today’s Rapid Java EE Development: Live Coding from Scratch to Deployment
 %section
   %h2 Stay in the loop
-  %table.links.loop{:style => "width: 100%"}
+  %table.links.loop.relative{:style => "width: 100%; top: 80px"}
     %tr
       %td Project
       %td

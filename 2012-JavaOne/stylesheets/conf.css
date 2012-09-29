@@ -200,6 +200,7 @@ ul.intro {
 
 .reveal .commons {
     font-size: 10pt;
+    line-height: 1.5em;
     text-align: center;
 }
 
@@ -219,6 +220,11 @@ ul.intro {
 .reveal .links li {
     font-size: 18pt;
     line-height: normal;
+}
+
+.reveal .url {
+    font-size: 17pt;
+    line-height: 17pt;
 }
 
 .reveal dl dt, .reveal dl dd {
