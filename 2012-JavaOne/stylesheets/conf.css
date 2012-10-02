@@ -188,10 +188,13 @@ ul.intro {
     padding: 0;
 }
 
-.reveal .prettyprint .highlight, .reveal .prettyprint .highlight code {
-    background-color:#eee;
+.reveal .prettyprint .highlight, .reveal .prettyprint .highlight {
     font-weight: normal;
     font-size: 20px;
+}
+
+.reveal .prettyprint .highlight, .reveal .prettyprint .highlight code {
+    background-color:#eee;
 }
 
 .reveal section .print {
@@ -223,6 +226,7 @@ ul.intro {
 }
 
 .reveal .url {
+    font-size: 17pt;
     font-size: 17pt;
     line-height: 17pt;
 }
