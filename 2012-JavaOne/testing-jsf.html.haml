@@ -72,7 +72,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
               Karel Piwko (
               %a{:href => "https://twitter.com/karelpiwko"}@karelpiwko
               )
-            %li Arquillian Drone
+            %li Arquillian Drone Lead
       %tr
         %td
           %img{:src => "assets/images/jhuska.jpg"}
@@ -80,9 +80,9 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
           %ul
             %li
               Juraj Huska (
-              %a{:href => "https://github.com/jhuska"}jhuska
+              %a{:href => "https://twitter.com/j_huska"}@j_huska
               )
-            %li Arquillian Graphene
+            %li Arquillian Graphene, Arquillian Drone
       %tr
         %td
           %img{:src => "assets/images/jan_papousek.jpg"}
@@ -92,7 +92,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
               Jan Papoušek (
               %a{:href => "https://twitter.com/jan_papousek"}@jan_papousek
               )
-            %li Arquillian Graphene
+            %li Arquillian Graphene, Arquillian Drone
   %section
     %h2 Who are you?
     %div
@@ -355,7 +355,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
     %h2 WebElement Lookup
     %br
     %p.left Selenium/WebDriver programmatic API:
-    %pre.relative{:class => "prettyprint", :style => "font-size:25px"}
+    %pre{:class => "prettyprint", :style => "font-size:25px"}
       %code
         = preserve do
           :escaped
@@ -363,12 +363,14 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
                 = driver.findElement(By.id("username"))
     %br
     %p.left Alternative @FindBy annotation:
-    %pre.relative{:class => "prettyprint", :style => "font-size:25px"}
+    %pre{:class => "prettyprint", :style => "font-size:25px"}
       %code
         = preserve do
           :escaped
             @FindBy(id="username")
             WebElement username;
+            ...
+            PageFactory.initElements(driver, this);
     .notes
       %ul
         %li By.ByClassName, By.ByCssSelector, By.ById, By.ByLinkText, By.ByName, By.ByPartialLinkText, By.ByTagName, By.ByXPath, ByChained, ByIdOrName
@@ -491,15 +493,15 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
     %h2 Arquillian Drone
     %div.relative.inline.left{:style => "top : 80px"}
       %img.plain{:src => "assets/images/drone.png"}
-      %p{:style => "width: 550px"} Manages the life-cycle of objects required for interaction between browser and deployed application
+      %p{:style => "width: 550px"} Manages the browser life-cycle
   %section
     %h2 Arquillian Drone
     %ul
       %li
         Integrates with:
         %ul
-          %li Arquillian Graphene
           %li Selenium/Webdriver
+          %li Arquillian Graphene
     %pre.relative{:class => "prettyprint", :style => "font-size: 20px; top: 50px"}
       %code
         = preserve do
@@ -525,7 +527,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
         %p.block QA focus: Automate tests
 %section
   %section
-    %h2 Example | GoogleTest
+    %h2 Example | Google Drone Test
     %div.relative.inline{:style => "top: 50px"}
       %img{:src => "assets/images/google.png"}
       %ul.bullets
@@ -534,24 +536,29 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
           Demonstrate
           %span.monospace @Drone
   %section
-    %h2 GoogleTest | Test
+    %h2 Google Drone Test | Test
     %pre.relative{:class => "prettyprint", :style => "font-size: 20px; top: 80px"}
       %code{:id => "googleTest"}
         = preserve do
           :escaped
             @RunWith(Arquillian.class)
-            public class GoogleTest {
-
-                URL url = URLUtils.buildUrl("http://www.google.com/");
+            public class GoogleDroneTest {
 
                 @Drone
                 WebDriver browser;
 
                 @Test
                 public void testOpeningHomePage() {
-                    browser.get(url.toString());
+                    browser.get("http://www.google.com/");
+                    List<WebElement> elements = browser.findElements(
+                        By.xpath("//span[contains(text(), 'Google Search')]"));
+
+                    Assert.assertTrue("Page not loaded", elements.size() > 0);
                 }
             }
+    .fragment.screen{:data=>{:prettify=>"googleTest", :prettify_lines=>"0:1"}}
+    .fragment.screen{:data=>{:prettify=>"googleTest", :prettify_lines=>"3:4"}}
+    .fragment.screen{:data=>{:prettify=>"googleTest", :prettify_lines=>"6:13"}}
   %section
     %h1.relative.demo Demo Time
 %section
@@ -596,24 +603,31 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
   %section
     %h2 Selenium | Page objects
     %div.relative.inline{:style => "top : 50px"}
-      %img.nomargin{:src => "assets/images/page.png"}
+      %img{:src => "assets/images/page.png"}
       %div
-        %ul.bullets.fixed-width-narrow
+        %ul.fixed-width
           %li A class that encapsulates the behaviour of a page
-        %br
-        %br
-        %div.relative{:style => "left: 20px"}
-          %pre{:class => "prettyprint", :style => "font-size: 20px; width: 525px; margin-right: 0;"}
-            %code
-              = preserve do
-                :escaped
-                  @Page
-                  LoginPage loginPage
-          %pre{:class => "prettyprint", :style => "font-size: 20px; width: 525px; margin-right: 0;"}
-            %code{:style => "margin=left: 0; padding: 0"}
-              = preserve do
-                :escaped
-                  loginPage.loginAs("username", "password");
+  %section
+    %h2 Selenium | LoginPage
+    %pre{:class => "prettyprint", :style => "font-size: 20px; top: 30px"}
+      %code
+        = preserve do
+          :escaped
+            public class LoginPage {
+                private final WebDriver driver;
+
+                public LoginPage(WebDriver driver) {
+                    this.driver = driver;
+                }
+
+                public HomePage loginAs(String username, String password) {
+                    driver.findElement(By.id("username")).sendKeys(username);
+                    driver.findElement(By.id("passwd")).sendKeys(password);
+                    driver.findElement(By.id("login")).submit();
+
+                    return new HomePage(driver);
+                }
+            }
   %section
     %h2 Selenium | Page Instantiation
     %p.relative{:style => "top: 100px"} Selenium PageFactory class instantiates Page Objects:
@@ -626,15 +640,20 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
   %section
     %h2 Graphene | Page Injection
     %p.relative{:style => "top: 100px"}
-      Graphene introduces the
-      %span.monospace @Page
-      Injection Annotation
-    %pre.relative{:class => "prettyprint", :style => "font-size: 22px; top: 200px"}
-      %code
-        = preserve do
-          :escaped
-            @Page
-            LoginPage loginPage
+      Graphene test enrichment manages the PageFactory
+    %div.relative{:style => "top: 150px"}
+      %pre{:class => "prettyprint", :style => "font-size: 22px;"}
+        %code
+          = preserve do
+            :escaped
+              @Page
+              LoginPage loginPage
+      %pre{:class => "prettyprint", :style => "font-size: 22px;"}
+        %code
+          = preserve do
+            :escaped
+              @FindBy(id="username")
+              WebElement username;
   %section
     %h2 Graphene | Page Fragments
     %div.relative.inline{:style => "top : 50px"}
@@ -650,8 +669,8 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
             %code
               = preserve do
                 :escaped
-                  @FindBy(css=".pickList")
-                  PickListComponent pickList;
+                  @FindBy(css=".calendar")
+                  CalendarFragment calendar;
   %section
     %h2 Abstraction FTW!
     %p.italic.relative{:style => "top: 150px"}
@@ -737,7 +756,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
           %dd blocks on XHR (Ajax)
   %section
     %h2 Request guard | Usage
-    %pre{:class => "prettyprint", :style => "font-size: 20px;"}
+    %pre{:class => "prettyprint", :style => "font-size: 20px; top: 30px"}
       %code
         = preserve do
           :escaped
@@ -747,9 +766,6 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
                 @FindBy(id="http")
                 private WebElement httpButton;
              
-                @FindBy(id="none")
-                private WebElement noneButton;
-               
                 @FindBy(id="xhr")
                 private WebElement xhrButton;
              
@@ -757,7 +773,6 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
                 public void testSimple() {
                     guardHttp(httpButton).click();
                     guardXhr(xhrButton).click();
-                    guardHttp(noneButton).click();
                 }
             }
 %section
@@ -769,11 +784,11 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
         %code
           = preserve do
             :escaped
-              @JavaScript("myBackground")
-              @Dependency(sources = {"background.js"})
+              @JavaScript("javascriptObject")
+              @Dependency(sources = {"file.js"})
               public interface Background {
-                  void setBackground(String color);
-                  String getBackground();
+                  void voidMethod(String color);
+                  String someFunction();
               }
   %section
     %h2 Example | Javascript Interface
@@ -899,65 +914,155 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
         %li catch exceptions thrown when performing selenium command
 %section
   %section
-    %h2 Graphene | Example
-    %pre{:class => "prettyprint", :style => "font-size: 8px"}
+    %h2 Example | LoginScreen
+    %div.relative.inline{:style => "top: 50px"}
+      %img{:src => "assets/images/login_screen.png"}
+      %ul.bullets{:style => "width: 420px"}
+        %li Graphene Test
+        %li
+          Demonstrate Page Fragments
+  %section
+    %h2 LoginScreen | Deployment
+    %pre{:class => "prettyprint", :style => "font-size: 14px"}
+      %code{:id => "deployment"}
+        = preserve do
+          :escaped
+            public class Deployments {
+                public static final String WEBAPP_SRC = "src/main/webapp";
+
+                public static WebArchive getLoginScreenDeployment() {
+                    return ShrinkWrap.create(WebArchive.class, "login.war")
+                            .addClasses(Credentials.class, User.class, LoginController.class)
+                            .addAsWebResource(new File(WEBAPP_SRC, "resources/bootstrap/css/bootstrap.css"),
+                                              "resources/bootstrap/css/bootstrap.css")
+                            .addAsWebResource(new File(WEBAPP_SRC, "login.xhtml"))
+                            .addAsWebResource(new File(WEBAPP_SRC, "home.xhtml"))
+                            .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+                            .addAsWebInfResource(
+                                    new StringAsset("<faces-config version=\"2.0\"/>"),
+                                    "faces-config.xml");
+                }
+
+            }
+  %section
+    %h2 LoginScreen | GrapheneTest
+    %pre{:class => "prettyprint", :style => "font-size: 10px"}
       %code{:id => "graphene"}
         = preserve do
           :escaped
-            RunWith(Arquillian.class)
-            public class PickListTest {
-                private static final String WEBAPP_SRC = "src/main/webapp";
+            @RunWith(Arquillian.class)
+            public class LoginScreenGrapheneTest {
 
                 @Deployment(testable = false)
                 public static WebArchive createDeployment() {
-                    MavenDependencyResolver resolver = DependencyResolvers.use(
-                            MavenDependencyResolver.class).loadMetadataFromPom("pom.xml");
-
-                    return ShrinkWrap.create(WebArchive.class, "picklist.war")
-                            .addPackage(RichBean.class.getPackage())
-                            .addAsWebResource(new File(WEBAPP_SRC + "/pickList", "pickList.xhtml"))
-                            .addAsWebResource(new File(WEBAPP_SRC + "/pickList", "pickList_strings.xhtml"))
-                            .addAsWebResource(new File(WEBAPP_SRC + "/pickList", "pickList_composite.xhtml"))
-                            .addAsWebResource(new File(WEBAPP_SRC + "/resources/components", "pickList.xhtml"), "/resources/components/pickList.xhtml")
-                            .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-                            .addAsWebInfResource(new StringAsset("<faces-config version=\"2.0\"/>"), "faces-config.xml")
-                            .addAsLibraries(resolver.artifact("org.richfaces.ui:richfaces-components-ui:4.3.0-SNAPSHOT").resolveAsFiles())
-                            .addAsLibraries(resolver.artifact("org.richfaces.core:richfaces-core-impl:4.3.0-SNAPSHOT").resolveAsFiles());
+                    return Deployments.getLoginScreenDeployment();
                 }
 
                 @Drone
                 WebDriver browser;
 
                 @ArquillianResource
-                URL deploymentURL;
+                URL contextPath;
 
-                @FindBy(css=".pickList")
-                PickListComponent pickList;
+                @FindBy(id="loginForm:username")
+                private WebElement usernameInput;
 
-                @FindBy(css=".submitButton")
-                WebElement submitButton;
+                @FindBy(id="loginForm:password")
+                private WebElement passwordInput;
 
-                @FindBy(css=".out")
-                WebElement outPanel;
+                @FindBy(id="loginForm:login")
+                private WebElement loginButton;
 
                 @Test
-                public void testPickListInPage() {
-                    String page = deploymentURL + "pickList.jsf";
+                @RunAsClient
+                public void should_login_successfully() throws Exception {
+                    String page = contextPath + "login.jsf";
                     browser.get(page);
-                    pickList.addAll();
-                    Graphene.guardHttp(submitButton).submit();
-                    List<WebElement> elements = outPanel.findElements(By.cssSelector(".value"));
-                    List<String> values = new ArrayList<String>(elements.size());
-                    for (WebElement element : elements) {
-                        values.add(element.getText());
-                    }
-                    Assert.assertEquals(5, values.size());
-                    Assert.assertEquals(pickList.getSelectedItems(), values);
+
+                    usernameInput.sendKeys("demo");
+                    passwordInput.sendKeys("demo");
+                    loginButton.click();
+
+                    Assert.assertTrue("User should be logged in!",
+                            browser.findElements(By.xpath("//li[contains(text(), 'Welcome')]")).size() > 0);
                 }
+
+            }
     .fragment.screen{:data=>{:prettify=>"graphene", :prettify_lines=>"0:1"}}
-    .fragment.screen{:data=>{:prettify=>"graphene", :prettify_lines=>"4:19"}}
-    .fragment.screen{:data=>{:prettify=>"graphene", :prettify_lines=>"21:33"}}
-    .fragment.screen{:data=>{:prettify=>"graphene", :prettify_lines=>"36:50"}, :style => "top: -120px"}
+    .fragment.screen{:data=>{:prettify=>"graphene", :prettify_lines=>"3:6"}}
+    .fragment.screen{:data=>{:prettify=>"graphene", :prettify_lines=>"8:21"}}
+    .fragment.screen{:data=>{:prettify=>"graphene", :prettify_lines=>"23:36"}, :style => "top: -20px; margin: 0 -100px; font-size: 18px"}
+  %section
+    %h2 LoginScreen | LoginFragment
+    %pre{:class => "prettyprint", :style => "font-size: 10px"}
+      %code{:id => "loginFragment"}
+        = preserve do
+          :escaped
+            public class LoginFragment {
+
+                @FindBy(id="loginForm:username")
+                private WebElement usernameInput;
+
+                @FindBy(id="loginForm:password")
+                private WebElement passwordInput;
+
+                @FindBy(id="loginForm:login")
+                private WebElement loginButton;
+
+                public void setUsername(Object username) {
+                    usernameInput.sendKeys(username.toString());
+                }
+
+                public void setPassword(Object password) {
+                    passwordInput.sendKeys(password.toString());
+                }
+
+                public void click() {
+                    loginButton.click();
+                }
+            }
+    .fragment.screen{:data=>{:prettify=>"loginFragment", :prettify_lines=>"2:9"}}
+    .fragment.screen{:data=>{:prettify=>"loginFragment", :prettify_lines=>"11:21"}}
+  %section
+    %h2 LoginScreen | FragmentTest
+    %pre{:class => "prettyprint", :style => "font-size: 10px"}
+      %code{:id => "fragmentTest"}
+        = preserve do
+          :escaped
+            @RunWith(Arquillian.class)
+            public class LoginScreenFragmentTest {
+
+                @Deployment(testable = false)
+                public static WebArchive createDeployment() {
+                    return Deployments.getLoginScreenDeployment();
+                }
+
+                @Drone
+                WebDriver browser;
+
+                @ArquillianResource
+                URL contextPath;
+
+                @FindBy(id="loginForm")
+                LoginFragment loginForm;
+
+                @Test
+                @RunAsClient
+                public void should_login_successfully() {
+                    String page = contextPath + "login.jsf";
+                    browser.get(page);
+
+                    loginForm.setUsername("demo");
+                    loginForm.setPassword("demo");
+                    loginForm.click();
+
+                    Assert.assertTrue("User should be logged in!",
+                            browser.findElements(By.xpath("//li[contains(text(), 'Welcome')]")).size() > 0);
+                }
+
+            }
+    .fragment.screen{:data=>{:prettify=>"fragmentTest", :prettify_lines=>"14:15"}}
+    .fragment.screen{:data=>{:prettify=>"fragmentTest", :prettify_lines=>"17:29"}, :style => "top: 0px; margin: 0 -100px; font-size: 18px"}
 %section
   %section
     %h2 Arquillian Warp
@@ -1003,61 +1108,67 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
           :escaped
             @WarpTest
             @RunWith(Arquillian.class)
-            public class PickListWarpTest {
+            public class LoginScreenWarpTest {
+
                 @Deployment
-                ...
+                public static WebArchive createDeployment() {
+                    WebArchive webArchive = Deployments.getLoginScreenDeployment();
+                    webArchive.delete("WEB-INF/beans.xml");
+                    webArchive.addAsWebInfResource(new File("src/test/resources/beans.xml"));
+                    return webArchive;
+                }
+
+                @Drone
+                WebDriver browser;
+
+                @ArquillianResource
+                URL contextPath;
+
+                @FindBy(id="loginForm")
+                LoginFragment loginForm;
 
                 @Test
                 @RunAsClient
-                public void testPickListInPage() {
-                    String page = deploymentURL + "pickList.jsf";
+                public void should_login_successfully() {
+                    String page = contextPath + "login.jsf";
                     browser.get(page);
 
                     Warp.filter(new JsfRequestFilter()).execute(new ClientAction() {
                         @Override
                         public void action() {
-                            pickList.addAll();
-                            submitButton.submit();
+                            loginForm.setUsername("demo");
+                            loginForm.setPassword("demo");
+                            loginForm.click();
                         }
-                    }).verify(new CheckListSize());
+                    }).verify(new CheckUsername());
 
-                    List<WebElement> elements = outPanel.findElements(By.cssSelector(".value"));
-                    List<String> values = new ArrayList<String>(elements.size());
-                    for (WebElement element : elements) {
-                        values.add(element.getText());
-                    }
-                    Assert.assertEquals(5, values.size());
-                    Assert.assertEquals(pickList.getSelectedItems(), values);
+                    Assert.assertTrue("User should be logged in!",
+                            browser.findElements(By.xpath("//li[contains(text(), 'Welcome')]"))
+                                .size() > 0);
                 }
 
-                public static class JsfRequestFilter implements RequestFilter<HttpRequest> {
-                    @Override
-                    public boolean matches(HttpRequest httpRequest) {
-                        return httpRequest.getUri().contains("pickList.jsf");
-                    }
-                }
-
-                public static class CheckListSize extends ServerAssertion {
-                    private static final long serialVersionUID = 1L;
-
+                public static class CheckUsername extends ServerAssertion {
                     @Inject
-                    RichBean richBean;
+                    Credentials credentials;
 
                     @BeforePhase(Phase.UPDATE_MODEL_VALUES)
                     public void beforeUpdateModelValues() {
-                        Assert.assertEquals(4, richBean.getValues().size());
+                        Assert.assertNull(credentials.getUsername());
                     }
 
                     @AfterPhase(Phase.UPDATE_MODEL_VALUES)
                     public void afterUpdateModelValues() {
-                        Assert.assertEquals(5, richBean.getValues().size());
+                        Assert.assertEquals("demo", credentials.getUsername());
                     }
+
                 }
+
             }
     .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"0:2"}}
-    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"6:27"}, :style => "top: -60px"}
-    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"29:34"}}
-    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"36:51"}, :style => "top: -180px"}
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"4:10"}}
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"12:19"}}
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"21:39"}, :style => "top: -120px"}
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"41:53"}, :style => "top: -180px"}
   %section
     %h1.relative.demo Demo Time
 %section
