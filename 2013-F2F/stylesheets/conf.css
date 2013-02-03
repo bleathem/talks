@@ -66,12 +66,7 @@ ul.intro {
  box-shadow: none;
 }
 
-.html5_slide img {
- padding: 20px;
- float: right;
-}
-
-.reveal .inline p, .reveal .inline div, .reveal .inline img, .reveal .inline ul {
+.reveal .inline p, .reveal .inline div, .reveal .inline img, .reveal .inline ul, .reveal .inline h1 {
     display: inline-block;
     vertical-align: middle;
     width: auto;
@@ -132,26 +127,17 @@ ul.intro {
     text-transform: none;
 }
 
-.reveal .people {
-    text-align: left;
-    font-size: 30px;
-    line-height: 30px;
+.reveal .big {
+    font-size: 130% !important; 
 }
 
-.reveal .people ul {
-    margin-left: 20px;
+.reveal .big li {
+    margin-bottom: 1em;
 }
 
-.reveal .people td {
-    vertical-align: middle;
-}
-
-.reveal .people img {
-    margin: 0;
-    border: 0;
-    height: 84px;
-    width: 84px;
-}
+.reveal ul.checklist, .reveal ul.checklist ul { 
+    list-style: url('../assets/images/arrow.png'); 
+} 
 
 .reveal .prettyprint {
     background-color: #ffffff;
