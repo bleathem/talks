@@ -1,0 +1,221 @@
+---
+layout: reveal
+title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
+---
+
+%section
+  %img.splash{:src => "assets/jbosscommunity/splash_text.png"}
+%section
+  %h1 State of the RichFaces
+  %h2.capitalize 2012, 2013, and Beyond!
+  %ul.intro
+    %li Brian Leathem and Lukas Fryc
+    %li RWP F2F 2013 - Miami
+    %li 2013-02-04
+%section
+  %section
+    %h2 The plan
+    :textile
+      * What's RichFaces!?
+      * What we accomplished in 2012
+      * Where we are heading in 2013 (hint: RichWidgets!)
+    %div
+      %img.clear{:src => "assets/images/storm_troopers.jpg", :alt => "http://www.flickr.com/photos/jdhancock/5845280258/"}
+%section
+  %section
+    %h2 What is RichFaces?
+    %div.inline
+      %img.right{:src => "assets/images/mouthful.jpg", :alt => "http://www.flickr.com/photos/14798455@N06/7808358384/", :style => "width: 300px"}
+      :textile
+        div{width: 500px}. _*RichFaces* provides a set of *components* for building web applications built on top of the *visual* component model *standardized* in JSF as part of *Java EE*._
+  %section
+    %h2 Points of Difference
+    %table{:style => "width: 900px; height: 400px; margin: 100px auto 0 auto"}
+      %tr
+        %td
+          %h1 Community
+        %td
+          %h1 Innovation
+      %tr
+        %td
+          %h1 Quality
+        %td
+          %h1 Openness
+  %section
+    %h2 Community
+    %div.inline
+      %img.right{:src => "assets/images/meeting.png", :alt => "http://openclipart.org/detail/99271/meeting-by-yves_guillou", :style => "width: 500px;"}
+      :textile
+        {width: 300px}* Community members are encouraged to get involved
+  %section
+    %h2 Innovation
+    %div.inline
+      %img.plain.right{:src => "assets/images/bulb.png", :alt => "http://openclipart.org/detail/173608/lightbulb-2-by-tikigiki-173608", :style => "width: 400px"}
+      :textile
+        {width: 450px}* History of innovation
+        ** JSF 2 ajax _is_ ajax from RichFaces 3
+        ** Enterprise Push
+        ** Client-side validation
+        * Innovation today
+        ** Testing JSF applications
+        ** Component architecture
+  %section
+    %h2 Quality
+    %div.inline
+      %img.plain.right{:src => "assets/images/check.png", :alt => "http://openclipart.org/detail/89245", :style => "width: 350px"}
+      :textile
+        (bullets){width: 470px}* Dedicated QE team
+        * Functional & Units test suites
+        * Tens of thousands of tests
+        * New: Arquillian Extensions
+  %section
+    %h2 Openness
+    %div.inline
+      %img.right{:src => "assets/images/open.jpg", :alt => "http://www.flickr.com/photos/tribalicious/185151669/", :style => "width: 500px"}
+      :textile
+        (big)* Standards
+        * Source
+        * Process
+%section
+  %section
+    %h2 2012
+    %h1.relative{:style => "top:150px"} Highlights
+  %section
+    %h2 Highlight | Team Changes
+    %div.inline
+      %img.right{:src => "assets/images/foosball.jpg", :alt => "http://www.flickr.com/photos/daryl_mitchell/3414184390/", :style => "width: 450px"}
+      %div{:style => "width: 400px"}
+        :textile
+          - Brian := -> Project Lead
+          - Jay & Wesley := -> new projects
+
+          (bullets){margin-top: 40px}* Intern Michal Petrov
+          * Reduced staff compared to Exadel days
+  %section
+    %h2 Highlight | 4.1, 4.2, 4.3
+    :textile
+      (bullets checklist relative){top: 50px}* 6 month release cycle
+      * Showcase on OpenShift
+      * New components
+      ** editor, pickList, orderingList, notify, contextMenu, hotkey, focus, placeholder
+      * New Features
+      ** ...
+      * CDK improvements
+  %section
+    %h2 Highlight | Mobile
+    %div.inline
+      %img.plain.right{:src => "assets/images/mobile.png", :style => "width: 250px"}
+      :textile
+        (bullets){width: 400px}* Mobile compatible components
+        * Single page programming model built using "slidfast"
+  %section
+    %h2 Highlight | Testing
+    %div.inline.relative{:style => "top: 50px"}
+      %div
+        %img.plain{:src => "assets/images/graphene-logo.png", :style => "height: 250px"}
+        %p{:style => "display: block; width: 400px"} Arquillian Graphene
+      %div
+        %img.plain{:src => "assets/images/warp-logo.png", :style => "height: 250px"}
+        %p{:style => "display: block; width: 400px"} Arquillian Warp
+  %section
+    %h2 Warp | Example
+    %pre{:class => "prettyprint", :style => "font-size: 17px"}
+      %code{:id => "warp"}
+        = preserve do
+          :escaped
+            @Test
+            public void testAjaxOnBlur() {
+              browser.get(contextPath.toExternalForm());
+              autocomplete.type("t");
+              Suggestion<String> firstSuggestion = autocomplete.getFirstSuggestion();
+              guardXhr(autocomplete).autocompleteWithSuggestion(firstSuggestion);
+
+              Warp.initiate(new Activity() {
+                 @Override
+                public void perform() {
+                  guardXhr(autocomplete).blur();
+                }
+ 
+              }).inspect(new Inspection() {
+                @Inject
+                AutocompleteBean bean;
+ 
+                @AfterPhase(Phase.INVOKE_APPLICATION)
+                public void verify_bean_executed() {
+                  assertTrue(bean.isListenerInvoked());
+                }
+              });
+            }
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"0:1"}}
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"2:6"}}
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"10:10"}}
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"17:20"}}
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"14:15"}}
+  %section
+    %h2 Highlight | RichFaces Bootstrap
+    %div.inline.relative{:style => "top: 50px"}
+      %a{:href => "http://bootstrap-richfaces.rhcloud.com", :target => "_demo"}
+        %img{:src => "assets/images/richfaces-bootstrap.png", :style => "width: 420px"}
+      :textile
+        (bullets){width: 400px}* Sanbox Project
+        * Great community involvement
+        * PoC of our new component architecture
+  %section
+    %h2 Highlight | "Polyglot" widgets
+    %div.inline.relative{:style => "top: 50px"}
+      %a{:href => "http://polyglotwidgets-richfaces.rhcloud.com", :target => "_demo"}
+        %img{:src => "assets/images/polyglot-widgets.png", :style => "width: 420px"}
+      :textile
+        {width: 400px}* Our standalone javascript widgets in a _poly-framework_ environment
+%section
+  %section
+    %h2 2013 | The Future
+    %div.inline.relative{:style => "top: 50px"}
+      %div
+        %img.plain{:src => "assets/images/richfaces-logo.png", :style => "height: 300px"}
+        %p{:style => "display: block; width: 400px"} RichFaces 5
+      %div
+        %img.plain{:src => "assets/images/richwidgets-logo.png", :style => "height: 300px"}
+        %p{:style => "display: block; width: 400px"} RichWidgets
+%section
+  %section
+    %h2 RF5 | New build
+    %img.plain{:src => "assets/images/skyscraper.jpg", :style => "height: 350px; "}
+  %section
+    %h2 RF5 | Integrated LESS
+    %img.plain{:src => "assets/images/lesscss.png", :style => "height: 400px; "}
+  %section
+    %h2 RF5 | Bootstrap themes
+    %img.plain{:src => "assets/images/bootswatch.png", :style => "height: 400px; "}
+  %section
+    %h2 RF5 | New component Architecture
+    %div.inline.relative{:style => "top: 50px"}
+      %img.plain{:src => "assets/images/events.gif", :alt => "http://commons.wikimedia.org/wiki/File:Newtons_cradle_animation_book.gif", :style => "height: 300px"}
+      :textile
+        (bullets){width: 300px}* Standalone javascript widgets (RichWidgets)
+        * Loose coupling to the JSF back-end via a javascript event mechanism
+%section
+  %section
+    %h2 RichWidgets | Widgets for Everyone!
+    %div.inline
+      %img.plain{:src => "assets/images/richwidgets-logo.png", :style => "height: 300px"}
+    :textile
+      * Pure javascript project
+  %section
+    %h2 RichWidgets | Mobile First
+    %img{:src => "assets/images/MartinCooper.jpg", :alt => "http://en.wikipedia.org/wiki/File:2007Computex_e21Forum-MartinCooper.jpg"}
+  %section
+    %h2 RichWidgets | Tools integration
+    %div.inline.relative{:style => "top: 100px"}
+      %img.plain{:src => "assets/images/richwidgets-logo.png", :style => "height: 160px"}
+      %h1 +
+      %img.plain{:src => "assets/images/anvil.png", :style => "height: 160px"}
+      %h1 =
+      %img.plain{:src => "assets/images/anvil-gold.png", :style => "height: 160px"}
+  %section
+    %h2 RichWidgets | Basis for RF 5
+    %img.plain{:src => "assets/images/richfaces-logo.png", :style => "height: 400px"}
+%section
+  %h2 Questions
+  %img.plain{:src => "assets/images/question_mark.png", :style => "height: 400px"}
+
