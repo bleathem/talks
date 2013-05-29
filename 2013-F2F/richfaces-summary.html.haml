@@ -17,9 +17,8 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
     %h2 The plan
     :textile
       * What's RichFaces!?
-      * What we accomplisehd in 2012
-      * Where we are now
-      * Where RichFaces is headed in 2013 (hint: RichWidgets!)
+      * What we accomplished in 2012
+      * Where we are heading in 2013 (hint: RichWidgets!)
     %div
       %img.clear{:src => "assets/images/storm_troopers.jpg", :alt => "http://www.flickr.com/photos/jdhancock/5845280258/"}
 %section
@@ -34,22 +33,20 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
     %table{:style => "width: 900px; height: 400px; margin: 100px auto 0 auto"}
       %tr
         %td
-          %h1 Openness
+          %h1 Community
         %td
           %h1 Innovation
       %tr
         %td
-          %h1 Community
-        %td
           %h1 Quality
+        %td
+          %h1 Openness
   %section
-    %h2 Openness
+    %h2 Community
     %div.inline
-      %img.right{:src => "assets/images/open.jpg", :alt => "http://www.flickr.com/photos/tribalicious/185151669/", :style => "width: 500px"}
+      %img.right{:src => "assets/images/meeting.png", :alt => "http://openclipart.org/detail/99271/meeting-by-yves_guillou", :style => "width: 500px;"}
       :textile
-        (big)* Standards
-        * Source
-        * Process
+        {width: 300px}* Community members are encouraged to get involved
   %section
     %h2 Innovation
     %div.inline
@@ -57,16 +54,11 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
       :textile
         {width: 450px}* History of innovation
         ** JSF 2 ajax _is_ ajax from RichFaces 3
-        ** ...
+        ** Enterprise Push
+        ** Client-side validation
         * Innovation today
         ** Testing JSF applications
         ** Component architecture
-  %section
-    %h2 Community
-    %div.inline
-      %img.right{:src => "assets/images/meeting.png", :alt => "http://openclipart.org/detail/99271/meeting-by-yves_guillou", :style => "width: 500px;"}
-      :textile
-        {width: 300px}* Community members are encouraged to get involved
   %section
     %h2 Quality
     %div.inline
@@ -76,7 +68,18 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
         * Functional & Units test suites
         * Tens of thousands of tests
         * New: Arquillian Extensions
+  %section
+    %h2 Openness
+    %div.inline
+      %img.right{:src => "assets/images/open.jpg", :alt => "http://www.flickr.com/photos/tribalicious/185151669/", :style => "width: 500px"}
+      :textile
+        (big)* Standards
+        * Source
+        * Process
 %section
+  %section
+    %h2 2012
+    %h1.relative{:style => "top:150px"} Highlights
   %section
     %h2 Highlight | Team Changes
     %div.inline
@@ -106,20 +109,6 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
         (bullets){width: 400px}* Mobile compatible components
         * Single page programming model built using "slidfast"
   %section
-    %h2 Highlight | RichFaces Bootstrap
-    %div.inline.relative{:style => "top: 50px"}
-      %img.right{:src => "assets/images/richfaces-bootstrap.png", :style => "width: 420px"}
-      :textile
-        (bullets){width: 400px}* Sanbox Project
-        * Great community involvement
-        * PoC of our new component architecture
-  %section
-    %h2 Highlight | "Polyglot" widgets
-    %div.inline.relative{:style => "top: 50px"}
-      %img.right{:src => "assets/images/polyglot-widgets.png", :style => "width: 420px"}
-      :textile
-        {width: 400px}* Our standalone javascript widgets in a _poly-framework_ environment
-  %section
     %h2 Highlight | Testing
     %div.inline.relative{:style => "top: 50px"}
       %div
@@ -128,9 +117,59 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
       %div
         %img.plain{:src => "assets/images/warp-logo.png", :style => "height: 250px"}
         %p{:style => "display: block; width: 400px"} Arquillian Warp
+  %section
+    %h2 Warp | Example
+    %pre{:class => "prettyprint", :style => "font-size: 17px"}
+      %code{:id => "warp"}
+        = preserve do
+          :escaped
+            @Test
+            public void testAjaxOnBlur() {
+              browser.get(contextPath.toExternalForm());
+              autocomplete.type("t");
+              Suggestion<String> firstSuggestion = autocomplete.getFirstSuggestion();
+              guardXhr(autocomplete).autocompleteWithSuggestion(firstSuggestion);
+
+              Warp.initiate(new Activity() {
+                 @Override
+                public void perform() {
+                  guardXhr(autocomplete).blur();
+                }
+ 
+              }).inspect(new Inspection() {
+                @Inject
+                AutocompleteBean bean;
+ 
+                @AfterPhase(Phase.INVOKE_APPLICATION)
+                public void verify_bean_executed() {
+                  assertTrue(bean.isListenerInvoked());
+                }
+              });
+            }
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"0:1"}}
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"2:6"}}
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"10:10"}}
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"17:20"}}
+    .fragment.screen{:data=>{:prettify=>"warp", :prettify_lines=>"14:15"}}
+  %section
+    %h2 Highlight | RichFaces Bootstrap
+    %div.inline.relative{:style => "top: 50px"}
+      %a{:href => "http://bootstrap-richfaces.rhcloud.com", :target => "_demo"}
+        %img{:src => "assets/images/richfaces-bootstrap.png", :style => "width: 420px"}
+      :textile
+        (bullets){width: 400px}* Sanbox Project
+        * Great community involvement
+        * PoC of our new component architecture
+  %section
+    %h2 Highlight | "Polyglot" widgets
+    %div.inline.relative{:style => "top: 50px"}
+      %a{:href => "http://polyglotwidgets-richfaces.rhcloud.com", :target => "_demo"}
+        %img{:src => "assets/images/polyglot-widgets.png", :style => "width: 420px"}
+      :textile
+        {width: 400px}* Our standalone javascript widgets in a _poly-framework_ environment
 %section
   %section
-    %h2 The Future
+    %h2 2013 | The Future
     %div.inline.relative{:style => "top: 50px"}
       %div
         %img.plain{:src => "assets/images/richfaces-logo.png", :style => "height: 300px"}
@@ -140,13 +179,6 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
         %p{:style => "display: block; width: 400px"} RichWidgets
 %section
   %section
-    %h2 RF5 | New component Architecture
-    %div.inline.relative{:style => "top: 50px"}
-      %img.plain{:src => "assets/images/events.gif", :alt => "http://commons.wikimedia.org/wiki/File:Newtons_cradle_animation_book.gif", :style => "height: 300px"}
-      :textile
-        (bullets){width: 300px}* Standalone javascript widgets (RichWidgets)
-        * Loose coupling to the JSF back-end via a javascript event mechanism
-  %section
     %h2 RF5 | New build
     %img.plain{:src => "assets/images/skyscraper.jpg", :style => "height: 350px; "}
   %section
@@ -155,6 +187,13 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
   %section
     %h2 RF5 | Bootstrap themes
     %img.plain{:src => "assets/images/bootswatch.png", :style => "height: 400px; "}
+  %section
+    %h2 RF5 | New component Architecture
+    %div.inline.relative{:style => "top: 50px"}
+      %img.plain{:src => "assets/images/events.gif", :alt => "http://commons.wikimedia.org/wiki/File:Newtons_cradle_animation_book.gif", :style => "height: 300px"}
+      :textile
+        (bullets){width: 300px}* Standalone javascript widgets (RichWidgets)
+        * Loose coupling to the JSF back-end via a javascript event mechanism
 %section
   %section
     %h2 RichWidgets | Widgets for Everyone!
@@ -176,3 +215,7 @@ title: "JavaOne 2012 | Testing JSF applications with Arquillian and Selenium"
   %section
     %h2 RichWidgets | Basis for RF 5
     %img.plain{:src => "assets/images/richfaces-logo.png", :style => "height: 400px"}
+%section
+  %h2 Questions
+  %img.plain{:src => "assets/images/question_mark.png", :style => "height: 400px"}
+
