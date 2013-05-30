@@ -73,5 +73,6 @@ section
 
   section
     asciidoc:
-      == Consistent style
-      * CSS Frameworks
+      == CSS Frameworks
+      * Bootstrap
+      * Foundation
