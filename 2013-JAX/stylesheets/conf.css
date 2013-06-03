@@ -2,11 +2,11 @@
  list-style: none;
 }
 
-.reveal ul ul, .reveal ul.bullets {
+.reveal ul ul, .reveal ul.bullets, .reveal .bullets > ul {
  list-style: disc;
 }
 
-.reveal ul.bullets {
+.reveal ul.bullets, .reveal .bullets > ul {
     padding-left: 30px;
 }
 
@@ -66,7 +66,7 @@ ul.intro {
  box-shadow: none;
 }
 
-.reveal .inline p, .reveal .inline div, .reveal .inline img, .reveal .inline ul, .reveal .inline h1 {
+.reveal .inline > p, .reveal .inline > div, .reveal .inline > img, .reveal .inline > ul, .reveal .inline > h1, .inline > pre {
     display: inline-block;
     vertical-align: middle;
     width: auto;
@@ -84,7 +84,7 @@ ul.intro {
     width: 520px;
 }
 
-.reveal .inline ul.fixed-width-narrow {
+.reveal .inline .fixed-width-narrow {
     width: 460px;
 }
 
@@ -95,6 +95,30 @@ ul.intro {
 
 .reveal img.nomargin {
     margin-right: 0;
+}
+
+.reveal .side-by-side > div {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.reveal .side-by-side img {
+    margin: 40px 0;
+}
+
+.reveal .side-by-side pre {
+    margin: 0;
+    width: 470px
+}
+
+.reveal .side-by-side pre:first-child {
+    margin-left: -50px;
+    margin-right: 5px;
+}
+
+.reveal .side-by-side pre:nth-child(2) {
+    margin-right: -50px;
+    margin-left: 5px;
 }
 
 .left {

@@ -7,8 +7,9 @@ section
   img.splash src="assets/jbosscommunity/splash_text.png" 
 
 section
-  h1 "Poly-framework" Web applications with Java EE
-  h2.capitalize 2012, 2013, and Beyond!
+  h1 "Poly-framework" 
+  h1 Web applications 
+  h2 with Java EE
   ul.intro
     li Brian Leathem
     li JAX 2013 - Santa Clara
@@ -21,7 +22,7 @@ section
       == The plan
       *  Web applications implemented with
       ** multiple web frameworks 
-      ** while preserving a consistent experience
+      ** preserving a consistent experience
 
       image:assets/images/storm_troopers.jpg["http://www.flickr.com/photos/jdhancock/5845280258/"]
 
@@ -30,7 +31,6 @@ section
       == Who am I?
       * Senior Software Engineer at Red Hat
       * RichFaces Project Lead
-      * Represent Red Hat on the JSF 2.2 EG (JSR-344)
 
       image:assets/images/silhouette.png["http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232"]
 
@@ -42,36 +42,372 @@ section
 section
 
   section
+    h2 The Problem
+    br
+    h4 How to mix web frameworks?
     asciidoc:
-      == The Problem
-      * Existing app in production that “works”
-      * Want to use shiny new technology
+      [role='bullets']
+      * Modernize a legacy app
+      * Teams with disparate expertise
+      * Best tool for the job
+
+    br
+    br
+    h3 style="font-style : italic" We want to use the shiny new technology
+
+  section
+    h2 Rewrite the application?
+    .inline.center.side-by-side
+      div
+        img.plain src="assets/images/money.png" alt="http://openclipart.org/detail/22860/money-bag-icon-by-chovynz"
+        p Too costly
+      div: img.plain  src="assets/images/bug.png" alt="http://openclipart.org/detail/29356/bug-by-ddoo"
+        p Introduce new bugs
+
+  section
+    h2 What if you could...
+    .inline.relative style="top:40px"
+      img.plain src="assets/images/thinking.png" alt="http://openclipart.org/detail/171299/indecisive-silhouette.svg-by-tulvur-171299"
+      div.fixed-width-narrow Run multiple frameworks side-by-side?
+
+section
+
+  section
+    h2 Genderal considerations
+    .inline.relative style="top:120px"
+      asciidoc:
+       * Client-side
+       ** Consistent L&F
+       ** Consistent behaviour
+ 
+      asciidoc:
+       * Server-side
+       ** Shared state
+       ** Programming model
 
   section
     asciidoc:
-      == Rewrite the application?
+      == CSS Frameworks
+      * Bootstrap: http://twitter.github.com/bootstrap
+      * Foundation: http://foundation.zurb.com/
+      * GroundWorkCSS: http://groundwork.sidereel.com
+      * Ink: http://ink.sapo.pt/
+      * Gumby: http://gumbyframework.com/
+      * Maxmertkit: http://www.maxmert.com/
+      * Responsive Grid System: http://www.responsivegridsystem.com/
+      * Base: http://matthewhartman.github.com/base/
 
-      [role='fragment']
-      * Too costly
-      * Introduce new bugs 
+  section
+    h2 Advantages of a CSS framework
+    .inline.relative style="top:60px"
+      img.plain src="assets/images/check.png" alt="http://openclipart.org/detail/89245"
+      asciidoc:
+        [role="bullets"]
+        * Web-framework independent
+        * Re-usable accross frameworks
+
+section
+
+  section
+    img.plain src="assets/images/bootstrap.png"
+
+  section
+    h2 Bootstrap | Scaffolding
+    a href="http://twitter.github.io/bootstrap/scaffolding.html"
+      img.plain src="assets/images/bootstrap_grid.png"
+      p http://twitter.github.io/bootstrap/scaffolding.html
+
+  section
+    h2 Bootstrap | Base CSS
+    a href="http://twitter.github.io/bootstrap/base-css.html"
+      img.plain src="assets/images/bootstrap_tables.png"
+      p http://twitter.github.io/bootstrap/base-css.html
+
+  section
+    h2 Bootstrap | Components
+    a href="http://twitter.github.io/bootstrap/components.html"
+      img.plain src="assets/images/bootstrap_buttons.png"
+      p http://twitter.github.io/bootstrap/components.html
+
+  section
+    h2 Bootstrap | Customizable
+    a href="http://twitter.github.io/bootstrap/customize.html"
+      img.plain src="assets/images/bootstrap_vars.png"
+      p http://twitter.github.io/bootstrap/customize.html
+
+section
+
+  section
+    a href="http://twitter.github.io/bootstrap/lesscss.html"
+      h1.normalcase http://lesscss.org/
+      img.plain src="assets/images/lesscss.png"
+
+  section
+    h2 LESS | Variables
+    pre.prettyprint.relative style="font-size: 27px; top: 50px"
+      code
+        | @nice-blue: #5B83AD;
+          @light-blue: (@nice-blue + #111);
+    p.relative style="top:100px" outputs:
+    pre.prettyprint.relative style="top:150px; font-size: 27px"
+      code
+        | #header { color: #6c94be; }
+    a href="http://lesscss.org/#-variables"
+      h3.normalcase.relative style="top:200px" http://lesscss.org/#-variables
+
+  section
+    h2 LESS | Mixins
+    pre.prettyprint style="font-size: 25px"
+      code.lang-css
+        | .bordered {
+            border-top: dotted 1px black;
+            border-bottom: solid 2px black;
+          }
+    p mix in:
+    pre.prettyprint.relative style="top:0px; font-size: 25px"
+      code.lang-css
+        | #menu a {
+            color: #111;
+            .bordered;
+          }
+          .post a {
+            color: red;
+            .bordered;
+          }
+    a href="http://lesscss.org/#-mixins"
+      h3.normalcase http://lesscss.org/#-mixins
+ 
+  section
+    h2 LESS | Parametric Mixins
+    pre.prettyprint style="font-size: 25px"
+      code.lang-css
+        | .border-radius (@radius) {
+            border-radius: @radius;
+            -moz-border-radius: @radius;
+            -webkit-border-radius: @radius;
+          }
+    p mix in:
+    pre.prettyprint style="font-size: 25px"
+      code.lang-css
+        | #header {
+            .border-radius(4px);
+          }
+          .button {
+            .border-radius(6px);
+          }
+    a href="http://lesscss.org/#-parametric-mixins"
+      h3.normalcase http://lesscss.org/#-parametric-mixins
+
+  section
+    h2 LESS | Nesting
+    .inline.side-by-side
+      pre.prettyprint.relative style="font-size: 25px; top: 0px; width: 400px"
+        code.lang-css
+          | #header { 
+              color: black;
+            }
+            #header .navigation {
+              font-size: 12px;
+            }
+            #header .logo {
+              width: 300px;
+            }
+            #header .logo:hover {
+              text-decoration: none;
+            }
+      pre.prettyprint.relative style="font-size: 25px; top: 0px; width: 540px"
+        code.lang-css
+          | #header {
+              color: black;
+
+              .navigation {
+                font-size: 12px;
+              }
+
+              .logo {
+                width: 300px;
+                &:hover {text-decoration: none}
+              }
+            }
+    a.relative style="top:20px" href="http://lesscss.org/#-nested-rules"
+      h3.normalcase http://lesscss.org/#-nested-rules
+
+  section
+    h2 LESS | Operations
+    pre.prettyprint.relative style="font-size: 25px; top: 50px"
+      code.lang-css
+        | @base: 5%;
+          @filler: (@base * 2);
+          @other: (@base + @filler);
+
+          color: (#888 / 4);
+          background-color: (@base-color + #111);
+          height: (100% / 2 + @filler);
+    a.relative style="top:100px" href="http://lesscss.org/#-operations"
+      h3.normalcase http://lesscss.org/#-operations
+
+  section
+    h2 LESS | Built-in Functions
+    pre.prettyprint.relative style="font-size: 25px; top: 50px"
+      code.lang-css
+        | @base: #f04615;
+          @width: 0.5;
+
+          .class {
+            width: percentage(0.5); // returns `50%`
+            color: saturate(@base, 5%);
+            background-color: spin(lighten(@base, 25%), 8);
+          }
+    a.relative style="top:100px" href="http://lesscss.org/#-functions"
+      h3.normalcase http://lesscss.org/#-functions
+
+  section
+    iframe src="files/Accordion/accordion.html" style="width: 800px; height: 800px"
+
+  section
+    pre.prettyprint.relative style="font-size: 13px;"
+      code#accordion.lang-css
+        |
+          @import "lib/bootstrap/less/variables.less";
+          @import "lib/bootstrap/less/mixins.less";
+
+          .skin {
+
+            .rf-ac, .rf-ac-itm-hdr, .rf-ac-itm-cnt, .rf-ac-itm-hdr {
+              font-size: @baseFontSize;
+              font-family: @baseFontFamily;
+              line-height: @baseLineHeight;
+              border-color: @navbarBorder;
+              background-color: @white;
+              border: none;
+            }
+
+            .rf-ac {
+              border: 1px solid @navbarBorder;
+              border-top: none;
+              .border-radius(@baseBorderRadius);
+              overflow:hidden;
+            }
+
+            .rf-ac-itm-hdr {
+              border-top: 1px solid @navbarBorder;
+              background-image: none;
+              padding: 5px 15px;
+            }
+
+            .rf-ac-itm-cnt {
+              border-top: 1px solid @navbarBorder;
+              padding: 10px 16px;
+            }
+
+            .rf-ac-itm-hdr {
+              color: @linkColor;
+            }
+          }
+
+    .fragment.screen data-prettify="accordion" data-prettify_lines="0:1"
+    .fragment.screen data-prettify="accordion" data-prettify_lines="3:3"
+    .fragment.screen data-prettify="accordion" data-prettify_lines="5:12"
+    .fragment.screen data-prettify="accordion" data-prettify_lines="14:34" style="top:-100px"
+
+section
+
+  section
+    h2 ... and feel
+    .inline.relative style="top:60px"
+      img.plain src="assets/images/windows31.jpg" alt="http://commons.wikimedia.org/wiki/File:Windows_3.1x_Captura.jpg" style="width:500px"
+      div style="width:350px"
+        asciidoc:
+          [role="bullets"]
+          * Behaviour
+          * "Moving" parts
+
+  section
+    h2 JSF Components 
+    .images style="margin-top: 150px"
+      table
+        tr
+          td
+            img.relative src="assets/images/jsf_component_sets/icefaces.gif" style="left: 50px"
+          td
+            img.relative src="assets/images/jsf_component_sets/richfaces-logo.png" style="top: -150px"
+          td
+            img.relative src="assets/images/jsf_component_sets/openfaces.png" style="left: -50px"
+        tr
+          td
+            img.relative src="assets/images/jsf_component_sets/trinidad.png"
+          td
+            img.relative src="assets/images/jsf_component_sets/myfaces.png"
+          td
+            img.relative src="assets/images/jsf_component_sets/primefaces.png"
+        tr
+          td
+            img.relative src="assets/images/jsf_component_sets/ibm.png" style="left: 120px"
+          td
+          td
+            img.relative src="assets/images/jsf_component_sets/oracle.png" style="left: -120px" 
 
   section
     asciidoc:
-      == What if you could...
-
-      Run multiple frameworks side-by-side?
-
-  section
-    asciidoc:
-      == Genderal considerations
-      * Client-side
-      ** Consistent L&F
-      ** Consistent behaviour
-      * &nbsp;
-      * Server-side
-      ** Shared state
+      == GWT libraries
+      * https://developers.google.com/web-toolkit/doc/latest/RefWidgetGallery
+      * http://www.sencha.com/products/gxt
+      * https://sites.google.com/site/gwtcomponents/
 
   section
     asciidoc:
-      == Consistent style
-      * CSS Frameworks
+      == RichFaces Widgets
+
+  section
+    asciidoc:
+      == Loose coupling
+      * Event based architecture
+
+section
+
+  section
+    asciidoc:
+      == Server-side
+
+  section
+    asciidoc:
+      == CDI
+      * Shared server state
+      * Consistent programming model
+      * Front-end independent
+
+  section
+    asciidoc:
+      == CDI | Dependency Injection
+
+  section
+    asciidoc:
+      == CDI | Contexts
+
+  section 
+    asciidoc:
+      == CDI | Events
+
+section
+
+  section
+    asciidoc:
+      == Example | JSF
+
+  section
+    asciidoc:
+      == Example | GWT
+
+  section
+    asciidoc:
+      == Example | REST
+
+section
+
+  section
+    asciidoc:
+      == One step further
+      * ESB
+
+
+
