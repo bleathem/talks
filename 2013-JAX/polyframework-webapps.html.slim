@@ -34,26 +34,22 @@ section
 
       image:assets/images/silhouette.png["http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232"]
 
-  section
-    asciidoc:
-      == Who are you?
-      image:assets/images/crowd.png["http://openclipart.org/detail/22519/crowd-by-kattekrab"]
-
 section
 
   section
-    h2 The Problem
-    br
-    h4 How to mix web frameworks?
-    asciidoc:
-      [role='bullets']
-      * Modernize a legacy app
-      * Teams with disparate expertise
-      * Best tool for the job
+    h2 The Problem...
+    .relative style="top: 40px"
+      p We want to mix web frameworks so we can:
+      .relative style="top: 40px"
+        asciidoc:
+          [role='bullets']
+          * modernize a legacy application
+          * accomodate teams with disparate expertise
+          * use the best tool for the job
 
-    br
-    br
-    h3 style="font-style : italic" We want to use the shiny new technology
+        h3.normalcase.relative style="top:60px"
+          span ... use the 
+          span style="font-style : italic" shiny new technology
 
   section
     h2 Rewrite the application?
@@ -69,6 +65,15 @@ section
     .inline.relative style="top:40px"
       img.plain src="assets/images/thinking.png" alt="http://openclipart.org/detail/171299/indecisive-silhouette.svg-by-tulvur-171299"
       div.fixed-width-narrow Run multiple frameworks side-by-side?
+
+  section
+    h1.demo demo
+    a.relative style="top:40px" href="https://polyglotwidgets-richfaces.rhcloud.com/" target="_demo" https://polyglotwidgets-richfaces.rhcloud.com/
+
+  section
+    asciidoc:
+      == Who are you?
+      image:assets/images/crowd.png["http://openclipart.org/detail/22519/crowd-by-kattekrab"]
 
 section
 
@@ -86,6 +91,15 @@ section
        ** Programming model
 
   section
+    h2 Use a CSS framework
+    .inline.relative style="top:60px"
+      img.plain src="assets/images/check.png" alt="http://openclipart.org/detail/89245"
+      asciidoc:
+        [role="bullets"]
+        * Web-framework independent
+        * Re-usable accross frameworks
+
+  section
     asciidoc:
       == CSS Frameworks
       * Bootstrap: http://twitter.github.com/bootstrap
@@ -97,15 +111,6 @@ section
       * Responsive Grid System: http://www.responsivegridsystem.com/
       * Base: http://matthewhartman.github.com/base/
 
-  section
-    h2 Advantages of a CSS framework
-    .inline.relative style="top:60px"
-      img.plain src="assets/images/check.png" alt="http://openclipart.org/detail/89245"
-      asciidoc:
-        [role="bullets"]
-        * Web-framework independent
-        * Re-usable accross frameworks
-
 section
 
   section
@@ -113,47 +118,50 @@ section
 
   section
     h2 Bootstrap | Scaffolding
-    a href="http://twitter.github.io/bootstrap/scaffolding.html"
+    a href="http://twitter.github.io/bootstrap/scaffolding.html" target="_demo"
       img.plain src="assets/images/bootstrap_grid.png"
       p http://twitter.github.io/bootstrap/scaffolding.html
 
   section
     h2 Bootstrap | Base CSS
-    a href="http://twitter.github.io/bootstrap/base-css.html"
+    a href="http://twitter.github.io/bootstrap/base-css.html" target="_demo"
       img.plain src="assets/images/bootstrap_tables.png"
       p http://twitter.github.io/bootstrap/base-css.html
 
   section
     h2 Bootstrap | Components
-    a href="http://twitter.github.io/bootstrap/components.html"
+    a href="http://twitter.github.io/bootstrap/components.html" target="_demo"
       img.plain src="assets/images/bootstrap_buttons.png"
       p http://twitter.github.io/bootstrap/components.html
 
   section
     h2 Bootstrap | Customizable
-    a href="http://twitter.github.io/bootstrap/customize.html"
+    a href="http://twitter.github.io/bootstrap/customize.html" target="_demo"
       img.plain src="assets/images/bootstrap_vars.png"
       p http://twitter.github.io/bootstrap/customize.html
 
 section
 
   section
-    a href="http://twitter.github.io/bootstrap/lesscss.html"
+    a href="http://lesscss.org/" target="_demo"
       h1.normalcase http://lesscss.org/
       img.plain src="assets/images/lesscss.png"
 
   section
     h2 LESS | Variables
-    pre.prettyprint.relative style="font-size: 27px; top: 50px"
-      code
-        | @nice-blue: #5B83AD;
-          @light-blue: (@nice-blue + #111);
-    p.relative style="top:100px" outputs:
-    pre.prettyprint.relative style="top:150px; font-size: 27px"
-      code
-        | #header { color: #6c94be; }
-    a href="http://lesscss.org/#-variables"
-      h3.normalcase.relative style="top:200px" http://lesscss.org/#-variables
+    .relative style="top:50px"
+      pre.prettyprint.relative style="font-size: 27px;"
+        code
+          | @nice-blue: #5B83AD;
+            @light-blue: (@nice-blue + #111);
+
+            #header { color: @light-blue; }
+      p.relative style="top:20px" css output:
+      pre.prettyprint.relative style="top:40px; font-size: 27px"
+        code
+          | #header { color: #6c94be; }
+      a href="http://lesscss.org/#-variables" target="_demo"
+        h3.normalcase.relative style="top:60px" http://lesscss.org/#-variables
 
   section
     h2 LESS | Mixins
@@ -174,7 +182,7 @@ section
             color: red;
             .bordered;
           }
-    a href="http://lesscss.org/#-mixins"
+    a href="http://lesscss.org/#-mixins" target="_demo"
       h3.normalcase http://lesscss.org/#-mixins
  
   section
@@ -195,7 +203,7 @@ section
           .button {
             .border-radius(6px);
           }
-    a href="http://lesscss.org/#-parametric-mixins"
+    a href="http://lesscss.org/#-parametric-mixins" target="_demo"
       h3.normalcase http://lesscss.org/#-parametric-mixins
 
   section
@@ -229,7 +237,7 @@ section
                 &:hover {text-decoration: none}
               }
             }
-    a.relative style="top:20px" href="http://lesscss.org/#-nested-rules"
+    a.relative style="top:20px" href="http://lesscss.org/#-nested-rules" target="_demo" 
       h3.normalcase http://lesscss.org/#-nested-rules
 
   section
@@ -243,7 +251,7 @@ section
           color: (#888 / 4);
           background-color: (@base-color + #111);
           height: (100% / 2 + @filler);
-    a.relative style="top:100px" href="http://lesscss.org/#-operations"
+    a.relative style="top:100px" href="http://lesscss.org/#-operations" target="_demo"
       h3.normalcase http://lesscss.org/#-operations
 
   section
@@ -258,11 +266,20 @@ section
             color: saturate(@base, 5%);
             background-color: spin(lighten(@base, 25%), 8);
           }
-    a.relative style="top:100px" href="http://lesscss.org/#-functions"
+    a.relative style="top:100px" href="http://lesscss.org/#-functions" target="_demo"
       h3.normalcase http://lesscss.org/#-functions
 
   section
-    iframe src="files/Accordion/accordion.html" style="width: 800px; height: 800px"
+    h2 Compiling Less
+    asciidoc:
+      * Javascript: 
+      ** http://lesscss.org/[less.js] 
+      * Java (less.js via rhino): 
+      ** https://github.com/marceloverdijk/lesscss-java[lesscss-java]
+      ** https://code.google.com/p/wro4j/[wro4j]
+
+  section
+    iframe src="files/Accordion/accordion.html" style="width: 800px; height: 600px"
 
   section
     pre.prettyprint.relative style="font-size: 13px;"
@@ -309,6 +326,10 @@ section
     .fragment.screen data-prettify="accordion" data-prettify_lines="3:3"
     .fragment.screen data-prettify="accordion" data-prettify_lines="5:12"
     .fragment.screen data-prettify="accordion" data-prettify_lines="14:34" style="top:-100px"
+
+  section
+    h1.demo demo
+    a.relative style="top:40px" href="http://localhost:8000/accordion.html#!watch" target="_demo" http://localhost:8000/accordion.html#!watch
 
 section
 
@@ -376,6 +397,11 @@ section
         * http://www.sencha.com/products/extjs/[Sencha Ext JS]
 
   section
+    h2 jQuery UI
+    iframe src="files/jquery/" style="width: 800px; height: 440px"
+      
+
+  section
     h2 RichFaces Widgets
     .inline.relative style="top:40px"
       img.plain src="assets/images/richwidgets-logo.png" style="width:400px"
@@ -383,6 +409,7 @@ section
         [role='fixed-width-narrow bullets']
         * Standalone javascript widgets
         * Framework independent
+        * http://www.w3.org/TR/NOTE-HTMLComponents
         * Used in RichFaces 5
     a.relative style="top:80px" href="https://github.com/richfaces/richfaces-widgets" https://github.com/richfaces/richfaces-widgets
 
@@ -398,32 +425,98 @@ section
   section
     h2 Example
     p style="margin: 50px auto;" PickList Widget:
-    iframe src="files/richfaces-widgets/examples/pickList_only.html" style="width: 800px; height: 800px"
+    iframe src="files/richfaces-widgets/examples/pickList_only.html" scrolling="no" style="width: 820px; height: 300px; overflow-x: hidden;"
 
 section
 
   section
-    asciidoc:
-      == Server-side
+    h2 Server-side
+    .inline.relative style="top:40px"
+      img.plain src="assets/images/network.png" style="width:400px"
+      asciidoc:
+        [role='fixed-width-narrow bullets']
+        * Shared server state
+        * Consistent programming model
+        * Front-end independent
+    h1.fragment CDI
 
   section
-    asciidoc:
-      == CDI
-      * Shared server state
-      * Consistent programming model
-      * Front-end independent
+    h2 CDI | Dependency Injection
+    p.relative style="top:40px" Retrieve a contextual instance of a Bean
+    pre.prettyprint.relative style="font-size: 27px; top: 90px"
+      code
+        | public class CapitalsObserver {
+            @Inject
+            CapitalsBean capitalsBean;
+          
+            @Inject @Push(topic = "capitalsSelected")
+            private Event<String> jsfEvent;
+            
+            ...
+          }
 
   section
-    asciidoc:
-      == CDI | Dependency Injection
+    h2 CDI | Contexts
+    .inline.relative style="top:40px"
+      asciidoc:
+        * Scope:
+        ** determines lifecycle of instances
+        ** maps clients to instances
+        * Context:
+        ** implements the scope
+
+    p.relative style="top:80px" @SessionScoped @RequestScoped @DependentScoped @ConversationScoped @ApplicationScoped
 
   section
-    asciidoc:
-      == CDI | Contexts
+    h2 CDI | Contexts
+    pre.prettyprint.relative style="font-size: 27px; top: 80px"
+      code
+        | ...
+          @SessionScoped
+          public class CapitalsBean {
+            ...
+            @PostConstruct
+            public void init() {
+              selectedCapitals = new ArrayList<Capital>();
+              selectedCapitals.add(capitals.get(0));
+            }
+            ...
+          }
 
   section 
-    asciidoc:
-      == CDI | Events
+    h2 CDI | Events
+    p.left Event producer:
+    pre.prettyprint.relative style="font-size: 25px;top: 40px"
+      code
+        | public class CapitalsBean {
+            @Inject @Server
+            private Event<CapitalsSelected> serverEvent;
+            ...
+            public void setSelectedCapitals(List<Capital> selected) {
+              this.selectedCapitals = selected;
+              serverEvent.fire(new CapitalsSelected(selected));
+            }
+          }
+
+  section
+    h2 CDI | Events
+    p.left Event observer:
+    pre.prettyprint.relative style="font-size: 25px;"
+      code
+        | public class CapitalsObserver {
+
+            public void observeClientEvent(
+              @Observes @Client 
+              CapitalsSelected capitalsSelected) {
+                ...
+            }
+
+            public void observeServerEvent(
+              @Observes @Server 
+              CapitalsSelected capitalsSelected) {
+                ...
+            }
+          }
 
 section
 

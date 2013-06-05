@@ -88,6 +88,12 @@ ul.intro {
     width: 460px;
 }
 
+.reveal .side-by-side .fixed-width {
+    width: 49%;
+    margin: 0;
+    vertical-align: top;
+}
+
 .reveal .inline img {
     padding: 0;
     margin-right: 30px;
