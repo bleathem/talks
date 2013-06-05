@@ -29,6 +29,10 @@
     <script type="text/javascript" src="../components/jquery-ui/ui/jquery.ui.selectable.js"></script>
     <script type="text/javascript" src="../components/jquery-ui/ui/jquery.ui.sortable.js"></script>
 
+<style type="text/css">
+ <!-- BODY {background:none transparent;}-->
+ </style>
+
 </head>
 
 <body>
@@ -47,6 +51,8 @@
                     <li data-key="9" class="num">Sydney</li>
                 </ol>
             </div>
+
+            <ul id="log"></ul>
   <script src="../dist/scripts/richfaces.js"></script>
 
 <script>
@@ -55,6 +61,15 @@
     };
 
     $("#pickListDemo").pickList(pluginOptions1);
+
+    $("#pickListDemo").pickList({change: function(event, ui) {
+      var selected = "";
+      ui.pickedElements.each(function() {
+        selected += " " + $(this).text();
+      });
+      $("#log").prepend($("<li/>").text("Selected Elements:"+selected));
+}});
+
 </script>
 
 </body>
