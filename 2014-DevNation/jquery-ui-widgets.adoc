@@ -1,0 +1,38 @@
+= Hands on with the jQuery UI widget factory
+Brian Leathem
+<https://github.com/brianleathem[@brianleathem]>
+:backend: dzslides
+:dzslides-transition: fade
+:dzslides-aspect: 16-9
+:dzslides-style: stormy
+:dzslides-highlight: monokai
+:source-highlighter: highlightjs
+
+[.topic.intro]
+== Intro
+This talk is about
+
+== !
+
+something
+
+== !
+
+*Title*
+
+== !
+
+[.incremental]
+* dzslides
+* deckjs
+
+[.topic.source]
+== Source
+
+[source,ruby]
+--
+puts 'Hello, World!'
+--
+
+[.topic.ending]
+== Fin!
