@@ -1,6 +1,115 @@
-<!DOCTYPE html><html lang="en" class="aspect-16-9"><head><meta charset="UTF-8"><meta name="generator" content="Asciidoctor 0.1.4, dzslides backend"><title>Hands on with the jQuery UI widget factory</title><meta name="author" content="Brian Leathem"><meta name="presdate" content="&lt;https"><link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald"><link rel="stylesheet" href="./dzslides/themes/style/stormy.css"><style>section:not(.topic) > h2 { display: none;}</style><link rel="stylesheet" href="./dzslides/core/dzslides.css"><link rel="stylesheet" href="./dzslides/themes/transition/fade.css"></head><body><section class="title"><h1>Hands on with the jQuery UI widget factory</h1><footer><span class="author">Brian Leathem</span></footer></section><section class="topic intro"><h2>Intro</h2><p>This talk is about</p></section>
-<section><p>something</p></section>
-<section><p><strong>Title</strong></p></section>
-<section><ul class="incremental"><li>dzslides</li><li>deckjs</li></ul></section>
-<section class="topic source"><h2>Source</h2><div class="listingblock"><pre class="highlight"><code class="ruby">puts 'Hello, World!'</code></pre></div></section>
-<section class="topic ending"><h2>Fin!</h2></section><script src="./dzslides/core/dzslides.js"></script><script src="./dzslides/highlight/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad()</script></body></html>
+<!DOCTYPE html><html lang="en" class="aspect-16-9"><head><meta charset="UTF-8" /><meta name="generator" content="Asciidoctor 1.5.0.preview, dzslides backend" /><title>Hands on with the jQuery UI widget factory</title><meta name="author" content="Brian Leathem" /><link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" /><link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald" /><link rel="stylesheet" href="./dzslides/themes/highlight/github.css" /><link rel="stylesheet" href="./dzslides/themes/style/../../../themes/devnation.css" /><link rel="stylesheet" href="./dzslides/core/dzslides.css" /><link rel="stylesheet" href="./dzslides/themes/transition/fade.css" /><script src="//code.jquery.com/jquery-1.10.2.js"></script><script>jQuery.noConflict()</script><script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script></head><body><section class="front"></section><section class="title"><h1>Hands on with the jQuery UI widget factory</h1><footer><span class="author">Brian Leathem</span> <span class="email"><a href="https://github.com/brianleathem">@brianleathem</a></span></footer></section><section><h2>The plan</h2><div class="openblock side-by-side"><ul><li>jQuery Plugin review</li><li>Widget factory advantages</li><li>Use cases and examples</li></ul>
+<img class="right" src="images/storm_troopers.jpg" alt="http://www.flickr.com/photos/jdhancock/5845280258/" /></div></section>
+<section><h2>jQuery Plugins</h2><div class="openblock side-by-side"><ul><li>An easy way to share code</li><li>Great for "simple" use cases</li></ul>
+<div class="listingblock"><pre>(function( $ ) {
+ $.fn.myplugin = function() {
+  return this.each(function() {
+   $(this)
+    .addClass("some-class")
+    .css("color", "red");
+   });
+ };
+})( jQuery );</pre></div></div></section>
+<section><h2>Use cases</h2><p>jQuery plugins are well suited to use cases where plugin execution results in some intended side-effect:</p>
+<ul><li>Text manipulation</li><li>Animation</li><li>Layout</li></ul></section>
+<section><h2>Stateful plugins</h2><div class="openblock side-by-side"><ul><li>Track &amp; query state</li><li>Mutate options</li><li>Widget interactions</li></ul>
+<p><span class="hide">break the list up</span></p>
+<ul><li>Reverse DOM changes</li><li>Notify event listeners</li></ul></div>
+<div class="openblock center"><p><span class="emphasis">Widgets</span></p></div></section>
+<section><h2>A Stateful Widget</h2><div class="openblock side-by-side"><ul><li>Using the javascript API to cycle the active tab<div>
+<button onclick="var active = jQuery( '#tabs' ).tabs('option', 'active'); jQuery( '#tabs' ).tabs('option', 'active', (active + 1) % 3)" style="font-size: 30px; padding: 10px">Cycle Tabs</button>
+<div></li></ul>
+<div>
+<div id="tabs" class="live-demo" style="width: 400px; height: 234px;">
+  <ul>
+    <li><a href="#fragment-1"><span>One</span></a></li>
+    <li><a href="#fragment-2"><span>Two</span></a></li>
+    <li><a href="#fragment-3"><span>Three</span></a></li>
+  </ul>
+  <div id="fragment-1">
+    <p>Instantiate the widget as a jQuery plugin:</p>
+    <pre><code>$( "#tabs" ).tabs(); </code></pre>
+  </div>
+  <div id="fragment-2">
+    <p class="javascript">Query the active tab using the <em>active</em> option:</p>
+    <pre><code>jQuery('#tabs')
+  .tabs('option', 'active');</code></pre>
+  </div>
+  <div id="fragment-3">
+    <p class="javascript">Set the active tab with the same <em>active</em> option:</p>
+    <pre><code>jQuery('#tabs')
+  .tabs('option', 'active', value);</code></pre>
+  </div>
+</div>
+<div></div>
+<script>jQuery( '#tabs' ).tabs();</script></section>
+<section><h2>Widgets with OOP</h2><div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
+  function MyWidget( element ) {
+    this.init( element );
+  }
+  MyWidget.prototype.init = ...
+  MyWidget.prototype.destroy = ...
+  MyWidget.prototype.addListener = ...
+  MyWidget.prototype.removeListener = ...
+  MyWidget.prototype.setOption = ...
+
+  ...</code></pre></div></section>
+<section><h2>Widgets with OOP</h2><div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
+  ...
+
+  $.fn.mywidget = function() {
+    return this.each( function() {
+      $.data( this, "mywidget", new MyWidget( this ) );
+    });
+  };
+})( jQuery );</code></pre></div></section>
+<section><h2>Widgets with OOP</h2><p>Interact with the widget via an API:</p>
+<div class="listingblock"><pre class="highlight"><code class="javascript">$(document).ready( function() {
+  var widget = $( "#foo" ).mywidget().data( "mywidget" );
+  widget.doSomething();
+});</code></pre></div></section>
+<section><h2>Remove the boilerplate</h2><p>Encapsulate the boilerplate code in a common prototype function</p>
+<div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
+  $.extend(MyWidget.prototype, myPrototype);
+})(jQuery);</code></pre></div></section>
+<section><h2>jQuery UI widget factory</h2><p>The jQuery UI widget factory provides us this shared prototype.</p>
+<div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
+  $.widget( "bleathem.mywidget", { /** prototype object **/ });
+})( jQuery );</code></pre></div></section>
+<section><h2>Default Options</h2><div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
+  $.widget( "bleathem.mywidget", {
+
+    options: {...},
+
+  });
+})( jQuery );</code></pre></div></section>
+<section><h2>Initialising your widget</h2><div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
+  $.widget( "bleathem.mywidget", {
+
+    _create: function() {
+      ...
+    },
+
+  });
+})( jQuery );</code></pre></div></section>
+<section><h2>The Public API</h2><div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
+  $.widget( "bleathem.mywidget", {
+
+    doSomething: function() {
+      // public methods have no "_" prefix
+    },
+    _helper: function() {
+      // private methods have an "_" prefix
+    }
+
+  });
+})( jQuery );</code></pre></div></section>
+<section><h2>lifecycle in depth</h2><ul><li>_create</li><li>_trigger</li><li>_setOption</li><li>_destroy</li><li>revert an element back to it’s initial state</li></ul></section>
+<section><h2>Styling with bootstrap</h2></section>
+<section><h2>less.js</h2></section>
+<section><h2>DataTable example</h2></section>
+<section><h2>Dev environment</h2></section>
+<section class="topic ending"><h2>The End!</h2></section><script src="./dzslides/core/dzslides.js"></script><script src="./dzslides/highlight/highlight.pack.js"></script><script type="text/javascript">var nodes = document.querySelectorAll(".listingblock pre");
+for (var i = 0; i < nodes.length; ++i) {
+  hljs.highlightBlock(nodes[i]);
+};</script></body></html>

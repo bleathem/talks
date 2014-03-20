@@ -1,38 +1,231 @@
 = Hands on with the jQuery UI widget factory
-Brian Leathem
-<https://github.com/brianleathem[@brianleathem]>
+Brian Leathem <https://github.com/brianleathem[@brianleathem]>
 :backend: dzslides
 :dzslides-transition: fade
 :dzslides-aspect: 16-9
-:dzslides-style: stormy
-:dzslides-highlight: monokai
+:dzslides-style: ../../../themes/devnation
+:dzslides-highlight: github
 :source-highlighter: highlightjs
+:imagesdir: images
 
-[.topic.intro]
-== Intro
-This talk is about
-
-== !
-
-something
-
-== !
-
-*Title*
-
-== !
-
-[.incremental]
-* dzslides
-* deckjs
-
-[.topic.source]
-== Source
-
-[source,ruby]
+== The plan
+[side-by-side]
 --
-puts 'Hello, World!'
+* jQuery Plugin review
+* Widget factory advantages
+* Use cases and examples
+
+image::storm_troopers.jpg[Storm Troopers, role="right", alt="http://www.flickr.com/photos/jdhancock/5845280258/"]
 --
+
+== jQuery Plugins
+[side-by-side]
+--
+* An easy way to share code
+* Great for "simple" use cases
+[source,javascript]
+----
+(function( $ ) {
+ $.fn.myplugin = function() {
+  return this.each(function() {
+   $(this)
+    .addClass("some-class")
+    .css("color", "red");
+   });
+ };
+})( jQuery );
+----
+--
+
+== Use cases
+jQuery plugins are well suited to use cases where plugin execution results in some intended side-effect:
+
+* Text manipulation
+* Animation
+* Layout
+
+== Stateful plugins
+[side-by-side]
+--
+* Track & query state
+* Mutate options
+* Widget interactions
+
+[hide]#break the list up#
+
+* Reverse DOM changes
+* Notify event listeners
+--
+
+[center]
+--
+[emphasis]#Widgets#
+--
+
+== A Stateful Widget
+[side-by-side]
+--
+
+* Using the javascript API to cycle the active tab
++
+++++
+<div>
+<button onclick="var active = jQuery( '#tabs' ).tabs('option', 'active'); jQuery( '#tabs' ).tabs('option', 'active', (active + 1) % 3)" style="font-size: 30px; padding: 10px">Cycle Tabs</button>
+<div>
+++++
+
+++++
+<div>
+<div id="tabs" class="live-demo" style="width: 400px; height: 234px;">
+  <ul>
+    <li><a href="#fragment-1"><span>One</span></a></li>
+    <li><a href="#fragment-2"><span>Two</span></a></li>
+    <li><a href="#fragment-3"><span>Three</span></a></li>
+  </ul>
+  <div id="fragment-1">
+    <p>Instantiate the widget as a jQuery plugin:</p>
+    <pre><code>$( "#tabs" ).tabs(); </code></pre>
+  </div>
+  <div id="fragment-2">
+    <p class="javascript">Query the active tab using the <em>active</em> option:</p>
+    <pre><code>jQuery('#tabs')
+  .tabs('option', 'active');</code></pre>
+  </div>
+  <div id="fragment-3">
+    <p class="javascript">Set the active tab with the same <em>active</em> option:</p>
+    <pre><code>jQuery('#tabs')
+  .tabs('option', 'active', value);</code></pre>
+  </div>
+</div>
+<div>
+++++
+--
+
+++++
+<script>jQuery( '#tabs' ).tabs();</script>
+++++
+
+== Widgets with OOP
+[source, javascript]
+----
+( function( $ ) {
+  function MyWidget( element ) {
+    this.init( element );
+  }
+  MyWidget.prototype.init = ...
+  MyWidget.prototype.destroy = ...
+  MyWidget.prototype.addListener = ...
+  MyWidget.prototype.removeListener = ...
+  MyWidget.prototype.setOption = ...
+
+  ...
+----
+
+== Widgets with OOP
+
+[source, javascript]
+----
+( function( $ ) {
+  ...
+
+  $.fn.mywidget = function() {
+    return this.each( function() {
+      $.data( this, "mywidget", new MyWidget( this ) );
+    });
+  };
+})( jQuery );
+----
+
+== Widgets with OOP
+
+Interact with the widget via an API:
+
+[source, javascript]
+---- 
+$(document).ready( function() {
+  var widget = $( "#foo" ).mywidget().data( "mywidget" );
+  widget.doSomething();
+});
+----
+
+== Remove the boilerplate
+
+Encapsulate the boilerplate code in a common prototype function
+[source, javascript]
+---- 
+( function( $ ) {
+  $.extend(MyWidget.prototype, myPrototype);
+})(jQuery);
+----
+
+== jQuery UI widget factory
+The jQuery UI widget factory provides us this shared prototype.
+
+[source, javascript]
+---- 
+( function( $ ) {
+  $.widget( "bleathem.mywidget", { /** prototype object **/ });
+})( jQuery );
+----
+
+== Default Options
+[source, javascript]
+---- 
+( function( $ ) {
+  $.widget( "bleathem.mywidget", {
+
+    options: {...},
+
+  });
+})( jQuery );
+----
+
+== Initialising your widget
+[source, javascript]
+---- 
+( function( $ ) {
+  $.widget( "bleathem.mywidget", {
+
+    _create: function() {
+      ...
+    },
+
+  });
+})( jQuery );
+----
+
+== The Public API
+[source, javascript]
+---- 
+( function( $ ) {
+  $.widget( "bleathem.mywidget", {
+
+    doSomething: function() {
+      // public methods have no "_" prefix
+    },
+    _helper: function() {
+      // private methods have an "_" prefix
+    }
+
+  });
+})( jQuery );
+----
+
+== lifecycle in depth
+* _create
+* _trigger
+* _setOption
+* _destroy
+* revert an element back to it’s initial state
+
+== Styling with bootstrap
+
+== less.js
+
+== DataTable example
+
+== Dev environment
+
 
 [.topic.ending]
-== Fin!
+== The End!

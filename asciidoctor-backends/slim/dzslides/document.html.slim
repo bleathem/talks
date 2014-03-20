@@ -9,23 +9,24 @@ html lang=(attr :lang, 'en' unless attr? :nolang) class="aspect-#{attr 'dzslides
        :revdate => 'presdate', :corpname => 'company'}.each do |key, name|
       - if attr? key
         meta name=name content=(attr key)
+    link rel='stylesheet' href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"
     link rel='stylesheet' href="http://fonts.googleapis.com/css?#{attr 'dzslides-fonts', 'family=Oswald'}"
     - if attr? :icons, 'font'
       - if !(attr 'iconfont-remote', '').nil?
         link rel='stylesheet' href=(attr 'iconfont-cdn', 'http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css')
       - else
         link rel='stylesheet' href=normalize_web_path("#{attr 'iconfont-name', 'font-awesome'}.css", (attr :stylesdir, ''))
-    - if attr? 'source-highlighter'
+    - if attr? 'dzslides-highlight'
       link rel='stylesheet' href="./dzslides/themes/highlight/#{attr 'dzslides-highlight', 'default'}.css"
     link rel='stylesheet' href="./dzslides/themes/style/#{attr 'dzslides-style', 'default'}.css"
     /FIXME move this CSS into stylesheet
-    style
-      |section:not(.topic) > h2 {
-      |  display: none;
-      |}
     /bug in full screen image if include dzslides.css before ours
     link rel='stylesheet' href='./dzslides/core/dzslides.css'
     link rel='stylesheet' href="./dzslides/themes/transition/#{attr 'dzslides-transition', 'horizontal-slide'}.css" 
+    script src="//code.jquery.com/jquery-1.10.2.js"
+    script jQuery.noConflict()
+    script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"
+
     - if attr? 'math'
       script type='text/x-mathjax-config'
         |MathJax.Hub.Config({
@@ -44,6 +45,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang) class="aspect-#{attr 'dzslides
         |document.addEventListener('DOMContentLoaded', MathJax.Hub.TypeSet)
     =docinfo '.html'
   body id=@id
+    section.front
     section.title
       h1=@header.title
       footer
@@ -64,4 +66,9 @@ html lang=(attr :lang, 'en' unless attr? :nolang) class="aspect-#{attr 'dzslides
     script src='./dzslides/core/dzslides.js' 
     - if attr? 'dzslides-highlight'
       script src='./dzslides/highlight/highlight.pack.js'
-      script hljs.initHighlightingOnLoad()
+      //script hljs.initHighlightingOnLoad()
+      javascript:
+        var nodes = document.querySelectorAll(".listingblock pre");
+        for (var i = 0; i < nodes.length; ++i) {
+          hljs.highlightBlock(nodes[i]);
+        };

@@ -1,0 +1,200 @@
+/*
+ Theme: Default
+ Fonts: Oswald
+
+ <link href="http://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+
+*/
+html, .view body {
+  background-color: black;
+  counter-reset: slideidx;
+}
+body, .view section {
+  background-color: white;
+  border-radius: 12px;
+}
+section, .view head > title {
+  /* The font from Google */
+  font-family: 'Oswald', Arial, serif;
+  font-size: 30px;
+}
+
+section {
+  background-image: url("../../images/devnation/base.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+section.front {
+  background-image: url("../../images/devnation/title.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+section.title {
+  background-image: url("../../images/devnation/speaker.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+section.title h1 {
+  color: #F3F4F8;
+  margin-top: 100px;
+  font-size: 80px;
+  text-align: center;
+}
+
+section.title footer {
+
+}
+
+.view section:after {
+  counter-increment: slideidx;
+  content: counter(slideidx, decimal-leading-zero);
+  position: absolute;
+  bottom: -80px;
+  right: 100px;
+  color: white;
+}
+.view head > title {
+  color: white;
+  text-align: center;
+  margin: 1em 0 1em 0;
+}
+
+h2 {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 60px;
+  font-weight: normal;
+}
+
+.hide {
+  display: none;
+}
+
+.topic h2 {
+  margin-top: 150px;
+  font-weight: bold;
+}
+
+.center {
+  text-align: center;
+}
+
+.emphasis {
+  font-weight: bold;
+  color: blue;
+  font-style: italic;
+  font-size: 70px;
+}
+
+ul {
+    margin: 25px 0px 25px 200px;
+}
+p {
+  margin: 25px 25px;
+  font-size: 30px;
+}
+blockquote {
+  height: 100%;
+  background-color: black;
+  color: white;
+  font-size: 60px;
+  padding: 50px;
+}
+blockquote:before {
+  content: open-quote;
+}
+blockquote:after {
+  content: close-quote;
+}
+/* Figures are displayed full-page, with the caption
+   on top of the image/video */
+figure {
+  background-color: black;
+}
+figcaption {
+  margin: 70px;
+  font-size: 50px;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  text-align: right;
+  background-color: #F3F4F8;
+  border-top: 1px solid #CCC;
+}
+.view section {
+  -moz-transition: none;
+  -webkit-transition: none;
+  -ms-transition: none;
+  transition: none;
+}
+.view section[aria-selected] {
+  border: 5px red solid;
+}
+
+/* Incremental elements */
+
+/* Items already covered */
+.incremental > * {
+  opacity: 1;
+}
+/* Current item */
+.incremental > *[aria-selected] {
+  opacity: 1;
+}
+/* Items to be shown */
+.incremental > *[aria-selected] ~ * {
+  opacity: 0;
+}
+/* The progressbar, at the bottom of the slides, show the global
+   progress of the presentation. */
+#progress-bar {
+  height: 2px;
+  background: #AAA;
+}
+
+.listingblock {
+  font-size: 20px;
+}
+
+.side-by-side {
+  padding-left: 1.5em;
+  padding-right: 0.5em;
+  display: table;
+  width: 100%;
+}
+
+.side-by-side > * {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.list {
+  margin-left: 25px;
+}
+
+.list ul {
+    margin: 0;
+    margin-left: 1em;
+}
+
+.side-by-side img {
+  width: 400px;
+}
+
+.live-demo, .live-demo p {
+  font-size: 15px;
+}
+
+.live-demo p {
+  margin: 20px 0;
+}

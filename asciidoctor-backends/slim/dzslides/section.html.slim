@@ -1,4 +1,10 @@
+- _content = content
 section class=role
   - if has_role? 'topic'
     h2 class=(attr :hrole) =title
+  - else 
+    - if title.start_with? '!'
+      h2 class='hide' =title
+    - else
+      h2 =title
   =content
