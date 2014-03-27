@@ -67,7 +67,7 @@ section.title footer {
 
 h2 {
   margin-top: 25px;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   text-align: center;
   font-size: 60px;
   font-weight: normal;
@@ -84,6 +84,21 @@ h2 {
 
 .center {
   text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center p, .center ul, p.center {
+    text-align: left;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 90%;
+}
+
+.nopadding, section.center > ul.nopadding, .center ul.nopadding {
+  padding: 0;
+  margin: 0;
 }
 
 .emphasis {
@@ -93,25 +108,53 @@ h2 {
   font-size: 70px;
 }
 
-ul {
-    margin: 25px 0px 25px 200px;
+section > .center > ul, section.center > ul {
+    display: inline-block;
+    margin: 25px 0px 25px 45px;
 }
+
+section > ul {
+    margin: 25px 0px 25px 45px;
+}
+
+ul ul {
+    margin: 0 0 0 30px;
+}
+
+
+ul.checks  {    
+  list-style-type: none;
+}
+
+ul.checks li:before {    
+  font-family: 'FontAwesome';
+  content: '\f00c';
+  margin:0 5px 0 -15px;
+  color: blue;
+}
+
 p {
-  margin: 25px 25px;
+  margin: 20px 25px;
   font-size: 30px;
 }
-blockquote {
-  height: 100%;
-  background-color: black;
-  color: white;
-  font-size: 60px;
-  padding: 50px;
+blockquote, .sidebarblock {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 0 10px;
+    padding: 0.5em 10px;
+    quotes: "\201C""\201D""\2018""\2019";
 }
 blockquote:before {
-  content: open-quote;
+    color: #ccc;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
 }
-blockquote:after {
-  content: close-quote;
+blockquote p {
+    display: inline;
+    margin: 0;
 }
 /* Figures are displayed full-page, with the caption
    on top of the image/video */
@@ -167,8 +210,6 @@ footer {
 }
 
 .side-by-side {
-  padding-left: 1.5em;
-  padding-right: 0.5em;
   display: table;
   width: 100%;
 }
@@ -176,6 +217,15 @@ footer {
 .side-by-side > * {
   display: table-cell;
   vertical-align: middle;
+  padding-left: 25px;
+}
+
+.side-by-side > *:last-child {
+  padding-right: 25px;
+}
+
+.side-by-side ul {
+  padding-left: 50px;
 }
 
 .list {
@@ -188,7 +238,8 @@ footer {
 }
 
 .side-by-side img {
-  width: 400px;
+  max-width: 400px;
+  max-height: 280px;
 }
 
 .live-demo, .live-demo p {
@@ -198,3 +249,13 @@ footer {
 .live-demo p {
   margin: 20px 0;
 }
+
+.stopwatch {
+  margin: 0 30px;
+}
+
+.scroll {
+    overflow-y: scroll;
+    height: 100%;
+}
+

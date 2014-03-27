@@ -1,7 +1,9 @@
-<!DOCTYPE html><html lang="en" class="aspect-16-9"><head><meta charset="UTF-8" /><meta name="generator" content="Asciidoctor 1.5.0.preview, dzslides backend" /><title>Hands on with the jQuery UI widget factory</title><meta name="author" content="Brian Leathem" /><link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" /><link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald" /><link rel="stylesheet" href="./dzslides/themes/highlight/github.css" /><link rel="stylesheet" href="./dzslides/themes/style/../../../themes/devnation.css" /><link rel="stylesheet" href="./dzslides/core/dzslides.css" /><link rel="stylesheet" href="./dzslides/themes/transition/fade.css" /><script src="//code.jquery.com/jquery-1.10.2.js"></script><script>jQuery.noConflict()</script><script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script></head><body><section class="front"></section><section class="title"><h1>Hands on with the jQuery UI widget factory</h1><footer><span class="author">Brian Leathem</span> <span class="email"><a href="https://github.com/brianleathem">@brianleathem</a></span></footer></section><section><h2>The plan</h2><div class="openblock side-by-side"><ul><li>jQuery Plugin review</li><li>Widget factory advantages</li><li>Use cases and examples</li></ul>
-<img class="right" src="images/storm_troopers.jpg" alt="http://www.flickr.com/photos/jdhancock/5845280258/" /></div></section>
+<!DOCTYPE html><html lang="en" class="aspect-16-9"><head><meta charset="UTF-8" /><meta name="generator" content="Asciidoctor 1.5.0.preview, dzslides backend" /><title>Hands on with the jQuery UI widget factory</title><meta name="author" content="Brian Leathem" /><link rel="stylesheet" href="/assets/jquery-ui-theme/jquery-ui.css" /><link rel="stylesheet" href="/assets/stopwatch.css" /><link rel="stylesheet" href="/assets/bootstrap-button.css" /><link rel="stylesheet" href="/assets/font-awesome.min.css" /><link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald" /><link rel="stylesheet" href="./dzslides/themes/highlight/github.css" /><link rel="stylesheet" href="./dzslides/themes/style/../../../themes/devnation.css" /><link rel="stylesheet" href="./dzslides/core/dzslides.css" /><link rel="stylesheet" href="./dzslides/themes/transition/fade.css" /><script src="/assets/jquery.min.js"></script><script>jQuery.noConflict()</script><script src="assets/jquery-ui.min.js"></script><script src="/assets/stopwatch.js"></script></head><body><section class="front"></section><section class="title"><h1>Hands on with the jQuery UI widget factory</h1><footer><span class="author">Brian Leathem</span> <span class="email"><a href="https://github.com/brianleathem">@brianleathem</a></span></footer></section><section><h2>The plan</h2><div class="openblock side-by-side"><ul><li>jQuery Plugin review</li><li>Widget factory advantages</li><li>Use cases and examples</li></ul>
+<img class="right" src="images/storm_troopers.jpg" alt="http://www.flickr.com/photos/jdhancock/5845280258/" /></div>
+<details><details open=""><summary>Notes</summary></details></details></section>
+<section><h2>Who am I?</h2></section>
 <section><h2>jQuery Plugins</h2><div class="openblock side-by-side"><ul><li>An easy way to share code</li><li>Great for "simple" use cases</li></ul>
-<div class="listingblock"><pre>(function( $ ) {
+<div class="listingblock"><pre class="highlight"><code class="javascript">(function( $ ) {
  $.fn.myplugin = function() {
   return this.each(function() {
    $(this)
@@ -9,15 +11,15 @@
     .css("color", "red");
    });
  };
-})( jQuery );</pre></div></div></section>
-<section><h2>Use cases</h2><p>jQuery plugins are well suited to use cases where plugin execution results in some intended side-effect:</p>
-<ul><li>Text manipulation</li><li>Animation</li><li>Layout</li></ul></section>
-<section><h2>Stateful plugins</h2><div class="openblock side-by-side"><ul><li>Track &amp; query state</li><li>Mutate options</li><li>Widget interactions</li></ul>
-<p><span class="hide">break the list up</span></p>
-<ul><li>Reverse DOM changes</li><li>Notify event listeners</li></ul></div>
-<div class="openblock center"><p><span class="emphasis">Widgets</span></p></div></section>
-<section><h2>A Stateful Widget</h2><div class="openblock side-by-side"><ul><li>Using the javascript API to cycle the active tab<div>
-<button onclick="var active = jQuery( '#tabs' ).tabs('option', 'active'); jQuery( '#tabs' ).tabs('option', 'active', (active + 1) % 3)" style="font-size: 30px; padding: 10px">Cycle Tabs</button>
+})( jQuery );</code></pre></div></div>
+<details><details open=""><summary>Notes</summary><ul><li>Show of hands from those who have authored a jQuery plugin?</li><li>De-facto standard</li></ul></details></details></section>
+<section class="center"><h2>Use cases</h2><p>jQuery plugins are well suited to use cases where plugin execution results in some intended side-effect:</p>
+<ul><li>Text manipulation</li><li>Animation</li><li>Layout</li></ul>
+<details><details open=""><summary>Notes</summary><p>jQuery plugins execute <strong>once</strong></p></details></details></section>
+<section><h2>Stateful plugins</h2><div class="openblock side-by-side"><ul><li>Track &amp; query state</li><li>Mutate options</li><li>Widget interactions</li><li>Reverse DOM changes</li><li>Notify event listeners</li></ul>
+<p><span class="emphasis">Widgets</span></p></div></section>
+<section><h2>A Stateful Widget</h2><div class="openblock side-by-side"><ul><li>The active tab is the widget state</li><li>Use the javascript API to cycle the active tab<div>
+<button class='btn' onclick="var active = jQuery( '#tabs' ).tabs('option', 'active'); jQuery( '#tabs' ).tabs('option', 'active', (active + 1) % 3)" style="font-size: 30px; margin-top: 20px">Cycle Tabs</button>
 <div></li></ul>
 <div>
 <div id="tabs" class="live-demo" style="width: 400px; height: 234px;">
@@ -68,47 +70,435 @@
   var widget = $( "#foo" ).mywidget().data( "mywidget" );
   widget.doSomething();
 });</code></pre></div></section>
-<section><h2>Remove the boilerplate</h2><p>Encapsulate the boilerplate code in a common prototype function</p>
+<section><h2>OOP | Boilerplate</h2><p>Encapsulate the boilerplate code in a common prototype function</p>
 <div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
+  MyWidget.prototype = ...
   $.extend(MyWidget.prototype, myPrototype);
 })(jQuery);</code></pre></div></section>
-<section><h2>jQuery UI widget factory</h2><p>The jQuery UI widget factory provides us this shared prototype.</p>
-<div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
-  $.widget( "bleathem.mywidget", { /** prototype object **/ });
-})( jQuery );</code></pre></div></section>
-<section><h2>Default Options</h2><div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
-  $.widget( "bleathem.mywidget", {
+<section class="center"><h2>OOP | Advantages</h2><ul><li>Object instance</li><li>API for interactions</li><li>D.R.Y. w/ a Shared prototype</li></ul></section>
+<section class="center"><h2>OOP | Dis-advantages</h2><ul><li>Custom prototype maintenance</li><li>Non-standard API<ul><li>events</li><li>mutable options</li></ul></li></ul></section>
+<section><h2>jQuery UI widget factory</h2><div class="openblock side-by-side"><ul class="checks"><li>Track &amp; query state</li><li>Mutate options</li><li>Widget interactions</li><li>Reverse DOM changes</li><li>Notify event listeners</li></ul>
+<div class="center emphasis">Consistent<br />API</div></div>
+<details><details open=""><summary>Notes</summary><p>The jQuery UI widget factory provides this shared prototype.</p></details></details></section>
+<section><h2>Stopwatch example</h2><div class="openblock side-by-side"><div class="listingblock center""><pre class="highlight"><code class="javascript">jQuery('#timer').stopwatch();</code></pre></div>
+<img src="images/stopwatch.jpg" alt="http://www.flickr.com/photos/26782864@N00/3297205226/" /></div></section>
+<section><h2>window.setInterval</h2><blockquote><p>Calls a function or executes a code snippet repeatedly, with a fixed time delay between each call to that function.</p></blockquote>
+<div class="listingblock"><pre class="highlight"><code class="javascript">    createInterval: function() {
+      this.intervalId = setInterval(
+           $.proxy(this._decrementCount, this),
+           this.increment
+      );
+    },</code></pre></div>
+<details><details open=""><summary>Notes</summary><ul><li>The least interesting part of the example</li></ul></details></details></section>
+<section><h2>Stopwatch example</h2><div id="timer" class="stopwatch">
+    <div class="digits">10</div>
+</div>
+<p class='center'>
+  <button class="btn" onclick="jQuery('#timer').stopwatch()">Execute</button>
+</p>
 
-    options: {...},
+<script>
+//jQuery('#timer').stopwatch();
+</script></section>
+<section><h2>Stopwatch example</h2><div id="timer2" class="stopwatch">
+    <div class="digits">10</div>
+</div>
 
-  });
-})( jQuery );</code></pre></div></section>
-<section><h2>Initialising your widget</h2><div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
-  $.widget( "bleathem.mywidget", {
+<div class='center'>
+  <button class="btn" onclick="jQuery('#timer2').stopwatch('start')">Start</button>
+  <button class="btn" onclick="jQuery('#timer2').stopwatch('pause')">Pause</button>
+  <button class="btn" onclick="jQuery('#timer2').stopwatch('resume')">Resume</button>
+  <button class="btn" onclick="jQuery('#timer2').stopwatch('stop')">Stop</button>
+  <button class="btn" onclick="jQuery('#timer2').stopwatch('reset')">Reset</button>
+</div>
+<div class='center'>
+  <button class="btn" onclick="jQuery('#timer2').stopwatch(window.richwidgets.timerOptions)">Execute</button>
+  <button class="btn" onclick="jQuery('#timer2').stopwatch('destroy')">Destroy</button>
+</div>
+<script>
+(function($) {
+  var ready = '#428bca';
+  var active = '#5cb85c';
+  var waiting = '#f0ad4e';
+  var stopped = '#d9534f';
+  var originalBg = $('#timer').css('background-color');
+  var originalColor = $('#timer').css('color');
 
-    _create: function() {
-      ...
+  var options = {
+    autostart: false,
+    create: function(event, ui) {
+      ui.element.css('background-color', ready);
+      ui.element.css('color', 'white');
     },
+    reset: function(event, ui) {
+      ui.element.css('background-color', ready);
+    },
+    start: function(event, ui) {
+      ui.element.css('background-color', active);
+    },
+    resume: function(event, ui) {
+      ui.element.css('background-color', active);
+    },
+    pause: function(event, ui) {
+      ui.element.css('background-color', waiting);
+    },
+    stop: function(event, ui) {
+      ui.element.css('background-color', stopped);
+    },
+    destroy: function(event, ui) {
+      ui.element.css('background-color', originalBg);
+      ui.element.css('color', originalColor);
+    }
+  };
 
+  window.richwidgets = window.richwidgets || {};
+  window.richwidgets.timerOptions = options;
+
+  $('#timer2').stopwatch(options);
+
+})(jQuery);
+</script></section>
+<section><h2>Widget Factory Deep Dive</h2><div class="openblock side-by-side"><div class="listingblock"><pre class="highlight"><code class="javascript">(function($) {
+  $.widget("rich.stopwatch", {
+    /** prototype object **/
   });
-})( jQuery );</code></pre></div></section>
-<section><h2>The Public API</h2><div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
-  $.widget( "bleathem.mywidget", {
-
+})(jQuery);</code></pre></div>
+<img src="images/factory.jpg" alt="http://commons.wikimedia.org/wiki/File:Thunderbird_assembly_line.jpg" /></div></section>
+<section><h2>Anatomy of a widget</h2><div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
+  $.widget( "rich.stopwatch", {
+    options: { ... }
     doSomething: function() {
       // public methods have no "_" prefix
     },
     _helper: function() {
       // private methods have an "_" prefix
     }
-
   });
 })( jQuery );</code></pre></div></section>
-<section><h2>lifecycle in depth</h2><ul><li>_create</li><li>_trigger</li><li>_setOption</li><li>_destroy</li><li>revert an element back to it’s initial state</li></ul></section>
-<section><h2>Styling with bootstrap</h2></section>
-<section><h2>less.js</h2></section>
-<section><h2>DataTable example</h2></section>
+<section><h2>Default Options</h2><div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
+  $.widget( "rich.stopwatch", {
+
+    options: {
+      autostart: true,
+      direction: 'decreasing',
+      increment: 100 // in milliseconds
+    },
+    ...
+  });
+})( jQuery );</code></pre></div></section>
+<section><h2>Invoking Methods</h2><p>Public methods:</p>
+<div class="listingblock"><pre class="highlight"><code class="javascript">$('#timer').stopwatch('doSomething', 'optionalParam');
+
+// or
+
+var widget = $('#timer').data('richStopwatch');
+widget.doSomething();</code></pre></div></section>
+<section><h2>Invoking Methods</h2><p>Private methods <em>are</em> accessible:</p>
+<div class="listingblock"><pre class="highlight"><code class="javascript">var widget = $('#timer').data('richStopwatch');
+widget._helper();</code></pre></div>
+<p>Accessible private methods is helps with widget extension</p></section>
+<section><h2>Lifecycle and callbacks</h2><div class="openblock side-by-side"><img src="images/cycle.png" alt="http://openclipart.org/detail/171954/cycle-color-by-karthikeyan-171954" />
+<ul><li>_create / _destroy</li><li>disable / enable</li><li>_setOption</li><li>_trigger</li></ul></div></section>
+<section class="center"><h2>Widget Initialisation</h2><p>Optionally override the <code>_create</code> method</p>
+<ul><li>Apply DOM changes</li><li>Register event listeners</li><li><em>create</em> event fired implicitly</li></ul></section>
+<section><h2>Create</h2><div class="listingblock"><pre class="highlight"><code class="javascript">    _create: function() {
+      this.digitsElement = this.element.find('.digits');
+      this.startTime = this.digits();
+      this.digits(this.startTime);
+      if (this.options.autostart) {
+        this._createInterval();
+      }
+      if (this.options.showProgressBar) {
+        this._addProgressBar();
+      }
+    },</code></pre></div></section>
+<section><h2>Widget Clean Up</h2><div class="openblock side-by-side"><img src="images/tidy.png" alt="http://openclipart.org/detail/90451/keep-tidy-outside-01-by-anonymous" />
+<ul><li>Leave the DOM as you found it</li><li>Remove any event handlers</li><li>Remove any timers/intervals</li></ul></div></section>
+<section><h2>Destroy!</h2><div class="listingblock"><pre class="highlight"><code class="javascript">    _destroy: function() {
+      this._removeInterval();
+      if (this.progressBar) {
+        this.progressBar.parents('.progress').first().remove();
+      }
+      this.digitsElement.text(this.startTime);
+      this._trigger('destroy', undefined, this._dumpUi());
+    }</code></pre></div></section>
+<section><h2>Enable / Disable</h2><div class="listingblock"><pre class="highlight"><code class="javascript">$.widget = {
+  ...
+  enable: function() {
+    return this._setOptions({ disabled: false });
+  },
+
+  disable: function() {
+    return this._setOptions({ disabled: true });
+  },
+
+}</code></pre></div></section>
+<section><h2>Mutable Options</h2><p>The widget Factory provides the <code>option</code> method for getting/setting the initialisation options</p>
+<div class="listingblock"><pre class="highlight"><code class="javascript">$('#timer').stopwatch('option', 'showProgressBar', false);</code></pre></div>
+<p>Hook in via the <code>_setOption</code> method if required</p>
+<details><details open=""><summary>Notes</summary><ul><li>Alternatively you can get a reference to the widget object<ul><li>Some options have an implicit effect, eg. <code>increment</code></li><li>For other options some explicit action is required, eg. <code>showProgressBar</code></li></ul></li></ul></details></details></section>
+<section><h2>Mutable Options</h2><div class="listingblock"><pre class="highlight"><code class="javascript">    _setOption: function (key, value) {
+      var widget = this;
+      if (this.options.key === value) {
+        return;
+      }
+      switch (key) {
+        ...
+      }
+      this._super(key, value);
+    },</code></pre></div></section>
+<section><h2>Mutable Options</h2><div class="listingblock"><pre class="highlight"><code class="javascript">        case 'disabled':
+          if (value === true) widget._disable();
+          else widget._enable();
+          break;
+        case 'showProgressBar':
+          if (value === true &amp;&amp; !widget.progressBar) {
+            widget._addProgressBar();
+          } else if (value === false &amp;&amp; widget.progressBar) {
+            widget._removeProgressBar();
+          }
+          break;</code></pre></div>
+<details><details open=""><summary>Notes</summary><ul><li>Point out the disabled implementation here</li></ul></details></details></section>
+<section><h2>Events &amp; Callbacks</h2><div class="openblock side-by-side"><ul><li>Provide a means for object extension</li><li>Callbacks can be provided via the plugin options</li></ul>
+<img class="right" src="images/party.png" alt="http://openclipart.org/detail/181653/new-years-party-by-liftarn-181653" /></div>
+<details><details open=""><summary>Notes</summary><ul><li>No list of callbacks to maintain and notify</li></ul></details></details></section>
+<section><h2>Callbacks as options</h2><p class="center">Option name matches the event name:</p>
+<div class="listingblock"><pre class="highlight"><code class="javascript">  var options = {
+    ...
+
+    create: function(event, ui) {
+      ui.element.css('background-color', ready);
+      ui.element.css('color', 'white');
+    }</code></pre></div>
+<details><details open=""><summary>Notes</summary><ul><li>Option name matches the event name</li><li>Discuss the ui parameter</li></ul></details></details></section>
+<section><h2>Callbacks as event listeners</h2><p>jQuery event is prefixed with the event name</p>
+<div class="listingblock"><pre class="highlight"><code class="javascript">$('#timer').on('stopwatchcreate'), function(event, ui) {
+  ui.element.css('background-color', ready);
+  ui.element.css('color', 'white');
+});</code></pre></div>
+<details><details open=""><summary>Notes</summary><ul><li>jQuery events are all lowercase</li><li>Event name prefix is overridable with widgetEventPrefix</li></ul></details></details></section>
+<section><h2>Triggering events</h2><p>Triggering events couldn&#8217;t be any easier:</p>
+<div class="listingblock"><pre class="highlight"><code class="javascript">this._trigger('eventname', event, ui);</code></pre></div>
+<ul><li><code>event</code> usually propagates an observed event</li><li><code>ui</code> is an object that shares widget states</li></ul>
+<details><details open=""><summary>Notes</summary><ul><li>Consider checking the disabled state before triggering events</li></ul></details></details></section>
+<section><h2>The UI parameter</h2><p>Consolidate <code>ui</code> object creation in a method</p>
+<div class="listingblock"><pre class="highlight"><code class="javascript">    _dumpUi: function() {
+      return {
+        element: this.element,
+        digits: this.digits()
+      };
+    },</code></pre></div></section>
+<section><h2>_on / _off</h2></section>
+<section><h2>A note on styling</h2><p>Adopting the jQuery UI widget factory <em>does not</em> tie you to the jQuery UI themes.</p>
+<p>Examples in this demo were styled with:</p>
+<div class="center"><ul class="center"><li>Bootstrap</li><li>less.js</li></ul></div></section>
+<section class="topic"><h2>Testing and Docs</h2></section>
+<section><h2>Testing</h2><ul><li><a href="http://pivotal.github.io/jasmine/">Jasmine</a> - BDD for javascript</li><li><a href="https://github.com/velesin/jasmine-jquery">Jasmine-jQuery</a> - API for handling DOMfixtures in your tests</li><li><a href="http://karma-runner.github.io/">Karma</a> - test runner</li></ul>
+<div class="sidebarblock"><div class="content"><p><a href="https://github.com/richwidgets/richwidgets/blob/master/TESTS.md">github.com/richwidgets/richwidgets/blob/master/TESTS.md</a></p></div></div>
+<details><details open=""><summary>Notes</summary><ul><li>Jasmine is a behavior-driven development framework for testing JavaScript code</li><li>Jasmine-jquery provides an API for handling HTML, CSS, and JSON fixtures in your specs</li><li>Karma is the test runner, it controls the browser and executes the tests</li></ul></details></details></section>
+<section><h2>Jasmine Example</h2><div class="listingblock"><pre class="highlight"><code class="javascript">describe("The 'toBe' matcher compares with ===", function() {
+  it("and has a positive case ", function() {
+      expect(true).toBe(true);
+    });
+  it("and can have a negative case", function() {
+      expect(false).not.toBe(true);
+    });
+});</code></pre></div>
+<details><details open=""><summary>Notes</summary><ul><li>Jasmine provides an API that provides us with a vocabulary for writing tests</li></ul></details></details></section>
+<section><h2>API docs</h2><p>YUIDoc can be used to provide generated API documentation</p>
+<div class="listingblock"><pre class="highlight"><code class="javascript">    options: {
+      /**
+       * Whether to start the stopwatch on plugin execution
+       *
+       * @property autostart
+       * @type Boolean
+       * @default true
+       */
+      autostart: true,</code></pre></div>
+<details><details open=""><summary>Notes</summary><ul><li>Javadoc can be hard to give up</li></ul></details></details></section>
+<section class="topic"><h2>Stopwatch example</h2></section>
+<section><h2 class="hide">!</h2><div class="openblock scroll"><div class="listingblock"><pre class="highlight"><code class="javascript">/**
+ * A stopwatch widget
+ *
+ * @module Output
+ * @class chart
+ */
+(function ($) {
+
+  $.widget('rich.stopwatch', {
+
+    options: {
+      autostart: true,
+      direction: 'decreasing',
+      disabled: false,
+      showProgressBar: true,
+      increment: 100 // in milliseconds
+    },
+
+    _create: function() {
+      this.digitsElement = this.element.find('.digits');
+      this.startTime = this.digits();
+      this.digits(this.startTime);
+      if (this.options.autostart) {
+        this._createInterval();
+      }
+      if (this.options.showProgressBar) {
+        this._addProgressBar();
+      }
+    },
+
+    start: function() {
+      if (this.isRunning()) {
+        return;
+      }
+      this.reset();
+      this._createInterval();
+    },
+
+    resume: function() {
+      this._createInterval();
+    },
+
+    pause: function() {
+      this._removeInterval();
+    },
+
+    stop: function() {
+      this.digits(0);
+      this._removeInterval();
+    },
+
+    reset: function() {
+      if (this.options.disabled) {
+        return;
+      }
+      this._removeInterval();
+      this.digits(this.startTime);
+      this._trigger('reset', undefined, this._dumpUi());
+    },
+
+    isRunning: function() {
+      return !!this.intervalId;
+    },
+
+    digits: function(value) {
+      if (typeof value === 'undefined') {
+        return parseFloat(this.digitsElement.text());
+      } else if (! this.options.disabled) {
+        if (value &lt;= 0) {
+          value = 0;
+        }
+        this.digitsElement.text(value.toFixed(2));
+        this._updateProgressBar();
+      }
+    },
+
+    _createInterval: function() {
+      if (!this.intervalId &amp;&amp; !this.options.disabled) {
+        this.intervalId = setInterval($.proxy(this._decrementCount, this), this.options.increment);
+        this._trigger('start', undefined, this._dumpUi());
+      }
+    },
+
+    _removeInterval: function() {
+      if (this.intervalId &amp;&amp; !this.options.disabled) {
+        clearInterval(this.intervalId);
+        this.intervalId = null;
+        this._trigger('stop', undefined, this._dumpUi());
+      }
+    },
+
+    _decrementCount: function() {
+      var delta = this.options.increment/1000;
+      var time = this.options.direction === 'increasing' ?
+        this.digits() + delta : this.digits() - delta;
+      this.digits(time);
+      if (time &lt;= 0) {
+        this._removeInterval();
+      }
+    },
+
+    _addProgressBar: function() {
+      if (this.options.direction === 'increasing') {
+        return;
+      }
+      this.progressBar = $('&lt;div class="progress-bar" style="width: 0%;" /&gt;');
+      var progress = $('&lt;div class="progress" /&gt;').append(this.progressBar);
+      this._updateProgressBar();
+      this.element.append(progress);
+    },
+
+    _removeProgressBar: function() {
+      if (this.progressBar) {
+        this.progressBar.parents('.progress').first().remove();
+        this.progressBar = null;
+      }
+    },
+
+    _updateProgressBar: function() {
+      if (! this.progressBar) {
+        return;
+      }
+      var value = 100 - (this.digits() / this.startTime * 100);
+      this.progressBar.css('width', value.toFixed(4) + '%');
+    },
+
+    _disable: function () {
+      this._removeInterval();
+      this.element.addClass('disabled');
+    },
+
+    _enable: function () {
+      this.element.removeClass('disabled');
+    },
+
+    _dumpUi: function() {
+      return {
+        element: this.element,
+        digits: this.digits()
+      };
+    },
+
+    _getCreateEventData: function() {
+      // called when the widget factory fires its create event
+      return this._dumpUi();
+    },
+
+    _setOption: function (key, value) {
+      var widget = this;
+      if (this.options.key === value) {
+        return;
+      }
+      switch (key) {
+        case 'disabled':
+          if (value === true) {
+            widget._disable();
+          } else {
+            widget._enable();
+          }
+          break;
+        case 'showProgressBar':
+          if (value === true &amp;&amp; !widget.progressBar) {
+            widget._addProgressBar();
+          } else if (value === false &amp;&amp; widget.progressBar) {
+            widget._removeProgressBar();
+          }
+          break;
+      }
+      this._super(key, value);
+    },
+
+    _destroy: function() {
+      this._removeInterval();
+      this._removeProgressBar();
+      this.digitsElement.text(this.startTime);
+      this._trigger('destroy', undefined, this._dumpUi());
+    }
+
+  });
+}(jQuery) );</code></pre></div></div></section>
 <section><h2>Dev environment</h2></section>
+<section><h2>Learn More</h2><ul><li><a href="https://api.jqueryui.com/jquery.widget/">https://api.jqueryui.com/jquery.widget/</a></li><li><a href="http://ajpiano.com/widgetfactory">http://ajpiano.com/widgetfactory</a></li><li><a href="https://learn.jquery.com/jquery-ui/widget-factory/how-to-use-the-widget-factory/">https://learn.jquery.com/jquery-ui/widget-factory/how-to-use-the-widget-factory/</a></li></ul></section>
 <section class="topic ending"><h2>The End!</h2></section><script src="./dzslides/core/dzslides.js"></script><script src="./dzslides/highlight/highlight.pack.js"></script><script type="text/javascript">var nodes = document.querySelectorAll(".listingblock pre");
 for (var i = 0; i < nodes.length; ++i) {
   hljs.highlightBlock(nodes[i]);

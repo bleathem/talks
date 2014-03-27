@@ -9,7 +9,7 @@ Brian Leathem <https://github.com/brianleathem[@brianleathem]>
 :imagesdir: images
 
 == The plan
-[side-by-side]
+[.side-by-side]
 --
 * jQuery Plugin review
 * Widget factory advantages
@@ -18,11 +18,18 @@ Brian Leathem <https://github.com/brianleathem[@brianleathem]>
 image::storm_troopers.jpg[Storm Troopers, role="right", alt="http://www.flickr.com/photos/jdhancock/5845280258/"]
 --
 
+[NOTE.details]
+====
+====
+
+== Who am I?
+
 == jQuery Plugins
-[side-by-side]
+[.side-by-side]
 --
 * An easy way to share code
 * Great for "simple" use cases
+
 [source,javascript]
 ----
 (function( $ ) {
@@ -37,6 +44,13 @@ image::storm_troopers.jpg[Storm Troopers, role="right", alt="http://www.flickr.c
 ----
 --
 
+[NOTE.details]
+====
+* Show of hands from those who have authored a jQuery plugin?
+* De-facto standard
+====
+
+[.center]
 == Use cases
 jQuery plugins are well suited to use cases where plugin execution results in some intended side-effect:
 
@@ -44,33 +58,33 @@ jQuery plugins are well suited to use cases where plugin execution results in so
 * Animation
 * Layout
 
+[NOTE.details]
+====
+jQuery plugins execute *once*
+====
+
 == Stateful plugins
-[side-by-side]
+[.side-by-side]
 --
 * Track & query state
 * Mutate options
 * Widget interactions
-
-[hide]#break the list up#
-
 * Reverse DOM changes
 * Notify event listeners
---
 
-[center]
---
 [emphasis]#Widgets#
 --
 
 == A Stateful Widget
-[side-by-side]
+[.side-by-side]
 --
 
-* Using the javascript API to cycle the active tab
+* The active tab is the widget state
+* Use the javascript API to cycle the active tab
 +
 ++++
 <div>
-<button onclick="var active = jQuery( '#tabs' ).tabs('option', 'active'); jQuery( '#tabs' ).tabs('option', 'active', (active + 1) % 3)" style="font-size: 30px; padding: 10px">Cycle Tabs</button>
+<button class='btn' onclick="var active = jQuery( '#tabs' ).tabs('option', 'active'); jQuery( '#tabs' ).tabs('option', 'active', (active + 1) % 3)" style="font-size: 30px; margin-top: 20px">Cycle Tabs</button>
 <div>
 ++++
 
@@ -148,84 +162,534 @@ $(document).ready( function() {
 });
 ----
 
-== Remove the boilerplate
+== OOP | Boilerplate
 
 Encapsulate the boilerplate code in a common prototype function
 [source, javascript]
 ---- 
 ( function( $ ) {
+  MyWidget.prototype = ...
   $.extend(MyWidget.prototype, myPrototype);
 })(jQuery);
 ----
 
+[.center]
+== OOP | Advantages
+* Object instance
+* API for interactions
+* D.R.Y. w/ a Shared prototype
+
+[.center]
+== OOP | Dis-advantages
+* Custom prototype maintenance
+* Non-standard API
+** events
+** mutable options
+
 == jQuery UI widget factory
-The jQuery UI widget factory provides us this shared prototype.
 
-[source, javascript]
----- 
-( function( $ ) {
-  $.widget( "bleathem.mywidget", { /** prototype object **/ });
-})( jQuery );
+[.side-by-side]
+--
+[.checks]
+* Track & query state
+* Mutate options
+* Widget interactions
+* Reverse DOM changes
+* Notify event listeners
+
+++++
+<div class="center emphasis">Consistent<br />API</div>
+++++
+--
+
+[NOTE.details]
+====
+The jQuery UI widget factory provides this shared prototype.
+====
+
+== Stopwatch example
+[.side-by-side]
+--
+[source, javascript, role=center"]
+----
+jQuery('#timer').stopwatch();
 ----
 
-== Default Options
+image::stopwatch.jpg[Stopwatch, alt="http://www.flickr.com/photos/26782864@N00/3297205226/"]
+--
+
+== window.setInterval
+
+[quote]
+Calls a function or executes a code snippet repeatedly, with a fixed time delay between each call to that function.
+
 [source, javascript]
----- 
-( function( $ ) {
-  $.widget( "bleathem.mywidget", {
-
-    options: {...},
-
-  });
-})( jQuery );
 ----
-
-== Initialising your widget
-[source, javascript]
----- 
-( function( $ ) {
-  $.widget( "bleathem.mywidget", {
-
-    _create: function() {
-      ...
+    createInterval: function() {
+      this.intervalId = setInterval(
+           $.proxy(this._decrementCount, this),
+           this.increment
+      );
     },
-
-  });
-})( jQuery );
 ----
 
-== The Public API
-[source, javascript]
----- 
-( function( $ ) {
-  $.widget( "bleathem.mywidget", {
+[NOTE.details]
+====
+* The least interesting part of the example
+====
 
+== Stopwatch example
+
+++++
+<div id="timer" class="stopwatch">
+    <div class="digits">10</div>
+</div>
+<p class='center'>
+  <button class="btn" onclick="jQuery('#timer').stopwatch()">Execute</button>
+</p>
+
+<script>
+//jQuery('#timer').stopwatch();
+</script>
+++++
+
+== Stopwatch example
+
+++++
+<div id="timer2" class="stopwatch">
+    <div class="digits">10</div>
+</div>
+
+<div class='center'>
+  <button class="btn" onclick="jQuery('#timer2').stopwatch('start')">Start</button>
+  <button class="btn" onclick="jQuery('#timer2').stopwatch('pause')">Pause</button>
+  <button class="btn" onclick="jQuery('#timer2').stopwatch('resume')">Resume</button>
+  <button class="btn" onclick="jQuery('#timer2').stopwatch('stop')">Stop</button>
+  <button class="btn" onclick="jQuery('#timer2').stopwatch('reset')">Reset</button>
+</div>
+<div class='center'>
+  <button class="btn" onclick="jQuery('#timer2').stopwatch(window.richwidgets.timerOptions)">Execute</button>
+  <button class="btn" onclick="jQuery('#timer2').stopwatch('destroy')">Destroy</button>
+</div>
+++++
+
+++++
+<script>
+(function($) {
+  var ready = '#428bca';
+  var active = '#5cb85c';
+  var waiting = '#f0ad4e';
+  var stopped = '#d9534f';
+  var originalBg = $('#timer').css('background-color');
+  var originalColor = $('#timer').css('color');
+
+  var options = {
+    autostart: false,
+    create: function(event, ui) {
+      ui.element.css('background-color', ready);
+      ui.element.css('color', 'white');
+    },
+    reset: function(event, ui) {
+      ui.element.css('background-color', ready);
+    },
+    start: function(event, ui) {
+      ui.element.css('background-color', active);
+    },
+    resume: function(event, ui) {
+      ui.element.css('background-color', active);
+    },
+    pause: function(event, ui) {
+      ui.element.css('background-color', waiting);
+    },
+    stop: function(event, ui) {
+      ui.element.css('background-color', stopped);
+    },
+    destroy: function(event, ui) {
+      ui.element.css('background-color', originalBg);
+      ui.element.css('color', originalColor);
+    }
+  };
+
+  window.richwidgets = window.richwidgets || {};
+  window.richwidgets.timerOptions = options;
+
+  $('#timer2').stopwatch(options);
+
+})(jQuery);
+</script>
+
+++++
+
+== Widget Factory Deep Dive
+
+[.side-by-side]
+--
+[source, javascript, style="margin-left: 20px"]
+---- 
+(function($) {
+  $.widget("rich.stopwatch", { 
+    /** prototype object **/ 
+  });
+})(jQuery);
+----
+
+image::factory.jpg[Thunderbird assembly line, alt="http://commons.wikimedia.org/wiki/File:Thunderbird_assembly_line.jpg"]
+--
+
+== Anatomy of a widget
+[source, javascript]
+----
+( function( $ ) {
+  $.widget( "rich.stopwatch", {
+    options: { ... }
     doSomething: function() {
       // public methods have no "_" prefix
     },
     _helper: function() {
       // private methods have an "_" prefix
     }
-
   });
 })( jQuery );
 ----
 
-== lifecycle in depth
-* _create
-* _trigger
+== Default Options
+[source, javascript]
+----
+( function( $ ) {
+  $.widget( "rich.stopwatch", {
+
+    options: {
+      autostart: true,
+      direction: 'decreasing',
+      increment: 100 // in milliseconds
+    },
+    ...
+  });
+})( jQuery );
+----
+
+== Invoking Methods
+Public methods:
+[source, javascript]
+----
+$('#timer').stopwatch('doSomething', 'optionalParam');
+
+// or
+
+var widget = $('#timer').data('richStopwatch');
+widget.doSomething();
+----
+
+== Invoking Methods
+Private methods _are_ accessible:
+[source, javascript]
+----
+var widget = $('#timer').data('richStopwatch');
+widget._helper();
+----
+
+Accessible private methods is helps with widget extension
+
+== Lifecycle and callbacks
+
+[.side-by-side]
+--
+image::cycle.png[lifecycle, alt="http://openclipart.org/detail/171954/cycle-color-by-karthikeyan-171954"]
+
+* _create / _destroy
+* disable / enable
 * _setOption
-* _destroy
-* revert an element back to it’s initial state
+* _trigger
+--
 
-== Styling with bootstrap
+[.center]
+== Widget Initialisation
+Optionally override the `_create` method
 
-== less.js
+* Apply DOM changes
+* Register event listeners
+* _create_ event fired implicitly
 
-== DataTable example
+== Create
+[source, javascript]
+---- 
+    _create: function() {
+      this.digitsElement = this.element.find('.digits');
+      this.startTime = this.digits();
+      this.digits(this.startTime);
+      if (this.options.autostart) {
+        this._createInterval();
+      }
+      if (this.options.showProgressBar) {
+        this._addProgressBar();
+      }
+    },
+----
+
+== Widget Clean Up
+[.side-by-side]
+--
+image::tidy.png[clean up, alt="http://openclipart.org/detail/90451/keep-tidy-outside-01-by-anonymous"]
+
+* Leave the DOM as you found it
+* Remove any event handlers
+* Remove any timers/intervals
+--
+
+== Destroy!
+[source, javascript]
+----
+    _destroy: function() {
+      this._removeInterval();
+      if (this.progressBar) {
+        this.progressBar.parents('.progress').first().remove();
+      }
+      this.digitsElement.text(this.startTime);
+      this._trigger('destroy', undefined, this._dumpUi());
+    }
+----
+
+== Enable / Disable
+[source, javascript]
+----
+$.widget = {
+  ...
+  enable: function() {
+    return this._setOptions({ disabled: false });
+  },
+
+  disable: function() {
+    return this._setOptions({ disabled: true });
+  },
+
+}
+----
+
+== Mutable Options
+The widget Factory provides the `option` method for getting/setting the initialisation options
+
+[source, javascript]
+----
+$('#timer').stopwatch('option', 'showProgressBar', false);
+----
+
+Hook in via the `_setOption` method if required
+
+[NOTE.details]
+====
+* Alternatively you can get a reference to the widget object
+** Some options have an implicit effect, eg. `increment`
+** For other options some explicit action is required, eg. `showProgressBar`
+====
+
+== Mutable Options
+[source, javascript]
+----
+    _setOption: function (key, value) {
+      var widget = this;
+      if (this.options.key === value) {
+        return;
+      }
+      switch (key) {
+        ...
+      }
+      this._super(key, value);
+    },
+----
+
+== Mutable Options
+[source, javascript]
+----
+        case 'disabled':
+          if (value === true) widget._disable();
+          else widget._enable();
+          break;
+        case 'showProgressBar':
+          if (value === true && !widget.progressBar) {
+            widget._addProgressBar();
+          } else if (value === false && widget.progressBar) {
+            widget._removeProgressBar();
+          }
+          break;
+----
+
+[NOTE.details]
+====
+* Point out the disabled implementation here
+====
+
+== Events & Callbacks
+[.side-by-side]
+--
+* Provide a means for object extension
+* Callbacks can be provided via the plugin options
+
+image::party.png[Party, role="right", alt="http://openclipart.org/detail/181653/new-years-party-by-liftarn-181653"]
+--
+
+[NOTE.details]
+====
+* No list of callbacks to maintain and notify
+====
+
+== Callbacks as options
+
+[.center]
+Option name matches the event name:
+
+[source, javascript]
+----
+  var options = {
+    ...
+
+    create: function(event, ui) {
+      ui.element.css('background-color', ready);
+      ui.element.css('color', 'white');
+    }
+----
+
+[NOTE.details]
+====
+* Option name matches the event name
+* Discuss the ui parameter
+====
+
+== Callbacks as event listeners
+jQuery event is prefixed with the event name
+
+[source, javascript]
+----
+$('#timer').on('stopwatchcreate'), function(event, ui) {
+  ui.element.css('background-color', ready);
+  ui.element.css('color', 'white');
+});
+----
+
+[NOTE.details]
+====
+* jQuery events are all lowercase
+* Event name prefix is overridable with widgetEventPrefix
+====
+
+== Triggering events
+Triggering events couldn't be any easier:
+[source, javascript]
+----
+this._trigger('eventname', event, ui);
+----
+
+* `event` usually propagates an observed event
+* `ui` is an object that shares widget states
+
+[NOTE.details]
+====
+* Consider checking the disabled state before triggering events
+====
+
+== The UI parameter
+Consolidate `ui` object creation in a method
+
+[source, javascript]
+----
+    _dumpUi: function() {
+      return {
+        element: this.element,
+        digits: this.digits()
+      };
+    },
+----
+
+== _on / _off
+
+== A note on styling
+
+Adopting the jQuery UI widget factory _does not_ tie you to the jQuery UI themes.
+
+Examples in this demo were styled with:
+
+[.center]
+* Bootstrap
+* less.js
+
+[.topic]
+== Testing and Docs
+
+== Testing
+* http://pivotal.github.io/jasmine/[Jasmine] - BDD for javascript
+* https://github.com/velesin/jasmine-jquery[Jasmine-jQuery] - API for handling DOMfixtures in your tests
+* http://karma-runner.github.io/[Karma] - test runner
+
+****
+https://github.com/richwidgets/richwidgets/blob/master/TESTS.md[github.com/richwidgets/richwidgets/blob/master/TESTS.md]
+****
+
+[NOTE.details]
+====
+* Jasmine is a behavior-driven development framework for testing JavaScript code
+* Jasmine-jquery provides an API for handling HTML, CSS, and JSON fixtures in your specs
+* Karma is the test runner, it controls the browser and executes the tests
+
+====
+
+== Jasmine Example
+
+[source, javascript]
+----
+describe("The 'toBe' matcher compares with ===", function() {
+  it("and has a positive case ", function() {
+      expect(true).toBe(true);
+    });
+  it("and can have a negative case", function() {
+      expect(false).not.toBe(true);
+    });
+});
+----
+
+[NOTE.details]
+====
+* Jasmine provides an API that provides us with a vocabulary for writing tests
+====
+
+== API docs
+YUIDoc can be used to provide generated API documentation
+
+[source, javascript]
+----
+    options: {
+      /**
+       * Whether to start the stopwatch on plugin execution
+       *
+       * @property autostart
+       * @type Boolean
+       * @default true
+       */
+      autostart: true,
+----
+
+[NOTE.details]
+====
+* Javadoc can be hard to give up
+====
+
+[.topic]
+== Stopwatch example
+
+== !
+
+[.scroll]
+--
+[source, javascript]
+----
+include::assets/stopwatch.js[]
+----
+--
 
 == Dev environment
 
+== Learn More
+* https://api.jqueryui.com/jquery.widget/
+* http://ajpiano.com/widgetfactory
+* https://learn.jquery.com/jquery-ui/widget-factory/how-to-use-the-widget-factory/
 
 [.topic.ending]
 == The End!

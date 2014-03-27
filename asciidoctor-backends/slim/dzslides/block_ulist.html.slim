@@ -8,9 +8,18 @@
           - if item.blocks?
             =item.content
 - else
-  ul class=role
-    - items.each do |item|
-      li
-        =item.text
-        - if item.blocks?
-          =item.content
+  - if has_role? 'center'
+    div class='center'
+      ul class=role
+        - items.each do |item|
+          li
+            =item.text
+            - if item.blocks?
+              =item.content
+  - else
+    ul class=role
+      - items.each do |item|
+        li
+          =item.text
+          - if item.blocks?
+            =item.content

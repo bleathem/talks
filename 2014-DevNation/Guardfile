@@ -12,6 +12,7 @@ guard 'shell' do
         :template_dir => "/home/bleathem/Documents/talks/asciidoctor-backends",
         :template_engine => 'slim',
         :backend => 'dzslides',
+        :'safe'=> 'SAFE',
         :attributes => {
         }
     )
