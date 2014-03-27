@@ -3,8 +3,10 @@ section class=role
   - if has_role? 'topic'
     h2 class=(attr :hrole) =title
   - else 
-    - if title.start_with? '!'
-      h2 class='hide' =title
-    - else
+    - if ! title.start_with? '!'
       h2 =title
-  =content
+  - if ! title.start_with? '!'
+    div class='content'
+      =content
+  - else
+    =content

@@ -15,7 +15,7 @@ Brian Leathem <https://github.com/brianleathem[@brianleathem]>
 * Widget factory advantages
 * Use cases and examples
 
-image::storm_troopers.jpg[Storm Troopers, role="right", alt="http://www.flickr.com/photos/jdhancock/5845280258/"]
+image::storm_troopers.jpg[Storm Troopers, alt="http://www.flickr.com/photos/jdhancock/5845280258/"]
 --
 
 [NOTE.details]
@@ -23,6 +23,19 @@ image::storm_troopers.jpg[Storm Troopers, role="right", alt="http://www.flickr.c
 ====
 
 == Who am I?
+[.side-by-side]
+--
+image::silhouette.png[Silhouette, alt="http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232"]
+
+* Brian Leathem
+* Software Engineer @ Red Hat
+* RichFaces project lead (JSF)
+* RichWidgets -- http://richwidgets.io
+
+--
+
+[.topic]
+== jQuery Plugins
 
 == jQuery Plugins
 [.side-by-side]
@@ -52,7 +65,8 @@ image::storm_troopers.jpg[Storm Troopers, role="right", alt="http://www.flickr.c
 
 [.center]
 == Use cases
-jQuery plugins are well suited to use cases where plugin execution results in some intended side-effect:
+Well suited to use cases where plugin execution +
+_results in some intended side-effect:_
 
 * Text manipulation
 * Animation
@@ -186,6 +200,9 @@ Encapsulate the boilerplate code in a common prototype function
 ** events
 ** mutable options
 
+[.topic]
+== jQuery UI Widget Factory
+
 == jQuery UI widget factory
 
 [.side-by-side]
@@ -225,12 +242,12 @@ Calls a function or executes a code snippet repeatedly, with a fixed time delay 
 
 [source, javascript]
 ----
-    createInterval: function() {
-      this.intervalId = setInterval(
-           $.proxy(this._decrementCount, this),
-           this.increment
-      );
-    },
+createInterval: function() {
+  this.intervalId = setInterval(
+       $.proxy(this._decrementCount, this),
+       this.increment
+  );
+},
 ----
 
 [NOTE.details]
@@ -270,6 +287,8 @@ Calls a function or executes a code snippet repeatedly, with a fixed time delay 
 <div class='center'>
   <button class="btn" onclick="jQuery('#timer2').stopwatch(window.richwidgets.timerOptions)">Execute</button>
   <button class="btn" onclick="jQuery('#timer2').stopwatch('destroy')">Destroy</button>
+  <button class="btn" onclick="jQuery('#timer2').stopwatch('enable')">Enable</button>
+  <button class="btn" onclick="jQuery('#timer2').stopwatch('disable')">Disable</button>
 </div>
 ++++
 
@@ -413,17 +432,17 @@ Optionally override the `_create` method
 == Create
 [source, javascript]
 ---- 
-    _create: function() {
-      this.digitsElement = this.element.find('.digits');
-      this.startTime = this.digits();
-      this.digits(this.startTime);
-      if (this.options.autostart) {
-        this._createInterval();
-      }
-      if (this.options.showProgressBar) {
-        this._addProgressBar();
-      }
-    },
+_create: function() {
+  this.digitsElement = this.element.find('.digits');
+  this.startTime = this.digits();
+  this.digits(this.startTime);
+  if (this.options.autostart) {
+    this._createInterval();
+  }
+  if (this.options.showProgressBar) {
+    this._addProgressBar();
+  }
+},
 ----
 
 == Widget Clean Up
@@ -439,14 +458,14 @@ image::tidy.png[clean up, alt="http://openclipart.org/detail/90451/keep-tidy-out
 == Destroy!
 [source, javascript]
 ----
-    _destroy: function() {
-      this._removeInterval();
-      if (this.progressBar) {
-        this.progressBar.parents('.progress').first().remove();
-      }
-      this.digitsElement.text(this.startTime);
-      this._trigger('destroy', undefined, this._dumpUi());
-    }
+_destroy: function() {
+  this._removeInterval();
+  if (this.progressBar) {
+    this.progressBar.parents('.progress').first().remove();
+  }
+  this.digitsElement.text(this.startTime);
+  this._trigger('destroy', undefined, this._dumpUi());
+}
 ----
 
 == Enable / Disable
@@ -485,32 +504,32 @@ Hook in via the `_setOption` method if required
 == Mutable Options
 [source, javascript]
 ----
-    _setOption: function (key, value) {
-      var widget = this;
-      if (this.options.key === value) {
-        return;
-      }
-      switch (key) {
-        ...
-      }
-      this._super(key, value);
-    },
+_setOption: function (key, value) {
+  var widget = this;
+  if (this.options.key === value) {
+    return;
+  }
+  switch (key) {
+    ...
+  }
+  this._super(key, value);
+},
 ----
 
 == Mutable Options
 [source, javascript]
 ----
-        case 'disabled':
-          if (value === true) widget._disable();
-          else widget._enable();
-          break;
-        case 'showProgressBar':
-          if (value === true && !widget.progressBar) {
-            widget._addProgressBar();
-          } else if (value === false && widget.progressBar) {
-            widget._removeProgressBar();
-          }
-          break;
+case 'disabled':
+  if (value === true) widget._disable();
+  else widget._enable();
+  break;
+case 'showProgressBar':
+  if (value === true && !widget.progressBar) {
+    widget._addProgressBar();
+  } else if (value === false && widget.progressBar) {
+    widget._removeProgressBar();
+  }
+  break;
 ----
 
 [NOTE.details]
@@ -524,7 +543,7 @@ Hook in via the `_setOption` method if required
 * Provide a means for object extension
 * Callbacks can be provided via the plugin options
 
-image::party.png[Party, role="right", alt="http://openclipart.org/detail/181653/new-years-party-by-liftarn-181653"]
+image::party.png[Party, alt="http://openclipart.org/detail/181653/new-years-party-by-liftarn-181653"]
 --
 
 [NOTE.details]
@@ -539,13 +558,13 @@ Option name matches the event name:
 
 [source, javascript]
 ----
-  var options = {
-    ...
+var options = {
+  ...
 
-    create: function(event, ui) {
-      ui.element.css('background-color', ready);
-      ui.element.css('color', 'white');
-    }
+  create: function(event, ui) {
+    ui.element.css('background-color', ready);
+    ui.element.css('color', 'white');
+  }
 ----
 
 [NOTE.details]
@@ -591,12 +610,12 @@ Consolidate `ui` object creation in a method
 
 [source, javascript]
 ----
-    _dumpUi: function() {
-      return {
-        element: this.element,
-        digits: this.digits()
-      };
-    },
+_dumpUi: function() {
+  return {
+    element: this.element,
+    digits: this.digits()
+  };
+},
 ----
 
 == _on / _off
@@ -655,15 +674,15 @@ YUIDoc can be used to provide generated API documentation
 
 [source, javascript]
 ----
-    options: {
-      /**
-       * Whether to start the stopwatch on plugin execution
-       *
-       * @property autostart
-       * @type Boolean
-       * @default true
-       */
-      autostart: true,
+options: {
+  /**
+   * Whether to start the stopwatch on plugin execution
+   *
+   * @property autostart
+   * @type Boolean
+   * @default true
+   */
+  autostart: true,
 ----
 
 [NOTE.details]
