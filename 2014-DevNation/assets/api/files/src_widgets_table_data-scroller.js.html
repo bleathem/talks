@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/widgets/table/data-scroller.js - richfaces-widgets</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.7.0/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-responsive.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+        
+	    <img alt="richfaces-widgets" src="../../logo.png" style="max-height: 65%;" title="richfaces-widgets">
+        
+            richfaces-widgets
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>0.1.1-wip</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/autocomplete", "classes/chart", "classes/dataScroller", "classes/dataTable", "classes/editor", "classes/orderingList", "classes/pickList", "classes/select", "classes/stopwatch", "classes/subTable", "classes/subTableToggle", "modules/Input", "modules/Output", "modules/Select", "modules/Table"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+    <h3>APIs</h3>
+    <div id="sidebar">
+        <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+            <li class="active"><a href="#classes" data-toggle="tab">Widgets</a></li>
+            <li><a href="#modules" data-toggle="tab">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" placeholder="Type to filter APIs">
+        </div>
+
+        <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+            <div class="tab-pane active" id="classes">
+                <ul id="api-classes" class="nav nav-list">
+                    
+                        <li><a href="../classes/autocomplete.html">autocomplete</a></li>
+                    
+                        <li><a href="../classes/chart.html">chart</a></li>
+                    
+                        <li><a href="../classes/dataScroller.html">dataScroller</a></li>
+                    
+                        <li><a href="../classes/dataTable.html">dataTable</a></li>
+                    
+                        <li><a href="../classes/editor.html">editor</a></li>
+                    
+                        <li><a href="../classes/orderingList.html">orderingList</a></li>
+                    
+                        <li><a href="../classes/pickList.html">pickList</a></li>
+                    
+                        <li><a href="../classes/select.html">select</a></li>
+                    
+                        <li><a href="../classes/stopwatch.html">stopwatch</a></li>
+                    
+                        <li><a href="../classes/subTable.html">subTable</a></li>
+                    
+                        <li><a href="../classes/subTableToggle.html">subTableToggle</a></li>
+                    
+                </ul>
+            </div>
+
+            <div class="tab-pane" id="modules">
+                <ul id="api-modules" class="nav nav-list">
+                    
+                        <li><a href="../modules/Input.html">Input</a></li>
+                    
+                        <li><a href="../modules/Output.html">Output</a></li>
+                    
+                        <li><a href="../modules/Select.html">Select</a></li>
+                    
+                        <li><a href="../modules/Table.html">Table</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+        Show:
+        <label for="api-show-inherited" class="checkbox">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected" class="checkbox">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private" class="checkbox">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated" class="checkbox">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </form>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <div class="page-header">
+    <h1>src/widgets/table/data-scroller.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+ * A widget for paging through other iterating widgets
+ *
+ * @module Table
+ * @class dataScroller
+ */
+(function ($) {
+
+  $.widget(&#x27;rich.dataScroller&#x27;, {
+
+    options: {
+      pageSize: 10,
+      start: 0,
+      size: null,
+      targetSelector: null,
+      fastStep: 1,
+      // events
+      scroll: null
+    },
+
+    _create: function() {
+      this._updatePageButtonDom();
+      this.page = this.options.page ? this.options.page :
+        this.options.size ? (Math.floor(this.options.start / this.options.pageSize)) : 0;
+      this._updatePageButtonStyle();
+      this._attachEvents();
+    },
+
+    _attachEvents: function() {
+      var widget = this;
+      this.element.on(&#x27;click&#x27;, &#x27;li&#x27;, function(e) {
+        var button = $(this);
+        if (button.hasClass(&#x27;disabled&#x27;)) {
+          e.preventDefault();
+          return;
+        }
+        if (button.hasClass(&#x27;first&#x27;)) {
+          widget.showPage(0);
+        } else if (button.hasClass(&#x27;fast-previous&#x27;)) {
+          widget.showPage(widget.page - widget.options.fastStep);
+        } else if (button.hasClass(&#x27;previous&#x27;)) {
+          widget.previous();
+        } else if (button.hasClass(&#x27;next&#x27;)) {
+          widget.next();
+        } else if (button.hasClass(&#x27;fast-next&#x27;)) {
+          widget.showPage(widget.page + widget.options.fastStep);
+        } else if (button.hasClass(&#x27;last&#x27;)) {
+          widget.showPage(widget.pageMax);
+        } else {
+          widget.showPage(button.text() -1);
+        }
+        e.preventDefault();
+      });
+    },
+
+    previous: function() {
+      var newPage = this.page - 1;
+      if (newPage &lt; 0) {
+        return;
+      } else {
+        this.showPage(newPage);
+      }
+    },
+
+    next: function() {
+      var newPage = this.page + 1;
+      if (this.pageMax &amp;&amp; newPage &gt; this.pageMax) {
+        return;
+      } else {
+        this.showPage(newPage);
+      }
+    },
+
+    showPage: function(page) {
+      if (page &lt; 0) {
+        page = 0;
+      } else if (this.pageMax &amp;&amp; page &gt; this.pageMax) {
+        page = this.pageMax;
+      }
+      this.page = page;
+      var first = page * this.options.pageSize;
+      var last = first + this.options.pageSize - 1;
+      var ui = {
+        table: this._$target(),
+        first: first,
+        last: last,
+        page: page
+      };
+      this._trigger(&#x27;scroll&#x27;, null, ui);
+      this._updatePageButtonStyle();
+    },
+
+    refresh: function() {
+      this._updatePageButtonDom();
+      this._updatePageButtonStyle();
+    },
+
+    _updatePageButtonStyle: function() {
+      var elements = this.element.find(&#x27;li&#x27;);
+      var widget = this;
+      elements.each(function(index) {
+        var button = $(this);
+        if (button.hasClass(&#x27;previous&#x27;) || button.hasClass(&#x27;fast-previous&#x27;) || button.hasClass(&#x27;first&#x27;)) {
+          if (widget.page === 0) {
+            button.addClass(&#x27;disabled&#x27;);
+          } else {
+            button.removeClass(&#x27;disabled&#x27;);
+          }
+          return;
+        }
+        if (button.hasClass(&#x27;next&#x27;) || button.hasClass(&#x27;fast-next&#x27;) || button.hasClass(&#x27;last&#x27;)) {
+          if (widget.page === widget.pageMax) {
+            button.addClass(&#x27;disabled&#x27;);
+          } else {
+            button.removeClass(&#x27;disabled&#x27;);
+          }
+          return;
+        }
+        if (button.text() === (widget.page + 1).toString()) {
+          button.addClass(&#x27;active&#x27;);
+        } else {
+          button.removeClass(&#x27;active&#x27;);
+        }
+      });
+    },
+
+    _updatePageButtonDom: function() {
+      if (!this.options.fastStep || this.options.fastStep.toString() === &#x27;1&#x27;) {
+        this.element.find(&#x27;.fast-previous&#x27;).hide();
+        this.element.find(&#x27;.fast-next&#x27;).hide();
+      }
+      var pageButtons = this.element.find(&#x27;li&#x27;).filter(function() {
+        var button = $(this);
+        return ! (
+          button.hasClass(&#x27;first&#x27;) ||
+          button.hasClass(&#x27;fast-previous&#x27;) ||
+          button.hasClass(&#x27;previous&#x27;) ||
+          button.hasClass(&#x27;next&#x27;) ||
+          button.hasClass(&#x27;fast-next&#x27;) ||
+          button.hasClass(&#x27;last&#x27;)
+          );
+      });
+      this.pageMax = this.options.size ? (Math.floor((this.options.size -1) / this.options.pageSize)) : 0;
+      if (pageButtons.length &lt; this.pageMax + 1) {
+        var initial = pageButtons.length + 1;
+        var previousButton = pageButtons.last();
+        for (var i = initial; i &lt;= this.pageMax +1; i++) {
+          var button = $(&#x27;&lt;li&gt;&lt;a href=&quot;#&quot;&gt;&#x27;+i+&#x27;&lt;/a&gt;&lt;/li&gt;&#x27;);
+          previousButton.after(button);
+          previousButton = button;
+        }
+      } else if (pageButtons.length &gt; this.pageMax + 1) {
+        var final = pageButtons.length;
+        for (var j = this.pageMax + 1; j &lt; final; j++) {
+          pageButtons[j].remove();
+        }
+        if (this.page &gt; this.pageMax) {
+          this.page = this.pageMax;
+        }
+      }
+    },
+
+    _setOption: function(key, value) {
+      var widget = this;
+      if (this.options.key === value) {
+        return;
+      }
+      switch (key) {
+        case &#x27;size&#x27;:
+          widget.options.size = value;
+          widget.refresh();
+        break;
+      }
+      this._super(key, value);
+    },
+
+    _$target: function() {
+      return this.options.targetSelector ? $(this.options.targetSelector) : null;
+    },
+  });
+
+}(jQuery));
+
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/widgets/table/data-table.js - richfaces-widgets</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.7.0/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-responsive.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+        
+	    <img alt="richfaces-widgets" src="../../logo.png" style="max-height: 65%;" title="richfaces-widgets">
+        
+            richfaces-widgets
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>0.1.1-wip</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/autocomplete", "classes/chart", "classes/dataScroller", "classes/dataTable", "classes/editor", "classes/orderingList", "classes/pickList", "classes/select", "classes/stopwatch", "classes/subTable", "classes/subTableToggle", "modules/Input", "modules/Output", "modules/Select", "modules/Table"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+    <h3>APIs</h3>
+    <div id="sidebar">
+        <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+            <li class="active"><a href="#classes" data-toggle="tab">Widgets</a></li>
+            <li><a href="#modules" data-toggle="tab">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" placeholder="Type to filter APIs">
+        </div>
+
+        <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+            <div class="tab-pane active" id="classes">
+                <ul id="api-classes" class="nav nav-list">
+                    
+                        <li><a href="../classes/autocomplete.html">autocomplete</a></li>
+                    
+                        <li><a href="../classes/chart.html">chart</a></li>
+                    
+                        <li><a href="../classes/dataScroller.html">dataScroller</a></li>
+                    
+                        <li><a href="../classes/dataTable.html">dataTable</a></li>
+                    
+                        <li><a href="../classes/editor.html">editor</a></li>
+                    
+                        <li><a href="../classes/orderingList.html">orderingList</a></li>
+                    
+                        <li><a href="../classes/pickList.html">pickList</a></li>
+                    
+                        <li><a href="../classes/select.html">select</a></li>
+                    
+                        <li><a href="../classes/stopwatch.html">stopwatch</a></li>
+                    
+                        <li><a href="../classes/subTable.html">subTable</a></li>
+                    
+                        <li><a href="../classes/subTableToggle.html">subTableToggle</a></li>
+                    
+                </ul>
+            </div>
+
+            <div class="tab-pane" id="modules">
+                <ul id="api-modules" class="nav nav-list">
+                    
+                        <li><a href="../modules/Input.html">Input</a></li>
+                    
+                        <li><a href="../modules/Output.html">Output</a></li>
+                    
+                        <li><a href="../modules/Select.html">Select</a></li>
+                    
+                        <li><a href="../modules/Table.html">Table</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+        Show:
+        <label for="api-show-inherited" class="checkbox">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected" class="checkbox">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private" class="checkbox">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated" class="checkbox">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </form>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <div class="page-header">
+    <h1>src/widgets/table/data-table.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+ * A widget providing hooks for sorting and filtering a data table.
+ *
+ * @module Table
+ * @class dataTable
+ */
+(function ($) {
+
+  $.widget(&#x27;rich.dataTable&#x27;, {
+
+    options: {
+      length: null,
+      sortMode: &#x27;single&#x27;, // single, multi
+      filterMode: &#x27;multi&#x27;, // single, multi
+      /**
+       * Fired when a sortable header is clicked.  A sortable header is a &lt;th&gt; element with the class &#x27;sort&#x27; in &lt;thead&gt;.
+       *
+       * @event sort
+       */
+      sort: null,
+      sorted: null,
+
+      /**
+       * Fired when a filterable element header is changed.  A filterable element is one marked with the class &#x27;filter&#x27; in &lt;thead&gt;.
+       *
+       * @event filter
+       */
+      filter: null,
+      filtered: null
+
+    },
+
+    _create: function () {
+      if (!this.length) {
+        this.length = this.element.find(&#x27;tbody&#x27;).not(&#x27;.scroller&#x27;).find(&#x27;tr&#x27;).length;
+      }
+      this.sortStates = [];
+      this.filterStates = [];
+      this._addSortEvents();
+      this._addFilterEvents();
+    },
+
+    _addSortEvents: function() {
+      var sortableHeaders = this.element.find(&#x27;thead .sort&#x27;);
+      if (sortableHeaders) {
+        var widget = this;
+        sortableHeaders.on(&#x27;click&#x27;, function(e) {
+          if (e.delegateTarget) {
+            var sortHandle = e.delegateTarget;
+            var column = sortHandle.tagName.toUpperCase() === &#x27;TH&#x27; ? $(sortHandle) : $(sortHandle).parents(&#x27;th&#x27;).first();
+            var sortOrder = widget._sortOrder(column) === &#x27;ascending&#x27; ? &#x27;descending&#x27; : &#x27;ascending&#x27;;
+            if (e.metaKey || e.ctrlKey) {
+              sortOrder = &#x27;unsorted&#x27;;
+            }
+            if (widget.options.sortMode === &#x27;single&#x27;) {
+              widget._clearSortOrders(sortHandle);
+            }
+            widget._sortOrder(column,  sortOrder);
+          }
+          widget._trigger(&#x27;sort&#x27;, e, widget._dumpState());
+          widget._trigger(&#x27;sorted&#x27;, e, widget._dumpState());
+          e.preventDefault();
+        });
+      }
+    },
+
+    _addFilterEvents: function() {
+      var widget = this;
+      var inputFilters = this.element.find(&#x27;thead input.filter&#x27;);
+      var callback = function(e) {
+        var input = $(e.currentTarget);
+        if (widget.options.filterMode === &#x27;single&#x27;) {
+          widget._clearFilterValues(input);
+        }
+        var column = input.parents(&#x27;th&#x27;).first();
+        widget._pushFilterState(column, input.val());
+        widget._trigger(&#x27;filter&#x27;, e, widget._dumpState());
+        widget._trigger(&#x27;filtered&#x27;, e, widget._dumpState());
+      };
+
+      if (inputFilters) {
+        inputFilters.on(&#x27;keyup&#x27;, callback);
+      }
+      var selectFilters = this.element.find(&#x27;thead select.filter&#x27;);
+      if (selectFilters) {
+        selectFilters.on(&#x27;change&#x27;, callback);
+      }
+    },
+
+    _clearSortOrders: function(current) {
+      this.element.find(&#x27;thead .sort&#x27;).not(current).removeClass(&#x27;ascending descending unsorted&#x27;);
+      this.sortStates = [];
+    },
+
+    _clearFilterValues: function(current) {
+      this.element.find(&#x27;thead .filter&#x27;).not(current).val(&#x27;&#x27;);
+    },
+
+    // ascending, descending, unsorted
+    _sortOrder: function(column, sortOrder) {
+      if (arguments.length &lt; 2) {
+        if (column.hasClass(&#x27;ascending&#x27;)) {
+          return &#x27;ascending&#x27;;
+        }
+        if (column.hasClass(&#x27;descending&#x27;)) {
+          return &#x27;descending&#x27;;
+        }
+        return &#x27;unsorted&#x27;;
+
+      } else {
+        column.removeClass(&#x27;ascending descending unsorted&#x27;);
+        column.addClass(sortOrder);
+      }
+      this._pushSortState(column, sortOrder);
+    },
+
+    _pushSortState: function(column, sortOrder) {
+      var index = this._columnIndex(column);
+
+      var id = column.attr(&#x27;id&#x27;);
+      var newSortState = {
+        id: id,
+        index: index,
+        column: column,
+        sortOrder: sortOrder
+      };
+
+      this.sortStates = this.sortStates.filter(function(sortState) {
+        return sortState.index !== newSortState.index;
+      });
+
+      if (newSortState.sortOrder !== &#x27;unsorted&#x27;) { // omit unsorted columns from the sort state
+        this.sortStates.push(newSortState);
+      }
+    },
+
+    _pushFilterState: function(column, filterValue) {
+      var index = this._columnIndex(column);
+
+      var id = column.attr(&#x27;id&#x27;);
+      var newFilterState = {
+        id: id,
+        index: index,
+        column: column,
+        filterValue: filterValue
+      };
+
+      this.filterStates = this.filterStates.filter(function(filterState) {
+        return filterState.index !== newFilterState.index;
+      });
+
+      this.filterStates.push(newFilterState); // push empty filters so we notify when a filter has been cleared
+    },
+
+    _dumpState: function() {
+      var ui = {
+        table: this.element,
+        sort: this.sortStates, // array indexed by priority
+        filter: this.filterStates, // array indexed by priority
+        length: this.options.length
+      };
+      return ui;
+    },
+
+    _columnIndex: function(column) {
+      var row = column.parents(&#x27;tr&#x27;).first();
+      return row.find(&#x27;th&#x27;).index(column);
+    }
+  });
+
+}(jQuery));
+
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>
