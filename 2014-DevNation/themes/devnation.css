@@ -9,13 +9,16 @@ html, .view body {
   background-color: black;
   counter-reset: slideidx;
 }
+
 body, .view section {
   background-color: white;
   border-radius: 12px;
 }
+
 section, .view head > title {
   /* The font from Google */
-  font-family: 'Oswald', Arial, serif;
+  /*font-family: 'Oswald', Arial, serif;*/
+  font-family: 'Open Sans', sans-serif;
   font-size: 30px;
 }
 
@@ -24,6 +27,7 @@ section {
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+  font-size: 28px;
 }
 
 section.front {
@@ -42,12 +46,16 @@ section.title {
 
 section.title h1 {
   color: #F3F4F8;
-  margin-top: 100px;
-  font-size: 80px;
+  margin-top: 140px;
+  font-size: 42px;
+  font-family: 'Bevan', cursive;
   text-align: center;
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
   /*text-shadow: -1px 0 #fc5d47, 0 1px #fc5d47, 1px 0 #fc5d47, 0 -1px #fc5d47;*/
   /*text-shadow: -2px 0 #6dbcdb, 0 2px #6dbcdb, 2px 0 #6dbcdb, 0 -2px #6dbcdb;*/
-  -webkit-text-stroke: 2px #6dbcdb;
+  -webkit-text-stroke: 1px #6dbcdb;
 }
 
 section.title footer {
@@ -62,6 +70,7 @@ section.title footer {
   right: 100px;
   color: white;
 }
+
 .view head > title {
   color: white;
   text-align: center;
@@ -69,16 +78,19 @@ section.title footer {
 }
 
 h2 {
-  margin-top: 25px;
+  margin-top: 35px;
   margin-bottom: 0px;
   text-align: center;
-  font-size: 60px;
+  font-size: 40px;
   font-weight: normal;
+  font-family: 'Bevan', cursive;
+  color: #fc5d47; /* devnation red */
 }
 
 .topic h2 {
   margin-top: 170px;
   font-weight: bold;
+  font-size: 150%;
   color: #fc5d47; /* devnation red */
   text-shadow: 2px 1px #6dbcdb;
 }
@@ -90,21 +102,22 @@ h2 {
 }
 
 section > .content {
-    width: 800px;
-    padding: 0 20px;
-    height: 310px;
-    display: table-cell;
-    vertical-align: middle;
+  width: 800px;
+  padding: 0 20px;
+  height: 320px;
+  display: table-cell;
+  vertical-align: middle;
 }
 
 section.center > .content * {
-    text-align: left;
+  text-align: left;
 }
 
 section.center > .content > *:not(details), div.center > * {
   display: inline-block;
   margin-left: auto;
   margin-right: auto;
+  text-align: left;
 }
 
 .nopadding {
@@ -114,43 +127,49 @@ section.center > .content > *:not(details), div.center > * {
 
 .emphasis {
   font-weight: bold;
-  color: #6dbcdb;  /* devantion blue */
+  color: #6dbcdb; /* devantion blue */
   font-style: italic;
-  font-size: 70px;
+  font-size: 250%;
 }
 
 p {
   margin-bottom: 20px;
-  font-size: 30px;
 }
+
 blockquote, .sidebarblock {
-    background: #f9f9f9;
-    border-left: 10px solid #ccc;
-    margin-bottom: 10px;
-    padding: 0.5em 10px;
-    quotes: "\201C""\201D""\2018""\2019";
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin-bottom: 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C" "\201D" "\2018" "\2019";
+  font-size: 90%;
 }
+
 blockquote:before {
-    color: #ccc;
-    content: open-quote;
-    font-size: 4em;
-    line-height: 0.1em;
-    margin-right: 0.25em;
-    vertical-align: -0.4em;
+  color: #ccc;
+  content: open-quote;
+  font-size: 300%;
+  line-height: 0.1em;
+  margin-right: 0.1em;
+  vertical-align: -0.2em;
 }
-blockquote p {
-    display: inline;
-    margin: 0;
+
+blockquote p, .sidebarblock p {
+  display: inline;
+  margin: 0;
 }
+
 /* Figures are displayed full-page, with the caption
    on top of the image/video */
 figure {
   background-color: black;
 }
+
 figcaption {
   margin: 70px;
-  font-size: 50px;
+  font-size: 90%;
 }
+
 footer {
   position: absolute;
   bottom: 0;
@@ -159,13 +178,17 @@ footer {
   text-align: right;
   background-color: #F3F4F8;
   border-top: 1px solid #CCC;
+  font-size: 85%;
+  font-family: 'Open Sans', sans-serif;
 }
+
 .view section {
   -moz-transition: none;
   -webkit-transition: none;
   -ms-transition: none;
   transition: none;
 }
+
 .view section[aria-selected] {
   border: 5px red solid;
 }
@@ -176,14 +199,17 @@ footer {
 .incremental > * {
   opacity: 1;
 }
+
 /* Current item */
 .incremental > *[aria-selected] {
   opacity: 1;
 }
+
 /* Items to be shown */
 .incremental > *[aria-selected] ~ * {
   opacity: 0;
 }
+
 /* The progressbar, at the bottom of the slides, show the global
    progress of the presentation. */
 #progress-bar {
@@ -192,61 +218,79 @@ footer {
 }
 
 .listingblock {
-  font-size: 20px;
+  font-size: 65%;
 }
 
 .side-by-side {
   display: table;
   border-collapse: collapse;
-  width: 760px;  /*  .content width - 2 X .content padding */
+  width: 760px; /*  .content width - 2 X .content padding */
 }
 
 .side-by-side > * {
   display: table-cell;
   vertical-align: middle;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .side-by-side > *:first-child {
   padding-right: 20px;
 }
 
-.side-by-side ul {
-  padding-left: 1em;
+.side-by-side .list {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.side-by-side .list > ul {
+  display: inline-block;
+  text-align: left;
 }
 
 .side-by-side img {
-    max-width: 320px;
-    max-height: 280px;
+  max-width: 320px;
+  max-height: 280px;
 }
 
 ul {
   margin-left: 1em;
 }
 
-ul.checks  {
+ul.checks {
   list-style-type: none;
   margin-left: 0;
 }
 
 ul.checks li:before {
-    font-family: 'FontAwesome';
-    content: '\f00c';
-    margin:0 5px 0 -1em;
-    color: #6dbcdb;  /* devantion blue */
+  font-family: 'FontAwesome';
+  content: '\f00c';
+  margin: 0 5px 0 -1em;
+  color: #6dbcdb; /* devantion blue */
+}
+
+ul ol {
+  margin-left: 3em;
 }
 
 .list {
   margin-left: 25px;
+  margin-bottom: 1em;
 }
 
 /* a div of class list wraps lists with at title */
 .list > ul {
-    margin: 0;
-    margin-left: 1em;
+  margin: 0;
+  margin-left: 1em;
 }
 
-.live-demo, .live-demo p {
-  font-size: 15px;
+.live-demo {
+  font-size: 65%;
+}
+
+.live-demo .ui-tabs-panel {
+  font-size: 75%;
 }
 
 .live-demo p {
@@ -258,7 +302,17 @@ ul.checks li:before {
 }
 
 .scroll {
-    overflow-y: scroll;
-    height: 100%;
+  overflow-y: scroll;
+  padding-top: 14px;
+  padding-bottom: 25px;
+  height: 100%;
+}
+
+iframe {
+  overflow-y: scroll;
+  padding-top: 14px;
+  padding-bottom: 25px;
+  height: 100%;
+  width: 100%;
 }
 

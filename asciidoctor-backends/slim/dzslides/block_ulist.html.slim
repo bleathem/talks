@@ -17,9 +17,10 @@
             - if item.blocks?
               =item.content
   - else
-    ul class=role
-      - items.each do |item|
-        li
-          =item.text
-          - if item.blocks?
-            =item.content
+    .list
+      ul class=role
+        - items.each do |item|
+          li
+            =item.text
+            - if item.blocks?
+              =item.content

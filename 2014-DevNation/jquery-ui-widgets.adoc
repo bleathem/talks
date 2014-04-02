@@ -7,6 +7,7 @@ Brian Leathem <https://github.com/brianleathem[@brianleathem]>
 :dzslides-highlight: github
 :source-highlighter: highlightjs
 :imagesdir: images
+:linkattrs:
 
 == The plan
 [.side-by-side]
@@ -178,7 +179,7 @@ $(document).ready( function() {
 
 == OOP | Boilerplate
 
-Encapsulate the boilerplate code in a common prototype function
+Encapsulate the boilerplate code in a common prototype function:
 [source, javascript]
 ---- 
 ( function( $ ) {
@@ -215,7 +216,7 @@ Encapsulate the boilerplate code in a common prototype function
 * Notify event listeners
 
 ++++
-<div class="center emphasis">Consistent<br />API</div>
+<div class="center emphasis" style="width: 50%">Consistent<br />API</div>
 ++++
 --
 
@@ -540,8 +541,10 @@ case 'showProgressBar':
 == Events & Callbacks
 [.side-by-side]
 --
-* Provide a means for object extension
-* Callbacks can be provided via the plugin options
+* Events allow for object extension
+* Callbacks provided as either:
+  . plugin options
+  . event listeners
 
 image::party.png[Party, alt="http://openclipart.org/detail/181653/new-years-party-by-liftarn-181653"]
 --
@@ -597,6 +600,7 @@ Triggering events couldn't be any easier:
 this._trigger('eventname', event, ui);
 ----
 
+.Function Parameters:
 * `event` usually propagates an observed event
 * `ui` is an object that shares widget states
 
@@ -617,8 +621,6 @@ _dumpUi: function() {
   };
 },
 ----
-
-== _on / _off
 
 == A note on styling
 
@@ -689,6 +691,14 @@ options: {
 ====
 * Javadoc can be hard to give up
 ====
+
+== Stopwatch API docs
+
+****
+link:/assets/api/classes/stopwatch.html[/assets/api/classes/stopwatch.html, window="API"]
+****
+
+
 
 [.topic]
 == Stopwatch example
