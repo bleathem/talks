@@ -4,6 +4,7 @@
 <section><h2>Who am I?</h2><div class="content"><div class="openblock side-by-side"><img src="images/silhouette.png" alt="http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232" />
 <div class="list"><ul><li>Brian Leathem</li><li>Software Engineer @ Red Hat</li><li>RichFaces project lead (JSF)</li><li>RichWidgets&#8201;&#8212;&#8201;<a href="http://richwidgets.io">http://richwidgets.io</a></li></ul></div></div></div></section>
 <section class="topic"><h2>jQuery Plugins</h2><div class="content"></div></section>
+<section><h2>Who are you?</h2><div class="content"><img src="images/crowd.png" alt="http://openclipart.org/detail/crowd-by-kattekrab" /></div></section>
 <section><h2>jQuery Plugins</h2><div class="content"><div class="openblock side-by-side"><div class="list"><ul><li>An easy way to share code</li><li>Great for "simple" use cases</li></ul></div>
 <div class="listingblock"><pre class="highlight"><code class="javascript">(function( $ ) {
  $.fn.myplugin = function() {
@@ -14,13 +15,14 @@
    });
  };
 })( jQuery );</code></pre></div></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Show of hands from those who have authored a jQuery plugin?</li><li>De-facto standard</li></ul></div></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Show of hands from those of you who feel you are proficient with javascript?</li><li>Show of hands from those of you who have authored a jQuery plugin?</li><li>De-facto standard</li></ul></div></details></details></div></section>
 <section class="center"><h2>Use cases</h2><div class="content"><p>Well suited to use cases where plugin execution<br />
 <em>results in some intended side-effect:</em></p>
 <div class="list"><ul><li>Text manipulation</li><li>Animation</li><li>Layout</li></ul></div>
-<details><details open=""><summary>Notes</summary><p>jQuery plugins execute <strong>once</strong></p></details></details></div></section>
-<section><h2>Stateful plugins</h2><div class="content"><div class="openblock side-by-side"><div class="list"><ul><li>Track &amp; query state</li><li>Mutate options</li><li>Widget interactions</li><li>Reverse DOM changes</li><li>Notify event listeners</li></ul></div>
-<p><span class="emphasis">Widgets</span></p></div></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Provide a means to manipulate a set of DOM objects</li><li>jQuery plugins execute <strong>once</strong></li></ul></div></details></details></div></section>
+<section><h2>Stateful plugins</h2><div class="content"><div class="openblock side-by-side"><div class="list"><ul><li>Track &amp; query state</li><li>Mutate options</li><li>Plugin interactions</li><li>Reverse DOM changes</li><li>Notify event listeners</li></ul></div>
+<p><span class="emphasis">Widgets</span></p></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>There are a number of concerns that are not addressed out-of-the box with the jQuery plugin syntax</li><li>These include&#8230;</li><li>Some examples of these include</li></ul></div></details></details></div></section>
 <section><h2>A Stateful Widget</h2><div class="content"><div class="openblock side-by-side"><div class="list"><ul><li>The active tab is the widget state</li><li>Use the javascript API to cycle the active tab<div>
 <button class='btn' onclick="var active = jQuery( '#tabs' ).tabs('option', 'active'); jQuery( '#tabs' ).tabs('option', 'active', (active + 1) % 3)" style="font-size: 30px; margin-top: 20px">Cycle Tabs</button>
 <div></li></ul></div>
@@ -58,7 +60,8 @@
   MyWidget.prototype.removeListener = ...
   MyWidget.prototype.setOption = ...
 
-  ...</code></pre></div></div></section>
+  ...</code></pre></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>This isn&#8217;t to say there aren&#8217;t jQuery plugins out there that track state</li></ul></div></details></details></div></section>
 <section><h2>Widgets with OOP</h2><div class="content"><div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
   ...
 

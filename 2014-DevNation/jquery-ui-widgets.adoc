@@ -38,6 +38,9 @@ image::silhouette.png[Silhouette, alt="http://leslycorazon.wikispaces.com/file/d
 [.topic]
 == jQuery Plugins
 
+== Who are you?
+image::crowd.png[crowd, alt="http://openclipart.org/detail/crowd-by-kattekrab"]
+
 == jQuery Plugins
 [.side-by-side]
 --
@@ -60,7 +63,8 @@ image::silhouette.png[Silhouette, alt="http://leslycorazon.wikispaces.com/file/d
 
 [NOTE.details]
 ====
-* Show of hands from those who have authored a jQuery plugin?
+* Show of hands from those of you who feel you are proficient with javascript?
+* Show of hands from those of you who have authored a jQuery plugin?
 * De-facto standard
 ====
 
@@ -75,7 +79,8 @@ _results in some intended side-effect:_
 
 [NOTE.details]
 ====
-jQuery plugins execute *once*
+* Provide a means to manipulate a set of DOM objects
+* jQuery plugins execute *once*
 ====
 
 == Stateful plugins
@@ -83,12 +88,19 @@ jQuery plugins execute *once*
 --
 * Track & query state
 * Mutate options
-* Widget interactions
+* Plugin interactions
 * Reverse DOM changes
 * Notify event listeners
 
 [emphasis]#Widgets#
 --
+
+[NOTE.details]
+====
+* There are a number of concerns that are not addressed out-of-the box with the jQuery plugin syntax
+* These include...
+* Some examples of these include
+====
 
 == A Stateful Widget
 [.side-by-side]
@@ -149,6 +161,11 @@ jQuery plugins execute *once*
 
   ...
 ----
+
+[NOTE.details]
+====
+* This isn't to say there aren't jQuery plugins out there that track state
+====
 
 == Widgets with OOP
 
