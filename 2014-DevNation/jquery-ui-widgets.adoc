@@ -21,6 +21,12 @@ image::storm_troopers.jpg[Storm Troopers, alt="http://www.flickr.com/photos/jdha
 
 [NOTE.details]
 ====
+ * We're here to talk about building javascript widgets with the jQuery UI widget factory.
+ * Using the familiar jQuery plugin pattern as a common starting point we'll look at
+   some use cases where jQuery plugins fall short and discuss how the jquery widget factory helps us
+   overcome those shortcomings.
+ * Finally we'll do a deep-dive into an example widget and learn the widget factory conventions that help
+   us keep our code clean and concise
 ====
 
 == Who am I?
@@ -32,21 +38,65 @@ image::silhouette.png[Silhouette, alt="http://leslycorazon.wikispaces.com/file/d
 * Software Engineer @ Red Hat
 * RichFaces project lead (JSF)
 * RichWidgets -- http://richwidgets.io
-
 --
 
-[.topic]
-== jQuery Plugins
+[NOTE.details]
+====
+* My own experience with the widget factory comes from the work I've done leading the RichFaces JSF project
+  over the past year in developing RichFaces 5
+* Our goal with RichFaces 5 is to re-develop the front end of our JSF components as standalone javascript widgets
+  that can be used either independently or backed by any web framework in any language
+* We created the _richwidgets_ subproject to move that effort forward, and we chose the jquery ui widget factory
+  as the vehicle for our implementation
+====
 
 == Who are you?
 image::crowd.png[crowd, alt="http://openclipart.org/detail/crowd-by-kattekrab"]
 
+[NOTE.details]
+====
+* And how about you guys, lets' get an idea of the audience we have here today?
+* Can I see a show of hands
+** from those in the audience who consider themselves proficient with javascript?
+** And how about those of you who are familiar with the jquery plugin pattern?
+====
+
+[.topic]
+== jQuery Plugins
+
+[NOTE.details]
+====
+* Great, with the introductions out of the way let's dive into the good stuff
+====
+
 == jQuery Plugins
 [.side-by-side]
 --
+* A new method that extends jQuery's prototype object
+* Interact with a collectin of elements
 * An easy way to share code
 * Great for "simple" use cases
 
+++++
+<div>
+++++
+image::jquery.png[jquery, alt="http://brand.jquery.org/logos/"]
+++++
+</div>
+++++
+
+--
+
+[NOTE.details]
+====
+* Allow us to create custom code to interact with a set of elements
+* De-facto standard, providing a module system for sharing code between projects
+====
+
+== A simple plugin
+
+[.side-by-side]
+--
 [source,javascript]
 ----
 (function( $ ) {
@@ -59,13 +109,26 @@ image::crowd.png[crowd, alt="http://openclipart.org/detail/crowd-by-kattekrab"]
  };
 })( jQuery );
 ----
+
+[source,html]
+----
+
+<html>
+  <p>Some text in a document</p>
+</html>
+
+...
+
+<script>
+  $('p').myplugin();
+</script>
+----
 --
 
 [NOTE.details]
 ====
-* Show of hands from those of you who feel you are proficient with javascript?
-* Show of hands from those of you who have authored a jQuery plugin?
-* De-facto standard
+* We have here before us a simple jquery plugin
+* It consists of a function assignment into the jQuery object
 ====
 
 [.center]

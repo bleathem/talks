@@ -1,12 +1,24 @@
 <!DOCTYPE html><html lang="en" class="aspect-16-9"><head><meta charset="UTF-8" /><meta name="generator" content="Asciidoctor 1.5.0.preview, dzslides backend" /><title>Hands on with the jQuery UI widget factory</title><meta name="author" content="Brian Leathem" /><link rel="stylesheet" href="/assets/jquery-ui-theme/jquery-ui.css" /><link rel="stylesheet" href="/assets/stopwatch.css" /><link rel="stylesheet" href="/assets/bootstrap-button.css" /><link rel="stylesheet" href="/assets/font-awesome.min.css" /><link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Bevan" /><link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700,800" /><link rel="stylesheet" href="./dzslides/themes/highlight/github.css" /><link rel="stylesheet" href="./dzslides/themes/style/../../../themes/devnation.css" /><link rel="stylesheet" href="./dzslides/core/dzslides.css" /><link rel="stylesheet" href="./dzslides/themes/transition/fade.css" /><script src="/assets/jquery.min.js"></script><script>jQuery.noConflict()</script><script src="assets/jquery-ui.min.js"></script><script src="/assets/stopwatch.js"></script></head><body><section class="front"></section><section class="title"><h1>Hands on with the jQuery UI widget factory</h1><footer><span class="author">Brian Leathem</span> <span class="email"><a href="https://github.com/brianleathem">@brianleathem</a></span></footer></section><section><h2>The plan</h2><div class="content"><div class="openblock side-by-side"><div class="list"><ul><li>jQuery Plugin review</li><li>Widget factory advantages</li><li>Use cases and examples</li></ul></div>
 <img src="images/storm_troopers.jpg" alt="http://www.flickr.com/photos/jdhancock/5845280258/" /></div>
-<details><details open=""><summary>Notes</summary></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>We&#8217;re here to talk about building javascript widgets with the jQuery UI widget factory.</li><li>Using the familiar jQuery plugin pattern as a common starting point we&#8217;ll look at
+some use cases where jQuery plugins fall short and discuss how the jquery widget factory helps us
+overcome those shortcomings.</li><li>Finally we&#8217;ll do a deep-dive into an example widget and learn the widget factory conventions that help
+us keep our code clean and concise</li></ul></div></details></details></div></section>
 <section><h2>Who am I?</h2><div class="content"><div class="openblock side-by-side"><img src="images/silhouette.png" alt="http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232" />
-<div class="list"><ul><li>Brian Leathem</li><li>Software Engineer @ Red Hat</li><li>RichFaces project lead (JSF)</li><li>RichWidgets&#8201;&#8212;&#8201;<a href="http://richwidgets.io">http://richwidgets.io</a></li></ul></div></div></div></section>
-<section class="topic"><h2>jQuery Plugins</h2><div class="content"></div></section>
-<section><h2>Who are you?</h2><div class="content"><img src="images/crowd.png" alt="http://openclipart.org/detail/crowd-by-kattekrab" /></div></section>
-<section><h2>jQuery Plugins</h2><div class="content"><div class="openblock side-by-side"><div class="list"><ul><li>An easy way to share code</li><li>Great for "simple" use cases</li></ul></div>
-<div class="listingblock"><pre class="highlight"><code class="javascript">(function( $ ) {
+<div class="list"><ul><li>Brian Leathem</li><li>Software Engineer @ Red Hat</li><li>RichFaces project lead (JSF)</li><li>RichWidgets&#8201;&#8212;&#8201;<a href="http://richwidgets.io">http://richwidgets.io</a></li></ul></div></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>My own experience with the widget factory comes from the work I&#8217;ve done leading the RichFaces JSF project
+over the past year in developing RichFaces 5</li><li>Our goal with RichFaces 5 is to re-develop the front end of our JSF components as standalone javascript widgets
+that can be used either independently or backed by any web framework in any language</li><li>We created the <em>richwidgets</em> subproject to move that effort forward, and we chose the jquery ui widget factory
+as the vehicle for our implementation</li></ul></div></details></details></div></section>
+<section><h2>Who are you?</h2><div class="content"><img src="images/crowd.png" alt="http://openclipart.org/detail/crowd-by-kattekrab" />
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>And how about you guys, lets&#8217; get an idea of the audience we have here today?</li><li>Can I see a show of hands<div class="list"><ul><li>from those in the audience who consider themselves proficient with javascript?</li><li>And how about those of you who are familiar with the jquery plugin pattern?</li></ul></div></li></ul></div></details></details></div></section>
+<section class="topic"><h2>jQuery Plugins</h2><div class="content"><details><details open=""><summary>Notes</summary><div class="list"><ul><li>Great, with the introductions out of the way let&#8217;s dive into the good stuff</li></ul></div></details></details></div></section>
+<section><h2>jQuery Plugins</h2><div class="content"><div class="openblock side-by-side"><div class="list"><ul><li>A new method that extends jQuery&#8217;s prototype object</li><li>Interact with a collectin of elements</li><li>An easy way to share code</li><li>Great for "simple" use cases</li></ul></div>
+<div>
+<img src="images/jquery.png" alt="http://brand.jquery.org/logos/" />
+</div></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Allow us to create custom code to interact with a set of elements</li><li>De-facto standard, providing a module system for sharing code between projects</li></ul></div></details></details></div></section>
+<section><h2>A simple plugin</h2><div class="content"><div class="openblock side-by-side"><div class="listingblock"><pre class="highlight"><code class="javascript">(function( $ ) {
  $.fn.myplugin = function() {
   return this.each(function() {
    $(this)
@@ -14,8 +26,17 @@
     .css("color", "red");
    });
  };
-})( jQuery );</code></pre></div></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Show of hands from those of you who feel you are proficient with javascript?</li><li>Show of hands from those of you who have authored a jQuery plugin?</li><li>De-facto standard</li></ul></div></details></details></div></section>
+})( jQuery );</code></pre></div>
+<div class="listingblock"><pre class="highlight"><code class="html">&lt;html&gt;
+  &lt;p&gt;Some text in a document&lt;/p&gt;
+&lt;/html&gt;
+
+...
+
+&lt;script&gt;
+  $('p').myplugin();
+&lt;/script&gt;</code></pre></div></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>We have here before us a simple jquery plugin</li><li>It consists of a function assignment into the jQuery object</li></ul></div></details></details></div></section>
 <section class="center"><h2>Use cases</h2><div class="content"><p>Well suited to use cases where plugin execution<br />
 <em>results in some intended side-effect:</em></p>
 <div class="list"><ul><li>Text manipulation</li><li>Animation</li><li>Layout</li></ul></div>
