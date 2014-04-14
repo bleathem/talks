@@ -89,6 +89,8 @@ h2 {
 
 .topic h2 {
   margin-top: 170px;
+  padding-left: 200px;
+  padding-right: 200px;
   font-weight: bold;
   font-size: 150%;
   color: #fc5d47; /* devnation red */
@@ -120,7 +122,7 @@ section.center > .content > *:not(details), div.center > * {
   text-align: left;
 }
 
-.content > img {
+.content > img, .content > a > img {
   max-width: 800px;
   max-height: 320px;
   margin-left: auto;
@@ -225,7 +227,7 @@ footer {
   background: #AAA;
 }
 
-.listingblock {
+code {
   font-size: 65%;
 }
 
@@ -324,3 +326,17 @@ iframe {
   width: 100%;
 }
 
+code {
+  font-family: monospace;
+  background-color: #f8f8ff;
+  padding: 0.5em;
+}
+
+.credits {
+  font-size: 50%;
+}
+
+.license {
+  font-size: 50%;
+  text-align: center;
+}

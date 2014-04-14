@@ -62,20 +62,22 @@ image::crowd.png[crowd, alt="http://openclipart.org/detail/crowd-by-kattekrab"]
 ====
 
 [.topic]
-== jQuery Plugins
+== Tapping into the jQuery ecosystem
 
 [NOTE.details]
 ====
 * Great, with the introductions out of the way let's dive into the good stuff
 ====
 
-== jQuery Plugins
+== jQuery
 [.side-by-side]
 --
-* A new method that extends jQuery's prototype object
-* Interact with a collectin of elements
-* An easy way to share code
-* Great for "simple" use cases
+.Consistent cross browser API for:
+* DOM traversal
+* HTML Manipulation
+* Event handling
+* Animation
+* Ajax
 
 ++++
 <div>
@@ -87,8 +89,54 @@ image::jquery.png[jquery, alt="http://brand.jquery.org/logos/"]
 
 --
 
+== jQuery API
+[source,javascript]
+----
+$('some-selector').method(parameters);
+----
+
+++++
+<br />
+++++
+
+.Example methods:
+[.listingblock]
+* `addClass / removeClass / css`
+* `html / text`
+* `bind`
+* `animate`
+
+== jQuery Ubiquity
+
+image::jquery_usage.png[jquery usage, link="http://trends.builtwith.com/javascript/jQuery"]
+
+[NOTE.details]
+
+== jQuery Plugins
+[.side-by-side]
+--
+* Extend jQuery with custom functionality
+* Easy way to share code
+
+[source,html]
+----
+
+<html>
+  <p>Some text in a document</p>
+</html>
+
+...
+
+<script>
+  $('p').myplugin();
+</script>
+----
+
+--
+
 [NOTE.details]
 ====
+* A new method that extends jQuery's prototype object
 * Allow us to create custom code to interact with a set of elements
 * De-facto standard, providing a module system for sharing code between projects
 ====
@@ -110,19 +158,6 @@ image::jquery.png[jquery, alt="http://brand.jquery.org/logos/"]
 })( jQuery );
 ----
 
-[source,html]
-----
-
-<html>
-  <p>Some text in a document</p>
-</html>
-
-...
-
-<script>
-  $('p').myplugin();
-</script>
-----
 --
 
 [NOTE.details]
@@ -144,25 +179,6 @@ _results in some intended side-effect:_
 ====
 * Provide a means to manipulate a set of DOM objects
 * jQuery plugins execute *once*
-====
-
-== Stateful plugins
-[.side-by-side]
---
-* Track & query state
-* Mutate options
-* Plugin interactions
-* Reverse DOM changes
-* Notify event listeners
-
-[emphasis]#Widgets#
---
-
-[NOTE.details]
-====
-* There are a number of concerns that are not addressed out-of-the box with the jQuery plugin syntax
-* These include...
-* Some examples of these include
 ====
 
 == A Stateful Widget
@@ -209,6 +225,25 @@ _results in some intended side-effect:_
 <script>jQuery( '#tabs' ).tabs();</script>
 ++++
 
+== Stateful plugins
+[.side-by-side]
+--
+* Track & query state
+* Mutate options
+* Plugin interactions
+* Reverse DOM changes
+* Notify event listeners
+
+[emphasis]#Widgets#
+--
+
+[NOTE.details]
+====
+* There are a number of concerns that are not addressed out-of-the box with the jQuery plugin syntax
+* These include...
+* Some examples of these include
+====
+
 == Widgets with OOP
 [source, javascript]
 ----
@@ -230,7 +265,7 @@ _results in some intended side-effect:_
 * This isn't to say there aren't jQuery plugins out there that track state
 ====
 
-== Widgets with OOP
+== OOP Plugins
 
 [source, javascript]
 ----
@@ -245,7 +280,7 @@ _results in some intended side-effect:_
 })( jQuery );
 ----
 
-== Widgets with OOP
+== Widget API with OOP
 
 Interact with the widget via an API:
 
@@ -257,7 +292,7 @@ $(document).ready( function() {
 });
 ----
 
-== OOP | Boilerplate
+== OOP -> Boilerplate!
 
 Encapsulate the boilerplate code in a common prototype function:
 [source, javascript]
@@ -268,19 +303,34 @@ Encapsulate the boilerplate code in a common prototype function:
 })(jQuery);
 ----
 
-[.center]
-== OOP | Advantages
+== OOP Advantages
+[.side-by-side]
+--
 * Object instance
 * API for interactions
 * D.R.Y. w/ a Shared prototype
 
-[.center]
-== OOP | Dis-advantages
+++++
+<div>
+<i class="fa fa-check-circle" style="font-size: 300px; color: #6dbcdb;"></i>
+</div>
+++++
+--
+
+== OOP Dis-advantages
+[.side-by-side]
+--
 * Custom prototype maintenance
 * Non-standard API
 ** events
 ** mutable options
 
+++++
+<div>
+<i class="fa fa-times-circle" style="font-size: 300px; color: #fc5d47;"></i>
+</div>
+++++
+--
 [.topic]
 == jQuery UI Widget Factory
 
@@ -323,12 +373,7 @@ Calls a function or executes a code snippet repeatedly, with a fixed time delay 
 
 [source, javascript]
 ----
-createInterval: function() {
-  this.intervalId = setInterval(
-       $.proxy(this._decrementCount, this),
-       this.increment
-  );
-},
+window.setInterval( callback, interval );
 ----
 
 [NOTE.details]
@@ -488,7 +533,11 @@ var widget = $('#timer').data('richStopwatch');
 widget._helper();
 ----
 
-Accessible private methods is helps with widget extension
+++++
+<br />
+++++
+
+Accessible private methods helps with widget extension
 
 == Lifecycle and callbacks
 
@@ -552,7 +601,7 @@ _destroy: function() {
 == Enable / Disable
 [source, javascript]
 ----
-$.widget = {
+$.widget = {  // the jQuery UI widget object
   ...
   enable: function() {
     return this._setOptions({ disabled: false });
@@ -573,6 +622,9 @@ The widget Factory provides the `option` method for getting/setting the initiali
 $('#timer').stopwatch('option', 'showProgressBar', false);
 ----
 
+++++
+<br />
+++++
 Hook in via the `_setOption` method if required
 
 [NOTE.details]
@@ -709,8 +761,8 @@ Adopting the jQuery UI widget factory _does not_ tie you to the jQuery UI themes
 Examples in this demo were styled with:
 
 [.center]
-* Bootstrap
-* less.js
+* Bootstrap (http://getbootstrap.com)
+* less.js (http://lesscss.org/)
 
 [.topic]
 == Testing and Docs
@@ -719,10 +771,6 @@ Examples in this demo were styled with:
 * http://pivotal.github.io/jasmine/[Jasmine] - BDD for javascript
 * https://github.com/velesin/jasmine-jquery[Jasmine-jQuery] - API for handling DOMfixtures in your tests
 * http://karma-runner.github.io/[Karma] - test runner
-
-****
-https://github.com/richwidgets/richwidgets/blob/master/TESTS.md[github.com/richwidgets/richwidgets/blob/master/TESTS.md]
-****
 
 [NOTE.details]
 ====
@@ -750,6 +798,18 @@ describe("The 'toBe' matcher compares with ===", function() {
 ====
 * Jasmine provides an API that provides us with a vocabulary for writing tests
 ====
+
+== More on testing
+Tomorrow at DevNation:
+****
+Mobile web development: workflow and best practices - Lukas Fryc (Room 208)
+****
+
+Testing in richwidgets:
+****
+https://github.com/richwidgets/richwidgets/blob/master/TESTS.md[github.com/richwidgets/richwidgets/blob/master/TESTS.md]
+****
+
 
 == API docs
 YUIDoc can be used to provide generated API documentation
@@ -793,12 +853,42 @@ include::assets/stopwatch.js[]
 ----
 --
 
-== Dev environment
+== Credits
+[.credits]
+****
+* http://www.flickr.com/photos/jdhancock/5845280258/
+* http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232
+* http://openclipart.org/detail/crowd-by-kattekrab
+* http://brand.jquery.org/logos/
+* http://www.flickr.com/photos/26782864@N00/3297205226/
+* http://commons.wikimedia.org/wiki/File:Thunderbird_assembly_line.jpg
+* http://openclipart.org/detail/171954/cycle-color-by-karthikeyan-171954
+* http://openclipart.org/detail/90451/keep-tidy-outside-01-by-anonymous
+* http://openclipart.org/detail/181653/new-years-party-by-liftarn-181653
+****
 
-== Learn More
+++++
+<div class='license'>
+  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
+    <img alt="Creative Commons Licence" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+  </a>
+  <br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Hands on with the jQuery UI widget factory</span> by
+  <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.bleathem.ca/talks/2014-DevNation/jquery-ui-widgets.html" property="cc:attributionName" rel="cc:attributionURL">Brian Leathem</a>
+      is licensed under a
+  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+  <br />Based on a work at
+  <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/bleathem/talks/" rel="dct:source">https://github.com/bleathem/talks/</a>.
+</div>
+++++
+
+== Learn More on jQuery UI
 * https://api.jqueryui.com/jquery.widget/
 * http://ajpiano.com/widgetfactory
 * https://learn.jquery.com/jquery-ui/widget-factory/how-to-use-the-widget-factory/
 
-[.topic.ending]
-== The End!
+++++
+<br />
+++++
+
+* http://richwidgets.io
+
