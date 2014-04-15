@@ -21,15 +21,15 @@ image::storm_troopers.jpg[Storm Troopers, alt="http://www.flickr.com/photos/jdha
 
 [NOTE.details]
 ====
- * Regardless of whether we are using web frameworks with server-side rendering, or if we are writing fat clients
-   in the browser for our rest back-end, javascript is the lingua franca of the web and the vehicle for
-   providing users with a rich user experience.
- * In this talk we will look at encapsulating the client behaviours in our applications as widgets that we can
-   share across our applications and with other users.
- * We'll start by looking at the familiar jQuery plugin pattern and discuss some use cases where jQuery plugins fall short.
- * We'll then see how the jquery widget factory helps us overcome those shortcomings.
- * Finally we'll do a deep-dive into an example widget and learn the widget factory conventions that help
-   us keep our code clean and concise.
+ * Regardless of whether we are using web frameworks with *server-side rendering*, or if we are writing *fat clients*
+   in the browser for our rest back-end, javascript is the *lingua franca* of the web and the vehicle for
+   providing users with a *rich user experience*.
+ * In this talk we will look at *encapsulating the client behaviours* in our applications as widgets that we can
+   *share* across our applications and with other users.
+ * We'll start by looking at the *familiar jQuery plugin* pattern and discuss some use cases where jQuery plugins *fall short*.
+ * We'll then see how the jquery *widget factory* helps us *overcome* those shortcomings.
+ * Finally we'll do a *deep-dive* into an example widget and learn the widget factory *conventions* that help
+   us keep our code *clean and concise*.
 ====
 
 == Who am I?
@@ -46,10 +46,10 @@ image::silhouette.png[Silhouette, alt="http://leslycorazon.wikispaces.com/file/d
 [NOTE.details]
 ====
 * My own experience with the widget factory comes from the work we've done in developing RichFaces 5
-* Our goal with RichFaces 5 is to re-develop the front end of our JSF components as standalone javascript widgets
-  that can be used either independently or backed by any web framework in any language
-* We created the _richwidgets_ subproject to move that effort forward, and we chose the jquery ui widget factory
-  as the vehicle for our implementation
+* Our goal with *RichFaces 5* is to re-develop the front end of our JSF components as *standalone javascript widgets*
+  that can be used either independently or backed by *any web framework* in any language
+* We created the *_richwidgets_* subproject to move that effort forward, and we chose the jquery ui widget factory
+  as the *vehicle for our implementation*
 ====
 
 == Who are you?
@@ -59,8 +59,8 @@ image::crowd.png[crowd, alt="http://openclipart.org/detail/crowd-by-kattekrab"]
 ====
 * And how about you guys, lets' get an idea of the audience we have here today.
 * Can I see a show of hands
-** from those in the audience who consider themselves proficient with javascript?
-** And how about those of you who are familiar with the jquery plugin pattern?
+** from those in the audience who consider themselves *proficient with javascript*?
+** And how about those of you who are *familiar with the jquery plugin pattern*?
 ====
 
 [.topic]
@@ -93,10 +93,10 @@ image::jquery.png[jquery, alt="http://brand.jquery.org/logos/"]
 
 [NOTE.details]
 ====
-* jQuery is a cross browser library providing a number of different functionalities.
+* jQuery is a *cross browser library* providing a number of different functionalities.
 * Historically the cross-browser nature of the library has been important,
-but as the browsers converge on the html 5 standard the browser differences are finally starting to disappear.
-* jQuery however continues to play an important role in providing a consistent API for manipulating the DOM
+but as the *browsers converge* on the html 5 standard the browser differences are finally starting to disappear.
+* jQuery however continues to play an important role in providing a *consistent API* for manipulating the DOM
 * The importance of this consistent API should not be overlooked when you are considering whether to include
 jQuery in your app.
 ====
@@ -120,11 +120,11 @@ $('some-selector').method(parameters);
 
 [NOTE.details]
 ====
-* This code sample demonstrates the typical jQuery API pattern
+* This code sample demonstrates the *typical jQuery API pattern* that we will want to match with our widget API
 * The $ sign represents the jQuery function object, and it's invoked on a css selector that returns us a list
   of DOM nodes.
 * We can then invoke a method on that list of nodes, with an optional set of parameters, where those parameters oftentimes include callbacks
-* And these methods typically return the list of nodes on which they are invoked, making them chainable
+* And these methods typically return the list of nodes on which they are invoked, making them *chainable*
 * This is the pattern we see whether we are manipulating the DOM, dealing with events, animating our page, or even issuing AJAX requests
 ====
 
@@ -134,11 +134,11 @@ image::jquery_usage.png[jquery usage, link="http://trends.builtwith.com/javascri
 
 [NOTE.details]
 ====
-* And so many people have caught on to how great it is to work with jQuery.
-* Out of the top 1 million sites, almost half of them are using jQuery.
-* Looking at the top 10 thousand sites, more than 3 quarters of them are using jQuery.
-* These numbers then should give us confidence in jQuery as our target
-* see Kris Borchers talk tomorrow to learn more about the jQuery ecosystem
+* Many people have caught on to how great it is to work with jQuery.
+* Out of the top *1 million sites*, almost *half* of them are using jQuery.
+* Looking at the top *10 thousand sites*, more than *3 quarters* of them are using jQuery.
+* These numbers then should give us *confidence* in jQuery as our target
+* *Kris Borchers* (Executive Director of the jQuery Foundation) will talk tomorrow to learn more about the jQuery ecosystem
 ====
 
 == jQuery Plugins
@@ -165,9 +165,9 @@ image::jquery_usage.png[jquery usage, link="http://trends.builtwith.com/javascri
 
 [NOTE.details]
 ====
-* jQuery plugins provide the means to tap into the jQuery ecosystem with custom functionality unique to our use cases
-* When we create a plugin we are extending jQuery's prototype object with a new method, making it available to all jQuery nodes
-* De-facto standard, providing a module system for sharing code between projects
+* jQuery plugins provide the means to *tap into* the jQuery ecosystem with custom functionality unique to our use cases
+* When we create a plugin we are *extending jQuery's prototype object* with a new method, making it available to all jQuery nodes
+* *De-facto standard*, providing a module system for *sharing* code between projects
 ====
 
 == A simple plugin
@@ -282,9 +282,8 @@ _results in some intended side-effect:_
 
 [NOTE.details]
 ====
-* Plugins on their won then aren't sufficient for providing stateful plugins
-*
-* These include the ability to
+* Plugins on their own then aren't sufficient for providing stateful plugins
+* Some uses cases where the plugins fall short include the ability to
 ** Track & query state
 ** Mutate options
 ** Plugin interactions
@@ -1039,7 +1038,7 @@ Examples in this demo were styled with:
 
 == Testing
 * http://pivotal.github.io/jasmine/[Jasmine] - BDD for javascript
-* https://github.com/velesin/jasmine-jquery[Jasmine-jQuery] - API for handling DOMfixtures in your tests
+* https://github.com/velesin/jasmine-jquery[Jasmine-jQuery] - API for handling DOM fixtures in your tests
 * http://karma-runner.github.io/[Karma] - test runner
 
 [NOTE.details]
