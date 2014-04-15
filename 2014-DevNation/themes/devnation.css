@@ -23,7 +23,7 @@ section, .view head > title {
 }
 
 section {
-  background-image: url("../../images/devnation/base.jpg");
+  background-image: url("../images/devnation/base.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -31,14 +31,14 @@ section {
 }
 
 section.front {
-  background-image: url("../../images/devnation/title.jpg");
+  background-image: url("../images/devnation/title.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
 }
 
 section.title {
-  background-image: url("../../images/devnation/speaker.jpg");
+  background-image: url("../images/devnation/speaker.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
