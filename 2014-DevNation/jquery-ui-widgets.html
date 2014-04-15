@@ -1,27 +1,33 @@
 <!DOCTYPE html><html lang="en" class="aspect-16-9"><head><meta charset="UTF-8" /><meta name="generator" content="Asciidoctor 1.5.0.preview, dzslides backend" /><title>Hands on with the jQuery UI widget factory</title><meta name="author" content="Brian Leathem" /><link rel="stylesheet" href="/assets/jquery-ui-theme/jquery-ui.css" /><link rel="stylesheet" href="/assets/stopwatch.css" /><link rel="stylesheet" href="/assets/bootstrap-button.css" /><link rel="stylesheet" href="/assets/font-awesome.min.css" /><link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Bevan" /><link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700,800" /><link rel="stylesheet" href="./dzslides/themes/highlight/github.css" /><link rel="stylesheet" href="./dzslides/themes/style/../../../themes/devnation.css" /><link rel="stylesheet" href="./dzslides/core/dzslides.css" /><link rel="stylesheet" href="./dzslides/themes/transition/fade.css" /><script src="/assets/jquery.min.js"></script><script>jQuery.noConflict()</script><script src="assets/jquery-ui.min.js"></script><script src="/assets/stopwatch.js"></script></head><body><section class="front"></section><section class="title"><h1>Hands on with the jQuery UI widget factory</h1><footer><span class="author">Brian Leathem</span> <span class="email"><a href="https://github.com/brianleathem">@brianleathem</a></span></footer></section><section><h2>The plan</h2><div class="content"><div class="openblock side-by-side"><div class="list"><ul><li>jQuery Plugin review</li><li>Widget factory advantages</li><li>Use cases and examples</li></ul></div>
 <img src="images/storm_troopers.jpg" alt="http://www.flickr.com/photos/jdhancock/5845280258/" /></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>We&#8217;re here to talk about building javascript widgets with the jQuery UI widget factory.</li><li>Using the familiar jQuery plugin pattern as a common starting point we&#8217;ll look at
-some use cases where jQuery plugins fall short and discuss how the jquery widget factory helps us
-overcome those shortcomings.</li><li>Finally we&#8217;ll do a deep-dive into an example widget and learn the widget factory conventions that help
-us keep our code clean and concise</li></ul></div></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Regardless of whether we are using web frameworks with server-side rendering, or if we are writing fat clients
+in the browser for our rest back-end, javascript is the lingua franca of the web and the vehicle for
+providing users with a rich user experience.</li><li>In this talk we will look at encapsulating the client behaviours in our applications as widgets that we can
+share across our applications and with other users.</li><li>We&#8217;ll start by looking at the familiar jQuery plugin pattern and discuss some use cases where jQuery plugins fall short.</li><li>We&#8217;ll then see how the jquery widget factory helps us overcome those shortcomings.</li><li>Finally we&#8217;ll do a deep-dive into an example widget and learn the widget factory conventions that help
+us keep our code clean and concise.</li></ul></div></details></details></div></section>
 <section><h2>Who am I?</h2><div class="content"><div class="openblock side-by-side"><img src="images/silhouette.png" alt="http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232" />
 <div class="list"><ul><li>Brian Leathem</li><li>Software Engineer @ Red Hat</li><li>RichFaces project lead (JSF)</li><li>RichWidgets&#8201;&#8212;&#8201;<a href="http://richwidgets.io">http://richwidgets.io</a></li></ul></div></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>My own experience with the widget factory comes from the work I&#8217;ve done leading the RichFaces JSF project
-over the past year in developing RichFaces 5</li><li>Our goal with RichFaces 5 is to re-develop the front end of our JSF components as standalone javascript widgets
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>My own experience with the widget factory comes from the work we&#8217;ve done in developing RichFaces 5</li><li>Our goal with RichFaces 5 is to re-develop the front end of our JSF components as standalone javascript widgets
 that can be used either independently or backed by any web framework in any language</li><li>We created the <em>richwidgets</em> subproject to move that effort forward, and we chose the jquery ui widget factory
 as the vehicle for our implementation</li></ul></div></details></details></div></section>
 <section><h2>Who are you?</h2><div class="content"><img src="images/crowd.png" alt="http://openclipart.org/detail/crowd-by-kattekrab" />
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>And how about you guys, lets&#8217; get an idea of the audience we have here today?</li><li>Can I see a show of hands<div class="list"><ul><li>from those in the audience who consider themselves proficient with javascript?</li><li>And how about those of you who are familiar with the jquery plugin pattern?</li></ul></div></li></ul></div></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>And how about you guys, lets&#8217; get an idea of the audience we have here today.</li><li>Can I see a show of hands<div class="list"><ul><li>from those in the audience who consider themselves proficient with javascript?</li><li>And how about those of you who are familiar with the jquery plugin pattern?</li></ul></div></li></ul></div></details></details></div></section>
 <section class="topic"><h2>Tapping into the jQuery ecosystem</h2><div class="content"><details><details open=""><summary>Notes</summary><div class="list"><ul><li>Great, with the introductions out of the way let&#8217;s dive into the good stuff</li></ul></div></details></details></div></section>
 <section><h2>jQuery</h2><div class="content"><div class="openblock side-by-side"><div class="list"><div class="title">Consistent cross browser API for:</div><ul><li>DOM traversal</li><li>HTML Manipulation</li><li>Event handling</li><li>Animation</li><li>Ajax</li></ul></div>
 <div>
 <img src="images/jquery.png" alt="http://brand.jquery.org/logos/" />
-</div></div></div></section>
+</div></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>jQuery is a cross browser library providing a number of different functionalities.</li><li>Historically the cross-browser nature of the library has been important,
+but as the browsers converge on the html 5 standard the browser differences are finally starting to disappear.</li><li>jQuery however continues to play an important role in providing a consistent API for manipulating the DOM</li><li>The importance of this consistent API should not be overlooked when you are considering whether to include
+jQuery in your app.</li></ul></div></details></details></div></section>
 <section><h2>jQuery API</h2><div class="content"><div class="listingblock"><pre class="highlight"><code class="javascript">$('some-selector').method(parameters);</code></pre></div>
 <br />
-<div class="list"><div class="title">Example methods:</div><ul class="listingblock"><li><code>addClass / removeClass / css</code></li><li><code>html / text</code></li><li><code>bind</code></li><li><code>animate</code></li></ul></div></div></section>
-<section><h2>jQuery Ubiquity</h2><div class="content"><a class="image" href="http://trends.builtwith.com/javascript/jQuery"><img src="images/jquery_usage.png" alt="jquery usage" /></a></div></section>
-<section class="details"><h2>jQuery Plugins</h2><div class="content"><div class="openblock side-by-side"><div class="list"><ul><li>Extend jQuery with custom functionality</li><li>Easy way to share code</li></ul></div>
+<div class="list"><div class="title">Example methods:</div><ul class="listingblock"><li><code>addClass / removeClass / css</code></li><li><code>html / text</code></li><li><code>on / off</code></li><li><code>animate</code></li></ul></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>This code sample demonstrates the typical jQuery API pattern</li><li>The $ sign represents the jQuery function object, and it&#8217;s invoked on a css selector that returns us a list
+of DOM nodes.</li><li>We can then invoke a method on that list of nodes, with an optional set of parameters, where those parameters oftentimes include callbacks</li><li>And these methods typically return the list of nodes on which they are invoked, making them chainable</li><li>This is the pattern we see whether we are manipulating the DOM, dealing with events, animating our page, or even issuing AJAX requests</li></ul></div></details></details></div></section>
+<section><h2>jQuery Ubiquity</h2><div class="content"><a class="image" href="http://trends.builtwith.com/javascript/jQuery"><img src="images/jquery_usage.png" alt="jquery usage" /></a>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>And so many people have caught on to how great it is to work with jQuery.</li><li>Out of the top 1 million sites, almost half of them are using jQuery.</li><li>Looking at the top 10 thousand sites, more than 3 quarters of them are using jQuery.</li><li>These numbers then should give us confidence in jQuery as our target</li><li>see Kris Borchers talk tomorrow to learn more about the jQuery ecosystem</li></ul></div></details></details></div></section>
+<section><h2>jQuery Plugins</h2><div class="content"><div class="openblock side-by-side"><div class="list"><ul><li>Extend jQuery with custom functionality</li><li>Easy way to share code</li></ul></div>
 <div class="listingblock"><pre class="highlight"><code class="html">&lt;html&gt;
   &lt;p&gt;Some text in a document&lt;/p&gt;
 &lt;/html&gt;
@@ -31,7 +37,7 @@ as the vehicle for our implementation</li></ul></div></details></details></div><
 &lt;script&gt;
   $('p').myplugin();
 &lt;/script&gt;</code></pre></div></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>A new method that extends jQuery&#8217;s prototype object</li><li>Allow us to create custom code to interact with a set of elements</li><li>De-facto standard, providing a module system for sharing code between projects</li></ul></div></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>jQuery plugins provide the means to tap into the jQuery ecosystem with custom functionality unique to our use cases</li><li>When we create a plugin we are extending jQuery&#8217;s prototype object with a new method, making it available to all jQuery nodes</li><li>De-facto standard, providing a module system for sharing code between projects</li></ul></div></details></details></div></section>
 <section><h2>A simple plugin</h2><div class="content"><div class="openblock side-by-side"><div class="listingblock"><pre class="highlight"><code class="javascript">(function( $ ) {
  $.fn.myplugin = function() {
   return this.each(function() {
@@ -41,11 +47,13 @@ as the vehicle for our implementation</li></ul></div></details></details></div><
    });
  };
 })( jQuery );</code></pre></div></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>We have here before us a simple jquery plugin</li><li>It consists of a function assignment into the jQuery object</li></ul></div></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>We have here before us a simple jquery plugin</li><li>It consists of a function assignment into the jQuery object<div class="list"><ul><li>where that function provides the desired functionality</li></ul></div></li><li>In case you are unfamiliar with the syntax, I will point out the outer surrounding function declaration
+which is not unique to jQuery plugins.  It&#8217;s simply an auto-executing function that immediately evaluates
+providing a closure in which the code is executed outside of the global namespace.<div class="list"><ul><li>You&#8217;ll see this pattern recurring throughout this talk</li></ul></div></li></ul></div></details></details></div></section>
 <section class="center"><h2>Use cases</h2><div class="content"><p>Well suited to use cases where plugin execution<br />
 <em>results in some intended side-effect:</em></p>
 <div class="list"><ul><li>Text manipulation</li><li>Animation</li><li>Layout</li></ul></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Provide a means to manipulate a set of DOM objects</li><li>jQuery plugins execute <strong>once</strong></li></ul></div></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>jQuery plugins execute <strong>once</strong>, either on page load, or in response to some event.</li><li>On their own this makes them useful for use cases where we want to execute the plugin and have some desired side-effect</li><li>There are however a number of uses cases that the jQuery plugin mechanism doesn&#8217;t cover out-of-the box</li></ul></div></details></details></div></section>
 <section><h2>A Stateful Widget</h2><div class="content"><div class="openblock side-by-side"><div class="list"><ul><li>The active tab is the widget state</li><li>Use the javascript API to cycle the active tab<div>
 <button class='btn' onclick="var active = jQuery( '#tabs' ).tabs('option', 'active'); jQuery( '#tabs' ).tabs('option', 'active', (active + 1) % 3)" style="font-size: 30px; margin-top: 20px">Cycle Tabs</button>
 <div></li></ul></div>
@@ -72,10 +80,12 @@ as the vehicle for our implementation</li></ul></div></details></details></div><
   </div>
 </div>
 <div></div>
-<script>jQuery( '#tabs' ).tabs();</script></div></section>
+<script>jQuery( '#tabs' ).tabs();</script>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Consider for example this tab widget from the jQuery UI widget factory.</li><li>It is a good example of what we&#8217;ll call a stateful widget</li><li>As we interact with the widget, it has to track which tab is active.</li><li>Additionally it provides an API for interacting with the widget.</li></ul></div></details></details></div></section>
 <section><h2>Stateful plugins</h2><div class="content"><div class="openblock side-by-side"><div class="list"><ul><li>Track &amp; query state</li><li>Mutate options</li><li>Plugin interactions</li><li>Reverse DOM changes</li><li>Notify event listeners</li></ul></div>
 <p><span class="emphasis">Widgets</span></p></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>There are a number of concerns that are not addressed out-of-the box with the jQuery plugin syntax</li><li>These include&#8230;</li><li>Some examples of these include</li></ul></div></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Plugins on their won then aren&#8217;t sufficient for providing stateful plugins
+*</li><li>These include the ability to<div class="list"><ul><li>Track &amp; query state</li><li>Mutate options</li><li>Plugin interactions</li><li>Reverse DOM changes</li><li>Notify event listeners</li></ul></div></li><li>This isn&#8217;t to say one can&#8217;t write a jQuery plugins that provides these capabilities<div class="list"><ul><li>The plugin mechanism is incredibly flexible, allowing us to solve this problem in our own way</li></ul></div></li></ul></div></details></details></div></section>
 <section><h2>Widgets with OOP</h2><div class="content"><div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
   function MyWidget( element ) {
     this.init( element );
@@ -87,7 +97,8 @@ as the vehicle for our implementation</li></ul></div></details></details></div><
   MyWidget.prototype.setOption = ...
 
   ...</code></pre></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>This isn&#8217;t to say there aren&#8217;t jQuery plugins out there that track state</li></ul></div></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>For example, we can use an object-oriented approach to track state and provide an API</li><li>Here we define a javascript prototype object that we will use to track state</li><li>We can define in this prototype all the functionality we are looking for, from
+lifecyle methods, to listener tracking, and option manipulation</li></ul></div></details></details></div></section>
 <section><h2>OOP Plugins</h2><div class="content"><div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
   ...
 
@@ -96,12 +107,14 @@ as the vehicle for our implementation</li></ul></div></details></details></div><
       $.data( this, "mywidget", new MyWidget( this ) );
     });
   };
-})( jQuery );</code></pre></div></div></section>
+})( jQuery );</code></pre></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Our jQuery plugin definition will then create an object using that prototype function for each jquery node on which it&#8217;s invoked</li><li>We can store that object in the DOM for later retrieval using the jQuery data function</li></ul></div></details></details></div></section>
 <section><h2>Widget API with OOP</h2><div class="content"><p>Interact with the widget via an API:</p>
 <div class="listingblock"><pre class="highlight"><code class="javascript">$(document).ready( function() {
   var widget = $( "#foo" ).mywidget().data( "mywidget" );
   widget.doSomething();
-});</code></pre></div></div></section>
+});</code></pre></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>When we later want to interact with the widget, we can retrieve it from the DOM and invoke methods on it</li><li>In this code sample we&#8217;ve retrieved the widget using the jQuery data function, and invoked the <code>doSomething</code> method</li></ul></div></details></details></div></section>
 <section><h2>OOP &#8594; Boilerplate!</h2><div class="content"><p>Encapsulate the boilerplate code in a common prototype function:</p>
 <div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
   MyWidget.prototype = ...
@@ -110,22 +123,27 @@ as the vehicle for our implementation</li></ul></div></details></details></div><
 <section><h2>OOP Advantages</h2><div class="content"><div class="openblock side-by-side"><div class="list"><ul><li>Object instance</li><li>API for interactions</li><li>D.R.Y. w/ a Shared prototype</li></ul></div>
 <div>
 <i class="fa fa-check-circle" style="font-size: 300px; color: #6dbcdb;"></i>
-</div></div></div></section>
+</div></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>So this is great, we&#8217;ve managed to create a stateful jQuery plugin</li><li>We can track the state of the widget in the object instance</li><li>We can interact with the widget via the object API</li><li>We can even stay dry by creating a common base prototype for all our widgets, encapsulating the common functionality</li></ul></div></details></details></div></section>
 <section><h2>OOP Dis-advantages</h2><div class="content"><div class="openblock side-by-side"><div class="list"><ul><li>Custom prototype maintenance</li><li>Non-standard API<div class="list"><ul><li>events</li><li>mutable options</li></ul></div></li></ul></div>
 <div>
 <i class="fa fa-times-circle" style="font-size: 300px; color: #fc5d47;"></i>
-</div></div></div></section>
-<section class="topic"><h2>jQuery UI Widget Factory</h2><div class="content"></div></section>
+</div></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>However this approach does have it&#8217;s drawbacks</li><li>If we go the shared prototype route we alone are responsible for maintaining that prototype</li><li>Anyone who want to consume or enhance our widget has to learn the idiosyncrasies unique to our approach
+and the custom API&#8217;s we&#8217;ve developed for common concerns like event handlers, and mutating options</li></ul></div></details></details></div></section>
+<section class="topic"><h2>jQuery UI Widget Factory</h2><div class="content"><details><details open=""><summary>Notes</summary><div class="list"><ul><li>This conveniently brings us to the jQuery UI widget factory.</li><li>The widget factory provides this shared prototype.</li></ul></div></details></details></div></section>
 <section><h2>jQuery UI widget factory</h2><div class="content"><div class="openblock side-by-side"><div class="list"><ul class="checks"><li>Track &amp; query state</li><li>Mutate options</li><li>Widget interactions</li><li>Reverse DOM changes</li><li>Notify event listeners</li></ul></div>
 <div class="center emphasis" style="width: 50%">Consistent<br />API</div></div>
-<details><details open=""><summary>Notes</summary><p>The jQuery UI widget factory provides this shared prototype.</p></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>The widget factory provides all the concerns we were looking to resolve, but does so while providing a consistent API</li><li>This not only makes it easier for users to consume our widget, but also makes it easier for those looking to maintain or extend our widget
+in the future</li></ul></div></details></details></div></section>
 <section><h2>Stopwatch example</h2><div class="content"><div class="openblock side-by-side"><div class="listingblock center""><pre class="highlight"><code class="javascript">jQuery('#timer').stopwatch();</code></pre></div>
-<img src="images/stopwatch.jpg" alt="http://www.flickr.com/photos/26782864@N00/3297205226/" /></div></div></section>
+<img src="images/stopwatch.jpg" alt="http://www.flickr.com/photos/26782864@N00/3297205226/" /></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>We&#8217;ll spend the rest of the talk diving into our sample widget - a "stopwatch" widget.</li><li>Notice however that the widget follows the jQuery plugin pattern.</li><li>Here we can see the invocation of the widget against the results of a jQuery selector</li></ul></div></details></details></div></section>
 <section><h2>window.setInterval</h2><div class="content"><blockquote><p>Calls a function or executes a code snippet repeatedly, with a fixed time delay between each call to that function.</p></blockquote>
 <div class="listingblock"><pre class="highlight"><code class="javascript">window.setInterval( callback, interval );</code></pre></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>The least interesting part of the example</li></ul></div></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>The mechanism of the widget itself is the least interesting part of the widget</li><li>The widget simply uses the setInterval javascript method to invoke a callback in a repeating interval</li><li>The callback updates the DOM showing the progress of the timer</li></ul></div></details></details></div></section>
 <section><h2>Stopwatch example</h2><div class="content"><div id="timer" class="stopwatch">
-    <div class="digits">10</div>
+    <div class="digits">5</div>
 </div>
 <p class='center'>
   <button class="btn" onclick="jQuery('#timer').stopwatch()">Execute</button>
@@ -133,9 +151,10 @@ as the vehicle for our implementation</li></ul></div></details></details></div><
 
 <script>
 //jQuery('#timer').stopwatch();
-</script></div></section>
+</script>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>In it&#8217;s simplest form the stopwatch widget behaves very much like a jquery plugin.</li><li>In this example I&#8217;ve bound the plugin execution to this html button</li><li>When I click the button, the plugin executes, and initiates the countdown timer</li><li>Let&#8217;s next look at some of the richness that is exposed by implementing this plugin as a widget</li></ul></div></details></details></div></section>
 <section><h2>Stopwatch example</h2><div class="content"><div id="timer2" class="stopwatch">
-    <div class="digits">10</div>
+    <div class="digits">5</div>
 </div>
 
 <div class='center'>
@@ -193,13 +212,19 @@ as the vehicle for our implementation</li></ul></div></details></details></div><
   $('#timer2').stopwatch(options);
 
 })(jQuery);
-</script></div></section>
+</script>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>The stopwatch widget API provides the ability to start, pause, resume, stop and reset the widget</li><li>Additionally I&#8217;ve provided the widget with some callbacks allowing my application to respond to
+state changes of the widget<div class="list"><ul><li>You can see the result of this as the background color changes</li></ul></div></li><li>Additionally the widget lifecycle is exposed via it&#8217;s API.<div class="list"><ul><li>We can destroy the widget, and have it clean up any DOM changes it introduced</li><li>This demo also shows how we can disable the widget, preventing any further user interaction until it&#8217;s re-enabled</li></ul></div></li></ul></div></details></details></div></section>
 <section><h2>Widget Factory Deep Dive</h2><div class="content"><div class="openblock side-by-side"><div class="listingblock"><pre class="highlight"><code class="javascript">(function($) {
   $.widget("rich.stopwatch", {
     /** prototype object **/
   });
 })(jQuery);</code></pre></div>
-<img src="images/factory.jpg" alt="http://commons.wikimedia.org/wiki/File:Thunderbird_assembly_line.jpg" /></div></div></section>
+<img src="images/factory.jpg" alt="http://commons.wikimedia.org/wiki/File:Thunderbird_assembly_line.jpg" /></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>With that demo in mind, let&#8217;s dive into the implementation of this widget and learn from it&#8217;s implementation</li><li>I mentioned earlier how the jQuery UI widget factory provides a shared prototype for our widgets</li><li>This prototype manages the lifecycle of our widget, and takes care of many of the base concerns in a
+"convention over configuration" style that keeps our widget code clean and concise</li><li>As a widget developer then, out only responsibility is to provide the widget factory with a prototype
+object used to extend the shared prototype with our custom functionality.</li><li>The widget factory will then take care of creating the jQuery plugin and managing our object instances</li><li>In this code snippet you can see the widget definition, where we invoke the widget factory <em>widget</em> function
+with 2 parameters:<div class="list"><ul><li>the namespaced name of our widget - this name will be used to create the jquery plugin</li><li>the prototype object unique to our particular widget</li></ul></div></li></ul></div></details></details></div></section>
 <section><h2>Anatomy of a widget</h2><div class="content"><div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
   $.widget( "rich.stopwatch", {
     options: { ... }
@@ -210,7 +235,9 @@ as the vehicle for our implementation</li></ul></div></details></details></div><
       // private methods have an "_" prefix
     }
   });
-})( jQuery );</code></pre></div></div></section>
+})( jQuery );</code></pre></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>The structure of the prototype is roughly as follows:</li><li>We have an options property that defines the default option values.<div class="list"><ul><li>the user provided options are automatically merged with the defaults, we don&#8217;t have to do this step ourselves</li></ul></div></li><li>The prototype has a number of function properties that follow the naming convention of using
+a <em>underscore</em> prefix to mark methods as private</li></ul></div></details></details></div></section>
 <section><h2>Default Options</h2><div class="content"><div class="listingblock"><pre class="highlight"><code class="javascript">( function( $ ) {
   $.widget( "rich.stopwatch", {
 
@@ -221,36 +248,43 @@ as the vehicle for our implementation</li></ul></div></details></details></div><
     },
     ...
   });
-})( jQuery );</code></pre></div></div></section>
-<section><h2>Invoking Methods</h2><div class="content"><p>Public methods:</p>
+})( jQuery );</code></pre></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Setting the default option values for the widget is pretty trivial</li><li>in our stopwatch widget we have:<div class="list"><ul><li>an autostart option that controls whether the countdown should start when the plugin is executed</li><li>a direction option that controls whether the timer counts up or down</li><li>and an increment option that controls the frequency at which the timer is updated</li></ul></div></li></ul></div></details></details></div></section>
+<section><h2>Widget API</h2><div class="content"><p>Invoking the public methods:</p>
 <div class="listingblock"><pre class="highlight"><code class="javascript">$('#timer').stopwatch('doSomething', 'optionalParam');
 
 // or
 
 var widget = $('#timer').data('richStopwatch');
-widget.doSomething();</code></pre></div></div></section>
+widget.doSomething();</code></pre></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>We have a couple of options on how we can access the public API of the widget:<div class="list"><ul><li>We can use the jQuery syntax, invoking the plugin with two parameters:<div class="list"><ul><li>the name of the method</li><li>any optional parameter for the method</li></ul></div></li><li>The advantage of this approach is we can chain the methods calls to other jQuery calls</li><li>Alternatively we can grab the widget object from the DOM and execute the methods directly</li></ul></div></li></ul></div></details></details></div></section>
 <section><h2>Invoking Methods</h2><div class="content"><p>Private methods <em>are</em> accessible:</p>
 <div class="listingblock"><pre class="highlight"><code class="javascript">var widget = $('#timer').data('richStopwatch');
 widget._helper();</code></pre></div>
 <br />
-<p>Accessible private methods helps with widget extension</p></div></section>
+<p>Accessible private methods helps with widget extension</p>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>It&#8217;s important to note however that private methods are also accessible via the widget object</li><li>This came as a surprise to me when I first learned about the widget factory</li><li>But it turns out to be really useful when extending other widgets.<div class="list"><ul><li>Forcing proper encapsulation would be be far too limiting</li></ul></div></li></ul></div></details></details></div></section>
 <section><h2>Lifecycle and callbacks</h2><div class="content"><div class="openblock side-by-side"><img src="images/cycle.png" alt="http://openclipart.org/detail/171954/cycle-color-by-karthikeyan-171954" />
-<div class="list"><ul><li>_create / _destroy</li><li>disable / enable</li><li>_setOption</li><li>_trigger</li></ul></div></div></div></section>
+<div class="list"><ul><li>_create / _destroy</li><li>disable / enable</li><li>_setOption</li><li>_trigger</li></ul></div></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>The widget factory manages the lifecyle of our widget</li><li>It provides some callbacks and methods to let us tap into that lifecyle</li><li>Let&#8217;s look into some of these in detail</li></ul></div></details></details></div></section>
 <section class="center"><h2>Widget Initialisation</h2><div class="content"><p>Optionally override the <code>_create</code> method</p>
-<div class="list"><ul><li>Apply DOM changes</li><li>Register event listeners</li><li><em>create</em> event fired implicitly</li></ul></div></div></section>
+<div class="list"><ul><li>Apply DOM changes</li><li>Register event listeners</li><li><em>create</em> event fired implicitly</li></ul></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>When the widget is initialized, the widget factory will invoke the <code>_create</code> method of your widget</li><li>this is where you want to put all the initialisation code for your widget including:<div class="list"><ul><li>applying any DOM changes</li><li>Registering event listeners</li></ul></div></li><li>After the widget is created, the widget factory fires the <code>create</code> event implicitly</li></ul></div></details></details></div></section>
 <section><h2>Create</h2><div class="content"><div class="listingblock"><pre class="highlight"><code class="javascript">_create: function() {
   this.digitsElement = this.element.find('.digits');
   this.startTime = this.digits();
   this.digits(this.startTime);
-  if (this.options.autostart) {
-    this._createInterval();
-  }
   if (this.options.showProgressBar) {
     this._addProgressBar();
   }
-},</code></pre></div></div></section>
+  if (this.options.autostart) {
+    this._createInterval();
+  }
+},</code></pre></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>In our create event we:<div class="list"><ul><li>find the DOM element holding the number we want to increment</li><li>store the initial time of our timer</li><li>re-format the start time with a call to the digits setter</li><li>Check if we should show a progressbar element</li><li>Finally check if we should start the timer on startup</li></ul></div></li></ul></div></details></details></div></section>
 <section><h2>Widget Clean Up</h2><div class="content"><div class="openblock side-by-side"><img src="images/tidy.png" alt="http://openclipart.org/detail/90451/keep-tidy-outside-01-by-anonymous" />
-<div class="list"><ul><li>Leave the DOM as you found it</li><li>Remove any event handlers</li><li>Remove any timers/intervals</li></ul></div></div></div></section>
+<div class="list"><ul><li>Leave the DOM as you found it</li><li>Remove any event handlers</li><li>Remove any timers/intervals</li></ul></div></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Another important callback in the widget lifecycle is the <code>_destroy</code> callback.</li><li>the widget factory invokes this widget method when the widget is being destroyed</li><li>This can happen as the result of an explicit destroy call like we saw in our demo</li><li>or it can be called implicitly when the widget&#8217;s DOM element if being removed from the DOM.</li><li>either way it&#8217;s our responsibility yo make sure our widget cleans up after itself</li><li>This usually involves:<div class="list"><ul><li>Removing any DOM changes applied by the widget</li><li>Cleaning up any event handlers</li><li>and in our case removing any timers and intervals</li></ul></div></li></ul></div></details></details></div></section>
 <section><h2>Destroy!</h2><div class="content"><div class="listingblock"><pre class="highlight"><code class="javascript">_destroy: function() {
   this._removeInterval();
   if (this.progressBar) {
@@ -258,7 +292,8 @@ widget._helper();</code></pre></div>
   }
   this.digitsElement.text(this.startTime);
   this._trigger('destroy', undefined, this._dumpUi());
-}</code></pre></div></div></section>
+}</code></pre></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>In our widget, the destroy callback<div class="list"><ul><li>removes the interval and the progressbar if it&#8217;s present</li><li>resets the time back to it&#8217;s initial value</li><li>Triggers a destroy event for the widget consumer to listen for<div class="list"><ul><li>We&#8217;ll talk more about events shortly</li></ul></div></li></ul></div></li></ul></div></details></details></div></section>
 <section><h2>Enable / Disable</h2><div class="content"><div class="listingblock"><pre class="highlight"><code class="javascript">$.widget = {  // the jQuery UI widget object
   ...
   enable: function() {
@@ -269,12 +304,14 @@ widget._helper();</code></pre></div>
     return this._setOptions({ disabled: true });
   },
 
-}</code></pre></div></div></section>
+}</code></pre></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Enabling/disabling the widget is handled a bit differently from creating and destroying</li><li>Taking a peak into the jQuery UI widget factory code we can see that the enable and disable
+public methods are already created for us, and they simply delegate to option mutation via the _setOptions method</li><li>So let&#8217;s take a look next at how we can mutate our widget options</li></ul></div></details></details></div></section>
 <section><h2>Mutable Options</h2><div class="content"><p>The widget Factory provides the <code>option</code> method for getting/setting the initialisation options</p>
 <div class="listingblock"><pre class="highlight"><code class="javascript">$('#timer').stopwatch('option', 'showProgressBar', false);</code></pre></div>
 <br />
 <p>Hook in via the <code>_setOption</code> method if required</p>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Alternatively you can get a reference to the widget object<div class="list"><ul><li>Some options have an implicit effect, eg. <code>increment</code></li><li>For other options some explicit action is required, eg. <code>showProgressBar</code></li></ul></div></li></ul></div></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>the widget factory provides out-of-the box the ability to mutate the option values used to initialize the widget</li><li>Some options have an implicit effect, eg. <code>increment</code> and no action on our part is required<div class="list"><ul><li>The option value is used directly, so changing it&#8217;s value has an immediate effect</li></ul></div></li><li>For other options some explicit action is required, for example the <code>showProgressBar</code> option<div class="list"><ul><li>For these options we will want to hook into the option update and take any appropriate actions</li><li>this is achieved using the _setOption callback</li></ul></div></li></ul></div></details></details></div></section>
 <section><h2>Mutable Options</h2><div class="content"><div class="listingblock"><pre class="highlight"><code class="javascript">_setOption: function (key, value) {
   var widget = this;
   if (this.options.key === value) {
@@ -284,7 +321,9 @@ widget._helper();</code></pre></div>
     ...
   }
   this._super(key, value);
-},</code></pre></div></div></section>
+},</code></pre></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>The typical pattern used in implementing the <code>_setOption</code> method is to use a switch statement to
+correctly act on the option update correctly</li></ul></div></details></details></div></section>
 <section><h2>Mutable Options</h2><div class="content"><div class="listingblock"><pre class="highlight"><code class="javascript">case 'disabled':
   if (value === true) widget._disable();
   else widget._enable();
@@ -296,10 +335,10 @@ case 'showProgressBar':
     widget._removeProgressBar();
   }
   break;</code></pre></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Point out the disabled implementation here</li></ul></div></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>In our stopwatch widget we handle the<div class="list"><ul><li>disabled option by delegating to some custom <code>_enable</code> and <code>_disable</code> methods</li><li>showProgressBar by invoking the method to show/hide the progressbar</li></ul></div></li></ul></div></details></details></div></section>
 <section><h2>Events &amp; Callbacks</h2><div class="content"><div class="openblock side-by-side"><div class="list"><ul><li>Events allow for object extension</li><li>Callbacks provided as either:<ol class="arabic"><li>plugin options</li><li>event listeners</li></ol></li></ul></div>
 <img src="images/party.png" alt="http://openclipart.org/detail/181653/new-years-party-by-liftarn-181653" /></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>No list of callbacks to maintain and notify</li></ul></div></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Events are important to a widget to allow applications to tap into the widget and respond to internal state changes</li><li>Fortunately the widget factory makes it easy for users to register callbacks for our events</li><li>Callback can either be provided as options to the widget, or as event listeners</li></ul></div></details></details></div></section>
 <section><h2>Callbacks as options</h2><div class="content"><p class="center">Option name matches the event name:</p>
 <div class="listingblock"><pre class="highlight"><code class="javascript">var options = {
   ...
@@ -308,30 +347,33 @@ case 'showProgressBar':
     ui.element.css('background-color', ready);
     ui.element.css('color', 'white');
   }</code></pre></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Option name matches the event name</li><li>Discuss the ui parameter</li></ul></div></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>When callbacks are passed as an option to the widget, the convention is the option name should match the event name</li><li>In our demo for instance, we provided a create callback to update the background color</li><li>Looking closely at the callback function you will notice two parameters:<div class="list"><ul><li>The expected event object - this is the DOM event which triggered the event (if applicable)</li><li>The second parameter is the ui object - it represents the state of the widget at the time the event is fired<div class="list"><ul><li>We&#8217;ll come back to this ui parameter in a moment</li></ul></div></li></ul></div></li></ul></div></details></details></div></section>
 <section><h2>Callbacks as event listeners</h2><div class="content"><p>jQuery event is prefixed with the event name</p>
 <div class="listingblock"><pre class="highlight"><code class="javascript">$('#timer').on('stopwatchcreate'), function(event, ui) {
   ui.element.css('background-color', ready);
   ui.element.css('color', 'white');
 });</code></pre></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>jQuery events are all lowercase</li><li>Event name prefix is overridable with widgetEventPrefix</li></ul></div></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>First let&#8217;s look at responding to widget events as standard jQuery event listeners</li><li>Here we are using the jQuery <code>on</code> method to listen for the <code>stopwatchcreate</code> event</li><li>The event is a concatenation of the widget name with the event name, all in lower case<div class="list"><ul><li>One can override this prefix using the widgetEventPrefix property of the widget</li></ul></div></li></ul></div></details></details></div></section>
 <section><h2>Triggering events</h2><div class="content"><p>Triggering events couldn&#8217;t be any easier:</p>
 <div class="listingblock"><pre class="highlight"><code class="javascript">this._trigger('eventname', event, ui);</code></pre></div>
 <div class="list"><div class="title">Function Parameters:</div><ul><li><code>event</code> usually propagates an observed event</li><li><code>ui</code> is an object that shares widget states</li></ul></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Consider checking the disabled state before triggering events</li></ul></div></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Triggering events from within your widget is also really easy.</li><li>Simply invoke the widget&#8217;s <code>_trigger</code> method with the event and ui parameters to fire an event and trigger the callbacks</li><li>I&#8217;ll also mention that it&#8217;s good practice to consider checking the disabled state before triggering your events</li></ul></div></details></details></div></section>
 <section><h2>The UI parameter</h2><div class="content"><p>Consolidate <code>ui</code> object creation in a method</p>
 <div class="listingblock"><pre class="highlight"><code class="javascript">_dumpUi: function() {
   return {
     element: this.element,
     digits: this.digits()
   };
-},</code></pre></div></div></section>
+},</code></pre></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Now let&#8217;s come back to that <code>ui</code> parameter.</li><li>In our stopwatch widget we&#8217;ve consolidated the ui object creation to a private method<div class="list"><ul><li>This ensures the ui object is always received in a consistent format</li></ul></div></li><li>You can see our ui object includes a convenience reference to the DOM element
+as well as the current time of the countdown timer</li></ul></div></details></details></div></section>
 <section><h2>A note on styling</h2><div class="content"><p>Adopting the jQuery UI widget factory <em>does not</em> tie you to the jQuery UI themes.</p>
 <p>Examples in this demo were styled with:</p>
-<div class="center"><ul class="center"><li>Bootstrap (<a href="http://getbootstrap.com">http://getbootstrap.com</a>)</li><li>less.js (<a href="http://lesscss.org/">http://lesscss.org/</a>)</li></ul></div></div></section>
-<section class="topic"><h2>Testing and Docs</h2><div class="content"></div></section>
+<div class="center"><ul class="center"><li>Bootstrap (<a href="http://getbootstrap.com">http://getbootstrap.com</a>)</li><li>less.js (<a href="http://lesscss.org/">http://lesscss.org/</a>)</li></ul></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>This takes us through our discussion of the stopwatch widget implementation.</li><li>I want point out that using the jQuery UI widget factory does not tie you to the rest of the jQuery UI widgets</li><li>nor does it require you to use the jQuery UI approach to themes</li><li>The widget we looked at today for instance was styled using Bootstrap and less.<div class="list"><ul><li>Both great tools which I could spend another hour talking about</li></ul></div></li></ul></div></details></details></div></section>
+<section class="topic"><h2>Testing and Docs</h2><div class="content"><details><details open=""><summary>Notes</summary><div class="list"><ul><li>We&#8217;ll wrap thing up with a brief discussion of some non functional concerns for our widget</li><li>testing and docs</li></ul></div></details></details></div></section>
 <section><h2>Testing</h2><div class="content"><div class="list"><ul><li><a href="http://pivotal.github.io/jasmine/">Jasmine</a> - BDD for javascript</li><li><a href="https://github.com/velesin/jasmine-jquery">Jasmine-jQuery</a> - API for handling DOMfixtures in your tests</li><li><a href="http://karma-runner.github.io/">Karma</a> - test runner</li></ul></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Jasmine is a behavior-driven development framework for testing JavaScript code</li><li>Jasmine-jquery provides an API for handling HTML, CSS, and JSON fixtures in your specs</li><li>Karma is the test runner, it controls the browser and executes the tests</li></ul></div></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>There are lots of tools available out there for testing your widgets</li><li>In the work we did on the richwidgets project we settles on the following tools:<div class="list"><ul><li>Jasmine is a behavior-driven development framework for testing JavaScript code</li><li>Jasmine-jquery provides an API for handling HTML, CSS, and JSON fixtures in your specs</li><li>Karma is the test runner, it controls the browser and executes the tests</li></ul></div></li></ul></div></details></details></div></section>
 <section><h2>Jasmine Example</h2><div class="content"><div class="listingblock"><pre class="highlight"><code class="javascript">describe("The 'toBe' matcher compares with ===", function() {
   it("and has a positive case ", function() {
       expect(true).toBe(true);
@@ -340,11 +382,12 @@ case 'showProgressBar':
       expect(false).not.toBe(true);
     });
 });</code></pre></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Jasmine provides an API that provides us with a vocabulary for writing tests</li></ul></div></details></details></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Here is an example of a simple test taken from the jasmine site</li><li>you can see how Jasmine provides an API vocabulary for writing fluent tests</li></ul></div></details></details></div></section>
 <section><h2>More on testing</h2><div class="content"><p>Tomorrow at DevNation:</p>
 <div class="sidebarblock"><div class="content"><p>Mobile web development: workflow and best practices - Lukas Fryc (Room 208)</p></div></div>
 <p>Testing in richwidgets:</p>
-<div class="sidebarblock"><div class="content"><p><a href="https://github.com/richwidgets/richwidgets/blob/master/TESTS.md">github.com/richwidgets/richwidgets/blob/master/TESTS.md</a></p></div></div></div></section>
+<div class="sidebarblock"><div class="content"><p><a href="https://github.com/richwidgets/richwidgets/blob/master/TESTS.md">github.com/richwidgets/richwidgets/blob/master/TESTS.md</a></p></div></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Testing of javascript code is a huge topic, and I am by no means doing it justice.  I encourage you to attend</li><li>Lukas&#8217; presentation tomorrow where he will be discussing javascript testing and tooling</li></ul></div></details></details></div></section>
 <section><h2>API docs</h2><div class="content"><p>YUIDoc can be used to provide generated API documentation</p>
 <div class="listingblock"><pre class="highlight"><code class="javascript">options: {
   /**
@@ -355,9 +398,10 @@ case 'showProgressBar':
    * @default true
    */
   autostart: true,</code></pre></div>
-<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Javadoc can be hard to give up</li></ul></div></details></details></div></section>
-<section><h2>Stopwatch API docs</h2><div class="content"><div class="sidebarblock"><div class="content"><p><a href="/assets/api/classes/stopwatch.html" target="API">/assets/api/classes/stopwatch.html</a></p></div></div></div></section>
-<section class="topic"><h2>Stopwatch example</h2><div class="content"></div></section>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Docs have a similar story to testing, with a number of solutions available</li><li>With the long Java background that I have, I am quite partial to the javadoc approach for documenting APIs in place</li><li>For this reason we settled on the YUIdoc approach for documenting the richwidgets project</li><li>you can see here the comment block on our option with some annotations describing the meta-characteristics</li><li>This same pattern is applied to methods and events</li></ul></div></details></details></div></section>
+<section><h2>Stopwatch API docs</h2><div class="content"><div class="sidebarblock"><div class="content"><p><a href="/assets/api/classes/stopwatch.html" target="API">/assets/api/classes/stopwatch.html</a></p></div></div>
+<details><details open=""><summary>Notes</summary><div class="list"><ul><li>Let&#8217;s take a look at the generated API docs for our stopwatch widget</li></ul></div></details></details></div></section>
+<section class="topic"><h2>Stopwatch example</h2><div class="content"><details><details open=""><summary>Notes</summary><p>We&#8217;ll wrap things up now with a final look at the widget code all put together</p></details></details></div></section>
 <section><div class="openblock scroll"><div class="listingblock"><pre class="highlight"><code class="javascript">/**
  * A stopwatch widget
  *

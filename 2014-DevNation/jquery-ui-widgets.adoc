@@ -21,12 +21,15 @@ image::storm_troopers.jpg[Storm Troopers, alt="http://www.flickr.com/photos/jdha
 
 [NOTE.details]
 ====
- * We're here to talk about building javascript widgets with the jQuery UI widget factory.
- * Using the familiar jQuery plugin pattern as a common starting point we'll look at
-   some use cases where jQuery plugins fall short and discuss how the jquery widget factory helps us
-   overcome those shortcomings.
+ * Regardless of whether we are using web frameworks with server-side rendering, or if we are writing fat clients
+   in the browser for our rest back-end, javascript is the lingua franca of the web and the vehicle for
+   providing users with a rich user experience.
+ * In this talk we will look at encapsulating the client behaviours in our applications as widgets that we can
+   share across our applications and with other users.
+ * We'll start by looking at the familiar jQuery plugin pattern and discuss some use cases where jQuery plugins fall short.
+ * We'll then see how the jquery widget factory helps us overcome those shortcomings.
  * Finally we'll do a deep-dive into an example widget and learn the widget factory conventions that help
-   us keep our code clean and concise
+   us keep our code clean and concise.
 ====
 
 == Who am I?
@@ -42,8 +45,7 @@ image::silhouette.png[Silhouette, alt="http://leslycorazon.wikispaces.com/file/d
 
 [NOTE.details]
 ====
-* My own experience with the widget factory comes from the work I've done leading the RichFaces JSF project
-  over the past year in developing RichFaces 5
+* My own experience with the widget factory comes from the work we've done in developing RichFaces 5
 * Our goal with RichFaces 5 is to re-develop the front end of our JSF components as standalone javascript widgets
   that can be used either independently or backed by any web framework in any language
 * We created the _richwidgets_ subproject to move that effort forward, and we chose the jquery ui widget factory
@@ -55,7 +57,7 @@ image::crowd.png[crowd, alt="http://openclipart.org/detail/crowd-by-kattekrab"]
 
 [NOTE.details]
 ====
-* And how about you guys, lets' get an idea of the audience we have here today?
+* And how about you guys, lets' get an idea of the audience we have here today.
 * Can I see a show of hands
 ** from those in the audience who consider themselves proficient with javascript?
 ** And how about those of you who are familiar with the jquery plugin pattern?
@@ -89,6 +91,16 @@ image::jquery.png[jquery, alt="http://brand.jquery.org/logos/"]
 
 --
 
+[NOTE.details]
+====
+* jQuery is a cross browser library providing a number of different functionalities.
+* Historically the cross-browser nature of the library has been important,
+but as the browsers converge on the html 5 standard the browser differences are finally starting to disappear.
+* jQuery however continues to play an important role in providing a consistent API for manipulating the DOM
+* The importance of this consistent API should not be overlooked when you are considering whether to include
+jQuery in your app.
+====
+
 == jQuery API
 [source,javascript]
 ----
@@ -103,14 +115,31 @@ $('some-selector').method(parameters);
 [.listingblock]
 * `addClass / removeClass / css`
 * `html / text`
-* `bind`
+* `on / off`
 * `animate`
+
+[NOTE.details]
+====
+* This code sample demonstrates the typical jQuery API pattern
+* The $ sign represents the jQuery function object, and it's invoked on a css selector that returns us a list
+  of DOM nodes.
+* We can then invoke a method on that list of nodes, with an optional set of parameters, where those parameters oftentimes include callbacks
+* And these methods typically return the list of nodes on which they are invoked, making them chainable
+* This is the pattern we see whether we are manipulating the DOM, dealing with events, animating our page, or even issuing AJAX requests
+====
 
 == jQuery Ubiquity
 
 image::jquery_usage.png[jquery usage, link="http://trends.builtwith.com/javascript/jQuery"]
 
 [NOTE.details]
+====
+* And so many people have caught on to how great it is to work with jQuery.
+* Out of the top 1 million sites, almost half of them are using jQuery.
+* Looking at the top 10 thousand sites, more than 3 quarters of them are using jQuery.
+* These numbers then should give us confidence in jQuery as our target
+* see Kris Borchers talk tomorrow to learn more about the jQuery ecosystem
+====
 
 == jQuery Plugins
 [.side-by-side]
@@ -136,8 +165,8 @@ image::jquery_usage.png[jquery usage, link="http://trends.builtwith.com/javascri
 
 [NOTE.details]
 ====
-* A new method that extends jQuery's prototype object
-* Allow us to create custom code to interact with a set of elements
+* jQuery plugins provide the means to tap into the jQuery ecosystem with custom functionality unique to our use cases
+* When we create a plugin we are extending jQuery's prototype object with a new method, making it available to all jQuery nodes
 * De-facto standard, providing a module system for sharing code between projects
 ====
 
@@ -164,6 +193,11 @@ image::jquery_usage.png[jquery usage, link="http://trends.builtwith.com/javascri
 ====
 * We have here before us a simple jquery plugin
 * It consists of a function assignment into the jQuery object
+** where that function provides the desired functionality
+* In case you are unfamiliar with the syntax, I will point out the outer surrounding function declaration
+  which is not unique to jQuery plugins.  It's simply an auto-executing function that immediately evaluates
+  providing a closure in which the code is executed outside of the global namespace.
+**  You'll see this pattern recurring throughout this talk
 ====
 
 [.center]
@@ -177,8 +211,9 @@ _results in some intended side-effect:_
 
 [NOTE.details]
 ====
-* Provide a means to manipulate a set of DOM objects
-* jQuery plugins execute *once*
+* jQuery plugins execute *once*, either on page load, or in response to some event.
+* On their own this makes them useful for use cases where we want to execute the plugin and have some desired side-effect
+* There are however a number of uses cases that the jQuery plugin mechanism doesn't cover out-of-the box
 ====
 
 == A Stateful Widget
@@ -225,6 +260,14 @@ _results in some intended side-effect:_
 <script>jQuery( '#tabs' ).tabs();</script>
 ++++
 
+[NOTE.details]
+====
+* Consider for example this tab widget from the jQuery UI widget factory.
+* It is a good example of what we'll call a stateful widget
+* As we interact with the widget, it has to track which tab is active.
+* Additionally it provides an API for interacting with the widget.
+====
+
 == Stateful plugins
 [.side-by-side]
 --
@@ -239,9 +282,17 @@ _results in some intended side-effect:_
 
 [NOTE.details]
 ====
-* There are a number of concerns that are not addressed out-of-the box with the jQuery plugin syntax
-* These include...
-* Some examples of these include
+* Plugins on their won then aren't sufficient for providing stateful plugins
+*
+* These include the ability to
+** Track & query state
+** Mutate options
+** Plugin interactions
+** Reverse DOM changes
+** Notify event listeners
+* This isn't to say one can't write a jQuery plugins that provides these capabilities
+** The plugin mechanism is incredibly flexible, allowing us to solve this problem in our own way
+
 ====
 
 == Widgets with OOP
@@ -262,7 +313,10 @@ _results in some intended side-effect:_
 
 [NOTE.details]
 ====
-* This isn't to say there aren't jQuery plugins out there that track state
+* For example, we can use an object-oriented approach to track state and provide an API
+* Here we define a javascript prototype object that we will use to track state
+* We can define in this prototype all the functionality we are looking for, from
+  lifecyle methods, to listener tracking, and option manipulation
 ====
 
 == OOP Plugins
@@ -280,6 +334,12 @@ _results in some intended side-effect:_
 })( jQuery );
 ----
 
+[NOTE.details]
+====
+* Our jQuery plugin definition will then create an object using that prototype function for each jquery node on which it's invoked
+* We can store that object in the DOM for later retrieval using the jQuery data function
+====
+
 == Widget API with OOP
 
 Interact with the widget via an API:
@@ -291,6 +351,12 @@ $(document).ready( function() {
   widget.doSomething();
 });
 ----
+
+[NOTE.details]
+====
+* When we later want to interact with the widget, we can retrieve it from the DOM and invoke methods on it
+* In this code sample we've retrieved the widget using the jQuery data function, and invoked the `doSomething` method
+====
 
 == OOP -> Boilerplate!
 
@@ -317,6 +383,14 @@ Encapsulate the boilerplate code in a common prototype function:
 ++++
 --
 
+[NOTE.details]
+====
+* So this is great, we've managed to create a stateful jQuery plugin
+* We can track the state of the widget in the object instance
+* We can interact with the widget via the object API
+* We can even stay dry by creating a common base prototype for all our widgets, encapsulating the common functionality
+====
+
 == OOP Dis-advantages
 [.side-by-side]
 --
@@ -331,8 +405,23 @@ Encapsulate the boilerplate code in a common prototype function:
 </div>
 ++++
 --
+
+[NOTE.details]
+====
+* However this approach does have it's drawbacks
+* If we go the shared prototype route we alone are responsible for maintaining that prototype
+* Anyone who want to consume or enhance our widget has to learn the idiosyncrasies unique to our approach
+  and the custom API's we've developed for common concerns like event handlers, and mutating options
+====
+
 [.topic]
 == jQuery UI Widget Factory
+
+[NOTE.details]
+====
+* This conveniently brings us to the jQuery UI widget factory.
+* The widget factory provides this shared prototype.
+====
 
 == jQuery UI widget factory
 
@@ -352,7 +441,9 @@ Encapsulate the boilerplate code in a common prototype function:
 
 [NOTE.details]
 ====
-The jQuery UI widget factory provides this shared prototype.
+* The widget factory provides all the concerns we were looking to resolve, but does so while providing a consistent API
+* This not only makes it easier for users to consume our widget, but also makes it easier for those looking to maintain or extend our widget
+  in the future
 ====
 
 == Stopwatch example
@@ -366,6 +457,13 @@ jQuery('#timer').stopwatch();
 image::stopwatch.jpg[Stopwatch, alt="http://www.flickr.com/photos/26782864@N00/3297205226/"]
 --
 
+[NOTE.details]
+====
+* We'll spend the rest of the talk diving into our sample widget - a "stopwatch" widget.
+* Notice however that the widget follows the jQuery plugin pattern.
+* Here we can see the invocation of the widget against the results of a jQuery selector
+====
+
 == window.setInterval
 
 [quote]
@@ -378,14 +476,16 @@ window.setInterval( callback, interval );
 
 [NOTE.details]
 ====
-* The least interesting part of the example
+* The mechanism of the widget itself is the least interesting part of the widget
+* The widget simply uses the setInterval javascript method to invoke a callback in a repeating interval
+* The callback updates the DOM showing the progress of the timer
 ====
 
 == Stopwatch example
 
 ++++
 <div id="timer" class="stopwatch">
-    <div class="digits">10</div>
+    <div class="digits">5</div>
 </div>
 <p class='center'>
   <button class="btn" onclick="jQuery('#timer').stopwatch()">Execute</button>
@@ -396,11 +496,19 @@ window.setInterval( callback, interval );
 </script>
 ++++
 
+[NOTE.details]
+====
+* In it's simplest form the stopwatch widget behaves very much like a jquery plugin.
+* In this example I've bound the plugin execution to this html button
+* When I click the button, the plugin executes, and initiates the countdown timer
+* Let's next look at some of the richness that is exposed by implementing this plugin as a widget
+====
+
 == Stopwatch example
 
 ++++
 <div id="timer2" class="stopwatch">
-    <div class="digits">10</div>
+    <div class="digits">5</div>
 </div>
 
 <div class='center'>
@@ -465,6 +573,17 @@ window.setInterval( callback, interval );
 
 ++++
 
+[NOTE.details]
+====
+* The stopwatch widget API provides the ability to start, pause, resume, stop and reset the widget
+* Additionally I've provided the widget with some callbacks allowing my application to respond to
+  state changes of the widget
+** You can see the result of this as the background color changes
+* Additionally the widget lifecycle is exposed via it's API.
+** We can destroy the widget, and have it clean up any DOM changes it introduced
+** This demo also shows how we can disable the widget, preventing any further user interaction until it's re-enabled
+====
+
 == Widget Factory Deep Dive
 
 [.side-by-side]
@@ -480,6 +599,21 @@ window.setInterval( callback, interval );
 
 image::factory.jpg[Thunderbird assembly line, alt="http://commons.wikimedia.org/wiki/File:Thunderbird_assembly_line.jpg"]
 --
+
+[NOTE.details]
+====
+* With that demo in mind, let's dive into the implementation of this widget and learn from it's implementation
+* I mentioned earlier how the jQuery UI widget factory provides a shared prototype for our widgets
+* This prototype manages the lifecycle of our widget, and takes care of many of the base concerns in a
+  "convention over configuration" style that keeps our widget code clean and concise
+* As a widget developer then, out only responsibility is to provide the widget factory with a prototype
+  object used to extend the shared prototype with our custom functionality.
+* The widget factory will then take care of creating the jQuery plugin and managing our object instances
+* In this code snippet you can see the widget definition, where we invoke the widget factory _widget_ function
+  with 2 parameters:
+** the namespaced name of our widget - this name will be used to create the jquery plugin
+** the prototype object unique to our particular widget
+====
 
 == Anatomy of a widget
 [source, javascript]
@@ -497,6 +631,15 @@ image::factory.jpg[Thunderbird assembly line, alt="http://commons.wikimedia.org/
 })( jQuery );
 ----
 
+[NOTE.details]
+====
+* The structure of the prototype is roughly as follows:
+* We have an options property that defines the default option values.
+** the user provided options are automatically merged with the defaults, we don't have to do this step ourselves
+* The prototype has a number of function properties that follow the naming convention of using
+  a _underscore_ prefix to mark methods as private
+====
+
 == Default Options
 [source, javascript]
 ----
@@ -513,8 +656,17 @@ image::factory.jpg[Thunderbird assembly line, alt="http://commons.wikimedia.org/
 })( jQuery );
 ----
 
-== Invoking Methods
-Public methods:
+[NOTE.details]
+====
+* Setting the default option values for the widget is pretty trivial
+* in our stopwatch widget we have:
+** an autostart option that controls whether the countdown should start when the plugin is executed
+** a direction option that controls whether the timer counts up or down
+** and an increment option that controls the frequency at which the timer is updated
+====
+
+== Widget API
+Invoking the public methods:
 [source, javascript]
 ----
 $('#timer').stopwatch('doSomething', 'optionalParam');
@@ -524,6 +676,16 @@ $('#timer').stopwatch('doSomething', 'optionalParam');
 var widget = $('#timer').data('richStopwatch');
 widget.doSomething();
 ----
+
+[NOTE.details]
+====
+* We have a couple of options on how we can access the public API of the widget:
+** We can use the jQuery syntax, invoking the plugin with two parameters:
+*** the name of the method
+*** any optional parameter for the method
+** The advantage of this approach is we can chain the methods calls to other jQuery calls
+** Alternatively we can grab the widget object from the DOM and execute the methods directly
+====
 
 == Invoking Methods
 Private methods _are_ accessible:
@@ -539,6 +701,14 @@ widget._helper();
 
 Accessible private methods helps with widget extension
 
+[NOTE.details]
+====
+* It's important to note however that private methods are also accessible via the widget object
+* This came as a surprise to me when I first learned about the widget factory
+* But it turns out to be really useful when extending other widgets.
+** Forcing proper encapsulation would be be far too limiting
+====
+
 == Lifecycle and callbacks
 
 [.side-by-side]
@@ -551,6 +721,13 @@ image::cycle.png[lifecycle, alt="http://openclipart.org/detail/171954/cycle-colo
 * _trigger
 --
 
+[NOTE.details]
+====
+* The widget factory manages the lifecyle of our widget
+* It provides some callbacks and methods to let us tap into that lifecyle
+* Let's look into some of these in detail
+====
+
 [.center]
 == Widget Initialisation
 Optionally override the `_create` method
@@ -559,6 +736,15 @@ Optionally override the `_create` method
 * Register event listeners
 * _create_ event fired implicitly
 
+[NOTE.details]
+====
+* When the widget is initialized, the widget factory will invoke the `_create` method of your widget
+* this is where you want to put all the initialisation code for your widget including:
+** applying any DOM changes
+** Registering event listeners
+* After the widget is created, the widget factory fires the `create` event implicitly
+====
+
 == Create
 [source, javascript]
 ---- 
@@ -566,14 +752,24 @@ _create: function() {
   this.digitsElement = this.element.find('.digits');
   this.startTime = this.digits();
   this.digits(this.startTime);
-  if (this.options.autostart) {
-    this._createInterval();
-  }
   if (this.options.showProgressBar) {
     this._addProgressBar();
   }
+  if (this.options.autostart) {
+    this._createInterval();
+  }
 },
 ----
+
+[NOTE.details]
+====
+* In our create event we:
+** find the DOM element holding the number we want to increment
+** store the initial time of our timer
+** re-format the start time with a call to the digits setter
+** Check if we should show a progressbar element
+** Finally check if we should start the timer on startup
+====
 
 == Widget Clean Up
 [.side-by-side]
@@ -584,6 +780,19 @@ image::tidy.png[clean up, alt="http://openclipart.org/detail/90451/keep-tidy-out
 * Remove any event handlers
 * Remove any timers/intervals
 --
+
+[NOTE.details]
+====
+* Another important callback in the widget lifecycle is the `_destroy` callback.
+* the widget factory invokes this widget method when the widget is being destroyed
+* This can happen as the result of an explicit destroy call like we saw in our demo
+* or it can be called implicitly when the widget's DOM element if being removed from the DOM.
+* either way it's our responsibility yo make sure our widget cleans up after itself
+* This usually involves:
+** Removing any DOM changes applied by the widget
+** Cleaning up any event handlers
+** and in our case removing any timers and intervals
+====
 
 == Destroy!
 [source, javascript]
@@ -597,6 +806,15 @@ _destroy: function() {
   this._trigger('destroy', undefined, this._dumpUi());
 }
 ----
+
+[NOTE.details]
+====
+* In our widget, the destroy callback
+** removes the interval and the progressbar if it's present
+** resets the time back to it's initial value
+** Triggers a destroy event for the widget consumer to listen for
+*** We'll talk more about events shortly
+====
 
 == Enable / Disable
 [source, javascript]
@@ -614,6 +832,14 @@ $.widget = {  // the jQuery UI widget object
 }
 ----
 
+[NOTE.details]
+====
+* Enabling/disabling the widget is handled a bit differently from creating and destroying
+* Taking a peak into the jQuery UI widget factory code we can see that the enable and disable
+  public methods are already created for us, and they simply delegate to option mutation via the _setOptions method
+* So let's take a look next at how we can mutate our widget options
+====
+
 == Mutable Options
 The widget Factory provides the `option` method for getting/setting the initialisation options
 
@@ -629,9 +855,12 @@ Hook in via the `_setOption` method if required
 
 [NOTE.details]
 ====
-* Alternatively you can get a reference to the widget object
-** Some options have an implicit effect, eg. `increment`
-** For other options some explicit action is required, eg. `showProgressBar`
+* the widget factory provides out-of-the box the ability to mutate the option values used to initialize the widget
+* Some options have an implicit effect, eg. `increment` and no action on our part is required
+** The option value is used directly, so changing it's value has an immediate effect
+* For other options some explicit action is required, for example the `showProgressBar` option
+** For these options we will want to hook into the option update and take any appropriate actions
+** this is achieved using the _setOption callback
 ====
 
 == Mutable Options
@@ -648,6 +877,12 @@ _setOption: function (key, value) {
   this._super(key, value);
 },
 ----
+
+[NOTE.details]
+====
+* The typical pattern used in implementing the `_setOption` method is to use a switch statement to
+  correctly act on the option update correctly
+====
 
 == Mutable Options
 [source, javascript]
@@ -667,7 +902,9 @@ case 'showProgressBar':
 
 [NOTE.details]
 ====
-* Point out the disabled implementation here
+* In our stopwatch widget we handle the
+** disabled option by delegating to some custom `_enable` and `_disable` methods
+** showProgressBar by invoking the method to show/hide the progressbar
 ====
 
 == Events & Callbacks
@@ -683,7 +920,9 @@ image::party.png[Party, alt="http://openclipart.org/detail/181653/new-years-part
 
 [NOTE.details]
 ====
-* No list of callbacks to maintain and notify
+* Events are important to a widget to allow applications to tap into the widget and respond to internal state changes
+* Fortunately the widget factory makes it easy for users to register callbacks for our events
+* Callback can either be provided as options to the widget, or as event listeners
 ====
 
 == Callbacks as options
@@ -704,8 +943,12 @@ var options = {
 
 [NOTE.details]
 ====
-* Option name matches the event name
-* Discuss the ui parameter
+* When callbacks are passed as an option to the widget, the convention is the option name should match the event name
+* In our demo for instance, we provided a create callback to update the background color
+* Looking closely at the callback function you will notice two parameters:
+** The expected event object - this is the DOM event which triggered the event (if applicable)
+** The second parameter is the ui object - it represents the state of the widget at the time the event is fired
+*** We'll come back to this ui parameter in a moment
 ====
 
 == Callbacks as event listeners
@@ -721,8 +964,10 @@ $('#timer').on('stopwatchcreate'), function(event, ui) {
 
 [NOTE.details]
 ====
-* jQuery events are all lowercase
-* Event name prefix is overridable with widgetEventPrefix
+* First let's look at responding to widget events as standard jQuery event listeners
+* Here we are using the jQuery `on` method to listen for the `stopwatchcreate` event
+* The event is a concatenation of the widget name with the event name, all in lower case
+** One can override this prefix using the widgetEventPrefix property of the widget
 ====
 
 == Triggering events
@@ -738,7 +983,9 @@ this._trigger('eventname', event, ui);
 
 [NOTE.details]
 ====
-* Consider checking the disabled state before triggering events
+* Triggering events from within your widget is also really easy.
+* Simply invoke the widget's `_trigger` method with the event and ui parameters to fire an event and trigger the callbacks
+* I'll also mention that it's good practice to consider checking the disabled state before triggering your events
 ====
 
 == The UI parameter
@@ -754,6 +1001,15 @@ _dumpUi: function() {
 },
 ----
 
+[NOTE.details]
+====
+* Now let's come back to that `ui` parameter.
+* In our stopwatch widget we've consolidated the ui object creation to a private method
+** This ensures the ui object is always received in a consistent format
+* You can see our ui object includes a convenience reference to the DOM element
+  as well as the current time of the countdown timer
+====
+
 == A note on styling
 
 Adopting the jQuery UI widget factory _does not_ tie you to the jQuery UI themes.
@@ -764,8 +1020,22 @@ Examples in this demo were styled with:
 * Bootstrap (http://getbootstrap.com)
 * less.js (http://lesscss.org/)
 
+[NOTE.details]
+====
+* This takes us through our discussion of the stopwatch widget implementation.
+* I want point out that using the jQuery UI widget factory does not tie you to the rest of the jQuery UI widgets
+* nor does it require you to use the jQuery UI approach to themes
+* The widget we looked at today for instance was styled using Bootstrap and less.
+** Both great tools which I could spend another hour talking about
+====
+
 [.topic]
 == Testing and Docs
+[NOTE.details]
+====
+* We'll wrap thing up with a brief discussion of some non functional concerns for our widget
+* testing and docs
+====
 
 == Testing
 * http://pivotal.github.io/jasmine/[Jasmine] - BDD for javascript
@@ -774,9 +1044,11 @@ Examples in this demo were styled with:
 
 [NOTE.details]
 ====
-* Jasmine is a behavior-driven development framework for testing JavaScript code
-* Jasmine-jquery provides an API for handling HTML, CSS, and JSON fixtures in your specs
-* Karma is the test runner, it controls the browser and executes the tests
+* There are lots of tools available out there for testing your widgets
+* In the work we did on the richwidgets project we settles on the following tools:
+** Jasmine is a behavior-driven development framework for testing JavaScript code
+** Jasmine-jquery provides an API for handling HTML, CSS, and JSON fixtures in your specs
+** Karma is the test runner, it controls the browser and executes the tests
 
 ====
 
@@ -796,7 +1068,8 @@ describe("The 'toBe' matcher compares with ===", function() {
 
 [NOTE.details]
 ====
-* Jasmine provides an API that provides us with a vocabulary for writing tests
+* Here is an example of a simple test taken from the jasmine site
+* you can see how Jasmine provides an API vocabulary for writing fluent tests
 ====
 
 == More on testing
@@ -810,6 +1083,11 @@ Testing in richwidgets:
 https://github.com/richwidgets/richwidgets/blob/master/TESTS.md[github.com/richwidgets/richwidgets/blob/master/TESTS.md]
 ****
 
+[NOTE.details]
+====
+* Testing of javascript code is a huge topic, and I am by no means doing it justice.  I encourage you to attend
+* Lukas' presentation tomorrow where he will be discussing javascript testing and tooling
+====
 
 == API docs
 YUIDoc can be used to provide generated API documentation
@@ -829,7 +1107,11 @@ options: {
 
 [NOTE.details]
 ====
-* Javadoc can be hard to give up
+* Docs have a similar story to testing, with a number of solutions available
+* With the long Java background that I have, I am quite partial to the javadoc approach for documenting APIs in place
+* For this reason we settled on the YUIdoc approach for documenting the richwidgets project
+* you can see here the comment block on our option with some annotations describing the meta-characteristics
+* This same pattern is applied to methods and events
 ====
 
 == Stopwatch API docs
@@ -838,10 +1120,18 @@ options: {
 link:/assets/api/classes/stopwatch.html[/assets/api/classes/stopwatch.html, window="API"]
 ****
 
-
+[NOTE.details]
+====
+* Let's take a look at the generated API docs for our stopwatch widget
+====
 
 [.topic]
 == Stopwatch example
+
+[NOTE.details]
+====
+We'll wrap things up now with a final look at the widget code all put together
+====
 
 == !
 
