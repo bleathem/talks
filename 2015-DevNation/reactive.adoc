@@ -44,7 +44,7 @@ image::silhouette.png[Silhouette, alt="http://leslycorazon.wikispaces.com/file/d
 ====
 
 == Who are you?
-image::crowd.png[crowd, alt="http://openclipart.org/detail/crowd-by-kattekrab"]
+image::crowd.svg[crowd, alt="https://openclipart.org/detail/22519/crowd"]
 
 [NOTE.details]
 ====
@@ -204,7 +204,7 @@ Promise.all(asyncTask1, asyncTask2).then(...)
 [.center]
 == What about events?
 
-image::reactive-chart.jpg[chart, alt="http://www.slideshare.net/stefanmayer13/functional-reactive-programming-with-rxjs"]
+image::reactive-chart.jpg[chart, alt="http://www.slideshare.net/stefanmayer13/functional-reactive-programming-with-rxjs", width="800px"]
 
 [NOTE.details]
 ====
@@ -230,7 +230,7 @@ Think of an observable as a _collection-in-time_
 == Imperative vs. Functional
 [.center]
 --
-*Iterating over an array*
+_Iterating over an array_
 --
 
 [.side-by-side]
@@ -247,12 +247,18 @@ for (var i=0; i < a.length; i++) {
 .Functional:
 [source,javascript]
 ----
-Functional:
 a.forEach(function(item) {
   // item.doAction()
+
 })
+
 ----
 --
+
+[NOTE.details]
+====
+* Writing functional code is like saying your a vegetarian.
+====
 
 [.codepen]
 == A Collection

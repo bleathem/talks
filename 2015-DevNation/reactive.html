@@ -4,7 +4,7 @@
 <section><h2>Who am I?</h2><div class="content"><div class="openblock side-by-side"><img src="images/silhouette.png" alt="http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232" />
 <div class="list"><ul><li>Brian Leathem</li><li>Software Engineer @ Red Hat</li><li>Works on developer tools and frameworks</li></ul></div></div>
 <details><details open="open"><summary>Notes</summary><p>*</p></details></details></div></section>
-<section><h2>Who are you?</h2><div class="content"><img src="images/crowd.png" alt="http://openclipart.org/detail/crowd-by-kattekrab" />
+<section><h2>Who are you?</h2><div class="content"><img src="images/crowd.svg" alt="https://openclipart.org/detail/22519/crowd" />
 <details><details open="open"><summary>Notes</summary><div class="list"><ul><li>And how about you guys, lets' get an idea of the audience we have here today.</li><li>Can I see a show of hands<div class="list"><ul><li>from those in the audience who consider themselves <strong>proficient with javascript</strong>?</li><li>And how about those of you who have <strong>used node.js</strong>?</li></ul></div></li></ul></div></details></details></div></section>
 <section class="topic"><h2>Async JavaScript</h2><div class="content"><details><details open="open"><summary>Notes</summary><div class="list"><ul><li>Great, with the introductions out of the way let&#8217;s dive into the good stuff</li></ul></div></details></details></div></section>
 <section><h2>Callbacks</h2><div class="content"><div class="openblock side-by-side"><div>
@@ -53,19 +53,20 @@ function doAction() {
 <br />
 <div class="listingblock"><div class="title">Parallel:</div><pre class="highlight"><code class="javascript">Promise.all(asyncTask1, asyncTask2).then(...)</code></pre></div>
 <details><details open="open"><summary>Notes</summary><div class="list"><ul><li>chain asynchornous tasks, rather then nest them</li><li>library functions for executing them in parallel</li><li>Error handling is well-defined and consistent</li></ul></div></details></details></div></section>
-<section class="center"><h2>What about events?</h2><div class="content"><img src="images/reactive-chart.jpg" alt="http://www.slideshare.net/stefanmayer13/functional-reactive-programming-with-rxjs" />
+<section class="center"><h2>What about events?</h2><div class="content"><img src="images/reactive-chart.jpg" alt="http://www.slideshare.net/stefanmayer13/functional-reactive-programming-with-rxjs" width="800px" />
 <details><details open="open"><summary>Notes</summary><div class="list"><ul><li>jQuery plugins execute <strong>once</strong>, either on page load, or in response to some event.</li><li>On their own this makes them useful for use cases where we want to execute the plugin and have some desired side-effect</li><li>There are however a number of uses cases that the jQuery plugin mechanism doesn&#8217;t cover out-of-the box</li></ul></div></details></details></div></section>
 <section><h2>Observable what?!</h2><div class="content"><p class="center">Think of an observable as a <em>collection-in-time</em></p>
 <div class="openblock center"><div class="list"><div class="title">Same <em>functional</em> tools apply</div><ul><li><code>forEach</code></li><li><code>filter</code></li><li><code>map</code></li><li>&#8230;&#8203;</li></ul></div></div></div></section>
-<section><h2>Imperative vs. Functional</h2><div class="content"><div class="openblock center"><p><strong>Iterating over an array</strong></p></div>
+<section><h2>Imperative vs. Functional</h2><div class="content"><div class="openblock center"><p><em>Iterating over an array</em></p></div>
 <div class="openblock side-by-side"><div class="listingblock"><div class="title">Imperative:</div><pre class="highlight"><code class="javascript">for (var i=0; i &lt; a.length; i++) {
   item = a[i];
   // item.doAction()
 }</code></pre></div>
-<div class="listingblock"><div class="title">Functional:</div><pre class="highlight"><code class="javascript">Functional:
-a.forEach(function(item) {
+<div class="listingblock"><div class="title">Functional:</div><pre class="highlight"><code class="javascript">a.forEach(function(item) {
   // item.doAction()
-})</code></pre></div></div></div></section>
+
+})</code></pre></div></div>
+<details><details open="open"><summary>Notes</summary><div class="list"><ul><li>Writing functional code is like saying your a vegetarian.</li></ul></div></details></details></div></section>
 <section class="codepen"><h2>A Collection</h2><div class="content"><p data-height="520" data-theme-id="0" data-slug-hash="QbgKmp" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/QbgKmp/'>Collection | Iden</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script></div></section>
 <section class="codepen"><h2>An Observable</h2><div class="content"><p data-height="520" data-theme-id="0" data-slug-hash="mJwrae" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/mJwrae/'>Observable</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
