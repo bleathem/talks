@@ -1,0 +1,24 @@
+require '/home/bleathem/workspace/asciidoctor/asciidoctor/lib/asciidoctor'
+require 'erb'
+require 'tilt'
+require 'tilt/asciidoc'
+require 'slim'
+
+guard 'shell' do
+  watch(/^reactive\.adoc$/) {|m|
+    Asciidoctor.render_file(
+        m[0],
+        :in_place => true,
+        :template_dir => "/home/bleathem/Documents/talks/asciidoctor-backends",
+        :template_engine => 'slim',
+        :backend => 'dzslides',
+        :'safe'=> 'SAFE',
+        :attributes => {
+        }
+    )
+  }
+end
+
+guard 'livereload' do
+  watch(%r{.+\.(css|js|html)})
+end

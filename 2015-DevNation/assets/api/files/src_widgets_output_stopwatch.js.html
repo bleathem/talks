@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/widgets/output/stopwatch.js - richfaces-widgets</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.7.0/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-responsive.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+        
+	    <img alt="richfaces-widgets" src="../../logo.png" style="max-height: 65%;" title="richfaces-widgets">
+        
+            richfaces-widgets
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b>0.1.1-wip</b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/autocomplete", "classes/chart", "classes/dataScroller", "classes/dataTable", "classes/editor", "classes/orderingList", "classes/pickList", "classes/select", "classes/stopwatch", "classes/subTable", "classes/subTableToggle", "modules/Input", "modules/Output", "modules/Select", "modules/Table"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+    <h3>APIs</h3>
+    <div id="sidebar">
+        <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+            <li class="active"><a href="#classes" data-toggle="tab">Widgets</a></li>
+            <li><a href="#modules" data-toggle="tab">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" placeholder="Type to filter APIs">
+        </div>
+
+        <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+            <div class="tab-pane active" id="classes">
+                <ul id="api-classes" class="nav nav-list">
+                    
+                        <li><a href="../classes/autocomplete.html">autocomplete</a></li>
+                    
+                        <li><a href="../classes/chart.html">chart</a></li>
+                    
+                        <li><a href="../classes/dataScroller.html">dataScroller</a></li>
+                    
+                        <li><a href="../classes/dataTable.html">dataTable</a></li>
+                    
+                        <li><a href="../classes/editor.html">editor</a></li>
+                    
+                        <li><a href="../classes/orderingList.html">orderingList</a></li>
+                    
+                        <li><a href="../classes/pickList.html">pickList</a></li>
+                    
+                        <li><a href="../classes/select.html">select</a></li>
+                    
+                        <li><a href="../classes/stopwatch.html">stopwatch</a></li>
+                    
+                        <li><a href="../classes/subTable.html">subTable</a></li>
+                    
+                        <li><a href="../classes/subTableToggle.html">subTableToggle</a></li>
+                    
+                </ul>
+            </div>
+
+            <div class="tab-pane" id="modules">
+                <ul id="api-modules" class="nav nav-list">
+                    
+                        <li><a href="../modules/Input.html">Input</a></li>
+                    
+                        <li><a href="../modules/Output.html">Output</a></li>
+                    
+                        <li><a href="../modules/Select.html">Select</a></li>
+                    
+                        <li><a href="../modules/Table.html">Table</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+        Show:
+        <label for="api-show-inherited" class="checkbox">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected" class="checkbox">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private" class="checkbox">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated" class="checkbox">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </form>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <div class="page-header">
+    <h1>src/widgets/output/stopwatch.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+ * A stopwatch widget that can operate in either an &#x27;increasing&#x27; mode (a stopwatch)
+ * or in a &#x27;decreasing&#x27; mode (a timer).
+ *
+ * @module Output
+ * @class stopwatch
+ */
+(function ($) {
+
+  $.widget(&#x27;rich.stopwatch&#x27;, {
+
+    options: {
+      /**
+       * Whether to start the stopwatch on plugin execution
+       *
+       * @property autostart
+       * @type Boolean
+       * @default true
+       */
+      autostart: true,
+      /**
+       * Whether the widget should operate in an &#x27;increasing&#x27; mode (a stopwatch)
+       * or in a &#x27;decreasing&#x27; mode (a timer).
+       *
+       * @property direction
+       * @type String
+       * @default &#x27;decreasing&#x27;
+       */
+      direction: &#x27;decreasing&#x27;,
+      /**
+       * Disable the pickList widget
+       *
+       * @property disabled
+       * @type Boolean
+       * @default false
+       */
+      disabled: false,
+      /**
+       * Whether to display the progressbar when operating in the &#x27;decreasing&#x27; direction
+       *
+       * @property autostart
+       * @type Boolean
+       * @default true
+       */
+      showProgressBar: true,
+      /**
+       * The amount by which to increment the stopwatch.  Value is given in milliseconds
+       *
+       * @property header
+       * @type String
+       * @default &#x27;100&#x27;
+       */
+      increment: 100,
+      /**
+       * Fired after the widget is created
+       *
+       * @event create
+       */
+      create: null,
+      /**
+       * Fired when the stopwatch starts
+       *
+       * @event start
+       */
+      start: null,
+      /**
+       * Fired when the stopwatch stops
+       *
+       * @event stop
+       */
+      stop: null,
+      /**
+       * Fired when the stopwatch is reset
+       *
+       * @event reset
+       */
+      reset: null,
+      /**
+       * Fired after the widget is destroyed
+       *
+       * @event destroy
+       */
+      destroy: null
+    },
+
+    _create: function() {
+      this.digitsElement = this.element.find(&#x27;.digits&#x27;);
+      this.startTime = this.digits();
+      this.digits(this.startTime);
+      if (this.options.autostart) {
+        this._createInterval();
+      }
+      if (this.options.showProgressBar) {
+        this._addProgressBar();
+      }
+    },
+
+    /**
+     * Start the stopwatch
+     * @method start
+     * @chainable
+     */
+    start: function() {
+      if (! this.isRunning()) {
+        this.reset();
+        this._createInterval();
+      }
+      return this;
+    },
+
+    /**
+     * Resume from a paused state
+     * @method resume
+     * @chainable
+     */
+    resume: function() {
+      this._createInterval();
+      return this;
+    },
+
+    /**
+     * Pause the stopwatch
+     * @method pause
+     * @chainable
+     */
+    pause: function() {
+      this._removeInterval();
+      return this;
+    },
+
+    /**
+     * Stop the stopwatch, set the digits to 0
+     * @method stop
+     * @chainable
+     */
+    stop: function() {
+      this.digits(0);
+      this._removeInterval();
+      return this;
+    },
+
+    /**
+     * Stop the stopwatch, set the digits back to its initial value
+     * @method reset
+     * @chainable
+     */
+    reset: function() {
+      if (!this.options.disabled) {
+        this._removeInterval();
+        this.digits(this.startTime);
+        this._trigger(&#x27;reset&#x27;, undefined, this._dumpUi());
+      }
+      return this;
+    },
+
+    /**
+     * Return true if the stopwatch is currently incrementing
+     *
+     * @method isRunning
+     * @returns {boolean}
+     */
+    isRunning: function() {
+      return !!this.intervalId;
+    },
+
+    /**
+     * A getter/setter for the stopwatch digits
+     *
+     * @method digits
+     * @param value
+     * @returns {Number}
+     */
+    digits: function(value) {
+      if (typeof value === &#x27;undefined&#x27;) {
+        return parseFloat(this.digitsElement.text());
+      } else if (! this.options.disabled) {
+        if (value &lt;= 0) {
+          value = 0;
+        }
+        this.digitsElement.text(value.toFixed(2));
+        this._updateProgressBar();
+      }
+    },
+
+    _createInterval: function() {
+      if (!this.intervalId &amp;&amp; !this.options.disabled) {
+        this.intervalId = setInterval($.proxy(this._decrementCount, this), this.options.increment);
+        this._trigger(&#x27;start&#x27;, undefined, this._dumpUi());
+      }
+    },
+
+    _removeInterval: function() {
+      if (this.intervalId &amp;&amp; !this.options.disabled) {
+        clearInterval(this.intervalId);
+        this.intervalId = null;
+        this._trigger(&#x27;stop&#x27;, undefined, this._dumpUi());
+      }
+    },
+
+    _decrementCount: function() {
+      var delta = this.options.increment/1000;
+      var time = this.options.direction === &#x27;increasing&#x27; ?
+        this.digits() + delta : this.digits() - delta;
+      this.digits(time);
+      if (time &lt;= 0) {
+        this._removeInterval();
+      }
+    },
+    
+    _addProgressBar: function() {
+      if (this.options.direction === &#x27;increasing&#x27;) {
+        return;
+      }
+      this.progressBar = $(&#x27;&lt;div class=&quot;progress-bar&quot; style=&quot;width: 0%;&quot; /&gt;&#x27;);
+      var progress = $(&#x27;&lt;div class=&quot;progress&quot; /&gt;&#x27;).append(this.progressBar);
+      this._updateProgressBar();
+      this.element.append(progress);
+    },
+
+    _removeProgressBar: function() {
+      if (this.progressBar) {
+        this.progressBar.parents(&#x27;.progress&#x27;).first().remove();
+        this.progressBar = null;
+      }
+    },
+
+    _updateProgressBar: function() {
+      if (! this.progressBar) {
+        return;
+      }
+      var value = 100 - (this.digits() / this.startTime * 100);
+      this.progressBar.css(&#x27;width&#x27;, value.toFixed(4) + &#x27;%&#x27;);
+    },
+
+    _disable: function () {
+      this._removeInterval();
+      this.element.addClass(&#x27;disabled&#x27;);
+    },
+
+    _enable: function () {
+      this.element.removeClass(&#x27;disabled&#x27;);
+    },
+
+    _dumpUi: function() {
+      return {
+        element: this.element,
+        digits: this.digits()
+      };
+    },
+
+    _getCreateEventData: function() {
+      // called when the widget factory fires its create event
+      return this._dumpUi();
+    },
+
+    _setOption: function (key, value) {
+      var widget = this;
+      if (this.options.key === value) {
+        return;
+      }
+      switch (key) {
+        case &#x27;disabled&#x27;:
+          if (value === true) {
+            widget._disable();
+          } else {
+            widget._enable();
+          }
+          break;
+        case &#x27;showProgressBar&#x27;:
+          if (value === true &amp;&amp; !widget.progressBar) {
+            widget._addProgressBar();
+          } else if (value === false &amp;&amp; widget.progressBar) {
+            widget._removeProgressBar();
+          }
+          break;
+      }
+      this._super(key, value);
+    },
+
+    _destroy: function() {
+      this._removeInterval();
+      this._removeProgressBar();
+      this.digitsElement.text(this.startTime);
+      this._trigger(&#x27;destroy&#x27;, undefined, this._dumpUi());
+    }
+
+  });
+}(jQuery) );
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>
