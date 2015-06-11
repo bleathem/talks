@@ -340,10 +340,14 @@ code {
 .codepen iframe {
   transform: scale(0.82);
   transform-origin: 0 0;
-  width: 1500px !important;
+  width: 1515px !important;
   overflow:hidden;
 }
 
 .tweet iframe {
   transform: scale(2);
+}
+
+.graph {
+  font-size: 20px;
 }

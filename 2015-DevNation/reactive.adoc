@@ -276,16 +276,6 @@ a.forEach(function(item) {
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 ++++
 
-== Functional examples
-
-Collections
-
-http://codepen.io/bleathem/pen/aONazB
-
-Observables
-
-http://codepen.io/bleathem/pen/pJyOMN
-
 == Rx.js
 
 _Reactive Extensions for JavaScript_
@@ -305,6 +295,169 @@ _Reactive Extensions for JavaScript_
 <blockquote class="twitter-tweet tw-align-center" lang="en"><p lang="en" dir="ltr">Observable in JavaScript proposal presented to TC-39 (JS standards committee) today. Advanced to Stage 1 (Proposal). <a href="https://t.co/sBuazdM7vR">https://t.co/sBuazdM7vR</a></p>&mdash; Jafar Husain (@jhusain) <a href="https://twitter.com/jhusain/status/604111900012511232">May 29, 2015</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 ++++
+
+== Some basic transforms
+* `map`
+* `reduce`
+* `mergeAll`
+* `reduce`
+* `zip`
+
+
+== `map`
+
+[.side-by-side]
+--
+
+[source,javascript]
+----
+.map(function(x) {
+  return {
+    id: x.id
+  , color: 'green'
+  , size: x.size
+  , type: 'square'
+  };
+});
+----
+
+++++
+<div>
+++++
+Map each shape
+
+into a green square
+
+of the same size
+++++
+</div>
+++++
+
+
+--
+
+== Collection `map`
+
+[.codepen]
+--
+++++
+<p data-height="550" data-theme-id="0" data-slug-hash="JdJNJj" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/JdJNJj/'>Operating on a Collection</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+++++
+--
+
+== Observable `map`
+
+[.codepen]
+--
+++++
+<p data-height="655" data-theme-id="0" data-slug-hash="zGzwWg" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/zGzwWg/'>Map an Observable</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+++++
+--
+
+== `reduce`
+[source,javascript]
+----
+var outputData = inputData
+  .reduce(function(acc, x) {
+    return {
+      id: x.id
+    , color: 'green'
+    , size: acc.size + x.size
+    , type: 'square'
+    };
+  }, {size: 0});
+----
+
+== Collection `reduce`
+
+[.codepen]
+--
+++++
+<p data-height="550" data-theme-id="0" data-slug-hash="doRWKp" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/doRWKp/'>Reduce a Collection</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+++++
+--
+
+== Observable `reduce`
+[.codepen]
+--
+++++
+<p data-height="564" data-theme-id="0" data-slug-hash="eNRWKa" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/eNRWKa/'>Reduce an Observable</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+++++
+--
+
+== `mergeAll`
+[source,javascript]
+----
+.map(function(x) {
+    var y = _.clone(x);
+    y.id = y.id + 80;
+    y.color = 'green';
+    var z = _.clone(x);
+    y.size = y.size / 1.5;
+    z.size = z.size / 1.5;
+    return [y, z];
+  })
+  .mergeAll();
+----
+
+== Nested Collections
+[.codepen]
+--
+++++
+<p data-height="550" data-theme-id="0" data-slug-hash="waepdK" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/waepdK/'>Map a nested Collection</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+++++
+--
+
+== Nested Collections `mergeAll`
+[.codepen]
+--
+++++
+<p data-height="550" data-theme-id="0" data-slug-hash="eNRVGx" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/eNRVGx/'>MergeAll a Collection</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+++++
+--
+
+== Observable `mergeAll`
+[.codepen]
+--
+++++
+<p data-height="655" data-theme-id="0" data-slug-hash="mJwXxW" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/mJwXxW/'>MergeAll an Observable</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+++++
+--
+
+== `flatMap`
+`flatMap` is a shorthand for a `map` followed by a `mergeAll`.
+
+== `zip`
+[source,javascript]
+----
+var outputData = Rx.Observable.zip(
+  input1Data,
+  input2Data,
+  function(x1, x2) {
+    return {
+      id: x1.id
+    , color: x1.color
+    , size: x2.size
+    , type: x2.type
+    };
+  });
+----
+
+== Observable `zip`
+[.codepen]
+--
+++++
+<p data-height="655" data-theme-id="0" data-slug-hash="doRmgm" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/doRmgm/'>Zip an Observable</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+++++
+--
 
 == Creating Observables
 
@@ -373,7 +526,16 @@ Rx.Observable.fromEvent(element, 'mousemove')
   .subscribe(...);
 ----
 
-== User Case: Drag and Drop
+== Example: jQuery .on()
+[.codepen]
+--
+++++
+<p data-height="655" data-theme-id="0" data-slug-hash="bdRBYL" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/bdRBYL/'>Event Listener</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+++++
+--
+
+== Use Case: Drag and Drop
 
 .Define the Observables:
 [source,javascript]
@@ -384,7 +546,7 @@ var mousemove = Rx.Observable.fromEvent(document,   'mousemove');
 var mousedown = Rx.Observable.fromEvent(dragTarget, 'mousedown');
 ----
 
-== User Case: Drag and Drop
+== Use Case: Drag and Drop
 
 .Manipulate the Observables
 [source,javascript]
@@ -401,7 +563,7 @@ var mousedrag = mousedown.flatMap(function (md) {
 });
 ----
 
-== User Case: Drag and Drop
+== Use Case: Drag and Drop
 
 .Subscribe to Observables
 [source,javascript]
@@ -416,5 +578,30 @@ var subscription = mousedrag.subscribe(function (pos) {
 == Example: Drag and Drop
 ++++
 <p data-height="620" data-theme-id="0" data-slug-hash="JdJbzX" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/JdJbzX/'>Event Listener</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+++++
+
+== Use Case: Autocomplete
+[source,javascript]
+----
+Rx.Observable.fromEvent($input, 'keyup')
+  .map(function (e) {
+    return e.target.value; // Project the text from the input
+  })
+  .filter(function (text) {
+    return text.length > 2; // Only if the text is longer than 2 characters
+  })
+  .debounce(750 /* Pause for 750ms */ )
+  .distinctUntilChanged() // Only if the value has changed
+  .flatMapLatest(searchWikipedia)
+  .subscribe(function (data) {
+    // ...
+  });
+----
+
+[.codepen]
+== Example: Autocomplete
+++++
+<p data-height="620" data-theme-id="0" data-slug-hash="vOZjNv" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/vOZjNv/'>Event Listener</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 ++++
