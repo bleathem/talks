@@ -11,16 +11,18 @@ Brian Leathem <https://github.com/brianleathem[@brianleathem]>
 
 == This is not...
 image::react.png[crowd, alt="https://openclipart.org/detail/22519/crowd"]
+[NOTE.details]
+====
+ * A better title would be simply "Reactive with Rx.js"
+ * This is *not* a talk on React - the web framework put out by facebook
+====
 
 [.topic]
 == Reactive programming with Rx.js
 [NOTE.details]
 ====
- * A better title would be simply "Reactive with Rx.js"
- * This is *not* a talk on React - the web framework put out by facebook
- * In this session we will run trhough a quick review of Asynchronous programming with javascript
- * We will introduce the concept of the Observable, and look at how it enables us to handle aysnch in a functional reactive way
- * We'll look at a bunch of examples to demonstrate the power of Observalbes
+* Rather this session addresses functional reactive programming in javascript
+* by the end of the session we should have a good understanding of what both functional and reactive have in this context
 ====
 
 
@@ -34,6 +36,12 @@ image::react.png[crowd, alt="https://openclipart.org/detail/22519/crowd"]
 image::storm_troopers.jpg[Storm Troopers, alt="http://www.flickr.com/photos/jdhancock/5845280258/"]
 --
 
+[NOTE.details]
+====
+ * In this session we will run trhough a quick review of Asynchronous programming with javascript
+ * We will introduce the concept of the Observable, and look at how it enables us to handle aysnch in a functional reactive way
+ * We'll look at a bunch of examples to demonstrate the power of Observalbes
+====
 
 == Who am I?
 [.side-by-side]
@@ -58,7 +66,7 @@ image::crowd.svg[crowd, alt="https://openclipart.org/detail/22519/crowd"]
 * And how about you guys, lets' get an idea of the audience we have here today.
 * Can I see a show of hands
 ** from those in the audience who consider themselves *proficient with javascript*?
-** And how about those of you who have *used node.js*?
+** who are *familiar with functional programming in other contexts*?
 ====
 
 [.topic]
@@ -72,8 +80,17 @@ image::crowd.svg[crowd, alt="https://openclipart.org/detail/22519/crowd"]
 == Async Javascript
 * XHR
 * Animations
-* Timeout
+* Timeout/Interval
 * Event Listeners
+
+[NOTE.details]
+====
+* Javascript runs with a single event loop
+* Long running-code can block this loop
+* Asynchronous programming gives us a way to break out of this event loop
+* Some familiar uses cases include XHR, Animations, timers, and event listeners
+* Whole host of new Async APIs with the new ES6 APIs
+====
 
 == Callbacks
 [.side-by-side]
@@ -103,13 +120,12 @@ image::protester.svg[jquery, alt="https://openclipart.org/detail/202235/proteste
 ++++
 </div>
 ++++
-
 --
 
 [NOTE.details]
 ====
-* XHR, timeouts & intervals, event listeners, geolocations
-* node.js
+* The standard means of working with asynchronous javascript
+* An sycnhrounous API will take a callback function as a parameter, and invoke that function when it's task is complete
 ====
 
 == Invoking `asyncTask`
@@ -132,6 +148,8 @@ asyncTask(args, function() {
 
 [NOTE.details]
 ====
+* Invoking such an asynch API involves creating a function to pass in as a callback
+* This works great, but breaks down quickly when you have multiple asynch tasks to perform
 ====
 
 == Nesting async calls - serial
@@ -161,6 +179,10 @@ image::callback.png[callback, width="100%"]
 
 [NOTE.details]
 ====
+* If you want to invoke those tasks serially, you have to nest them
+* each task is called via the callback of the previous task
+* quickly leads to what is knwon as *callback hell*
+* code is difficult to read, and difficult to debug
 ====
 
 == Simultaneous callbacks - parallel
@@ -180,8 +202,10 @@ function doAction() {
 
 [NOTE.details]
 ====
+* The story does not get any better when running asynch tasks in parallel
+* A common pattern is to share a callback bewteen tasks
+** and track task completion via a shared state object
 * What about error handling?
-* what if one of these aync tasks results in an error?
 ====
 
 == Promises to the rescue!
@@ -209,9 +233,10 @@ Promise.all(asyncTask1, asyncTask2).then(...)
 
 [NOTE.details]
 ====
-* chain asynchornous tasks, rather then nest them
-* library functions for executing them in parallel
-* Error handling is well-defined and consistent
+* The promise API was developed to help manage this complexity
+* It allows us to chain asynchornous tasks, rather then nest them
+* and offers library functions for executing them in parallel
+* Error handling is also well-defined and consistent
 ====
 
 [.center]
@@ -221,9 +246,11 @@ image::reactive-chart.jpg[chart, alt="", width="800px"]
 
 [NOTE.details]
 ====
-* jQuery plugins execute *once*, either on page load, or in response to some event.
-* On their own this makes them useful for use cases where we want to execute the plugin and have some desired side-effect
-* There are however a number of uses cases that the jQuery plugin mechanism doesn't cover out-of-the box
+* The promise API works great for dealing with single events
+** like an XHR callback for instance
+* But what about multi-valued events, like mouse or keyboard events?
+* We need an altogether different construct to deal with such multi-valued events
+* This is where the Observable comes in
 ====
 
 == Observable what?!
@@ -239,6 +266,15 @@ Think of an observable as a _collection-in-time_
 * `map`
 * ...
 --
+
+[NOTE.details]
+====
+* But what is this Observable thing Brian?
+* I like to relate the observable to a an array, or collection.
+* but instead of being a collection in "space", it's a collection in "time"
+* We will see how we can take the same functional tools we use to manipulate regular collections
+** and apply them to these collections-in-time
+====
 
 == Imperative vs. Functional
 [.center]
@@ -270,7 +306,14 @@ a.forEach(function(item) {
 
 [NOTE.details]
 ====
-* Writing functional code is like saying your a vegetarian.
+* So exactly what is functional programming?
+* I find it useful to think about functional programming as inverting the question of "who is in control?"
+* In an imperative approach
+** the developer explicitly iterates over a collection
+** takes a reference to each object, and manipulates that object
+* In a functional approach
+** The developer simply states what should be done to each object, and lets the container/library iterate over each one
+* This can be seen in these two code samples where we want to iterate over a collection
 ====
 
 [.codepen]
@@ -280,6 +323,15 @@ a.forEach(function(item) {
 <p data-height="520" data-theme-id="0" data-slug-hash="QbgKmp" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/QbgKmp/'>Collection | Iden</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 ++++
+
+[NOTE.details]
+====
+* To build on this analogy of Observables as collections in time
+* I built a series of visualisations that demonstrate operations on objects in each of these collections
+* A collection then is like a bag of objects
+* We have all the objects at hand, and can easily grab a reference to each one if we want
+* *Look at the code*
+====
 
 [.codepen]
 == An Observable
@@ -291,9 +343,11 @@ a.forEach(function(item) {
 
 [NOTE.details]
 ====
-* Collection in time
-* Event collection
-* Iterator pattern applied to Observer
+* An observable then is a collection in time
+* or an Event collection
+* We can't grab a reference to each object, because not all objects exist yet
+* This looks like an entirely different beast than the collection we just saw
+* So how is it we will be able to use the same tools to manipulate both these concepts?
 ====
 
 == Rx.js
@@ -305,16 +359,9 @@ _Reactive Extensions for JavaScript_
 
 [NOTE.details]
 ====
-*Next let's look at how we can use Rx.JS to create and consume Observables
+* The reactive extensions project provides an Observable implementation and an API for manipulating Observables
+* We are next going to look closely at a subset of this API, and see how the functional approach applies to both collections and collections-in-time
 ====
-
-[.tweet]
-== A Burgeoning Standard
-
-++++
-<blockquote class="twitter-tweet tw-align-center" lang="en"><p lang="en" dir="ltr">Observable in JavaScript proposal presented to TC-39 (JS standards committee) today. Advanced to Stage 1 (Proposal). <a href="https://t.co/sBuazdM7vR">https://t.co/sBuazdM7vR</a></p>&mdash; Jafar Husain (@jhusain) <a href="https://twitter.com/jhusain/status/604111900012511232">May 29, 2015</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-++++
 
 == Some basic transforms
 * `map`
@@ -325,14 +372,11 @@ _Reactive Extensions for JavaScript_
 
 [NOTE.details]
 ====
-* Rx.js is a big library, lots of functions
 * Focus on these base ingredients
 * We'll see more as we get into later examples
 ====
 
-
 == `map`
-
 [.side-by-side]
 --
 
@@ -359,12 +403,9 @@ of the same size
 ++++
 </div>
 ++++
-
-
 --
 
 == Collection `map`
-
 [.codepen]
 --
 ++++
@@ -374,7 +415,6 @@ of the same size
 --
 
 == Observable `map`
-
 [.codepen]
 --
 ++++
@@ -398,7 +438,6 @@ var outputData = inputData
 ----
 
 == Collection `reduce`
-
 [.codepen]
 --
 ++++
@@ -423,9 +462,11 @@ var outputData = inputData
     var y = _.clone(x);
     y.id = y.id + 80;
     y.color = 'green';
+
     var z = _.clone(x);
     y.size = y.size / 1.5;
     z.size = z.size / 1.5;
+
     return [y, z];
   })
   .mergeAll();
@@ -477,6 +518,11 @@ var outputData = Rx.Observable.zip(
   });
 ----
 
+[NOTE.details]
+====
+* The last function we'll explore in such detail is the zip function
+====
+
 == Observable `zip`
 [.codepen]
 --
@@ -486,8 +532,22 @@ var outputData = Rx.Observable.zip(
 ++++
 --
 
-== Creating Observables
+[.tweet]
+== A Burgeoning Standard
 
+++++
+<blockquote class="twitter-tweet tw-align-center" lang="en"><p lang="en" dir="ltr">Observable in JavaScript proposal presented to TC-39 (JS standards committee) today. Advanced to Stage 1 (Proposal). <a href="https://t.co/sBuazdM7vR">https://t.co/sBuazdM7vR</a></p>&mdash; Jafar Husain (@jhusain) <a href="https://twitter.com/jhusain/status/604111900012511232">May 29, 2015</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+++++
+
+[NOTE.details]
+====
+* At this point I want to point out that the Observable API is undergoing the standardisation process
+* So we you don't have to worry that you are incorporating yet-another proprietary library in your code
+* Eventually, the Observable, in some future form, will be part of the official javascript language
+====
+
+== Creating Observables
 .Brute Force:
 [source,javascript]
 ----
@@ -502,8 +562,14 @@ var source = Rx.Observable.create(function (observer) {
 });
 ----
 
-== Example: mousemove
+[NOTE.details]
+====
+* So now that we know how to work with Observables, let's take a step back and look at creating them
+* Here I'm showing the *brute force* approach for creating Observables
+* ...
+====
 
+== Example: mousemove
 .Using the brute force approach:
 [source,javascript]
 ----
@@ -515,6 +581,13 @@ Rx.Observable.create(function(observer) {
 });
 ----
 
+[NOTE.details]
+====
+* An example of this brute force approach for creating Observables is shown here
+* where we use an event listener to trigger observer events
+* this is however a naive implementation, as we really should take care of un-registering the listener when the observable is disposed of
+====
+
 == Example: mousemove
 
 .Using the `fromEvent` helper
@@ -523,6 +596,11 @@ Rx.Observable.create(function(observer) {
 var element = document.getElementById("box1");
 Rx.Observable.fromEvent(element, 'mousemove');
 ----
+
+[NOTE.details]
+====
+* Fortunately we don't often have to deal with such details, as the Rx.js library provides a number of helper methods for creating Observables
+====
 
 == Consuming Observables
 [source,javascript]
@@ -540,8 +618,27 @@ Rx.Observable.fromEvent(element, 'mousemove')
     }
 ----
 
+[NOTE.details]
+====
+* We can create Observables, and we can manipulate them
+* The last piece of the puzzle we have to discuss is how to consume them
+* Observables don't have any effect until we subscribe to the observable
+* You can think of the subscribe method as a forEach, where you are iterating over each object in the observable
+* In this code snippet we use a helper method to create a mousemove Observable, and then subscribe to it
+* in the subscribe method we specify 3 functions
+** an event iterator
+** an error handler
+** a completion callback
+====
+
 == Learn Rx
 http://reactive-extensions.github.io/learnrx/
+[NOTE.details]
+====
+* At this point I would like to point you to the learnrx resource for learning and exercising your Rx.js knowledge
+* Unfortunately we don't have the time to work through the tutorial, so we'll move on as though we have the above concepts cemented in our heads
+* Let's take a look at some use-cases, and see how manipulating Observables can give us some powerful functionality in a concise way
+====
 
 == Use Case: jQuery .on()
 [source,javascript]
@@ -609,8 +706,6 @@ var subscription = mousedrag.subscribe(function (pos) {
 ++++
 
 == Hot and Cold
-
-
 [.side-by-side]
 --
 ++++
@@ -650,6 +745,12 @@ image::cold.svg[chart, alt="https://openclipart.org/detail/170665/weather-icon-c
 
 --
 
+[NOTE.details]
+====
+* Why do we need the `takeUntil` method the `mousemove` Observable?
+* One subtlety of Observables is they can be broken down into 2 types: cold and hot
+====
+
 == Ending observables
 
 ----
@@ -672,7 +773,7 @@ yields:
 
 [NOTE.details]
 ====
-* takeUntil
+* the `take` and `takeUntil` methods then let us terminate Observables, allowing us to act on a well-defined set of values
 ====
 
 == Use Case: Autocomplete
@@ -716,15 +817,15 @@ Rx.Observable.fromEvent($input, 'keyup')
 * https://openclipart.org/detail/170665/weather-icon-cold
 
 == Conclusion
-* Rx.Js allows us to complex asynchronous applications as a composition of very simple functions
-* Same programming model can be used on the back-end, and front-end
+Quite simply:
+[quote]
+Rx.Js allows us to complex asynchronous applications as a composition of very simple functions
 
 == Resources
 * http://reactive-extensions.github.io/learnrx/ "Learn Rx"
 * https://www.youtube.com/watch?v=FAZJsxcykPs
 ---
 "Async Javascript at Netflix"
----
 * https://github.com/Reactive-Extensions/RxJS
 
 * http://twitter.com/brianleathem
