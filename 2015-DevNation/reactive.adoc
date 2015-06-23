@@ -9,7 +9,22 @@ Brian Leathem <https://github.com/brianleathem[@brianleathem]>
 :imagesdir: images
 :linkattrs:
 
-== Reactive with Rx.js
+== This is not...
+image::react.png[crowd, alt="https://openclipart.org/detail/22519/crowd"]
+
+[.topic]
+== Reactive programming with Rx.js
+[NOTE.details]
+====
+ * A better title would be simply "Reactive with Rx.js"
+ * This is *not* a talk on React - the web framework put out by facebook
+ * In this session we will run trhough a quick review of Asynchronous programming with javascript
+ * We will introduce the concept of the Observable, and look at how it enables us to handle aysnch in a functional reactive way
+ * We'll look at a bunch of examples to demonstrate the power of Observalbes
+====
+
+
+== The plan
 [.side-by-side]
 --
 * Async JavaScript review
@@ -19,14 +34,6 @@ Brian Leathem <https://github.com/brianleathem[@brianleathem]>
 image::storm_troopers.jpg[Storm Troopers, alt="http://www.flickr.com/photos/jdhancock/5845280258/"]
 --
 
-[NOTE.details]
-====
- * A better title would be simply "Ractive with Rx.js"
- * This is *not* a talk on React - the web framework put out by facebook
- * In this session we will run trhough a quick review of Asynchronous programming with javascript
- * We will introduce the concept of the Observable, and look at how it enables us to handle aysnch in a functional reactive way
- * We'll look at a bunch of examples to demonstrate the power of Observalbes
-====
 
 == Who am I?
 [.side-by-side]
@@ -61,6 +68,12 @@ image::crowd.svg[crowd, alt="https://openclipart.org/detail/22519/crowd"]
 ====
 * Great, with the introductions out of the way let's dive into the good stuff
 ====
+
+== Async Javascript
+* XHR
+* Animations
+* Timeout
+* Event Listeners
 
 == Callbacks
 [.side-by-side]
@@ -204,7 +217,7 @@ Promise.all(asyncTask1, asyncTask2).then(...)
 [.center]
 == What about events?
 
-image::reactive-chart.jpg[chart, alt="http://www.slideshare.net/stefanmayer13/functional-reactive-programming-with-rxjs", width="800px"]
+image::reactive-chart.jpg[chart, alt="", width="800px"]
 
 [NOTE.details]
 ====
@@ -276,6 +289,13 @@ a.forEach(function(item) {
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 ++++
 
+[NOTE.details]
+====
+* Collection in time
+* Event collection
+* Iterator pattern applied to Observer
+====
+
 == Rx.js
 
 _Reactive Extensions for JavaScript_
@@ -302,6 +322,13 @@ _Reactive Extensions for JavaScript_
 * `mergeAll`
 * `reduce`
 * `zip`
+
+[NOTE.details]
+====
+* Rx.js is a big library, lots of functions
+* Focus on these base ingredients
+* We'll see more as we get into later examples
+====
 
 
 == `map`
@@ -581,6 +608,73 @@ var subscription = mousedrag.subscribe(function (pos) {
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 ++++
 
+== Hot and Cold
+
+
+[.side-by-side]
+--
+++++
+<div>
+++++
+* Hot Observable
+** Ongoing; event stream doesn't stop
+
+* Cold Observable
+** No events until you subscribe
+
+----
+{...a...b...c......d..e.....f...}
+----
+----
+{1...2...3......4..5.....6}
+----
+
+++++
+</div>
+++++
+++++
+<table style='width:300px'><tr><td>
+++++
+image::hot.svg[chart, alt="https://openclipart.org/detail/170672/weather-icon-hot", height="400px"]
+++++
+</td>
+<td>
+++++
+
+image::cold.svg[chart, alt="https://openclipart.org/detail/170665/weather-icon-cold", height="400px"]
+
+++++
+</td></tr>
+</table>
+++++
+
+--
+
+== Ending observables
+
+----
+{...1.....2....3..4...5....}.take(3)
+----
+
+++++
+<br/>
+++++
+
+yields:
+
+++++
+<br/>
+++++
+
+----
+{1.....2....3}
+----
+
+[NOTE.details]
+====
+* takeUntil
+====
+
 == Use Case: Autocomplete
 [source,javascript]
 ----
@@ -605,3 +699,32 @@ Rx.Observable.fromEvent($input, 'keyup')
 <p data-height="620" data-theme-id="0" data-slug-hash="vOZjNv" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/vOZjNv/'>Event Listener</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 ++++
+
+== Middleware Keynote demo
+* UI built with Rx.js (and d3.js)
+
+[.topic]
+== Demo
+
+== Image references
+* https://openclipart.org/detail/22519/crowd
+* http://www.flickr.com/photos/jdhancock/5845280258/
+* http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232
+* https://openclipart.org/detail/22519/crowd
+* https://openclipart.org/detail/202235/protester
+* https://openclipart.org/detail/170672/weather-icon-hot
+* https://openclipart.org/detail/170665/weather-icon-cold
+
+== Conclusion
+* Rx.Js allows us to complex asynchronous applications as a composition of very simple functions
+* Same programming model can be used on the back-end, and front-end
+
+== Resources
+* http://reactive-extensions.github.io/learnrx/ "Learn Rx"
+* https://www.youtube.com/watch?v=FAZJsxcykPs
+---
+"Async Javascript at Netflix"
+---
+* https://github.com/Reactive-Extensions/RxJS
+
+* http://twitter.com/brianleathem
