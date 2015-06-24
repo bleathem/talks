@@ -37,9 +37,9 @@ image::storm_troopers.jpg[Storm Troopers, alt="http://www.flickr.com/photos/jdha
 
 [NOTE.details]
 ====
- * In this session we will run trhough a quick review of Asynchronous programming with javascript
- * We will introduce the concept of the Observable, and look at how it enables us to handle aysnch in a functional reactive way
- * We'll look at a bunch of examples to demonstrate the power of Observalbes
+ * In this session we will run through a quick review of Asynchronous programming with javascript
+ * We will introduce the concept of the Observable, and look at how it enables us to handle async in a functional reactive way
+ * We'll look at a bunch of examples to demonstrate the power of Observables
 ====
 
 == Who am I?
@@ -124,7 +124,7 @@ image::protester.svg[jquery, alt="https://openclipart.org/detail/202235/proteste
 [NOTE.details]
 ====
 * The standard means of working with asynchronous javascript
-* An sycnhrounous API will take a callback function as a parameter, and invoke that function when it's task is complete
+* An synchronous API will take a callback function as a parameter, and invoke that function when it's task is complete
 ====
 
 == Invoking `asyncTask`
@@ -147,8 +147,8 @@ asyncTask(args, function() {
 
 [NOTE.details]
 ====
-* Invoking such an asynch API involves creating a function to pass in as a callback
-* This works great, but breaks down quickly when you have multiple asynch tasks to perform
+* Invoking such an async API involves creating a function to pass in as a callback
+* This works great, but breaks down quickly when you have multiple async tasks to perform
 ====
 
 == Nesting async calls - serial
@@ -180,7 +180,7 @@ image::callback.png[callback, width="100%"]
 ====
 * If you want to invoke those tasks serially, you have to nest them
 * each task is called via the callback of the previous task
-* quickly leads to what is knwon as *callback hell*
+* quickly leads to what is known as *callback hell*
 * code is difficult to read, and difficult to debug
 ====
 
@@ -201,8 +201,8 @@ function doAction() {
 
 [NOTE.details]
 ====
-* The story does not get any better when running asynch tasks in parallel
-* A common pattern is to share a callback bewteen tasks
+* The story does not get any better when running async tasks in parallel
+* A common pattern is to share a callback between tasks
 ** and track task completion via a shared state object
 * What about error handling?
 ====
@@ -233,7 +233,7 @@ Promise.all(asyncTask1, asyncTask2).then(...)
 [NOTE.details]
 ====
 * The promise API was developed to help manage this complexity
-* It allows us to chain asynchornous tasks, rather then nest them
+* It allows us to chain asynchronous tasks, rather then nest them
 * and offers library functions for executing them in parallel
 * Error handling is also well-defined and consistent
 ====
@@ -326,7 +326,7 @@ a.forEach(function(item) {
 [NOTE.details]
 ====
 * To build on this analogy of Observables as collections in time
-* I built a series of visualisations that demonstrate operations on objects in each of these collections
+* I built a series of visualizations that demonstrate operations on objects in each of these collections
 * A collection then is like a bag of objects
 * We have all the objects at hand, and can easily grab a reference to each one if we want
 * *Look at the code*
@@ -625,7 +625,7 @@ Rx.Observable.fromEvent(element, 'mousemove')
       console.log(event);
     },
     function(error) {
-      concole.log(error);
+      console.log(error);
     },
     function() {
       // stream completed
@@ -765,7 +765,7 @@ image::cold.svg[chart, alt="https://openclipart.org/detail/170665/weather-icon-c
 * One subtlety of Observables is they can be broken down into 2 types: cold and hot
 ====
 
-== Ending observables
+== Ending Observables
 
 ----
 {...1.....2....3..4...5....}.take(3)
