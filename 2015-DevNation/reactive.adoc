@@ -241,7 +241,10 @@ Promise.all(asyncTask1, asyncTask2).then(...)
 [.center]
 == What about events?
 
-image::reactive-chart.jpg[chart, alt="", width="800px"]
+image::reactive-chart.jpg[chart, alt="http://www.slideshare.net/stefanmayer13/functional-reactive-programming-with-rxjs", width="800px"]
+
+[.credits]
+From: http://www.slideshare.net/stefanmayer13/functional-reactive-programming-with-rxjs
 
 [NOTE.details]
 ====
@@ -822,11 +825,14 @@ Rx.Observable.fromEvent($input, 'keyup')
 == Demo
 
 == Image references
+
+[.credits]
 * https://openclipart.org/detail/22519/crowd
 * http://www.flickr.com/photos/jdhancock/5845280258/
 * http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232
 * https://openclipart.org/detail/22519/crowd
 * https://openclipart.org/detail/202235/protester
+* http://www.slideshare.net/stefanmayer13/functional-reactive-programming-with-rxjs
 * https://openclipart.org/detail/170672/weather-icon-hot
 * https://openclipart.org/detail/170665/weather-icon-cold
 

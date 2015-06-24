@@ -3,7 +3,7 @@
 <section class="topic"><h2>Reactive programming with Rx.js</h2><div class="content"><details><details open="open"><summary>Notes</summary><div class="list"><ul><li>Rather this session addresses functional reactive programming in javascript</li><li>by the end of the session we should have a good understanding of what both functional and reactive have in this context</li></ul></div></details></details></div></section>
 <section><h2>The plan</h2><div class="content"><div class="openblock side-by-side"><div class="list"><ul><li>Async JavaScript review</li><li>Observables are what?</li><li>Use cases and examples</li></ul></div>
 <img src="images/storm_troopers.jpg" alt="http://www.flickr.com/photos/jdhancock/5845280258/" /></div>
-<details><details open="open"><summary>Notes</summary><div class="list"><ul><li>In this session we will run trhough a quick review of Asynchronous programming with javascript</li><li>We will introduce the concept of the Observable, and look at how it enables us to handle aysnch in a functional reactive way</li><li>We&#8217;ll look at a bunch of examples to demonstrate the power of Observalbes</li></ul></div></details></details></div></section>
+<details><details open="open"><summary>Notes</summary><div class="list"><ul><li>In this session we will run through a quick review of Asynchronous programming with javascript</li><li>We will introduce the concept of the Observable, and look at how it enables us to handle async in a functional reactive way</li><li>We&#8217;ll look at a bunch of examples to demonstrate the power of Observables</li></ul></div></details></details></div></section>
 <section><h2>Who am I?</h2><div class="content"><div class="openblock side-by-side"><img src="images/silhouette.png" alt="http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232" />
 <div class="list"><ul><li>Brian Leathem</li><li>Software Engineer @ Red Hat</li><li>Works on developer tools and frameworks</li></ul></div></div>
 <details><details open="open"><summary>Notes</summary><p>*</p></details></details></div></section>
@@ -22,12 +22,12 @@
 <div>
 <img src="images/protester.svg" alt="https://openclipart.org/detail/202235/protester" height="100%" />
 </div></div>
-<details><details open="open"><summary>Notes</summary><div class="list"><ul><li>The standard means of working with asynchronous javascript</li><li>An sycnhrounous API will take a callback function as a parameter, and invoke that function when it&#8217;s task is complete</li></ul></div></details></details></div></section>
+<details><details open="open"><summary>Notes</summary><div class="list"><ul><li>The standard means of working with asynchronous javascript</li><li>An synchronous API will take a callback function as a parameter, and invoke that function when it&#8217;s task is complete</li></ul></div></details></details></div></section>
 <section><h2>Invoking <code>asyncTask</code></h2><div class="content"><div class="openblock side-by-side"><div class="listingblock"><pre class="highlight"><code class="javascript">asyncTask(args, function() {
   // task is done here!
 })</code></pre></div>
 <div class="list"><div class="title">Anonymous function:</div><ul><li>simple</li><li>concise</li><li>well-accepted pattern</li></ul></div></div>
-<details><details open="open"><summary>Notes</summary><div class="list"><ul><li>Invoking such an asynch API involves creating a function to pass in as a callback</li><li>This works great, but breaks down quickly when you have multiple asynch tasks to perform</li></ul></div></details></details></div></section>
+<details><details open="open"><summary>Notes</summary><div class="list"><ul><li>Invoking such an async API involves creating a function to pass in as a callback</li><li>This works great, but breaks down quickly when you have multiple async tasks to perform</li></ul></div></details></details></div></section>
 <section><h2>Nesting async calls - serial</h2><div class="content"><div class="openblock side-by-side"><div class="listingblock"><pre class="highlight"><code class="javascript">asyncTask1(args, function() {
   asyncTask2(args, function() {
     asyncTask1(args, function() {
@@ -38,7 +38,7 @@
 <div>
 <img src="images/callback.png" alt="callback" width="100%" />
 </div></div>
-<details><details open="open"><summary>Notes</summary><div class="list"><ul><li>If you want to invoke those tasks serially, you have to nest them</li><li>each task is called via the callback of the previous task</li><li>quickly leads to what is knwon as <strong>callback hell</strong></li><li>code is difficult to read, and difficult to debug</li></ul></div></details></details></div></section>
+<details><details open="open"><summary>Notes</summary><div class="list"><ul><li>If you want to invoke those tasks serially, you have to nest them</li><li>each task is called via the callback of the previous task</li><li>quickly leads to what is known as <strong>callback hell</strong></li><li>code is difficult to read, and difficult to debug</li></ul></div></details></details></div></section>
 <section><h2>Simultaneous callbacks - parallel</h2><div class="content"><div class="listingblock"><pre class="highlight"><code class="javascript">var result1=false; result2=false; // state!!
 
 asyncTask1(function(){a1=true; doAction()}
@@ -49,7 +49,7 @@ function doAction() {
     …
   }
 }</code></pre></div>
-<details><details open="open"><summary>Notes</summary><div class="list"><ul><li>The story does not get any better when running asynch tasks in parallel</li><li>A common pattern is to share a callback bewteen tasks<div class="list"><ul><li>and track task completion via a shared state object</li></ul></div></li><li>What about error handling?</li></ul></div></details></details></div></section>
+<details><details open="open"><summary>Notes</summary><div class="list"><ul><li>The story does not get any better when running async tasks in parallel</li><li>A common pattern is to share a callback between tasks<div class="list"><ul><li>and track task completion via a shared state object</li></ul></div></li><li>What about error handling?</li></ul></div></details></details></div></section>
 <section><h2>Promises to the rescue!</h2><div class="content"><div class="listingblock"><div class="title">Serial:</div><pre class="highlight"><code class="javascript">asyncTask1.then(asyncTask2).then(function() {
   // success
 }, function(err) {
@@ -57,8 +57,9 @@ function doAction() {
 })</code></pre></div>
 <br />
 <div class="listingblock"><div class="title">Parallel:</div><pre class="highlight"><code class="javascript">Promise.all(asyncTask1, asyncTask2).then(...)</code></pre></div>
-<details><details open="open"><summary>Notes</summary><div class="list"><ul><li>The promise API was developed to help manage this complexity</li><li>It allows us to chain asynchornous tasks, rather then nest them</li><li>and offers library functions for executing them in parallel</li><li>Error handling is also well-defined and consistent</li></ul></div></details></details></div></section>
-<section class="center"><h2>What about events?</h2><div class="content"><img src="images/reactive-chart.jpg" alt="" width="800px" />
+<details><details open="open"><summary>Notes</summary><div class="list"><ul><li>The promise API was developed to help manage this complexity</li><li>It allows us to chain asynchronous tasks, rather then nest them</li><li>and offers library functions for executing them in parallel</li><li>Error handling is also well-defined and consistent</li></ul></div></details></details></div></section>
+<section class="center"><h2>What about events?</h2><div class="content"><img src="images/reactive-chart.jpg" alt="http://www.slideshare.net/stefanmayer13/functional-reactive-programming-with-rxjs" width="800px" />
+<p class="credits">From: <a href="http://www.slideshare.net/stefanmayer13/functional-reactive-programming-with-rxjs" class="bare">http://www.slideshare.net/stefanmayer13/functional-reactive-programming-with-rxjs</a></p>
 <details><details open="open"><summary>Notes</summary><div class="list"><ul><li>The promise API works great for dealing with single events<div class="list"><ul><li>like an XHR callback for instance</li></ul></div></li><li>But what about multi-valued events, like mouse or keyboard events?</li><li>We need an altogether different construct to deal with such multi-valued events</li><li>This is where the Observable comes in</li></ul></div></details></details></div></section>
 <section><h2>Observable what?!</h2><div class="content"><p class="center">Think of an observable as a <em>collection-in-time</em></p>
 <div class="openblock center"><div class="list"><div class="title">Same <em>functional</em> tools apply</div><ul><li><code>forEach</code></li><li><code>filter</code></li><li><code>map</code></li><li>&#8230;&#8203;</li></ul></div></div>
@@ -75,7 +76,7 @@ function doAction() {
 <details><details open="open"><summary>Notes</summary><div class="list"><ul><li>So exactly what is functional programming?</li><li>I find it useful to think about functional programming as inverting the question of "who is in control?"</li><li>In an imperative approach<div class="list"><ul><li>the developer explicitly iterates over a collection</li><li>takes a reference to each object, and manipulates that object</li></ul></div></li><li>In a functional approach<div class="list"><ul><li>The developer simply states what should be done to each object, and lets the container/library iterate over each one</li></ul></div></li><li>This can be seen in these two code samples where we want to iterate over a collection</li></ul></div></details></details></div></section>
 <section class="codepen"><h2>A Collection</h2><div class="content"><p data-height="520" data-theme-id="0" data-slug-hash="QbgKmp" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/QbgKmp/'>Collection | Iden</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
-<details><details open="open"><summary>Notes</summary><div class="list"><ul><li>To build on this analogy of Observables as collections in time</li><li>I built a series of visualisations that demonstrate operations on objects in each of these collections</li><li>A collection then is like a bag of objects</li><li>We have all the objects at hand, and can easily grab a reference to each one if we want</li><li><strong>Look at the code</strong></li></ul></div></details></details></div></section>
+<details><details open="open"><summary>Notes</summary><div class="list"><ul><li>To build on this analogy of Observables as collections in time</li><li>I built a series of visualizations that demonstrate operations on objects in each of these collections</li><li>A collection then is like a bag of objects</li><li>We have all the objects at hand, and can easily grab a reference to each one if we want</li><li><strong>Look at the code</strong></li></ul></div></details></details></div></section>
 <section class="codepen"><h2>An Observable</h2><div class="content"><p data-height="520" data-theme-id="0" data-slug-hash="mJwrae" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/mJwrae/'>Observable</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 <details><details open="open"><summary>Notes</summary><div class="list"><ul><li>An observable then is a collection in time</li><li>or an Event collection</li><li>We can&#8217;t grab a reference to each object, because not all objects exist yet</li><li>This looks like an entirely different beast than the collection we just saw</li><li>So how is it we will be able to use the same tools to manipulate both these concepts?</li></ul></div></details></details></div></section>
@@ -187,7 +188,7 @@ Rx.Observable.fromEvent(element, 'mousemove');</code></pre></div>
       console.log(event);
     },
     function(error) {
-      concole.log(error);
+      console.log(error);
     },
     function() {
       // stream completed
@@ -235,7 +236,7 @@ var mousedown = Rx.Observable.fromEvent(dragTarget, 'mousedown');</code></pre></
 </td></tr>
 </table></div>
 <details><details open="open"><summary>Notes</summary><div class="list"><ul><li>Why do we need the <code>takeUntil</code> method the <code>mousemove</code> Observable?</li><li>One subtlety of Observables is they can be broken down into 2 types: cold and hot</li></ul></div></details></details></div></section>
-<section><h2>Ending observables</h2><div class="content"><div class="listingblock"><pre>{...1.....2....3..4...5....}.take(3)</pre></div>
+<section><h2>Ending Observables</h2><div class="content"><div class="listingblock"><pre>{...1.....2....3..4...5....}.take(3)</pre></div>
 <br/>
 <p>yields:</p>
 <br/>
@@ -258,7 +259,7 @@ var mousedown = Rx.Observable.fromEvent(dragTarget, 'mousedown');</code></pre></
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script></div></section>
 <section><h2>Middleware Keynote demo</h2><div class="content"><div class="list"><ul><li>UI built with Rx.js (and d3.js)</li></ul></div></div></section>
 <section class="topic"><h2>Demo</h2><div class="content"></div></section>
-<section><h2>Image references</h2><div class="content"><div class="list"><ul><li><a href="https://openclipart.org/detail/22519/crowd" class="bare">https://openclipart.org/detail/22519/crowd</a></li><li><a href="http://www.flickr.com/photos/jdhancock/5845280258/" class="bare">http://www.flickr.com/photos/jdhancock/5845280258/</a></li><li><a href="http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232" class="bare">http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232</a></li><li><a href="https://openclipart.org/detail/22519/crowd" class="bare">https://openclipart.org/detail/22519/crowd</a></li><li><a href="https://openclipart.org/detail/202235/protester" class="bare">https://openclipart.org/detail/202235/protester</a></li><li><a href="https://openclipart.org/detail/170672/weather-icon-hot" class="bare">https://openclipart.org/detail/170672/weather-icon-hot</a></li><li><a href="https://openclipart.org/detail/170665/weather-icon-cold" class="bare">https://openclipart.org/detail/170665/weather-icon-cold</a></li></ul></div></div></section>
+<section><h2>Image references</h2><div class="content"><div class="list"><ul class="credits"><li><a href="https://openclipart.org/detail/22519/crowd" class="bare">https://openclipart.org/detail/22519/crowd</a></li><li><a href="http://www.flickr.com/photos/jdhancock/5845280258/" class="bare">http://www.flickr.com/photos/jdhancock/5845280258/</a></li><li><a href="http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232" class="bare">http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232</a></li><li><a href="https://openclipart.org/detail/22519/crowd" class="bare">https://openclipart.org/detail/22519/crowd</a></li><li><a href="https://openclipart.org/detail/202235/protester" class="bare">https://openclipart.org/detail/202235/protester</a></li><li><a href="http://www.slideshare.net/stefanmayer13/functional-reactive-programming-with-rxjs" class="bare">http://www.slideshare.net/stefanmayer13/functional-reactive-programming-with-rxjs</a></li><li><a href="https://openclipart.org/detail/170672/weather-icon-hot" class="bare">https://openclipart.org/detail/170672/weather-icon-hot</a></li><li><a href="https://openclipart.org/detail/170665/weather-icon-cold" class="bare">https://openclipart.org/detail/170665/weather-icon-cold</a></li></ul></div></div></section>
 <section><h2>Conclusion</h2><div class="content"><p>Quite simply:</p>
 <blockquote><p>Rx.Js allows us to complex asynchronous applications as a composition of very simple functions</p></blockquote></div></section>
 <section><h2>Resources</h2><div class="content"><div class="list"><ul><li><a href="http://reactive-extensions.github.io/learnrx/" class="bare">http://reactive-extensions.github.io/learnrx/</a> "Learn Rx"</li><li><a href="https://www.youtube.com/watch?v=FAZJsxcykPs" class="bare">https://www.youtube.com/watch?v=FAZJsxcykPs</a>
