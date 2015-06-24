@@ -13,7 +13,6 @@ Brian Leathem <https://github.com/brianleathem[@brianleathem]>
 image::react.png[crowd, alt="https://openclipart.org/detail/22519/crowd"]
 [NOTE.details]
 ====
- * A better title would be simply "Reactive with Rx.js"
  * This is *not* a talk on React - the web framework put out by facebook
 ====
 
@@ -423,38 +422,6 @@ of the same size
 ++++
 --
 
-== `reduce`
-[source,javascript]
-----
-var outputData = inputData
-  .reduce(function(acc, x) {
-    return {
-      id: x.id
-    , color: 'green'
-    , size: acc.size + x.size
-    , type: 'square'
-    };
-  }, {size: 0});
-----
-
-== Collection `reduce`
-[.codepen]
---
-++++
-<p data-height="550" data-theme-id="0" data-slug-hash="doRWKp" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/doRWKp/'>Reduce a Collection</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
-<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
-++++
---
-
-== Observable `reduce`
-[.codepen]
---
-++++
-<p data-height="564" data-theme-id="0" data-slug-hash="eNRWKa" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/eNRWKa/'>Reduce an Observable</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
-<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
-++++
---
-
 == `mergeAll`
 [source,javascript]
 ----
@@ -501,6 +468,53 @@ var outputData = inputData
 
 == `flatMap`
 `flatMap` is a shorthand for a `map` followed by a `mergeAll`.
+
+[source,javascript]
+----
+.flatMap(function(x) {
+    var y = _.clone(x);
+    y.id = y.id + 80;
+    y.color = 'green';
+
+    var z = _.clone(x);
+    y.size = y.size / 1.5;
+    z.size = z.size / 1.5;
+
+    return [y, z];
+  });
+----
+
+== `reduce`
+[source,javascript]
+----
+var outputData = inputData
+  .reduce(function(acc, x) {
+    return {
+      id: x.id
+    , color: 'green'
+    , size: acc.size + x.size
+    , type: 'square'
+    };
+  }, {size: 0});
+----
+
+== Collection `reduce`
+[.codepen]
+--
+++++
+<p data-height="550" data-theme-id="0" data-slug-hash="doRWKp" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/doRWKp/'>Reduce a Collection</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+++++
+--
+
+== Observable `reduce`
+[.codepen]
+--
+++++
+<p data-height="564" data-theme-id="0" data-slug-hash="eNRWKa" data-default-tab="result" data-user="bleathem" class='codepen'>See the Pen <a href='http://codepen.io/bleathem/pen/eNRWKa/'>Reduce an Observable</a> by Brian Leathem (<a href='http://codepen.io/bleathem'>@bleathem</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+++++
+--
 
 == `zip`
 [source,javascript]
