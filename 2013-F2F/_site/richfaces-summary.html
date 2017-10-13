@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>JavaOne 2012 | Testing JSF applications with Arquillian and Selenium</title>
+
+    <meta name="description" content="Going Mobile with your RichFaces Applications">
+    <meta name="author" content="Brian Leathem">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <link rel='stylesheet' href='stylesheets/lato-font.css'>
+
+    <link rel="stylesheet" href="stylesheets/reset.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <link rel="stylesheet" href="stylesheets/jbosscommunity.css">
+    <link rel="stylesheet" href="lib/google-code-prettify/prettify.css">
+    <link rel="stylesheet" href="stylesheets/print.css" media="print">
+    <link rel="stylesheet" href="stylesheets/conf.css">
+</head>
+
+<body>
+
+<div class="reveal">
+
+<!-- Used to fade in a background when a specific slide state is reached -->
+<div class="state-background"></div>
+
+<!-- Any section element inside of this container is displayed as a slide -->
+<div class="slides">
+<section>
+  <img class='splash' src='assets/jbosscommunity/splash_text.png' />
+</section>
+<section>
+  <h1>State of the RichFaces</h1>
+  <h2 class='capitalize'>2012, 2013, and Beyond!</h2>
+  <ul class='intro'>
+    <li>Brian Leathem and Lukas Fryc</li>
+    <li>RWP F2F 2013 - Miami</li>
+    <li>2013-02-04</li>
+  </ul>
+</section>
+<section>
+  <section>
+    <h2>The plan</h2>
+    <ul>
+    	<li>What&#8217;s RichFaces!?</li>
+    	<li>What we accomplished in 2012</li>
+    	<li>Where we are heading in 2013 (hint: RichWidgets!)</li>
+    </ul>
+    <div>
+      <img alt='http://www.flickr.com/photos/jdhancock/5845280258/' class='clear' src='assets/images/storm_troopers.jpg' />
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>What is RichFaces?</h2>
+    <div class='inline'>
+      <img alt='http://www.flickr.com/photos/14798455@N06/7808358384/' class='right' src='assets/images/mouthful.jpg' style='width: 300px' />
+      <div style="width: 500px;"><em><strong>RichFaces</strong> provides a set of <strong>components</strong> for building web applications built on top of the <strong>visual</strong> component model <strong>standardized</strong> in <span class="caps">JSF</span> as part of <strong>Java EE</strong>.</em></div>
+    </div>
+  </section>
+  <section>
+    <h2>Points of Difference</h2>
+    <table style='width: 900px; height: 400px; margin: 100px auto 0 auto'>
+      <tr>
+        <td>
+          <h1>Community</h1>
+        </td>
+        <td>
+          <h1>Innovation</h1>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h1>Quality</h1>
+        </td>
+        <td>
+          <h1>Openness</h1>
+        </td>
+      </tr>
+    </table>
+  </section>
+  <section>
+    <h2>Community</h2>
+    <div class='inline'>
+      <img alt='http://openclipart.org/detail/99271/meeting-by-yves_guillou' class='right' src='assets/images/meeting.png' style='width: 500px;' />
+      <ul style="width: 300px;">
+      	<li>Community members are encouraged to get involved</li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <h2>Innovation</h2>
+    <div class='inline'>
+      <img alt='http://openclipart.org/detail/173608/lightbulb-2-by-tikigiki-173608' class='plain right' src='assets/images/bulb.png' style='width: 400px' />
+      <ul style="width: 450px;">
+      	<li>History of innovation
+      	<ul>
+      		<li><span class="caps">JSF</span> 2 ajax <em>is</em> ajax from RichFaces 3</li>
+      		<li>Enterprise Push</li>
+      		<li>Client-side validation</li>
+      	</ul></li>
+      	<li>Innovation today
+      	<ul>
+      		<li>Testing <span class="caps">JSF</span> applications</li>
+      		<li>Component architecture</li>
+      	</ul></li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <h2>Quality</h2>
+    <div class='inline'>
+      <img alt='http://openclipart.org/detail/89245' class='plain right' src='assets/images/check.png' style='width: 350px' />
+      <ul style="width: 470px;" class="bullets">
+      	<li>Dedicated QE team</li>
+      	<li>Functional &amp; Units test suites</li>
+      	<li>Tens of thousands of tests</li>
+      	<li>New: Arquillian Extensions</li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <h2>Openness</h2>
+    <div class='inline'>
+      <img alt='http://www.flickr.com/photos/tribalicious/185151669/' class='right' src='assets/images/open.jpg' style='width: 500px' />
+      <ul class="big">
+      	<li>Standards</li>
+      	<li>Source</li>
+      	<li>Process</li>
+      </ul>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>2012</h2>
+    <h1 class='relative' style='top:150px'>Highlights</h1>
+  </section>
+  <section>
+    <h2>Highlight | Team Changes</h2>
+    <div class='inline'>
+      <img alt='http://www.flickr.com/photos/daryl_mitchell/3414184390/' class='right' src='assets/images/foosball.jpg' style='width: 450px' />
+      <div style='width: 400px'>
+        <dl>
+        	<dt>Brian</dt>
+        	<dd>&#8594; Project Lead</dd>
+        	<dt>Jay &amp; Wesley</dt>
+        	<dd>&#8594; new projects</dd>
+        </dl>
+        <ul style="margin-top: 40px;" class="bullets">
+        	<li>Intern Michal Petrov</li>
+        	<li>Reduced staff compared to Exadel days</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Highlight | 4.1, 4.2, 4.3</h2>
+    <ul style="top: 50px;" class="bullets checklist relative">
+    	<li>6 month release cycle</li>
+    	<li>Showcase on OpenShift</li>
+    	<li>New components
+    	<ul>
+    		<li>editor, pickList, orderingList, notify, contextMenu, hotkey, focus, placeholder</li>
+    	</ul></li>
+    	<li>New Features
+    	<ul>
+    		<li>&#8230;</li>
+    	</ul></li>
+    	<li><span class="caps">CDK</span> improvements</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Highlight | Mobile</h2>
+    <div class='inline'>
+      <img class='plain right' src='assets/images/mobile.png' style='width: 250px' />
+      <ul style="width: 400px;" class="bullets">
+      	<li>Mobile compatible components</li>
+      	<li>Single page programming model built using &#8220;slidfast&#8221;</li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <h2>Highlight | Testing</h2>
+    <div class='inline relative' style='top: 50px'>
+      <div>
+        <img class='plain' src='assets/images/graphene-logo.png' style='height: 250px' />
+        <p style='display: block; width: 400px'>Arquillian Graphene</p>
+      </div>
+      <div>
+        <img class='plain' src='assets/images/warp-logo.png' style='height: 250px' />
+        <p style='display: block; width: 400px'>Arquillian Warp</p>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Warp | Example</h2>
+    <pre class='prettyprint' style='font-size: 17px'><code id='warp'>@Test&#x000A;public void testAjaxOnBlur() {&#x000A;  browser.get(contextPath.toExternalForm());&#x000A;  autocomplete.type(&quot;t&quot;);&#x000A;  Suggestion&lt;String&gt; firstSuggestion = autocomplete.getFirstSuggestion();&#x000A;  guardXhr(autocomplete).autocompleteWithSuggestion(firstSuggestion);&#x000A;&#x000A;  Warp.initiate(new Activity() {&#x000A;     @Override&#x000A;    public void perform() {&#x000A;      guardXhr(autocomplete).blur();&#x000A;    }&#x000A;&#x000A;  }).inspect(new Inspection() {&#x000A;    @Inject&#x000A;    AutocompleteBean bean;&#x000A;&#x000A;    @AfterPhase(Phase.INVOKE_APPLICATION)&#x000A;    public void verify_bean_executed() {&#x000A;      assertTrue(bean.isListenerInvoked());&#x000A;    }&#x000A;  });&#x000A;}</code></pre>
+    <div class='fragment screen' data-prettify='warp' data-prettify_lines='0:1'></div>
+    <div class='fragment screen' data-prettify='warp' data-prettify_lines='2:6'></div>
+    <div class='fragment screen' data-prettify='warp' data-prettify_lines='10:10'></div>
+    <div class='fragment screen' data-prettify='warp' data-prettify_lines='17:20'></div>
+    <div class='fragment screen' data-prettify='warp' data-prettify_lines='14:15'></div>
+  </section>
+  <section>
+    <h2>Highlight | RichFaces Bootstrap</h2>
+    <div class='inline relative' style='top: 50px'>
+      <a href='http://bootstrap-richfaces.rhcloud.com' target='_demo'>
+        <img src='assets/images/richfaces-bootstrap.png' style='width: 420px' />
+      </a>
+      <ul style="width: 400px;" class="bullets">
+      	<li>Sanbox Project</li>
+      	<li>Great community involvement</li>
+      	<li>PoC of our new component architecture</li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <h2>Highlight | "Polyglot" widgets</h2>
+    <div class='inline relative' style='top: 50px'>
+      <a href='http://polyglotwidgets-richfaces.rhcloud.com' target='_demo'>
+        <img src='assets/images/polyglot-widgets.png' style='width: 420px' />
+      </a>
+      <ul style="width: 400px;">
+      	<li>Our standalone javascript widgets in a <em>poly-framework</em> environment</li>
+      </ul>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>2013 | The Future</h2>
+    <div class='inline relative' style='top: 50px'>
+      <div>
+        <img class='plain' src='assets/images/richfaces-logo.png' style='height: 300px' />
+        <p style='display: block; width: 400px'>RichFaces 5</p>
+      </div>
+      <div>
+        <img class='plain' src='assets/images/richwidgets-logo.png' style='height: 300px' />
+        <p style='display: block; width: 400px'>RichWidgets</p>
+      </div>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>RF5 | New build</h2>
+    <img class='plain' src='assets/images/skyscraper.jpg' style='height: 350px; ' />
+  </section>
+  <section>
+    <h2>RF5 | Integrated LESS</h2>
+    <img class='plain' src='assets/images/lesscss.png' style='height: 400px; ' />
+  </section>
+  <section>
+    <h2>RF5 | Bootstrap themes</h2>
+    <img class='plain' src='assets/images/bootswatch.png' style='height: 400px; ' />
+  </section>
+  <section>
+    <h2>RF5 | New component Architecture</h2>
+    <div class='inline relative' style='top: 50px'>
+      <img alt='http://commons.wikimedia.org/wiki/File:Newtons_cradle_animation_book.gif' class='plain' src='assets/images/events.gif' style='height: 300px' />
+      <ul style="width: 300px;" class="bullets">
+      	<li>Standalone javascript widgets (RichWidgets)</li>
+      	<li>Loose coupling to the <span class="caps">JSF</span> back-end via a javascript event mechanism</li>
+      </ul>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>RichWidgets | Widgets for Everyone!</h2>
+    <div class='inline'>
+      <img class='plain' src='assets/images/richwidgets-logo.png' style='height: 300px' />
+    </div>
+    <ul>
+    	<li>Pure javascript project</li>
+    </ul>
+  </section>
+  <section>
+    <h2>RichWidgets | Mobile First</h2>
+    <img alt='http://en.wikipedia.org/wiki/File:2007Computex_e21Forum-MartinCooper.jpg' src='assets/images/MartinCooper.jpg' />
+  </section>
+  <section>
+    <h2>RichWidgets | Tools integration</h2>
+    <div class='inline relative' style='top: 100px'>
+      <img class='plain' src='assets/images/richwidgets-logo.png' style='height: 160px' />
+      <h1>+</h1>
+      <img class='plain' src='assets/images/anvil.png' style='height: 160px' />
+      <h1>=</h1>
+      <img class='plain' src='assets/images/anvil-gold.png' style='height: 160px' />
+    </div>
+  </section>
+  <section>
+    <h2>RichWidgets | Basis for RF 5</h2>
+    <img class='plain' src='assets/images/richfaces-logo.png' style='height: 400px' />
+  </section>
+</section>
+<section>
+  <h2>Questions</h2>
+  <img class='plain' src='assets/images/question_mark.png' style='height: 400px' />
+</section>
+</div>
+
+<!-- The navigational controls UI -->
+<aside class="controls">
+    <a class="left" href="#">&#x25C4;</a>
+    <a class="right" href="#">&#x25BA;</a>
+    <a class="up" href="#">&#x25B2;</a>
+    <a class="down" href="#">&#x25BC;</a>
+</aside>
+
+<!-- Displays presentation progress, max value changes via JS to reflect # of slides -->
+<div class="progress"><span></span></div>
+
+</div>
+
+<script src="lib/jquery-1.7.2.min.js"></script>
+<!-- Optional libraries for code syntax highlighting and classList support in IE9 -->
+<script src="lib/google-code-prettify/prettify.js"></script>
+<script src="lib/classList.js"></script>
+
+<script src="js/reveal.js"></script>
+
+<script src="js/code_highlight.js"></script>
+<script src="js/draw_canvas.js"></script>
+
+<script>
+    // Parse the query string into a key/value object
+    var query = {};
+    location.search.replace(/[A-Z0-9]+?=(\w*)/gi, function (a) {
+        query[ a.split('=').shift() ] = a.split('=').pop();
+    });
+
+    // Fires when a slide with data-state=customevent is activated
+    Reveal.addEventListener('customevent', function () {
+        alert('"customevent" has fired');
+    });
+
+    // Fires each time a new slide is activated
+    Reveal.addEventListener('slidechanged', function (event) {
+        // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+    });
+
+    Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls:true,
+
+        // Display a presentation progress bar
+        progress:true,
+
+        // If true; each slide will be pushed to the browser history
+        history:true,
+
+        // Loops the presentation, defaults to false
+        loop:false,
+
+        // Flags if mouse wheel navigation should be enabled
+        mouseWheel:false,
+
+        // Apply a 3D roll to links on hover
+        rollingLinks:false,
+
+        // UI style
+        theme:query.theme || 'default', // default/neon
+
+        // Transition style
+        transition:'linear' // || query.transition || 'default' // default/cube/page/concave/linear(2d)
+    });
+
+    CodeHighlight.initialize({reveal: Reveal});
+    DrawCanvas.initialize({reveal: Reveal});
+
+    prettyPrint();
+
+</script>
+</body>
+</html>

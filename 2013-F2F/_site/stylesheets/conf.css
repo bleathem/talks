@@ -1,0 +1,341 @@
+.reveal ul, .reveal ul ul.nobullets {
+ list-style: none;
+}
+
+.reveal ul ul, .reveal ul.bullets {
+ list-style: disc;
+}
+
+.reveal ul.bullets {
+    padding-left: 30px;
+}
+
+ul.intro {
+ margin-top: 50px;
+ list-style: none;
+}
+
+.reveal img.plain {
+ border: none;
+ background: none;
+ -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+         box-shadow: none;
+
+}
+
+.reveal h1.alert {
+    color: #eee;
+    text-shadow: 0 1px 0 #ccc,
+    0 2px 0 #c9c9c9,
+    0 3px 0 #bbb,
+    0 4px 0 #b9b9b9,
+    0 5px 0 #aaa,
+    0 6px 1px rgba(0,0,0,.1),
+    0 0 5px rgba(0,0,0,.1),
+    0 1px 3px rgba(0,0,0,.3),
+    0 3px 5px rgba(0,0,0,.2),
+    0 5px 10px rgba(0,0,0,.25),
+    0 20px 20px rgba(0,0,0,.15);
+}
+
+.reveal .white {
+ background-color: #FFFFFF;
+}
+
+.reveal .images {
+ width: 100%;
+ padding-bottom: 50px;
+
+}
+
+.reveal .images table {
+ width: 100%;
+ margin: auto;
+}
+
+.reveal .images td {
+ vertical-align: middle;
+}
+
+.reveal .images img {
+ border: none;
+ background: none;
+ -webkit-box-shadow: none;
+ -moz-box-shadow: none;
+ box-shadow: none;
+}
+
+.reveal .inline p, .reveal .inline div, .reveal .inline img, .reveal .inline ul, .reveal .inline h1 {
+    display: inline-block;
+    vertical-align: middle;
+    width: auto;
+}
+
+.reveal .inline .block {
+    display: block;
+}
+
+.reveal .inline .fixed-width {
+    width: 490px;
+}
+
+.reveal .inline .fixed-width-wide {
+    width: 520px;
+}
+
+.reveal .inline ul.fixed-width-narrow {
+    width: 460px;
+}
+
+.reveal .inline img {
+    padding: 0;
+    margin-right: 30px;
+}
+
+.reveal img.nomargin {
+    margin-right: 0;
+}
+
+.left {
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.clear {
+    clear: both;
+}
+
+.reveal .demo {
+    font-size: 150px;
+    top: 150px;
+}
+
+.reveal .monospace {
+    font-family: monospace;
+    text-transform: none;
+}
+
+.reveal .big {
+    font-size: 130% !important; 
+}
+
+.reveal .big li {
+    margin-bottom: 1em;
+}
+
+.reveal ul.checklist, .reveal ul.checklist ul { 
+    list-style: url('../assets/images/arrow.png'); 
+} 
+
+.reveal .prettyprint {
+    background-color: #ffffff;
+    border: none;
+    padding: 10px;
+}
+
+.reveal .prettyprint .prettyprint {
+    width: auto;
+}
+
+.reveal .capitalize {
+    text-transform: capitalize;
+}
+
+.reveal .normalcase {
+    text-transform: none;
+}
+
+.reveal .prettyprint .highlight {
+    text-align: center;
+    text-indent: 100px;
+    margin: 0px -80px;
+    padding: 0;
+}
+
+.reveal .prettyprint .highlight code {
+    position: relative;
+    left: -100px;
+    margin: 0 auto;
+    text-align: left;
+    display: inline-block;
+    text-indent: 0px;
+    padding: 0;
+}
+
+.reveal .prettyprint .highlight, .reveal .prettyprint .highlight {
+    font-weight: normal;
+    font-size: 20px;
+}
+
+.reveal .prettyprint .highlight, .reveal .prettyprint .highlight code {
+    background-color:#eee;
+}
+
+.reveal section .print {
+    display: none;
+}
+
+.reveal .commons {
+    font-size: 10pt;
+    line-height: 1.5em;
+    text-align: center;
+}
+
+.reveal .links li a {
+    font-size: 16pt;
+}
+
+.reveal .links li {
+    font-size: 16pt;
+    line-height: normal;
+}
+
+.reveal .links li a {
+    font-size: 18pt;
+}
+
+.reveal .links li {
+    font-size: 18pt;
+    line-height: normal;
+}
+
+.reveal .url {
+    font-size: 17pt;
+    font-size: 17pt;
+    line-height: 17pt;
+}
+
+.reveal dl dt, .reveal dl dd {
+    text-align: left;
+}
+
+.reveal dl dt {
+    font-weight: bold;
+    margin-top: 1em;
+}
+
+.reveal dl dd {
+    font-style: italic;
+    margin-left: 4em;
+}
+
+@media screen {
+    .reveal .notes {
+        display: none;
+    }
+
+    .html5_slide p, .html5_slide div, .html5_slide img {
+        position: relative;
+    }
+
+    .relative {
+        position: relative
+    }
+
+    .resources {
+        margin-left: 15%;
+    }
+}
+
+@media print {
+    .reveal img {
+        border: none;
+        background: none;
+        -webkit-box-shadow: none;
+           -moz-box-shadow: none;
+                box-shadow: none;
+    }
+
+    section > ul, section > div, section > p {
+        margin-top: 50px;
+        margin-left: 50px;
+    }
+
+    body {
+        position: static;
+    }
+
+    .state-background {
+        position: static;
+    }
+
+    body, p, td, li, div, a {
+        font-size: 24pt;
+    }
+
+    h1 { font-size: 150% !important; }
+    h2 { font-size: 140% !important; }
+    h3 { font-size: 130% !important; }
+    h4 { font-size: 120% !important; }
+    h5 { font-size: 115% !important; }
+    h6 { font-size: 110% !important; }
+
+    .reveal section .screen {
+        display: none; !important
+    }
+
+    .reveal section .print {
+        display: block;
+    }
+
+    .landscape, .portrait {
+        position: static;
+        top: auto;
+        left: auto;
+        right: auto;
+        bottom: auto;
+    }
+
+    .reveal .notes, .notes p, .notes td, .notes li, .notes div, .notes a {
+        font-size: 16pt;
+    }
+
+    .reveal .notes .key li {
+        font-size: 24pt;
+    }
+
+    .reveal .notes li {
+        line-height: normal;
+    }
+
+    .reveal .notes {
+        clear: both;
+        border-top: #000000 solid 4px;
+        width: 100%;
+        margin-top: 40px;
+        padding-top: 40px;
+    }
+
+    .reveal ul {
+        list-style: disc;
+    }
+
+    .reveal.linear .slides>section, .reveal.linear .slides>section>section,
+    .reveal.linear .slides>section.past, .reveal.linear .slides>section.future {
+        width: 100%;
+        clear: both;
+    }
+
+    .reveal .links li, .reveal .links li a, .reveal .commons *{
+        font-size: 12pt;
+    }
+
+    .reveal pre.prettyprint {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+}

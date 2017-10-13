@@ -1,0 +1,12 @@
+input,select,textarea,button,keygen,isindex,legend,a{font-size:11px;font-family:Arial,Verdana,sans-serif;color:#000;}
+fieldset{border-width:1px;border-style:solid;padding:10px;border-color:#BED6F8;}
+hr{border-width:1px;border-style:solid;border-color:#BED6F8;}
+a{color:#0078D0;}
+a:hover{color:#0090FF;}
+a:visited{color:#0090FF;}
+input,select,textarea,button,keygen,isindex{border-width:1px;border-color:#BED6F8;color:#000;}
+button,input[type="reset"],input[type="submit"],input[type="button"]{border-width:1px;border-color:#BED6F8;font-size:11px;font-family:Arial,Verdana,sans-serif;color:#000;background-repeat:repeat-x;background-position:top left;background-color:#BED6F8;background-image:url(org.richfaces.images/buttonBackgroundImage.png);}
+button:hover,input[type="reset"]:hover,input[type="submit"]:hover,input[type="button"]:hover{background-position:bottom left;background-repeat:repeat-x;background-image:url(org.richfaces.images/buttonHoverBackgroundImage.png);}
+button[disabled],input[type="reset"][disabled],input[type="submit"][disabled],input[type="button"][disabled]{color:#8DB7F3;border-color:#ccc;background-color:#ccc;background-image:url(org.richfaces.images/buttonDisabledBackgroundImage.png);background-position:top left;}
+textarea,input[type="text"],input[type="password"],select{border-width:1px;border-style:solid;border-color:#BED6F8;font-size:11px;font-family:Arial,Verdana,sans-serif;color:#000;background-repeat:no-repeat;background-position:1px 1px;background-color:#fff;background-image:url(org.richfaces.images/inputBackgroundImage.png);}
+textarea[disabled],input[type="text"][disabled],input[type="password"][disabled],select[disabled]{color:#BED6F8;cursor:default;}

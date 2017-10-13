@@ -1,0 +1,1176 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>JavaOne 2012 | Testing JSF applications with Arquillian and Selenium</title>
+
+    <meta name="description" content="Going Mobile with your RichFaces Applications">
+    <meta name="author" content="Brian Leathem">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <link rel='stylesheet' href='stylesheets/lato-font.css'>
+
+    <link rel="stylesheet" href="stylesheets/reset.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <link rel="stylesheet" href="stylesheets/jbosscommunity.css">
+    <link rel="stylesheet" href="lib/google-code-prettify/prettify.css">
+    <link rel="stylesheet" href="stylesheets/print.css" media="print">
+    <link rel="stylesheet" href="stylesheets/conf.css">
+</head>
+
+<body>
+
+<div class="reveal">
+
+<!-- Used to fade in a background when a specific slide state is reached -->
+<div class="state-background"></div>
+
+<!-- Any section element inside of this container is displayed as a slide -->
+<div class="slides">
+<section>
+  <img class='splash' src='assets/jbosscommunity/splash_text.png' />
+</section>
+<section>
+  <h1>Testing JSF applications</h1>
+  <h2 class='capitalize'>with Arquillian and Selenium</h2>
+  <ul class='intro'>
+    <li>Brian Leathem and Lincoln Baxter, III</li>
+    <li>Senior Software Engineers, Red Hat</li>
+    <li>JavaOne 2012 - San Francisco</li>
+    <li>2012-09-04</li>
+  </ul>
+</section>
+<section>
+  <section>
+    <h2>The plan</h2>
+    <ul>
+    	<li>Brief Review of <em>back-end</em> testing</li>
+    	<li>How to test the <em>front-end</em> with Selenium</li>
+    	<li>Beyond Selenium with Arquillian Extensions</li>
+    </ul>
+    <div>
+      <img alt='http://www.flickr.com/photos/jdhancock/5845280258/' class='clear' src='assets/images/storm_troopers.jpg' />
+    </div>
+  </section>
+  <section>
+    <h2>Who are we?</h2>
+    <ul>
+      <li>Senior Software Engineers at Red Hat</li>
+      <li>RichFaces and Forge Project Leads</li>
+      <li>Represent Red Hat on the JSF 2.2 EG (JSR-344)</li>
+    </ul>
+    <div>
+      <img alt='http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232' src='assets/images/silhouette.png' />
+    </div>
+  </section>
+  <section>
+    <h2>Who's behind all this?</h2>
+    <table class='people' style='margin: auto'>
+      <tr>
+        <td>
+          <img src='assets/images/aslak.jpg' />
+        </td>
+        <td>
+          <ul>
+            <li>
+              Aslak Knutsen (
+              <a href='https://twitter.com/aslakknutsen'>@aslakknutsen</a>
+              )
+            </li>
+            <li>Arquillian Lead</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img src='assets/images/ALR.jpg' />
+        </td>
+        <td>
+          <ul>
+            <li>
+              Andrew Lee Rubinger (
+              <a href='https://twitter.com/ALRubinger'>@ALRubinger</a>
+              )
+            </li>
+            <li>Shrinkwrap Lead</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img src='assets/images/lfryc.jpg' />
+        </td>
+        <td>
+          <ul>
+            <li>
+              Lukáš Fryč (
+              <a href='https://twitter.com/lfryc'>@lfryc</a>
+              )
+            </li>
+            <li>Arquillian Graphene Lead, Arquillian Warp Lead</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img src='assets/images/kpiwko.jpg' />
+        </td>
+        <td>
+          <ul>
+            <li>
+              Karel Piwko (
+              <a href='https://twitter.com/karelpiwko'>@karelpiwko</a>
+              )
+            </li>
+            <li>Arquillian Drone Lead</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img src='assets/images/jhuska.jpg' />
+        </td>
+        <td>
+          <ul>
+            <li>
+              Juraj Huska (
+              <a href='https://twitter.com/j_huska'>@j_huska</a>
+              )
+            </li>
+            <li>Arquillian Graphene, Arquillian Drone</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img src='assets/images/jan_papousek.jpg' />
+        </td>
+        <td>
+          <ul>
+            <li>
+              Jan Papoušek (
+              <a href='https://twitter.com/jan_papousek'>@jan_papousek</a>
+              )
+            </li>
+            <li>Arquillian Graphene, Arquillian Drone</li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+  </section>
+  <section>
+    <h2>Who are you?</h2>
+    <div>
+      <img class='plain' src='assets/images/crowd.png' />
+    </div>
+    <div class='notes'>
+      Can I see a show of hands for those...
+      <ul>
+        <li>Who currently develop web applications with JSF?</li>
+        <li>Who are using Arquillian to test their application logic?</li>
+        <li>Who are using Selenium to test their application front-end?</li>
+      </ul>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>Back-end testing</h2>
+    <div class='relative inline' style='top: 50px'>
+      <img class='plain' src='assets/images/check.png' />
+      <p>A well understood problem</p>
+    </div>
+  </section>
+  <section>
+    <h2>Back-end testing | Unit tests</h2>
+    <div class='relative inline' style='top: 100px'>
+      <img class='plain nomargin' src='assets/images/masks.png' />
+      <div>
+        <h4>JUnit / TestNG</h4>
+        <ul class='bullets fixed-width-wide'>
+          <li>Easy to test self-contained logic</li>
+          <li>Mocks allow us to extend unit tests further</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Back-end testing | "Real" tests</h2>
+    <div class='left relative inline' style='top: 50px'>
+      <img class='plain' src='assets/images/testing-tags.png' />
+      <div>
+        <h4>"Real tests"</h4>
+        <ul class='bullets'>
+          <li>Test code in-container</li>
+          <li>No "surprises" in production</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Enter Arquillian</h2>
+    <div class='inline'>
+      <div>
+        <img class='plain' src='assets/images/arquillian_ike.png' />
+        <h4>Don't mock me!</h4>
+      </div>
+      <ul class='bullets'>
+        <li>Bring the container to the test</li>
+        <li>Micro-deployments</li>
+      </ul>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>Example | GreeterTest</h2>
+    <div class='relative inline' style='top: 100px'>
+      <div>
+        <h1 style='font-size: 120pt; margin-right: 30px'>Hello <br /> World!</h1>
+      </div>
+      <ul class='bullets'>
+        <li>Basic Arquillian test</li>
+        <li>
+          Demonstrate
+          <span class='monospace'>@Inject</span>
+        </li>
+        <li>Introduce Shrinkwrap</li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <h2>GreeterTest | The Bean</h2>
+    <pre class='prettyprint' style='font-size: 18px; top: 50px'><code id='greeter'>public class Greeter {&#x000A;&#x000A;    private PhraseBuilder phraseBuilder;&#x000A;&#x000A;    @Inject&#x000A;    public Greeter(PhraseBuilder phraseBuilder) {&#x000A;        this.phraseBuilder = phraseBuilder;&#x000A;    }&#x000A;&#x000A;    public void greet(PrintStream to, String name) {&#x000A;        to.println(createGreeting(name));&#x000A;    }&#x000A;&#x000A;    public String createGreeting(String name) {&#x000A;        return phraseBuilder.buildPhrase(&quot;hello&quot;, name);&#x000A;    }&#x000A;}</code></pre>
+  </section>
+  <section>
+    <h2>GreeterTest | Injection</h2>
+    <pre class='prettyprint' style='font-size: 18px; top: 100px'><code id='phraseBuilder'>public class PhraseBuilder {&#x000A;    private Map&lt;String, String&gt; templates;&#x000A;&#x000A;    public String buildPhrase(String id, Object... args) {&#x000A;        return MessageFormat.format(templates.get(id), args);&#x000A;    }&#x000A;&#x000A;    @PostConstruct&#x000A;    public void initialize() {&#x000A;        templates = new HashMap&lt;String, String&gt;();&#x000A;        templates.put(&quot;hello&quot;, &quot;Hello, {0}!&quot;);&#x000A;    }&#x000A;}</code></pre>
+  </section>
+  <section>
+    <h2>GreeterTest | Test</h2>
+    <pre class='prettyprint' style='font-size: 15px; top: 50px'><code id='basicTest'>@RunWith(Arquillian.class)&#x000A;public class GreeterTest {&#x000A;    @Deployment&#x000A;    public static JavaArchive createDeployment() {&#x000A;        JavaArchive jar = ShrinkWrap.create(JavaArchive.class)&#x000A;            .addClasses(Greeter.class, PhraseBuilder.class)&#x000A;            .addAsManifestResource(EmptyAsset.INSTANCE, &quot;beans.xml&quot;);&#x000A;        return jar;&#x000A;    }&#x000A;&#x000A;    @Inject&#x000A;    Greeter greeter;&#x000A;&#x000A;    @Test&#x000A;    public void should_create_greeting() {&#x000A;        Assert.assertEquals(&quot;Hello, Earthling!&quot;,&#x000A;            greeter.createGreeting(&quot;Earthling&quot;));&#x000A;    }&#x000A;}</code></pre>
+    <div class='fragment screen' data-prettify='basicTest' data-prettify_lines='0:1'></div>
+    <div class='fragment screen' data-prettify='basicTest' data-prettify_lines='2:9'></div>
+    <div class='fragment screen' data-prettify='basicTest' data-prettify_lines='10:11'></div>
+    <div class='fragment screen' data-prettify='basicTest' data-prettify_lines='13:17'></div>
+  </section>
+  <section>
+    <h2>The Magic</h2>
+    <ul class='relative' style='top: 50px'>
+      <li>
+        POM Dependencies
+        <ul>
+          <li>Arquillian</li>
+          <li>JUnit | TestNG</li>
+          <li>Deployment Container</li>
+        </ul>
+      </li>
+      <li>&nbsp;</li>
+      <li>
+        Arquillian.xml
+        <ul>
+          <li>Configuration of the test container</li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+  <section>
+    <h2>GreeterTest | POM</h2>
+    <pre class='prettyprint' style='font-size: 17px; top: 50px'><code id='basicTest'>&lt;profile&gt;&#x000A;    &lt;id&gt;arquillian-jbossas-managed&lt;/id&gt;&#x000A;    &lt;dependencies&gt;&#x000A;        ...&#x000A;        &lt;dependency&gt;&#x000A;            &lt;groupId&gt;org.jboss.as&lt;/groupId&gt;&#x000A;            &lt;artifactId&gt;jboss-as-arquillian-container-managed&lt;/artifactId&gt;&#x000A;            &lt;version&gt;7.1.1.Final&lt;/version&gt;&#x000A;            &lt;scope&gt;test&lt;/scope&gt;&#x000A;        &lt;/dependency&gt;&#x000A;&#x000A;        &lt;dependency&gt;&#x000A;            &lt;groupId&gt;org.jboss.arquillian.protocol&lt;/groupId&gt;&#x000A;            &lt;artifactId&gt;arquillian-protocol-servlet&lt;/artifactId&gt;&#x000A;            &lt;scope&gt;test&lt;/scope&gt;&#x000A;        &lt;/dependency&gt;&#x000A;&#x000A;    &lt;/dependencies&gt;&#x000A;&lt;/profile&gt;</code></pre>
+  </section>
+  <section>
+    <h1 class='relative demo'>Demo Time</h1>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>Front-end Testing</h2>
+    <img class='plain' src='assets/images/user.png' />
+  </section>
+  <section>
+    <h2>Ideal: Pyramid of test coverage</h2>
+    <div>
+      <img alt='http://watirmelon.files.wordpress.com/2012/01/idealautomatedtestingpyramid.png' src='assets/images/idealautomatedtestingpyramid.png' style='clear: both' />
+    </div>
+  </section>
+  <section>
+    <h2>Reality: Ice-cream Cone of test coverage</h2>
+    <div>
+      <img alt='http://watirmelon.files.wordpress.com/2012/01/softwaretestingicecreamconeantipattern.png' src='assets/images/softwaretestingicecreamconeantipattern.png' style='clear: both' />
+    </div>
+  </section>
+  <section>
+    <h2>Howto increase automated test coverage?</h2>
+    <ul>
+      <li>&nbsp;</li>
+      <li>
+        Unit tests of GUI code
+        <span style='margin-left: 20px; font-weight: bold'>-- lots of mocks!</span>
+      </li>
+      <li>&nbsp;</li>
+      <li>Let's focus on real-tests</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Real tests &rarr; real browsers</h2>
+    <div class='images white relative' style='top: 100px'>
+      <table>
+        <tr>
+          <td>
+            <img class='relative' src='assets/images/browsers/firefox.png' style='left: 50px' />
+          </td>
+          <td>
+            <img class='relative' src='assets/images/browsers/chrome.png' style='top: -50px' />
+          </td>
+          <td>
+            <img class='relative' src='assets/images/browsers/ie.png' style='left: -50px' />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <img class='relative' src='assets/images/browsers/opera.png' />
+          </td>
+          <td>
+            <img class='relative' src='assets/images/browsers/safari.jpg' />
+          </td>
+          <td>
+            <img class='relative' src='assets/images/browsers/konqueror.png' />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <img class='relative' src='assets/images/browsers/epiphany.png' style='left: 50px' />
+          </td>
+          <td>
+            <img class='relative' src='assets/images/browsers/camino.png' style='top: 50px' />
+          </td>
+          <td>
+            <img class='relative' src='assets/images/browsers/seamonkey.png' style='left: -50px' />
+          </td>
+        </tr>
+      </table>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>Selenium</h2>
+    <br />
+    <h5 class='bold'>
+      Selenium automates browsers.
+      <span style='font-style: italic'>That's it.</span>
+    </h5>
+    <div class='relative inline' style='top: -20px'>
+      <img class='plain nomargin' src='assets/images/selenium.png' />
+      <div>
+        <p class='left block'>WebDriver API:</p>
+        <ul class='bullets' style='width: 400px'>
+          <li>Unified API for all browsers</li>
+          <li>Headless tests via HtmlUnit</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Selenium | API</h2>
+    <br />
+    <div class='left'>
+      <p>WebDriver</p>
+      <hr />
+      <p class='italic'>Represents the web browser</p>
+      <hr />
+      <ul>
+        <li>
+          Methods:
+          <ul>
+            <li>.get()</li>
+            <li>.findElement(By)</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <h2>Selenium | API</h2>
+    <br />
+    <div class='left'>
+      <p>WebElement</p>
+      <hr />
+      <p class='italic'>Represents an HTML element.</p>
+      <hr />
+      <ul>
+        <li>
+          Methods:
+          <ul>
+            <li>.click()</li>
+            <li>.sendKeys()</li>
+            <li>.getText()</li>
+            <li>.findElement(By)</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <h2>WebElement Lookup</h2>
+    <br />
+    <p class='left'>Selenium/WebDriver programmatic API:</p>
+    <pre class='prettyprint' style='font-size:25px'><code>WebElement username&#x000A;    = driver.findElement(By.id(&quot;username&quot;))</code></pre>
+    <br />
+    <p class='left'>Alternative @FindBy annotation:</p>
+    <pre class='prettyprint' style='font-size:25px'><code>@FindBy(id=&quot;username&quot;)&#x000A;WebElement username;&#x000A;...&#x000A;PageFactory.initElements(driver, this);</code></pre>
+    <div class='notes'>
+      <ul>
+        <li>By.ByClassName, By.ByCssSelector, By.ById, By.ByLinkText, By.ByName, By.ByPartialLinkText, By.ByTagName, By.ByXPath, ByChained, ByIdOrName</li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <h2>Selenium IDE - Easy!</h2>
+    <div class='relative inline' style='top: 30px'>
+      <img class='plain nomargin' src='assets/images/selenium-ide.png' />
+      <ul class='bullets'>
+        <li>Easy to write/record tests</li>
+        <li>Replay tests against all browsers</li>
+      </ul>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>Example | Selenium</h2>
+    <img class='plain' src='assets/images/kitchensink.png' style='height: 500px' />
+  </section>
+  <section>
+    <div style='vertical-align: top; text-align: left'>
+      <h2 class='left' style='display: inline-block; vertical-align: top; text-align: center'>
+        Selenium
+        <br />
+        IDE
+      </h2>
+      <img class='relative' src='assets/images/selenium-ide-test.png' style=' display: inline-block; vertical-align: top; margin: 0;' />
+    </div>
+  </section>
+  <section>
+    <h2>Selenium Ex. | The Test</h2>
+    <pre class='prettyprint' style='font-size: 10px'><code id='selenium'>public class SeleniumTest {&#x000A;    private WebDriver driver;&#x000A;    private String baseUrl;&#x000A;    private StringBuffer verificationErrors = new StringBuffer();&#x000A;&#x000A;    @Before&#x000A;    public void setUp() throws Exception {&#x000A;      driver = new FirefoxDriver();&#x000A;      baseUrl = &quot;http://kitchensink-richfaces.rhcloud.com/&quot;;&#x000A;      driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);&#x000A;    }&#x000A;&#x000A;    @Test&#x000A;    public void test() throws Exception {&#x000A;      driver.get(baseUrl + &quot;/&quot;);&#x000A;      driver.findElement(By.id(&quot;reg:memberForm:name&quot;)).clear();&#x000A;      driver.findElement(By.id(&quot;reg:memberForm:name&quot;)).sendKeys(&quot;Brian Leathem&quot;);&#x000A;      driver.findElement(By.id(&quot;reg:memberForm:email&quot;)).clear();&#x000A;      driver.findElement(By.id(&quot;reg:memberForm:email&quot;)).sendKeys(&quot;bleathem@test.ca&quot;);&#x000A;      driver.findElement(By.id(&quot;reg:memberForm:phoneNumber&quot;)).clear();&#x000A;      driver.findElement(By.id(&quot;reg:memberForm:phoneNumber&quot;)).sendKeys(&quot;234234234235&quot;);&#x000A;      driver.findElement(By.id(&quot;reg:register&quot;)).click();&#x000A;      Thread.sleep(2000);&#x000A;      try {&#x000A;        assertEquals(&quot;Brian Leathem&quot;, driver&#x000A;          .findElement(By.id(&quot;reg:memberTable:0:member_name&quot;)).getText());&#x000A;      } catch (Error e) {&#x000A;        verificationErrors.append(e.toString());&#x000A;      }&#x000A;    }&#x000A;&#x000A;    @After&#x000A;    public void tearDown() throws Exception {&#x000A;      driver.quit();&#x000A;      String verificationErrorString = verificationErrors.toString();&#x000A;      if (!&quot;&quot;.equals(verificationErrorString)) {&#x000A;        fail(verificationErrorString);&#x000A;      }&#x000A;    }&#x000A;}</code></pre>
+    <div class='fragment screen' data-prettify='selenium' data-prettify_lines='5:11'></div>
+    <div class='fragment screen' data-prettify='selenium' data-prettify_lines='12:29' style='top: -40px; margin: 0 -90px'></div>
+    <div class='fragment screen' data-prettify='selenium' data-prettify_lines='31:38' style='top: -30px;'></div>
+  </section>
+  <section>
+    <h1 class='relative demo'>Demo Time</h1>
+  </section>
+  <section>
+    <h2>Selenium - Problems!</h2>
+    <div class='relative' style='top: 50px'></div>
+    <p>Not enough abstraction, Highly repetitive</p>
+    <p>&rarr; Maintenance problem</p>
+    <img alt='http://www.flickr.com/photos/cellardoorfilms/7620375702/' class='plain' src='assets/images/frustrated.jpg' style='margin-right: 4px' />
+    <div class='notes'>
+      <ul>
+        <li>Tests focus against state transitions</li>
+        <li>Test only DOM/CSS expressed directly in the test</li>
+      </ul>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>Automating Client-side testing</h2>
+    <div class='relative' style='top: 30px'>
+      <ul>
+        <li>Deploy the app, run the tests!</li>
+      </ul>
+      <div>
+        <img alt='http://www.flickr.com/photos/pasukaru76/6893926948/' class='plain' src='assets/images/assembly_line.jpg' />
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Container lifecycle</h2>
+    <div class='relative inline' style='top: 40px'>
+      <div>
+        <img class='plain nomargin' src='assets/images/arquillian_success.png' />
+        <h4>Ike has us covered!</h4>
+      </div>
+      <ul class='bullets fixed-width-narrow'>
+        <li>Startup/shutdown the container</li>
+        <li>Create the testable archive</li>
+        <li>Deploy the application</li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <h2>Client lifecycle?</h2>
+    <div class='relative inline' style='top: 40px'>
+      <img class='plain nomargin' src='assets/images/browser.png' />
+      <ul style='width: auto'>
+        <li>Start / Stop the Browser</li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <h2>Arquillian Extensions</h2>
+    <dl class='fragment'>
+      <dt>Arquillian Drone</dt>
+      <dd>Brings the browser to the test</dd>
+    </dl>
+    <dl class='fragment'>
+      <dt>Arquillian Graphene</dt>
+      <dd>Selenium integration and extension</dd>
+    </dl>
+    <dl class='fragment'>
+      <dt>Arquillian Warp</dt>
+      <dd>Testing on both sides of the request</dd>
+    </dl>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>Arquillian Drone</h2>
+    <div class='relative inline left' style='top : 80px'>
+      <img class='plain' src='assets/images/drone.png' />
+      <p style='width: 550px'>Manages the browser life-cycle</p>
+    </div>
+  </section>
+  <section>
+    <h2>Arquillian Drone</h2>
+    <ul>
+      <li>
+        Integrates with:
+        <ul>
+          <li>Selenium/Webdriver</li>
+          <li>Arquillian Graphene</li>
+        </ul>
+      </li>
+    </ul>
+    <pre class='prettyprint relative' style='font-size: 20px; top: 50px'><code>@Drone&#x000A;WebDriver browser</code></pre>
+    <br />
+    <pre class='prettyprint relative' style='font-size: 20px; top: 50px'><code>&lt;extension qualifier=&quot;webdriver&quot;&gt;&#x000A;    &lt;property name=&quot;browserCapabilities&quot;&gt;chrome&lt;/property&gt;&#x000A;&lt;/extension&gt;</code></pre>
+  </section>
+  <section>
+    <h2>Separation of concerns</h2>
+    <div class='inline left'>
+      <div>
+        <p class='block'>Devs focus: Author tests</p>
+        <img alt='http://www.flickr.com/photos/metrolibraryarchive/3267555668/' src='assets/images/build.jpg' style='width:400px; margin-top: 0' />
+      </div>
+      <div>
+        <img alt='http://www.flickr.com/photos/metrolibraryarchive/3267249336/' src='assets/images/inspection.jpg' style='width:400px' />
+        <p class='block'>QA focus: Automate tests</p>
+      </div>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>Example | Google Drone Test</h2>
+    <div class='relative inline' style='top: 50px'>
+      <img src='assets/images/google.png' />
+      <ul class='bullets'>
+        <li>Simple Drone test</li>
+        <li>
+          Demonstrate
+          <span class='monospace'>@Drone</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <h2>Google Drone Test | Test</h2>
+    <pre class='prettyprint relative' style='font-size: 20px; top: 80px'><code id='googleTest'>@RunWith(Arquillian.class)&#x000A;public class GoogleDroneTest {&#x000A;&#x000A;    @Drone&#x000A;    WebDriver browser;&#x000A;&#x000A;    @Test&#x000A;    public void testOpeningHomePage() {&#x000A;        browser.get(&quot;http://www.google.com/&quot;);&#x000A;        List&lt;WebElement&gt; elements = browser.findElements(&#x000A;            By.xpath(&quot;//span[contains(text(), 'Google Search')]&quot;));&#x000A;&#x000A;        Assert.assertTrue(&quot;Page not loaded&quot;, elements.size() &gt; 0);&#x000A;    }&#x000A;}</code></pre>
+    <div class='fragment screen' data-prettify='googleTest' data-prettify_lines='0:1'></div>
+    <div class='fragment screen' data-prettify='googleTest' data-prettify_lines='3:4'></div>
+    <div class='fragment screen' data-prettify='googleTest' data-prettify_lines='6:13'></div>
+  </section>
+  <section>
+    <h1 class='relative demo'>Demo Time</h1>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>Arquillian Graphene</h2>
+    <div class='relative inline' style='top : 50px'>
+      <img alt='http://www.flickr.com/photos/core-materials/5057399792/' class='plain' src='assets/images/graphene-logo.png' />
+      <p>
+        Selenium
+        <span style='font-variant : small-caps; font-style: italic; font-weight: bold'>Arquillian-Style</span>
+      </p>
+    </div>
+    <div class='notes'>
+      <ul>
+        <li>Arquillian integration starts with Drone and the instantiation of the WebDriver instance.</li>
+        <li>Graphene then takes new instance of WebDriver's browser session and store is in its Thread Local Context.</li>
+        <li>Graphene also wraps the WebDriver instance in order to intercept calls.</li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <h2>Graphene 1.0</h2>
+    <dl>
+      <dt>GrapheneSelenium class</dt>
+      <dd>type-safe Selenium class for Selenium 1.x</dd>
+    </dl>
+    <pre class='prettyprint relative' style='top: 100px; font-size:25px'><code>@Drone&#x000A;GrapheneSelenium browser;</code></pre>
+    <canvas class='fragment screen canvas'></canvas>
+  </section>
+  <section>
+    <h2>Graphene 2.0</h2>
+    <div class='relative inline' style='top : 50px'>
+      <img class='plain' src='assets/images/needle.png' />
+      <ul>
+        <li>More Injection</li>
+        <li>More Abstractions</li>
+        <li>More Extensions</li>
+      </ul>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>Page Abstractions</h2>
+    <div class='inline'>
+      <img class='plain' src='assets/images/html.png' />
+      <p class='fixed-width'>Encapsulate DOM elements behind a custom API</p>
+    </div>
+  </section>
+  <section>
+    <h2>Selenium | Page objects</h2>
+    <div class='relative inline' style='top : 50px'>
+      <img src='assets/images/page.png' />
+      <div>
+        <ul class='fixed-width'>
+          <li>A class that encapsulates the behaviour of a page</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Selenium | LoginPage</h2>
+    <pre class='prettyprint' style='font-size: 20px; top: 30px'><code>public class LoginPage {&#x000A;    private final WebDriver driver;&#x000A;&#x000A;    public LoginPage(WebDriver driver) {&#x000A;        this.driver = driver;&#x000A;    }&#x000A;&#x000A;    public HomePage loginAs(String username, String password) {&#x000A;        driver.findElement(By.id(&quot;username&quot;)).sendKeys(username);&#x000A;        driver.findElement(By.id(&quot;passwd&quot;)).sendKeys(password);&#x000A;        driver.findElement(By.id(&quot;login&quot;)).submit();&#x000A;&#x000A;        return new HomePage(driver);&#x000A;    }&#x000A;}</code></pre>
+  </section>
+  <section>
+    <h2>Selenium | Page Instantiation</h2>
+    <p class='relative' style='top: 100px'>Selenium PageFactory class instantiates Page Objects:</p>
+    <pre class='prettyprint relative' style='font-size: 22px; top: 200px'><code>LoginPage loginPage =&#x000A;    PageFactory.initElements(driver, LoginPage.class);</code></pre>
+  </section>
+  <section>
+    <h2>Graphene | Page Injection</h2>
+    <p class='relative' style='top: 100px'>
+      Graphene test enrichment manages the PageFactory
+    </p>
+    <div class='relative' style='top: 150px'>
+      <pre class='prettyprint' style='font-size: 22px;'><code>@Page&#x000A;LoginPage loginPage</code></pre>
+      <pre class='prettyprint' style='font-size: 22px;'><code>@FindBy(id=&quot;username&quot;)&#x000A;WebElement username;</code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Graphene | Page Fragments</h2>
+    <div class='relative inline' style='top : 50px'>
+      <img class='nomargin' src='assets/images/page-fragment.png' />
+      <div>
+        <ul class='bullets fixed-width-narrow'>
+          <li>Page Objects ++</li>
+          <li>Encapsulate the behaviour of a page fragment</li>
+        </ul>
+        <br />
+        <br />
+        <div class='relative' style='left: 20px'>
+          <pre class='prettyprint' style='font-size: 20px; width: 525px; margin-right: 0;'><code>@FindBy(css=&quot;.calendar&quot;)&#x000A;CalendarFragment calendar;</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Abstraction FTW!</h2>
+    <p class='italic relative' style='top: 150px'>
+      Single place to update WebDriver code
+      <br />
+      when the underlying DOM changes
+    </p>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>Waiting...</h2>
+    <p class='left'>Simplest case:</p>
+    <pre class='prettyprint' style='font-size: 20px;'><code>Thread.sleep(2000);</code></pre>
+    <p class='left'>Selenium provides the WebDriverWait class</p>
+    <pre class='prettyprint' style='font-size: 20px;'><code>WebElement myDynamicElement = (new WebDriverWait(driver, 10))&#x000A;  .until(new ExpectedCondition&lt;WebElement&gt;(){&#x000A;  @Override&#x000A;  public WebElement apply(WebDriver d) {&#x000A;    return d.findElement(By.id(&quot;myDynamicElement&quot;));&#x000A;  }});</code></pre>
+    <br />
+    <p class='left'>More boiler plate!</p>
+  </section>
+  <section>
+    <h2>Graphene wait helpers</h2>
+    <table class='left relative' style='width: 100%; top: 50px'>
+      <tr class='bold'>
+        <th>Helper</th>
+        <th>Description</th>
+        <th class='center'>Timeout</th>
+      </tr>
+      <tr>
+        <td>waitGui()</td>
+        <td>
+          waits for a short time
+          <br />
+          eg. wait for client-side operations
+        </td>
+        <td class='center'>1</td>
+      </tr>
+      <tr>
+        <td>waitAjax()</td>
+        <td>
+          waits for longer time
+          <br />
+          eg. wait for simple ajax request
+        </td>
+        <td class='center'>2</td>
+      </tr>
+      <tr>
+        <td>waitModel()</td>
+        <td>
+          waits for a long time
+          <br />
+          eg. wait for database requests
+        </td>
+        <td class='center'>5</td>
+      </tr>
+    </table>
+  </section>
+  <section>
+    <h2>Wait helper Usage</h2>
+    <pre class='prettyprint relative' style='font-size: 20px; width: 850px; top: 100px'><code>By id = By.id(&quot;button&quot;);&#x000A;WebElement element = driver.findElement(id);&#x000A;...&#x000A;waitModel(element(id).isVisible));&#x000A;...&#x000A;waitModel(element(element).not().textContains(&quot;blahblah&quot;));&#x000A;...&#x000A;waitModel(attribute(id, &quot;value&quot;).valueContains(&quot;blahblah&quot;));&#x000A;...&#x000A;waitModel(attribute(element, &quot;value&quot;).not().valueEquals(&quot;blahblah&quot;));</code></pre>
+  </section>
+  <section>
+    <h2>Request guards</h2>
+    <div class='inline'>
+      <img alt='http://www.flickr.com/photos/abennett96/2717629123/' src='assets/images/beefeater.jpg' />
+      <div style='width: 570px'>
+        <p class='left' style='font-style: italic'>Blocks the Selenium test execution until a network communication caused by a given action ends</p>
+        <dl>
+          <dt>guardHttp(button).click();</dt>
+          <dd>blocks on HTTP</dd>
+          <dt>guardXhr(button).click();</dt>
+          <dd>blocks on XHR (Ajax)</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Request guard | Usage</h2>
+    <pre class='prettyprint' style='font-size: 20px; top: 30px'><code>@RunWih(Arquillian.class)&#x000A;public class TestClass {&#x000A; &#x000A;    @FindBy(id=&quot;http&quot;)&#x000A;    private WebElement httpButton;&#x000A; &#x000A;    @FindBy(id=&quot;xhr&quot;)&#x000A;    private WebElement xhrButton;&#x000A; &#x000A;    @Test&#x000A;    public void testSimple() {&#x000A;        guardHttp(httpButton).click();&#x000A;        guardXhr(xhrButton).click();&#x000A;    }&#x000A;}</code></pre>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>Javascript Interfaces</h2>
+    <div class='relative' style='top: 40px'>
+      <p style='font-style: italic'>Execute JavaScript from your Java test</p>
+      <pre class='prettyprint relative' style='font-size: 24px; top: 80px'><code>@JavaScript(&quot;javascriptObject&quot;)&#x000A;@Dependency(sources = {&quot;file.js&quot;})&#x000A;public interface Background {&#x000A;    void voidMethod(String color);&#x000A;    String someFunction();&#x000A;}</code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Example | Javascript Interface</h2>
+    <div class='relative inline' style='top: 50px'>
+      <img src='assets/images/google.png' />
+      <ul class='bullets' style='width: 410px'>
+        <li>Manipulate the DOM</li>
+        <li>Bi-directional communication</li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <h2>Example | Javascript Interface</h2>
+    <p class='left'>
+      BackGround.java:
+    </p>
+    <pre class='prettyprint' style='font-size: 20px'><code>@JavaScript(&quot;myBackground&quot;)&#x000A;@Dependency(sources = {&quot;background.js&quot;})&#x000A;public interface Background {&#x000A;    void setBackground(String color);&#x000A;    String getBackground();&#x000A;}</code></pre>
+    <p class='left'>
+      background.js:
+    </p>
+    <pre class='prettyprint' style='font-size: 20px'><code>myBackground = {&#x000A;    setBackground : function (color) {&#x000A;        document.body.style.background = color;&#x000A;    },&#x000A;&#x000A;    getBackground : function () {&#x000A;        return document.body.style.background;&#x000A;    }&#x000A;}</code></pre>
+  </section>
+  <section>
+    <h2>Example | Javascript Interface</h2>
+    <pre class='prettyprint' style='font-size: 17px'><code>@RunWith(Arquillian.class)&#x000A;public class JavaScriptTest {&#x000A;&#x000A;    @Drone&#x000A;    WebDriver browser;&#x000A;&#x000A;    @Test&#x000A;    public void testOpeningHomePage() throws  Exception {&#x000A;        browser.get(&quot;http://www.google.com/&quot;);&#x000A;        Background background = JSInterfaceFactory.create(Background.class);&#x000A;&#x000A;        System.out.println(String.format(&#x000A;            &quot;Background color is: %s&quot;, background.getBackground()));&#x000A;&#x000A;        background.setBackground(&quot;red&quot;);&#x000A;        System.out.println(String.format(&#x000A;            &quot;Background color is: %s&quot;, background.getBackground()));&#x000A;        Thread.sleep((2000));&#x000A;&#x000A;        background.setBackground(&quot;&quot;);&#x000A;        System.out.println(String.format(&#x000A;            &quot;Background color is: %s&quot;, background.getBackground()));&#x000A;        Thread.sleep((2000));&#x000A;    }&#x000A;}</code></pre>
+  </section>
+  <section>
+    <h1 class='relative demo'>Demo Time</h1>
+  </section>
+  <section>
+    <h2>Page Extensions</h2>
+    <p class='left'>Automatically include Javascript Interfaces in your tests</p>
+    <br />
+    <p class='left'>Simply:</p>
+    <ul class='bullets'>
+      <li>Implement an interface</li>
+      <li>Register the extension</li>
+    </ul>
+    <br />
+    <br />
+    <p class='left'>See the docs...</p>
+    <a href='https://docs.jboss.org/author/display/ARQGRA2/Page+Extensions' style='font-size: 30px'>
+      https://docs.jboss.org/author/display/ARQGRA2/Page+Extensions
+    </a>
+  </section>
+  <section>
+    <h2>Request Guards | Impl</h2>
+    <pre class='prettyprint' style='font-size: 20px'><code>@JavaScript(value = &quot;Graphene.Page.RequestGuard&quot;)&#x000A;@Dependency(sources = &quot;Graphene.Page.RequestGuard.js&quot;,&#x000A;            interfaces=XhrInterception.class)&#x000A;public interface RequestGuard extends InstallableJavaScript {&#x000A;&#x000A;    /**&#x000A;     * @return the last request type&#x000A;     */&#x000A;    RequestType getRequestDone();&#x000A;&#x000A;    /**&#x000A;     * Clears the request type cache and returns the last&#x000A;     * request type&#x000A;     * @return the last request type&#x000A;     */&#x000A;    RequestType clearRequestDone();&#x000A;&#x000A;}</code></pre>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>Interceptors with Graphene</h2>
+    <p class='left relative' style='top: 50px'>Work is in progress to port the Graphene 1 interceptor API to Graphene 2</p>
+    <div class='relative' style='top: 100px'>
+      <ul class='bullets'>
+        <li>Code executed around each WebDriver invocation</li>
+        <li>Cross-cutting concerns</li>
+      </ul>
+      <br />
+      <br />
+      <a href='https://issues.jboss.org/browse/ARQGRA-79' style='font-size: 30px'>
+        https://issues.jboss.org/browse/ARQGRA-79
+      </a>
+    </div>
+    <div class='notes'>
+      <ul>
+        <li>execute code before/after the selenium command will be performed</li>
+        <li>catch exceptions thrown when performing selenium command</li>
+      </ul>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>Example | LoginScreen</h2>
+    <div class='relative inline' style='top: 50px'>
+      <img src='assets/images/login_screen.png' />
+      <ul class='bullets' style='width: 420px'>
+        <li>Graphene Test</li>
+        <li>
+          Demonstrate Page Fragments
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <h2>LoginScreen | Deployment</h2>
+    <pre class='prettyprint' style='font-size: 14px'><code id='deployment'>public class Deployments {&#x000A;    public static final String WEBAPP_SRC = &quot;src/main/webapp&quot;;&#x000A;&#x000A;    public static WebArchive getLoginScreenDeployment() {&#x000A;        return ShrinkWrap.create(WebArchive.class, &quot;login.war&quot;)&#x000A;                .addClasses(Credentials.class, User.class, LoginController.class)&#x000A;                .addAsWebResource(new File(WEBAPP_SRC, &quot;resources/bootstrap/css/bootstrap.css&quot;),&#x000A;                                  &quot;resources/bootstrap/css/bootstrap.css&quot;)&#x000A;                .addAsWebResource(new File(WEBAPP_SRC, &quot;login.xhtml&quot;))&#x000A;                .addAsWebResource(new File(WEBAPP_SRC, &quot;home.xhtml&quot;))&#x000A;                .addAsWebInfResource(EmptyAsset.INSTANCE, &quot;beans.xml&quot;)&#x000A;                .addAsWebInfResource(&#x000A;                        new StringAsset(&quot;&lt;faces-config version=\&quot;2.0\&quot;/&gt;&quot;),&#x000A;                        &quot;faces-config.xml&quot;);&#x000A;    }&#x000A;&#x000A;}</code></pre>
+  </section>
+  <section>
+    <h2>LoginScreen | GrapheneTest</h2>
+    <pre class='prettyprint' style='font-size: 10px'><code id='graphene'>@RunWith(Arquillian.class)&#x000A;public class LoginScreenGrapheneTest {&#x000A;&#x000A;    @Deployment(testable = false)&#x000A;    public static WebArchive createDeployment() {&#x000A;        return Deployments.getLoginScreenDeployment();&#x000A;    }&#x000A;&#x000A;    @Drone&#x000A;    WebDriver browser;&#x000A;&#x000A;    @ArquillianResource&#x000A;    URL contextPath;&#x000A;&#x000A;    @FindBy(id=&quot;loginForm:username&quot;)&#x000A;    private WebElement usernameInput;&#x000A;&#x000A;    @FindBy(id=&quot;loginForm:password&quot;)&#x000A;    private WebElement passwordInput;&#x000A;&#x000A;    @FindBy(id=&quot;loginForm:login&quot;)&#x000A;    private WebElement loginButton;&#x000A;&#x000A;    @Test&#x000A;    @RunAsClient&#x000A;    public void should_login_successfully() throws Exception {&#x000A;        String page = contextPath + &quot;login.jsf&quot;;&#x000A;        browser.get(page);&#x000A;&#x000A;        usernameInput.sendKeys(&quot;demo&quot;);&#x000A;        passwordInput.sendKeys(&quot;demo&quot;);&#x000A;        loginButton.click();&#x000A;&#x000A;        Assert.assertTrue(&quot;User should be logged in!&quot;,&#x000A;                browser.findElements(By.xpath(&quot;//li[contains(text(), 'Welcome')]&quot;)).size() &gt; 0);&#x000A;    }&#x000A;&#x000A;}</code></pre>
+    <div class='fragment screen' data-prettify='graphene' data-prettify_lines='0:1'></div>
+    <div class='fragment screen' data-prettify='graphene' data-prettify_lines='3:6'></div>
+    <div class='fragment screen' data-prettify='graphene' data-prettify_lines='8:21'></div>
+    <div class='fragment screen' data-prettify='graphene' data-prettify_lines='23:36' style='top: -20px; margin: 0 -100px; font-size: 18px'></div>
+  </section>
+  <section>
+    <h2>LoginScreen | LoginFragment</h2>
+    <pre class='prettyprint' style='font-size: 10px'><code id='loginFragment'>public class LoginFragment {&#x000A;&#x000A;    @FindBy(id=&quot;loginForm:username&quot;)&#x000A;    private WebElement usernameInput;&#x000A;&#x000A;    @FindBy(id=&quot;loginForm:password&quot;)&#x000A;    private WebElement passwordInput;&#x000A;&#x000A;    @FindBy(id=&quot;loginForm:login&quot;)&#x000A;    private WebElement loginButton;&#x000A;&#x000A;    public void setUsername(Object username) {&#x000A;        usernameInput.sendKeys(username.toString());&#x000A;    }&#x000A;&#x000A;    public void setPassword(Object password) {&#x000A;        passwordInput.sendKeys(password.toString());&#x000A;    }&#x000A;&#x000A;    public void click() {&#x000A;        loginButton.click();&#x000A;    }&#x000A;}</code></pre>
+    <div class='fragment screen' data-prettify='loginFragment' data-prettify_lines='2:9'></div>
+    <div class='fragment screen' data-prettify='loginFragment' data-prettify_lines='11:21'></div>
+  </section>
+  <section>
+    <h2>LoginScreen | FragmentTest</h2>
+    <pre class='prettyprint' style='font-size: 10px'><code id='fragmentTest'>@RunWith(Arquillian.class)&#x000A;public class LoginScreenFragmentTest {&#x000A;&#x000A;    @Deployment(testable = false)&#x000A;    public static WebArchive createDeployment() {&#x000A;        return Deployments.getLoginScreenDeployment();&#x000A;    }&#x000A;&#x000A;    @Drone&#x000A;    WebDriver browser;&#x000A;&#x000A;    @ArquillianResource&#x000A;    URL contextPath;&#x000A;&#x000A;    @FindBy(id=&quot;loginForm&quot;)&#x000A;    LoginFragment loginForm;&#x000A;&#x000A;    @Test&#x000A;    @RunAsClient&#x000A;    public void should_login_successfully() {&#x000A;        String page = contextPath + &quot;login.jsf&quot;;&#x000A;        browser.get(page);&#x000A;&#x000A;        loginForm.setUsername(&quot;demo&quot;);&#x000A;        loginForm.setPassword(&quot;demo&quot;);&#x000A;        loginForm.click();&#x000A;&#x000A;        Assert.assertTrue(&quot;User should be logged in!&quot;,&#x000A;                browser.findElements(By.xpath(&quot;//li[contains(text(), 'Welcome')]&quot;)).size() &gt; 0);&#x000A;    }&#x000A;&#x000A;}</code></pre>
+    <div class='fragment screen' data-prettify='fragmentTest' data-prettify_lines='14:15'></div>
+    <div class='fragment screen' data-prettify='fragmentTest' data-prettify_lines='17:29' style='top: 0px; margin: 0 -100px; font-size: 18px'></div>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>Arquillian Warp</h2>
+    <div class='relative inline' style='top: 50px'>
+      <img class='plain nomargin' src='assets/images/warp.png' />
+      <ul class='bullets fixed-width-narrow'>
+        <li>Testing on both sides of the request</li>
+        <li>En-rich the client request with a test to run on the server</li>
+        <li>En-rich the server response with results of the test</li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <h2>JSFUnit | the old way</h2>
+    <div class='relative inline' style='top: 20px'>
+      <img class='plain' src='assets/images/jsfunit.png' />
+      <ul class='bullets fixed-width'>
+        <li>HtmlUnit - no real browsers</li>
+        <li>Assert state only at the end of the JSF lifecycle</li>
+        <li>JSF Only (No CDI, EJB etc.)</li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <h2>Warp | the new way</h2>
+    <div class='relative inline' style='top: 20px'>
+      <img class='plain' src='assets/images/new.png' />
+      <ul class='fixed-width'>
+        <li>
+          Advantages:
+          <ul>
+            <li>Selenium / any HTTP client</li>
+            <li>Test the entire JSF lifecycle</li>
+            <li>
+              Test any injectable resource
+              <ul>
+                <li>CDI</li>
+                <li>EJB</li>
+                <li>Any framework!</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class='notes'>
+      <ul>
+        <li>Not just JSF</li>
+      </ul>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>Warp | Example</h2>
+    <pre class='prettyprint' style='font-size: 8px'><code id='warp'>@WarpTest&#x000A;@RunWith(Arquillian.class)&#x000A;public class LoginScreenWarpTest {&#x000A;&#x000A;    @Deployment&#x000A;    public static WebArchive createDeployment() {&#x000A;        WebArchive webArchive = Deployments.getLoginScreenDeployment();&#x000A;        webArchive.delete(&quot;WEB-INF/beans.xml&quot;);&#x000A;        webArchive.addAsWebInfResource(new File(&quot;src/test/resources/beans.xml&quot;));&#x000A;        return webArchive;&#x000A;    }&#x000A;&#x000A;    @Drone&#x000A;    WebDriver browser;&#x000A;&#x000A;    @ArquillianResource&#x000A;    URL contextPath;&#x000A;&#x000A;    @FindBy(id=&quot;loginForm&quot;)&#x000A;    LoginFragment loginForm;&#x000A;&#x000A;    @Test&#x000A;    @RunAsClient&#x000A;    public void should_login_successfully() {&#x000A;        String page = contextPath + &quot;login.jsf&quot;;&#x000A;        browser.get(page);&#x000A;&#x000A;        Warp.filter(new JsfRequestFilter()).execute(new ClientAction() {&#x000A;            @Override&#x000A;            public void action() {&#x000A;                loginForm.setUsername(&quot;demo&quot;);&#x000A;                loginForm.setPassword(&quot;demo&quot;);&#x000A;                loginForm.click();&#x000A;            }&#x000A;        }).verify(new CheckUsername());&#x000A;&#x000A;        Assert.assertTrue(&quot;User should be logged in!&quot;,&#x000A;                browser.findElements(By.xpath(&quot;//li[contains(text(), 'Welcome')]&quot;))&#x000A;                    .size() &gt; 0);&#x000A;    }&#x000A;&#x000A;    public static class CheckUsername extends ServerAssertion {&#x000A;        @Inject&#x000A;        Credentials credentials;&#x000A;&#x000A;        @BeforePhase(Phase.UPDATE_MODEL_VALUES)&#x000A;        public void beforeUpdateModelValues() {&#x000A;            Assert.assertNull(credentials.getUsername());&#x000A;        }&#x000A;&#x000A;        @AfterPhase(Phase.UPDATE_MODEL_VALUES)&#x000A;        public void afterUpdateModelValues() {&#x000A;            Assert.assertEquals(&quot;demo&quot;, credentials.getUsername());&#x000A;        }&#x000A;&#x000A;    }&#x000A;&#x000A;}</code></pre>
+    <div class='fragment screen' data-prettify='warp' data-prettify_lines='0:2'></div>
+    <div class='fragment screen' data-prettify='warp' data-prettify_lines='4:10'></div>
+    <div class='fragment screen' data-prettify='warp' data-prettify_lines='12:19'></div>
+    <div class='fragment screen' data-prettify='warp' data-prettify_lines='21:39' style='top: -120px'></div>
+    <div class='fragment screen' data-prettify='warp' data-prettify_lines='41:53' style='top: -180px'></div>
+  </section>
+  <section>
+    <h1 class='relative demo'>Demo Time</h1>
+  </section>
+</section>
+<section>
+  <h2>Reducing test development turnaround</h2>
+  <p class='left'>Best practices</p>
+  <ul>
+    <li class='fragment'>Use a Remote Container</li>
+    <li class='fragment'>Re-usable Browser Session</li>
+    <li class='fragment'>
+      Use Shrinkwrap micro-deployments
+      <ul>
+        <li>Share deployments across tests</li>
+      </ul>
+    </li>
+    <li class='fragment'>Arquillian jRebel extension</li>
+  </ul>
+</section>
+<section>
+  <h2>The end?</h2>
+  <h3 class='fragment' style='margin-top: 160px'>The beginning - of JSF testing adventure with Arquillian and Selenium!</h3>
+</section>
+<section>
+  <h2>Credits</h2>
+  <ul class='links'>
+    <li>
+      <a href='http://www.flickr.com/photos/jdhancock/5845280258/'>http://www.flickr.com/photos/jdhancock/5845280258/</a>
+      <a href='http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232'>http://leslycorazon.wikispaces.com/file/detail/head-silhouette-with-question-mark.png/319199232</a>
+      <a href='http://watirmelon.files.wordpress.com/2012/01/idealautomatedtestingpyramid.png'>http://watirmelon.files.wordpress.com/2012/01/idealautomatedtestingpyramid.png</a>
+      <a href='http://watirmelon.files.wordpress.com/2012/01/softwaretestingicecreamconeantipattern.png'>http://watirmelon.files.wordpress.com/2012/01/softwaretestingicecreamconeantipattern.png</a>
+      <a href='http://www.flickr.com/photos/cellardoorfilms/7620375702/'>http://www.flickr.com/photos/cellardoorfilms/7620375702/</a>
+      <a href='http://www.flickr.com/photos/pasukaru76/6893926948/'>http://www.flickr.com/photos/pasukaru76/6893926948/</a>
+      <a href='http://www.flickr.com/photos/metrolibraryarchive/3267555668/'>http://www.flickr.com/photos/metrolibraryarchive/3267555668/</a>
+      <a href='http://www.flickr.com/photos/metrolibraryarchive/3267249336/'>http://www.flickr.com/photos/metrolibraryarchive/3267249336/</a>
+      <a href='http://www.flickr.com/photos/core-materials/5057399792/'>http://www.flickr.com/photos/core-materials/5057399792/</a>
+      <a href='http://www.flickr.com/photos/abennett96/2717629123/'>http://www.flickr.com/photos/abennett96/2717629123/</a>
+    </li>
+  </ul>
+  <div class='links commons'>
+    <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons Licence" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Testing JSF applications with Arquillian and Selenium</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="www.bleathem.ca/talks/2012-JavaOne/richfaces-mobile.html" property="cc:attributionName" rel="cc:attributionURL">Brian Leathem</a> is licensed under a <br /><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/bleathem/talks/tree/master/2012-JavaOne" rel="dct:source">github.com</a>.<br />Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/bleathem/talks/tree/master/2012-JavaOne" rel="cc:morePermissions">https://github.com/bleathem/talks/tree/master/2012-JavaOne</a>.
+  </div>
+</section>
+<section>
+  <h2>Additional Resources</h2>
+  <ul class='bullets'>
+    <li>
+      Arquillian
+      <a href='http://arquillian.org/guides/getting_started/'>Getting Started guides</a>
+      <p class='url'>
+        <a href='http://arquillian.org/guides/getting_started/'>http://arquillian.org/guides/getting_started/</a>
+      </p>
+    </li>
+    <li style='margin-top: 1em'>
+      Arquillian Extensions:
+      <ul>
+        <li>
+          <a href='https://docs.jboss.org/author/display/ARQ/Drone'>Drone docs</a>
+          <p class='url'>
+            <a href='https://docs.jboss.org/author/display/ARQ/Drone'>https://docs.jboss.org/author/display/ARQ/Drone</a>
+          </p>
+        </li>
+        <li>
+          <a href='https://docs.jboss.org/author/display/ARQGRA2/Getting+Started'>Graphene 2 docs</a>
+          <p class='url'>
+            <a href='https://docs.jboss.org/author/display/ARQGRA2/Getting+Started'>https://docs.jboss.org/author/display/ARQGRA2/Getting+Started</a>
+          </p>
+        </li>
+        <li>
+          <a href='https://docs.jboss.org/author/display/ARQ/Warp'>Warp docs</a>
+          <p class='url'>
+            <a href='https://docs.jboss.org/author/display/ARQ/Warp'>https://docs.jboss.org/author/display/ARQ/Warp</a>
+          </p>
+        </li>
+      </ul>
+      <li style='margin-top: 1em'>
+        <a href='https://github.com/bleathem/TestingJSF'>Sample Code</a>
+        <p class='url'>
+          <a href='https://github.com/bleathem/TestingJSF'>https://github.com/bleathem/TestingJSF</a>
+        </p>
+      </li>
+    </li>
+  </ul>
+</section>
+<section>
+  <h2>Arquillian @ JavaOne</h2>
+  <ul style="font-size: 22px;">
+  	<li><a href="https://oracleus.activeevents.com/connect/sessionDetail.ww?SESSION_ID=5039">TUT5039</a> &#8211; Cover Your Web and Mobile Applications with Integration Tests from Scratch</li>
+  	<li><a href="https://oracleus.activeevents.com/connect/sessionDetail.ww?SESSION_ID=7469">CON7469</a> &#8211; Apache TomEE, a Java EE 6 Web Profile on Tomcat</li>
+  	<li><a href="https://oracleus.activeevents.com/connect/sessionDetail.ww?SESSION_ID=2818">CON2818</a> &#8211; A Bird’s-Eye View of the <span class="caps">CDI</span> Ecosystem</li>
+  	<li><a href="https://oracleus.activeevents.com/connect/sessionDetail.ww?SESSION_ID=5312">CON5312</a> &#8211; Continuous Enterprise Development: Case Studies in Java EE Integration Testing</li>
+  	<li><a href="https://oracleus.activeevents.com/connect/sessionDetail.ww?SESSION_ID=6918">CON6918</a> &#8211; The Arquillian Universe: A Tour Around the Astrophysics Lab</li>
+  	<li><a href="https://oracleus.activeevents.com/connect/sessionDetail.ww?SESSION_ID=7997">BOF7997</a> &#8211; A New Approach to Testing Your Java EE Applications Deployed on a PaaS</li>
+  	<li><a href="https://oracleus.activeevents.com/connect/sessionDetail.ww?SESSION_ID=7622">CON7622</a> &#8211; Testing <span class="caps">JSF</span> Applications with Arquillian and Selenium</li>
+  	<li><a href="https://oracleus.activeevents.com/connect/sessionDetail.ww?SESSION_ID=5458">CON5458</a> &#8211; Today’s Rapid Java EE Development: Live Coding from Scratch to Deployment</li>
+  </ul>
+</section>
+<section>
+  <h2>Stay in the loop</h2>
+  <table class='links loop relative' style='width: 100%; top: 80px'>
+    <tr>
+      <td>Project</td>
+      <td>
+        <a href='http://arquillian.org'>arquillian.org</a>
+      </td>
+      <td>
+        <a href='http://richfaces.org'>richfaces.org</a>
+      </td>
+    </tr>
+    <tr>
+      <td>Twitter:</td>
+      <td>
+        <a href='https://twitter.com/#!arquillian'>@arquillian</a>
+      </td>
+      <td>
+        <a href='https://twitter.com/#!richfaces'>@richfaces</a>
+      </td>
+    </tr>
+    <tr>
+      <td>Google+:</td>
+      <td>
+        <a href='https://plus.google.com/100660127586085393031/'>+Arquillian</a>
+      </td>
+      <td>
+        <a href='https://plus.google.com/b/115573055688754345457/'>+RichFaces</a>
+      </td>
+    </tr>
+    <tr>
+      <td>Forums:</td>
+      <td>
+        <a href='https://community.jboss.org/en/arquillian?view=discussions'>Arquillian User forum</a>
+      </td>
+      <td>
+        <a href='https://community.jboss.org/en/richfaces?view=discussions'>RichFaces User forum</a>
+      </td>
+    </tr>
+    <tr>
+      <td>IRC</td>
+      <td>#jbosstesting</td>
+      <td>#richfaces</td>
+    </tr>
+    <tr>
+      <td>Blog feed:</td>
+      <td>
+        <a href='http://arquillian.org/blog/'>arquillian.org/blog/</a>
+      </td>
+      <td>
+        <a href='http://planet.jboss.org/feed/richfacesall'>planet.jboss.org<br>/feed/richfacesall</a>
+      </td>
+    </tr>
+  </table>
+</section>
+</div>
+
+<!-- The navigational controls UI -->
+<aside class="controls">
+    <a class="left" href="#">&#x25C4;</a>
+    <a class="right" href="#">&#x25BA;</a>
+    <a class="up" href="#">&#x25B2;</a>
+    <a class="down" href="#">&#x25BC;</a>
+</aside>
+
+<!-- Displays presentation progress, max value changes via JS to reflect # of slides -->
+<div class="progress"><span></span></div>
+
+</div>
+
+<script src="lib/jquery-1.7.2.min.js"></script>
+<!-- Optional libraries for code syntax highlighting and classList support in IE9 -->
+<script src="lib/google-code-prettify/prettify.js"></script>
+<script src="lib/classList.js"></script>
+
+<script src="js/reveal.js"></script>
+
+<script src="js/code_highlight.js"></script>
+<script src="js/draw_canvas.js"></script>
+
+<script>
+    // Parse the query string into a key/value object
+    var query = {};
+    location.search.replace(/[A-Z0-9]+?=(\w*)/gi, function (a) {
+        query[ a.split('=').shift() ] = a.split('=').pop();
+    });
+
+    // Fires when a slide with data-state=customevent is activated
+    Reveal.addEventListener('customevent', function () {
+        alert('"customevent" has fired');
+    });
+
+    // Fires each time a new slide is activated
+    Reveal.addEventListener('slidechanged', function (event) {
+        // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+    });
+
+    Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls:true,
+
+        // Display a presentation progress bar
+        progress:true,
+
+        // If true; each slide will be pushed to the browser history
+        history:true,
+
+        // Loops the presentation, defaults to false
+        loop:false,
+
+        // Flags if mouse wheel navigation should be enabled
+        mouseWheel:false,
+
+        // Apply a 3D roll to links on hover
+        rollingLinks:false,
+
+        // UI style
+        theme:query.theme || 'default', // default/neon
+
+        // Transition style
+        transition:'linear' // || query.transition || 'default' // default/cube/page/concave/linear(2d)
+    });
+
+    CodeHighlight.initialize({reveal: Reveal});
+    DrawCanvas.initialize({reveal: Reveal});
+
+    prettyPrint();
+
+</script>
+</body>
+</html>

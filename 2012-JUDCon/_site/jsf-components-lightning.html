@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>JBW 2012 | Going Mobile with your RichFaces Applications</title>
+
+    <meta name="description" content="Going Mobile with your RichFaces Applications">
+    <meta name="author" content="Brian Leathem">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="stylesheets/reset.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <link rel="stylesheet" href="lib/google-code-prettify/prettify.css">
+    <link rel="stylesheet" href="stylesheets/print.css" media="print">
+    <link rel="stylesheet" href="stylesheets/conf.css">
+</head>
+
+<body>
+
+<div class="reveal">
+
+<!-- Used to fade in a background when a specific slide state is reached -->
+<div class="state-background"></div>
+
+<!-- Any section element inside of this container is displayed as a slide -->
+<div class="slides">
+<section>
+  <img class='splash' src='assets/images/jboss_community_txt.png' />
+</section>
+<section>
+  <h1>Leverage the jQuery plugin ecosystem</h1>
+  <h2 class='capitalize'>to create highly-interactive JSF Components</h2>
+  <ul class='intro'>
+    <li>Brian Leathem</li>
+    <li>Senior Software Engineer, Red Hat</li>
+    <li>2012-06-25</li>
+  </ul>
+  <ul class='notes'>
+    <li>This lightning talk is about creating JSF Components with a focus on code re-usability and maximizing portability</li>
+  </ul>
+</section>
+<section>
+  <h2>JSF is...</h2>
+  <img class='plain relative' src='assets/images/jigsaw.png' style='float:right; left: -40px: height: 300px' />
+  <p style='margin-top: 180px'>
+    Component-oriented
+  </p>
+  <ul class='notes'>
+    <li>JSF offers us a standardized component model for building web applications</li>
+    <li>In the context of this talk, this component model provides us with a blueprint for building portable components we can "plug" into any JSF application</li>
+  </ul>
+</section>
+<section>
+  <h2>Building JSF Components</h2>
+  <img class='plain relative' src='assets/images/house_of_cards.jpg' style='float:right; left: -40px: height: 300px' />
+  <p style='margin-top: 180px'>
+    Traditionally Tricky business
+  </p>
+  <ul class='notes'>
+    <li>This is great, but JSF components are notoriously verbose to create</li>
+  </ul>
+</section>
+<section>
+  <h2>Split code-base</h2>
+  <ul>
+    <li>
+      Server-side code
+      <ul>
+        <li>Components</li>
+        <li>Renderers</li>
+        <li>xml junk!</li>
+      </ul>
+    </li>
+    <li>
+      <br />
+    </li>
+    <li>
+      Client-side code
+      <ul>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>javascript</li>
+      </ul>
+    </li>
+  </ul>
+  <ul class='notes'>
+    <li>For starters, we're dealing with a split code base.</li>
+    <li>We not only have to create the server side code: Components, Renderers, and xml config</li>
+    <li>We also have to create the client side pieces: the html, javascript, and CSS responsible for the component's behaviour and user-interactions</li>
+  </ul>
+</section>
+<section>
+  <h2>Lots of browsers</h2>
+  <div class='images white' style='margin-top: 50px'>
+    <table>
+      <tr>
+        <td>
+          <img src='assets/images/firefox.png' />
+        </td>
+        <td>
+          <img src='assets/images/chrome.png' />
+        </td>
+        <td>
+          <img src='assets/images/ie.png' />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img src='assets/images/opera.png' />
+        </td>
+        <td>
+          <img src='assets/images/safari.jpg' />
+        </td>
+        <td>
+          <img src='assets/images/konqueror.png' />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img src='assets/images/epiphany.png' />
+        </td>
+        <td>
+          <img src='assets/images/camino.png' />
+        </td>
+        <td>
+          <img src='assets/images/seamonkey.png' />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <h1 class='fragment'>+ mobile!</h1>
+  <ul class='notes'>
+    <li>All this client-code then has to be tested in a in a multitude of browsers</li>
+    <li>and don't forget to test on mobile devices too</li>
+  </ul>
+</section>
+<section>
+  <h3>The solution</h3>
+  <ul>
+    <li>Re-use existing javascript "widgets"</li>
+    <li>There is a huge potential for code re-use</li>
+    <li>
+      <br />
+    </li>
+    <li class='fragment'>
+      Google search comparison:
+      <ul class='nobullets'>
+        <li>
+          JSF Component:
+          <ul>
+            <li>
+              <span style='font-family: monospace'>
+                &nbsp; ~ 3
+              </span>
+              Million hits
+            </li>
+          </ul>
+        </li>
+        <li>
+          Javascript Component:
+          <ul>
+            <li>
+              <span style='font-family: monospace'>
+                ~ 416
+              </span>
+              Million hits
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <ul class='notes'>
+    <li>But I'm not here to complain, I'm here to share a solution</li>
+    <li>You should be, and can easily be building JSF components using existing javascript "widgets"</li>
+    <li>By widgets, I mean self-contained free standing javscript code that encapsulates a user interaction</li>
+    <li>The important piece here is that these are self-contained components, framework independent, and not requiring any back-end nor framework code to operate</li>
+  </ul>
+</section>
+<section>
+  <h2>Image Gallery</h2>
+  <img class='plain' src='assets/images/imagegallery.png' />
+  <ul class='notes'>
+    <li>For example, look at this jQuery UI imagegallery widget</li>
+    <li>It's a trivial widget, with a rich usr interface.</li>
+    <li>To use it, you point the jQuery plugin at some correctly formatted html markup, and you end up with a fully functional, single-purpose image gallery</li>
+    <li>click on an thumbnail to get a zoomed-in popup of the photo, with controls to navigate through the provided collection of photos</li>
+  </ul>
+</section>
+<section>
+  <img class='plain relative' src='assets/images/jqueryui.png' style='float:right; top: -60px' />
+  <h3>jQuery UI</h3>
+  <ul class='notes'>
+    <li>jQuery plugins can also be fairly non-trivial</li>
+    <li>here we have the jQuery UI widget set, providing more complex functionality with tabs, datepickers, modal alerts, etc.</li>
+  </ul>
+</section>
+<section>
+  <img class='plain relative' src='assets/images/bootstrap.png' style='float:right; top: -60px' />
+  <h3>Bootstrap</h3>
+  <ul class='notes'>
+    <li>Another widget set generating a lot of excitement right now is the twitter Bootstrap project.</li>
+    <li>Bootstrap takes a stronger focus on HTML and CSS for widget behaviour, but does incorporate some javascript as well</li>
+  </ul>
+</section>
+<section>
+  <h2>Image Gallery - Component</h2>
+  <pre class='prettyprint' style='font-size: 7pt;'><code id='gallery'>&nbsp;&#x000A;  &lt;!DOCTYPE html&gt;&#x000A;  &lt;html lang=&quot;en-US&quot;&#x000A;      xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&#x000A;      xmlns:h=&quot;http://java.sun.com/jsf/html&quot;&#x000A;      xmlns:ui=&quot;http://java.sun.com/jsf/facelets&quot;&#x000A;      xmlns:cc=&quot;http://java.sun.com/jsf/composite&quot;&gt;&#x000A;  &#x000A;  &lt;cc:interface&gt;&#x000A;    &lt;cc:attribute name=&quot;photos&quot; /&gt;&#x000A;  &#x000A;    &lt;!-- plugin configuration --&gt;&#x000A;    &lt;cc:attribute name=&quot;selector&quot; /&gt;&#x000A;    [ ... snip ... ]&#x000A;    &lt;cc:attribute name=&quot;dialogClass&quot; /&gt;&#x000A;  &lt;/cc:interface&gt;&#x000A;  &#x000A;  &lt;cc:implementation&gt;&#x000A;    &lt;div id=&quot;#{cc.clientId}:div&quot;&gt;&#x000A;        &lt;ui:repeat value=&quot;#{cc.attrs.photos}&quot; var=&quot;photo&quot;&gt;&#x000A;            &lt;a rel=&quot;gallery&quot; href=&quot;#{photo.full}&quot; title=&quot;#{photo.title}&quot;&gt;&#x000A;                &lt;img src=&quot;#{photo.thumb}&quot; alt=&quot;#{photo.title}&quot; /&gt;&#x000A;            &lt;/a&gt;&#x000A;        &lt;/ui:repeat&gt;&#x000A;    &lt;/div&gt;&#x000A;  &#x000A;    &lt;h:outputScript library=&quot;javax.faces&quot; name=&quot;jsf.js&quot;/&gt;&#x000A;    &lt;h:outputScript library=&quot;composite/com.jquery&quot; name=&quot;jquery-1.7.2.min.js&quot;/&gt;&#x000A;    &lt;h:outputScript library=&quot;composite/com.jqueryui/js&quot; name=&quot;jquery-ui-1.8.19.custom.min.js&quot;/&gt;&#x000A;    &lt;h:outputScript library=&quot;composite/com.github.blueimp/js&quot; name=&quot;load-image.js&quot;/&gt;&#x000A;    &lt;h:outputScript library=&quot;composite/com.github.blueimp/js&quot; name=&quot;jquery.image-gallery.js&quot;/&gt;&#x000A;    &lt;h:outputStylesheet library=&quot;composite/com.jqueryui/css/ui-lightness&quot; name=&quot;jquery-ui.custom.css&quot;/&gt;&#x000A;    &lt;h:outputStylesheet library=&quot;composite/com.github.blueimp/css&quot; name=&quot;jquery.image-gallery.css&quot;/&gt;&#x000A;    &lt;h:outputScript&gt;&#x000A;        var pluginOptions = {};&#x000A;        ! '#{cc.attrs.selector}' || (pluginOptions.selector = '#{cc.attrs.selector}');&#x000A;        [ ... snip ... ]&#x000A;        ! '#{cc.attrs.dialogClass}' || (pluginOptions.dialogClass = '#{cc.attrs.dialogClass}');&#x000A;  &#x000A;        jQuery(function() {&#x000A;            $(document.getElementById('#{cc.clientId}:div')).imagegallery(pluginOptions);&#x000A;        });&#x000A;    &lt;/h:outputScript&gt;&#x000A;  &lt;/cc:implementation&gt;&#x000A;  &#x000A;  &lt;/html&gt;&#x000A;  &nbsp;</code></pre>
+  <div class='fragment screen' data-prettify='gallery' data-prettify_lines='1:6'></div>
+  <div class='fragment screen' data-prettify='gallery' data-prettify_lines='8:15'></div>
+  <div class='fragment screen' data-prettify='gallery' data-prettify_lines='17:24'></div>
+  <div class='fragment screen' data-prettify='gallery' data-prettify_lines='26:32'></div>
+  <div class='fragment screen' data-prettify='gallery' data-prettify_lines='34:41'></div>
+  <ul class='notes'>
+    <li>
+      Let's take a look at the code required to make a JSF 2 component out of these javascript widgets
+      <ol>
+        <li>Here we have a JSF 2 composite component, and starts like any other JSF facelet file</li>
+        <li>
+          <ul>
+            <li>The composite component has 2 sections, and interface and an implementation</li>
+            <li>In the interface we specify the attributes of the facelet tag</li>
+            <li>The attributes consist of the list of photos we want to include in our gallery</li>
+            <li>and all the options available to configure the jQuery plugin (which I've cut out for brevity)</li>
+          </ul>
+        </li>
+        <li>Next we have the html to generate: we loop of the photos list, and output an anchor tag for each photo</li>
+        <li>We then map the component attributes into a javascript object</li>
+        <li>which we then pass as an parameter when we invoke the jQuery plugin</li>
+      </ol>
+    </li>
+  </ul>
+</section>
+<section>
+  <h2>Using the imagegallery component</h2>
+  <pre class='prettyprint' style='font-size: 7pt;'><code id='gallery'>&nbsp;&#x000A;  &lt;my:datepicker buttonImageOnly=&quot;true&quot; dateFormat=&quot;yy-mm-dd&quot; showOn=&quot;both&quot;/&gt;&#x000A;  &nbsp;</code></pre>
+  <ul class='notes'>
+    <li>While the component gives a rich looking interface (I'd demo it if I had more time) it is in fact a simple "output-only" component</li>
+  </ul>
+</section>
+<section>
+  <h2>jQuery UI Datepicker component</h2>
+  <pre class='prettyprint' style='font-size: 7pt;'><code id='datepicker'>&nbsp;&#x000A;  &lt;!DOCTYPE html&gt;&#x000A;  &lt;html lang=&quot;en-US&quot;&#x000A;        xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&#x000A;        xmlns:h=&quot;http://java.sun.com/jsf/html&quot;&#x000A;        xmlns:f=&quot;http://java.sun.com/jsf/core&quot;&#x000A;        xmlns:ui=&quot;http://java.sun.com/jsf/facelets&quot;&#x000A;        xmlns:cc=&quot;http://java.sun.com/jsf/composite&quot;&gt;&#x000A;  &#x000A;  &lt;cc:interface&gt;&#x000A;      &lt;cc:attribute name=&quot;value&quot; /&gt;&#x000A;      &lt;cc:attribute name=&quot;showOn&quot; /&gt;&#x000A;      &lt;cc:attribute name=&quot;dateFormat&quot; /&gt;&#x000A;      &lt;cc:attribute name=&quot;buttonImageOnly&quot; /&gt;&#x000A;  &lt;/cc:interface&gt;&#x000A;  &#x000A;  &lt;cc:implementation&gt;&#x000A;      &lt;h:inputText id=&quot;input&quot; value=&quot;#{cc.attrs.value}&quot; /&gt;&#x000A;      &lt;h:outputScript library=&quot;javax.faces&quot; name=&quot;jsf.js&quot;/&gt;&#x000A;      &lt;h:outputScript library=&quot;composite/com.jquery&quot; name=&quot;jquery-1.7.2.min.js&quot;/&gt;&#x000A;      &lt;h:outputScript library=&quot;composite/com.jqueryui/development-bundle/ui&quot; name=&quot;jquery.ui.core.js&quot;/&gt;&#x000A;      &lt;h:outputScript library=&quot;composite/com.jqueryui/development-bundle/ui&quot; name=&quot;jquery.ui.widget.js&quot;/&gt;&#x000A;      &lt;h:outputScript library=&quot;composite/com.jqueryui/development-bundle/ui&quot; name=&quot;jquery.ui.datepicker.js&quot;/&gt;&#x000A;      &lt;h:outputStylesheet library=&quot;composite/com.jqueryui/css/ui-lightness&quot; name=&quot;jquery-ui.custom.css&quot;/&gt;&#x000A;      &lt;h:outputScript&gt;&#x000A;          var pluginOptions = {&#x000A;              buttonImage: &quot;#{request.contextPath}/javax.faces.resource/calendar.gif.jsf?ln=composite/org.richfaces&quot;,&#x000A;              buttonImageOnly: &quot;#{&quot;true&quot; eq cc.attrs.buttonImageOnly}&quot;&#x000A;          }&#x000A;          ! '#{cc.attrs.showOn}' || (pluginOptions.showOn = '#{cc.attrs.showOn}');&#x000A;          ! '#{cc.attrs.dateFormat}' || (pluginOptions.dateFormat = '#{cc.attrs.dateFormat}');&#x000A;  &#x000A;          jQuery(function() {&#x000A;              $(document.getElementById('#{cc.clientId}:input')).datepicker(pluginOptions);&#x000A;          });&#x000A;  &#x000A;      &lt;/h:outputScript&gt;&#x000A;  &lt;/cc:implementation&gt;&#x000A;  &lt;/html&gt;&#x000A;  &nbsp;</code></pre>
+  <div class='fragment screen' data-prettify='datepicker' data-prettify_lines='17:17'></div>
+  <ul class='notes'>
+    <li>let's look at the implementation of a component that accept user input - the datepicker</li>
+    <li>This composite component follows nearly the same pattern as previous except for one difference:</li>
+    <li>We are delegate to the JSF input component to return the widget data back to the JSF servlet</li>
+    <li>The point I want to make is that so long as you can find a JSF component to delegate to you can write a JSF component leveraging any</li>
+  </ul>
+</section>
+<section>
+  <h2>RichFaces CDK</h2>
+  <img class='plain relative' src='assets/images/richfaces-logo.png' style='float:right; margin-left: 60px' />
+  <p style='margin-top: 120px;'>Use the RichFaces CDK to build "full-fledged" JSF components with the ease and syntax of JSF 2 composite components</p>
+  <ul class='notes'>
+    <li>The RichFaces CDK templating language is modeled after JSF 2 composite components</li>
+    <li>However when you use the RichFaces CDK, the template is rendererd into Java code at runtime</li>
+    <li>You end up with "full-fledged" jsf components, free of any limitations of the composite component way of building components</li>
+    <li>Feel free to speak to me if you want to hear more about the CDK, or attend my talk in 2 weeks at JAX</li>
+  </ul>
+</section>
+<section>
+  <h2>This is bigger than JSF</h2>
+  <ul style='line-height: 400%'>
+    <li>Polyglot JVM</li>
+    <li>Web frameworks in many languages/environments</li>
+    <li>Consistent L&F throughout a heterogeneous application</li>
+  </ul>
+  <ul class='notes'>
+    <li>A Final motivation for building components on top of standalone javascript widgets - even when creating brand-new widgets</li>
+    <li>In this world of ployglot on the JVM, and hetergenous server environments, it's not uncommon to have a single application spread accross multiple frameworks</li>
+    <li>By using a consistent set of HTML markup, CSS, and javascript to enrich your application</li>
+    <li>you can achieve a consistent L&F for your users irrespective of the back-end technology</li>
+  </ul>
+</section>
+<section>
+  <h2>Call to action!</h2>
+  <div style='line-height: 150%'>
+    <br />
+    <p>All JBoss projects with UI building capabilities should coordinate and identify a common strategy for building client "widgets"</p>
+    <br />
+    <p>Let's empower our users to build heterogeneous JBoss applications with a consistent L&F!</p>
+  </div>
+  <ul class='notes'>
+    <li>So I'd like to extend an invitation to all framework providers at JBoss to come together and standardize on a set of javascript widgets</li>
+    <li>in this way we can empower our users to build heterogeneous JBoss applications with a consistent L&F!</li>
+  </ul>
+</section>
+<section>
+  <h2>Links</h2>
+  <div class='left resources'>
+    <ul class='links'>
+      <li>
+        <a href='https://github.com/richfaces/sandbox'>RichFaces Sandbox on github</a>
+      </li>
+      <li>
+        <a href='http://jsflive.wordpress.com/2010/09/19/collapsiblepanel-revisited/'>Blog Collapsible panel w/ Composite Components</a>
+      </li>
+      <li>
+        JSF Composite component API docs:
+        <ul>
+          <li>
+            <a href='http://javaserverfaces.java.net/nonav/docs/2.0/pdldocs/facelets/composite/interface.html'>composite Tag interface</a>
+          </li>
+          <li>
+            <a href='http://javaserverfaces.java.net/nonav/docs/2.0/pdldocs/facelets/composite/implementation.html'>composite Tag implementation</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <br />
+    <br />
+    <ul class='links'>
+      <li>
+        Javascript "widgets"
+        <ul>
+          <li>
+            <a href='http://jqueryui.com/'>jQuery UI</a>
+          </li>
+          <li>
+            <a href='http://twitter.github.com/bootstrap/'>Twitter Bootstrap</a>
+          </li>
+          <li>
+            <a href='http://blueimp.github.com/jQuery-Image-Gallery/'>jQuery-Image-Gallery</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</section>
+</div>
+
+<!-- The navigational controls UI -->
+<aside class="controls">
+    <a class="left" href="#">&#x25C4;</a>
+    <a class="right" href="#">&#x25BA;</a>
+    <a class="up" href="#">&#x25B2;</a>
+    <a class="down" href="#">&#x25BC;</a>
+</aside>
+
+<!-- Displays presentation progress, max value changes via JS to reflect # of slides -->
+<div class="progress"><span></span></div>
+
+</div>
+
+<script src="lib/jquery-1.7.2.min.js"></script>
+<!-- Optional libraries for code syntax highlighting and classList support in IE9 -->
+<script src="lib/google-code-prettify/prettify.js"></script>
+<script src="lib/classList.js"></script>
+
+<script src="js/reveal.js"></script>
+
+<script src="js/code_highlight.js"></script>
+
+<script>
+    // Parse the query string into a key/value object
+    var query = {};
+    location.search.replace(/[A-Z0-9]+?=(\w*)/gi, function (a) {
+        query[ a.split('=').shift() ] = a.split('=').pop();
+    });
+
+    // Fires when a slide with data-state=customevent is activated
+    Reveal.addEventListener('customevent', function () {
+        alert('"customevent" has fired');
+    });
+
+    // Fires each time a new slide is activated
+    Reveal.addEventListener('slidechanged', function (event) {
+        // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+    });
+
+    Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls:true,
+
+        // Display a presentation progress bar
+        progress:true,
+
+        // If true; each slide will be pushed to the browser history
+        history:true,
+
+        // Loops the presentation, defaults to false
+        loop:false,
+
+        // Flags if mouse wheel navigation should be enabled
+        mouseWheel:false,
+
+        // Apply a 3D roll to links on hover
+        rollingLinks:false,
+
+        // UI style
+        theme:query.theme || 'default', // default/neon
+
+        // Transition style
+        transition:'linear' // || query.transition || 'default' // default/cube/page/concave/linear(2d)
+    });
+
+    CodeHighlight.initialize({reveal: Reveal});
+
+    prettyPrint();
+
+</script>
+</body>
+</html>
