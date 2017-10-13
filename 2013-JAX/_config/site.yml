@@ -1,8 +1,0 @@
-profiles:
-  development:
-  production:
-    base_url: http://www.bleathem.ca/talks/2013-JAX/
-    deploy:
-      host: bleathem.ca
-      path: /home/bleathem/bleathem.ca/talks/2013-JAX/
-      uncommitted: true
