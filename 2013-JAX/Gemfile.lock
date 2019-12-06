@@ -75,9 +75,8 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
-    puma (1.6.3)
-      rack (~> 1.2)
-    rack (1.5.2)
+    puma (3.12.2)
+    rack (1.5.5)
     rb-inotify (0.9.0)
       ffi (>= 0.5.0)
     redcarpet (2.3.0)
@@ -115,7 +114,7 @@ DEPENDENCIES
   guard-livereload
   htmlcompressor
   less (~> 2.3.1)
-  puma (~> 1.6.3)
+  puma (~> 3.12.2)
   rb-inotify (~> 0.9.0)
   redcarpet (~> 2.3.0)
   slim (~> 2.0.0)
